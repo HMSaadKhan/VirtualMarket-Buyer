@@ -4,7 +4,7 @@ import { category } from "../../data";
 
 const Container = styled.div`
   display: flex;
-  flex: 33%;
+ 
   padding: 20px;
   justify-content: space-between;
 `;

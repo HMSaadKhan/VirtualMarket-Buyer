@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import MenuBar from "./Components/MenuBar/MenuBar";
 import AccountBar from "./Components/MenuBar/AccountBar"; 
 import Categories from "./Components/Categories/Categories";
-
+import Products from "./Components/Product/Products";
 
 function App() {
   return (
@@ -11,6 +11,7 @@ function App() {
       <AccountBar/>
       <MenuBar />
       <Categories/>
+      <Products/>
     </Router>
   );
 }
