@@ -1,17 +1,18 @@
 import * as React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import MenuBar from "./Components/MenuBar/MenuBar";
-import AccountBar from "./Components/MenuBar/AccountBar"; 
+import AccountBar from "./Components/MenuBar/AccountBar";
 import Categories from "./Components/Categories/Categories";
 import Products from "./Components/Product/Products";
-
+import Footer from "./Components/Footer";
 function App() {
   return (
     <Router>
-      <AccountBar/>
+      <AccountBar />
       <MenuBar />
-      <Categories/>
-      <Products/>
+      <Categories />
+      <Products />
+      <Footer />
     </Router>
   );
 }

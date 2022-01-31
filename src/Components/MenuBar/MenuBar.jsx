@@ -7,16 +7,14 @@ const Container = styled.div`
   background-color: #ff9a3c;
 `;
 const Wrapper = styled.div`
-  padding: 20px 30px;
+  padding: 0px 30px;
   display: flex;
-
   align-items: center;
   justify-content: space-between;
 `;
 
 
-const Logo = styled.div`
-flex=1;
+const Logo = styled.h1`
 `;
 const SearchBar = styled.div`
   display: flex;

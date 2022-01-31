@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-
-
 const Container = styled.div`
   flex: 1;
   margin: 3px;
-  height: 70vh;
-  min-width: 280px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   position: relative;
 `;
 
@@ -29,27 +29,28 @@ const Info = styled.div`
 `;
 
 const Title = styled.h1`
-    color:white;
-    margin-bottom: 20px;
+  color: #f8b500;
+  margin-bottom: 20px;
 `;
 
 const Button = styled.button`
-    border:none;
-    padding: 10px;
-    background-color: white;
-    color:gray;
-    cursor: pointer;
-    font-weight: 600;
+  border: none;
+  padding: 10px;
+  background-color: white;
+  color: gray;
+  cursor: pointer;
+  font-weight: 600;
 `;
 
 const CategoryItem = ({ item }) => {
-  return <Container><Image src={item.img}/>
+  return (
+    <Container>
+      <Image src={item.img} />
       <Info>
-          <Title>
-              {item.title}
-          </Title>
+        <Title>{item.title}</Title>
       </Info>
-      </Container>;
+    </Container>
+  );
 };
 
 export default CategoryItem;
