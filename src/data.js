@@ -53,6 +53,8 @@ export const category = [
     img: "https://www.tohfay.com/images/products/0_pid_3645.jpg",
     title: "Groceries",
   },
+  
+
 ];
 
 export const popularProducts = [

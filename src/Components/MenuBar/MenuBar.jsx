@@ -1,4 +1,11 @@
-import { Search, Chat, Favorite, ShoppingCart } from "@mui/icons-material";
+import {
+  Search,
+  Chat,
+  LoginRounded,
+  Favorite,
+  ShoppingCart,
+} from "@mui/icons-material";
+import { Link } from "react-router-dom";
 import * as React from "react";
 import styled from "styled-components";
 
@@ -13,9 +20,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
 `;
 
-
-const Logo = styled.h1`
-`;
+const Logo = styled.h1``;
 const SearchBar = styled.div`
   display: flex;
   flex=1;
@@ -38,11 +43,18 @@ const RightComponents = styled.div`
   margin-left: 10px;
 `;
 
+const linkStyle = {
+  textDecoration: "none",
+  color: "black",
+};
+
 const MenuBar = () => {
   return (
     <Container>
       <Wrapper>
-        <Logo>Virtual Market</Logo>
+        <Link to="/" style={linkStyle}>
+          <Logo>Virtual Market</Logo>
+        </Link>
         <SearchBar>
           <Input />
           <Search />
@@ -56,6 +68,11 @@ const MenuBar = () => {
           </RightComponents>
           <RightComponents>
             <ShoppingCart />
+          </RightComponents>
+          <RightComponents>
+            <Link to="/Login" style={linkStyle}>
+              <LoginRounded />{" "}
+            </Link>
           </RightComponents>
         </RightCorner>
       </Wrapper>
