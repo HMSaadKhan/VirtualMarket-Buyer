@@ -4,7 +4,6 @@ import {
   MailOutline,
   Phone,
   Pinterest,
-  Room,
   Twitter,
 } from "@mui/icons-material";
 import styled from "styled-components";
@@ -75,9 +74,6 @@ const ContactItem = styled.div`
   align-items: center;
 `;
 
-const Payment = styled.img`
-  width: 50%;
-`;
 
 const Footer = () => {
   return (

@@ -1,4 +1,4 @@
-import { Add, Remove } from "@mui/icons-material";
+import { Add, Remove, Delete } from "@mui/icons-material";
 import styled from "styled-components";
 
 const Product = styled.div`
@@ -9,10 +9,13 @@ const Product = styled.div`
 const ProductDetail = styled.div`
   flex: 2;
   display: flex;
+  padding: 0px 30px;
 `;
 
 const Image = styled.img`
-  width: 200px;
+  padding: 30px 0px;
+  width: 50px;
+  height: 50px;
 `;
 
 const Details = styled.div`
@@ -25,14 +28,6 @@ const Details = styled.div`
 const ProductName = styled.span``;
 
 const ProductId = styled.span``;
-
-const ProductColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props) => props.color};
-`;
-
 
 const PriceDetail = styled.div`
   flex: 1;
@@ -48,46 +43,57 @@ const ProductAmountContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const ProductAmount = styled.div`
+const ProductAmount = styled.span`
   font-size: 24px;
-  margin: 5px;
 `;
 
-const ProductPrice = styled.div`
-  font-size: 30px;
-  font-weight: 200;
+const ProductPrice = styled.span`
+  font-size: 20px;
+  font-weight: "bold";
 `;
 
 const Hr = styled.hr`
   background-color: #eee;
   border: none;
   height: 1px;
+  margin: 0px 20px;
 `;
+const deleteStyle = {
+  padding: 50,
+};
 
-const Cart = ({item}) => {
+const Cart = ({ item }) => {
   return (
-    <Product>
-      <ProductDetail>
-        <Image src={item.img} />
-        <Details>
-          <ProductName>
-            <b>Product:</b> {item.title}
-          </ProductName>
-          <ProductId>
-            <b>ID:</b> {item.id}
-          </ProductId> 
-          
-        </Details>
-      </ProductDetail>
-      <PriceDetail>
-        <ProductAmountContainer>
-          <Add />
-          <ProductAmount>2</ProductAmount>
-          <Remove />
-        </ProductAmountContainer>
-        <ProductPrice>{item.price}</ProductPrice>
-      </PriceDetail>
-    </Product>
+    <>
+      <Product>
+        <ProductDetail>
+          <Image src={item.img} />
+          <Details>
+            <ProductName>
+              <b>Product:</b> {item.title}
+            </ProductName>
+            <ProductId>
+              <b>ID:</b> {item.id}
+            </ProductId>
+            <ProductPrice>
+              <b>Price : </b>
+              {item.price}
+            </ProductPrice>
+          </Details>
+        </ProductDetail>
+        <PriceDetail>
+          <ProductAmountContainer>
+            <Remove />
+            <ProductAmount>2</ProductAmount>
+            <Add />
+          </ProductAmountContainer>
+        </PriceDetail>
+       
+          <Delete style={deleteStyle}/>
+       
+      </Product>
+      <Hr />
+    </>
   );
 };
 

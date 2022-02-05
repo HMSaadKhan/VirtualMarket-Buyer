@@ -1,4 +1,3 @@
-import { Add, Remove } from "@mui/icons-material";
 import styled from "styled-components";
 import { cartItem } from "../../data";
 import CartItems from "./CartItems";
@@ -79,7 +78,7 @@ const Cart = () => {
         <Title>YOUR CART</Title>
         <Top>
           <TopButton>CONTINUE SHOPPING</TopButton>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          <TopButton type="filled">Clear Cart</TopButton>
         </Top>
         <Bottom>
           <Info>
