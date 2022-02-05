@@ -1,16 +1,12 @@
-import {
-  Search,
-  Chat,
-  LoginRounded,
-  Favorite,
-  ShoppingCart,
-} from "@mui/icons-material";
-import { Link } from "react-router-dom";
-import * as React from "react";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import {Search, Chat, Favorite, ShoppingCart, AccountCircle, Notifications,} from "@mui/icons-material";
 
 const Container = styled.div`
-  height: 60px;
+  height: 70px;
   background-color: #ff9a3c;
 `;
 const Wrapper = styled.div`
@@ -49,6 +45,33 @@ const linkStyle = {
 };
 
 const MenuBar = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const isMenuOpen = Boolean(anchorEl);
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const history = useHistory();
+
+  const handleChange = (event) => {
+    history.push(event.target.getAttribute("value"));
+    handleMenuClose();
+  };
+
+  const renderMenu = (
+    <Menu anchorEl={anchorEl} open={isMenuOpen} onClose={handleMenuClose}>
+      <MenuItem value="/Login" onClick={handleChange}>
+        Login
+      </MenuItem>
+      <MenuItem value="/SignUp" onClick={handleChange}>
+        SignUp
+      </MenuItem>
+    </Menu>
+  );
   return (
     <Container>
       <Wrapper>
@@ -64,18 +87,24 @@ const MenuBar = () => {
             <Chat />
           </RightComponents>
           <RightComponents>
-            <Favorite />
+            <Notifications />
           </RightComponents>
           <RightComponents>
-            <ShoppingCart />
-          </RightComponents>
-          <RightComponents>
-            <Link to="/Login" style={linkStyle}>
-              <LoginRounded />{" "}
+            <Link to="/favorite" style={linkStyle}>
+              <Favorite />
             </Link>
+          </RightComponents>
+          <RightComponents>
+            <Link to="/Cart" style={linkStyle}>
+              <ShoppingCart />
+            </Link>
+          </RightComponents>
+          <RightComponents>
+            <AccountCircle onClick={handleProfileMenuOpen} />
           </RightComponents>
         </RightCorner>
       </Wrapper>
+      {renderMenu}
     </Container>
   );
 };
