@@ -11,9 +11,11 @@ import SignUp from "./Components/SignUpPage/SignUp";
 import HomePage from "./Components/HomePage/HomePage";
 import Cart from "./Components/Cart/Cart";
 import Favorite from "./Components/Favorites/Fvaorite";
+import AccountBar from "./Components/MenuBar/AccountBar"
 function App() {
   return (
     <Router>
+      <AccountBar/>
       <MenuBar />
       <Switch>
         <Route path="/" exact component={HomePage} />

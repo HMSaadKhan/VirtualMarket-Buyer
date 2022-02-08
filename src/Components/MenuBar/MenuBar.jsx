@@ -3,11 +3,18 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import {Search, Chat, Favorite, ShoppingCart, AccountCircle, Notifications,} from "@mui/icons-material";
+import {
+  Search,
+  Chat,
+  Favorite,
+  ShoppingCart,
+  AccountCircle,
+  Notifications,
+} from "@mui/icons-material";
 
 const Container = styled.div`
   height: 70px;
-  background-color: #ff9a3c;
+  background-color: #eee;
 `;
 const Wrapper = styled.div`
   padding: 0px 30px;
@@ -24,7 +31,7 @@ const SearchBar = styled.div`
 `;
 
 const Input = styled.input`
-  border: none;
+  border: 3px;
   height: 25px;
   width: 500px;
 `;
@@ -43,6 +50,7 @@ const linkStyle = {
   textDecoration: "none",
   color: "black",
 };
+
 
 const MenuBar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
