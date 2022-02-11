@@ -27,13 +27,13 @@ const Title = styled.h1`
 
 const Form = styled.form`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 `;
 
 const Input = styled.input`
   flex: 1;
   min-width: 40%;
-  margin: 10px 0;
+  margin: 10px 10px;
   padding: 10px;
 `;
 
@@ -45,30 +45,30 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
   margin-bottom: 10px;
+  margin-left: 10px;
 `;
 
-const Link = styled.a`
-  margin: 5px 0px;
-  font-size: 12px;
-  text-decoration: underline;
-  cursor: pointer;
-`;
-
-const Login = () => {
+const BuyerAccount = () => {
   return (
     <Container>
       <Wrapper>
-        <Title>SIGN IN</Title>
+        <Title>Account Details</Title>
         <Form>
-          <Input placeholder="username" />
-          <Input placeholder="password" />
-          <Button>LOGIN</Button>
-          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link>CREATE A NEW ACCOUNT</Link>
+          <Input placeholder="First Name" />
+          <Input placeholder="Last Name" />
+          <Input placeholder="Password" />
+          <Input placeholder="Confirm Password" />
         </Form>
+        <Form>
+          <Input placeholder="Contact" />
+        </Form>
+        <Form>
+          <Input placeholder="Address" />
+        </Form>
+        <Button>Save</Button>
       </Wrapper>
     </Container>
   );
 };
 
-export default Login;
+export default BuyerAccount;

@@ -4,7 +4,7 @@ import Product from "./Product";
 
 const Wrapper = styled.div`
   flex: 1;
-  padding: 20px;
+  padding: 50px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;

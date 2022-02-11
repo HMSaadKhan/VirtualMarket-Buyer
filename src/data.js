@@ -22,38 +22,37 @@ export const sliderItems = [
   },
 ];
 
-export const category = [
-  {
-    id: 1,
-    img: "https://dlior9lx1k7r2.cloudfront.net/userstoryphotos/652dfa2e-5dfc-4b44-a932-5695655a3475.png;preset=960",
-    title: "Electronics",
-  },
-  {
-    id: 2,
-    img: "https://st2.depositphotos.com/2219414/9513/v/950/depositphotos_95136142-stock-illustration-lifestyle-items-and-marketing-on.jpg",
-    title: "LifeStyle",
-  },
-  {
-    id: 3,
-    img: "https://assets.teenvogue.com/photos/5da8a8fa585a0e0009057027/16:9/w_2580,c_limit/Style_FashionItems-16_SOCIAL.jpg",
-    title: "Fashion",
-  },
-  {
-    id: 4,
-    img: "https://image.shutterstock.com/image-vector/set-colorful-sport-balls-gaming-260nw-1652718535.jpg",
-    title: "Sports",
-  },
-  {
-    id: 5,
-    img: "https://media.istockphoto.com/photos/spare-car-parts-picture-id518411068?k=20&m=518411068&s=170667a&w=0&h=h614SY9muFfvqVhlBovrgoQTIacMjrsrNkfhqQPpg7s=",
-    title: "AutoMobiles",
-  },
-  {
-    id: 6,
-    img: "https://www.tohfay.com/images/products/0_pid_3645.jpg",
-    title: "Groceries",
-  },
-];
+export const Category = {
+  id: '0',
+  name: 'Categories',
+  children: [
+    {
+      id: '1',
+      name: 'Electronics',
+      children:[
+        {
+          id:'2',
+          name: 'Computer'
+        },
+      ],
+    },
+    {
+      id: '3',
+      name: 'Fashion',
+      children: [
+        {
+          id: '4',
+          name: 'Men',
+        },
+        {
+          id: '5',
+          name: 'Women',
+        },
+      ],
+    },
+  ],
+};
+
 
 export const popularProducts = [
   {

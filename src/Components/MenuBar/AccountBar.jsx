@@ -6,21 +6,30 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
 const Container = styled.div`
-  height: 30px;
-  background-color: grey;
+  height: 40px;
+  background-color: white;
 `;
 const Wrapper = styled.div`
   padding: 4px 7px;
   display: flex;
-  align-item: right;
-  margin-right: 60px;
+  align-item: center;
+  justify-content: space-between;
 `;
 const Right = styled.div`
   display: flex;
-  margin-left: auto;
+  padding: 3px;
+  margin-right: 100px;
 `;
-const RightIn = styled.div`
-  margin-left: 10px;
+const Left = styled.div`
+  display: flex;
+  padding: 3px;
+  margin-left: 40px;
+`;
+const Hr = styled.hr`
+  background-color: #eee;
+  border: none;
+  height: 1px;
+ 
 `;
 
 const AccountBar = () => {
@@ -42,26 +51,15 @@ const AccountBar = () => {
   };
 
   const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      //id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
+    <Menu anchorEl={anchorEl} open={isMenuOpen} onClose={handleMenuClose}>
       <MenuItem value="/Login" onClick={handleChange}>
         Login
       </MenuItem>
       <MenuItem value="/SignUp" onClick={handleChange}>
         SignUp
+      </MenuItem>
+      <MenuItem value="/AccountSettings" onClick={handleChange}>
+        Account
       </MenuItem>
     </Menu>
   );
@@ -69,16 +67,16 @@ const AccountBar = () => {
   return (
     <Container>
       <Wrapper>
+        <Left>
+          <Notifications />
+          +0900 78601
+        </Left>
         <Right>
-          <RightIn>
-            <Notifications />
-          </RightIn>
-          <RightIn>
-            <AccountCircle onClick={handleProfileMenuOpen} />
-          </RightIn>
+          <AccountCircle onClick={handleProfileMenuOpen} />
         </Right>
       </Wrapper>
       {renderMenu}
+      <Hr />
     </Container>
   );
 };

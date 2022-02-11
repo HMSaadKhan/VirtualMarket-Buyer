@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import CategoryItem from "./CategoryItem";
-import { category } from "../../data";
+//import { category } from "../../data";
 
 const Container = styled.div``;
 const Text = styled.div`
@@ -15,14 +15,15 @@ const Wrapper = styled.div`
   height: 100%;
   justify-content: space-between;
 `;
+
 const Categories = ({ item }) => {
   return (
     <Container>
       <Text>Categories</Text>
       <Wrapper>
-        {category.map((item) => (
+        {/* {category.map((item) => (
           <CategoryItem item={item} key={item.id} />
-        ))}
+        ))} */}
       </Wrapper>
     </Container>
   );

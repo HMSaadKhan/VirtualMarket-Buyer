@@ -3,11 +3,18 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import {Search, Chat, Favorite, ShoppingCart, AccountCircle, Notifications,} from "@mui/icons-material";
+import {
+  Search,
+  Chat,
+  Favorite,
+  ShoppingCart,
+  AccountCircle,
+  Notifications,
+} from "@mui/icons-material";
 
 const Container = styled.div`
   height: 70px;
-  background-color: #ff9a3c;
+  background-color: #eee;
 `;
 const Wrapper = styled.div`
   padding: 0px 30px;
@@ -89,18 +96,11 @@ const MenuBar = () => {
           <RightComponents>
             <Notifications />
           </RightComponents>
-          <RightComponents>
-            <Link to="/favorite" style={linkStyle}>
-              <Favorite />
-            </Link>
-          </RightComponents>
+
           <RightComponents>
             <Link to="/Cart" style={linkStyle}>
               <ShoppingCart />
             </Link>
-          </RightComponents>
-          <RightComponents>
-            <AccountCircle onClick={handleProfileMenuOpen} />
           </RightComponents>
         </RightCorner>
       </Wrapper>

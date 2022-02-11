@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const Container = styled.div`
   flex: 1;
@@ -31,14 +35,12 @@ const Info = styled.div`
 const Title = styled.h1`
   color: #f8b500;
   margin-bottom: 20px;
+  cursor: pointer;
 `;
-
-
 
 const CategoryItem = ({ item }) => {
   return (
     <Container>
-      <Image src={item.img} />
       <Info>
         <Title>{item.title}</Title>
       </Info>
