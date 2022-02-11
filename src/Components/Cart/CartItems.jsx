@@ -13,7 +13,7 @@ const ProductDetail = styled.div`
 `;
 
 const Image = styled.img`
-  padding: 30px 0px;
+  padding: 40px 0px;
   width: 50px;
   height: 50px;
 `;
@@ -58,9 +58,9 @@ const Hr = styled.hr`
   height: 1px;
   margin: 0px 20px;
 `;
-const deleteStyle = {
-  padding: 50,
-};
+const DeleteStyle = styled.span`
+  padding: 50px;
+`;
 
 const Cart = ({ item }) => {
   return (
@@ -88,9 +88,9 @@ const Cart = ({ item }) => {
             <Add />
           </ProductAmountContainer>
         </PriceDetail>
-       
-          <Delete style={deleteStyle}/>
-       
+        <DeleteStyle>
+          <Delete />
+        </DeleteStyle>
       </Product>
       <Hr />
     </>

@@ -31,7 +31,7 @@ const SearchBar = styled.div`
 `;
 
 const Input = styled.input`
-  border: none;
+  border: 3px;
   height: 25px;
   width: 500px;
 `;
@@ -50,6 +50,7 @@ const linkStyle = {
   textDecoration: "none",
   color: "black",
 };
+
 
 const MenuBar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
