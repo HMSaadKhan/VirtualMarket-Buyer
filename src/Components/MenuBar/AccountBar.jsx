@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { AccountCircle, Notifications } from "@mui/icons-material";
+import { AccountCircle, Call } from "@mui/icons-material";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+import userService from "../../Services/UserService";
 
 const Container = styled.div`
   height: 40px;
@@ -29,7 +30,6 @@ const Hr = styled.hr`
   background-color: #eee;
   border: none;
   height: 1px;
- 
 `;
 
 const AccountBar = () => {
@@ -52,15 +52,30 @@ const AccountBar = () => {
 
   const renderMenu = (
     <Menu anchorEl={anchorEl} open={isMenuOpen} onClose={handleMenuClose}>
-      <MenuItem value="/Login" onClick={handleChange}>
-        Login
-      </MenuItem>
-      <MenuItem value="/SignUp" onClick={handleChange}>
-        SignUp
-      </MenuItem>
-      <MenuItem value="/AccountSettings" onClick={handleChange}>
-        Account
-      </MenuItem>
+      {!userService.isLoggedIn() ? (
+        <>
+          <MenuItem value="/Login" onClick={handleChange}>
+            Login
+          </MenuItem>
+          <MenuItem value="/SignUp" onClick={handleChange}>
+            SignUp
+          </MenuItem>
+        </>
+      ) : (
+        <>
+          <MenuItem value="/AccountSettings" onClick={handleChange}>
+            Account
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              userService.logout();
+              window.location.href = "/";
+            }}
+          >
+            Logout
+          </MenuItem>
+        </>
+      )}
     </Menu>
   );
 
@@ -68,7 +83,7 @@ const AccountBar = () => {
     <Container>
       <Wrapper>
         <Left>
-          <Notifications />
+          <Call />
           +0900 78601
         </Left>
         <Right>

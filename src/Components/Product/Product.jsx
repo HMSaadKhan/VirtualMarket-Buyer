@@ -4,6 +4,7 @@ import {
   ShoppingCartOutlined,
 } from "@mui/icons-material";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 const Info = styled.div`
   opacity: 0;
@@ -66,6 +67,15 @@ const Icon = styled.div`
 `;
 
 const Product = ({ item }) => {
+
+
+  const history = useHistory();
+
+  const handleChange = (event) => {
+    history.push(event.target.getAttribute("value"));
+  }
+
+
   return (
     <Container>
       <Circle />
@@ -75,7 +85,7 @@ const Product = ({ item }) => {
           <ShoppingCartOutlined />
         </Icon>
         <Icon>
-          <SearchOutlined />
+          <SearchOutlined value='/ProductDetail' onClick={handleChange}  />
         </Icon>
         <Icon>
           <FavoriteBorderOutlined />

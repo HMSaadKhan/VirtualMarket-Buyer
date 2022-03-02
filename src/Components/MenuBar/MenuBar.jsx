@@ -1,16 +1,9 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import {
-  Search,
-  Chat,
-  Favorite,
-  ShoppingCart,
-  AccountCircle,
-  Notifications,
-} from "@mui/icons-material";
+
+import { Badge, Menu, MenuItem, IconButton } from "@mui/material";
+import { Search, Chat, ShoppingCart, Notifications } from "@mui/icons-material";
 
 const Container = styled.div`
   height: 70px;
@@ -28,6 +21,7 @@ const SearchBar = styled.div`
   display: flex;
   flex=1;
   align-items: center;
+  cursor:pointer;
 `;
 
 const Input = styled.input`
@@ -46,12 +40,6 @@ const RightComponents = styled.div`
   margin-left: 10px;
 `;
 
-const linkStyle = {
-  textDecoration: "none",
-  color: "black",
-};
-
-
 const MenuBar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -59,9 +47,9 @@ const MenuBar = () => {
     setAnchorEl(null);
   };
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleProfileMenuOpen = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
   const history = useHistory();
 
@@ -75,7 +63,7 @@ const MenuBar = () => {
       <MenuItem value="/Login" onClick={handleChange}>
         Login
       </MenuItem>
-      <MenuItem value="/SignUp" onClick={handleChange}>
+      <MenuItem value="/SignUp" onClick={() => history.push("/Cart")}>
         SignUp
       </MenuItem>
     </Menu>
@@ -83,9 +71,7 @@ const MenuBar = () => {
   return (
     <Container>
       <Wrapper>
-        <Link to="/" style={linkStyle}>
-          <Logo>Virtual Market</Logo>
-        </Link>
+        <Logo onClick={() => history.push("/")}> Virtual Market</Logo>
         <SearchBar>
           <Input />
           <Search />
@@ -95,13 +81,17 @@ const MenuBar = () => {
             <Chat />
           </RightComponents>
           <RightComponents>
-            <Notifications />
+            <IconButton size="large">
+              <Badge badgeContent={17} color="error">
+                <Notifications />
+              </Badge>
+            </IconButton>
           </RightComponents>
 
           <RightComponents>
-            <Link to="/Cart" style={linkStyle}>
+            <IconButton component={Link} to="/Cart">
               <ShoppingCart />
-            </Link>
+            </IconButton>
           </RightComponents>
         </RightCorner>
       </Wrapper>

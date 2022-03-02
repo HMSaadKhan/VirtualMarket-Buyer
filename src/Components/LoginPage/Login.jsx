@@ -1,3 +1,7 @@
+import React from "react";
+import { makeStyles } from "@mui/styles";
+import { TextField } from "@material-ui/core";
+import userService from "../../Services/UserService";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -55,19 +59,50 @@ const Link = styled.a`
 `;
 
 const Login = () => {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   return (
-    <Container>
-      <Wrapper>
-        <Title>SIGN IN</Title>
-        <Form>
-          <Input placeholder="username" />
-          <Input placeholder="password" />
-          <Button>LOGIN</Button>
-          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link>CREATE A NEW ACCOUNT</Link>
-        </Form>
-      </Wrapper>
-    </Container>
+    <>
+      <Container>
+        <Wrapper>
+          <Title>SIGN IN</Title>
+          <Form>
+            <Input
+              placeholder="Email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
+            <Input
+              placeholder="password"
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+            <Button
+              onClick={(e) => {
+                userService
+                  .login(email, password)
+                  .then((data) => {
+                    console.log(data);
+                    window.location.href = "/";
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }}
+            >
+              LOGIN
+            </Button>
+            <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+            <Link>CREATE A NEW ACCOUNT</Link>
+          </Form>
+        </Wrapper>
+      </Container>
+    </>
   );
 };
 

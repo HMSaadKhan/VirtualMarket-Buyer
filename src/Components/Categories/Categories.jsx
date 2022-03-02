@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import CategoryItem from "./CategoryItem";
+//import CategoryItem from "./CategoryItem";
 //import { category } from "../../data";
 
 const Container = styled.div``;
