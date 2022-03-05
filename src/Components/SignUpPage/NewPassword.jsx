@@ -1,10 +1,11 @@
 import React from "react";
 import { makeStyles } from "@mui/styles";
 import { TextField, Button, Grid, Paper } from "@material-ui/core";
-import userService from "../../Services/BuyerService";
+import buyerService from "../../Services/BuyerService";
 import { toast } from "react-toastify";
 import { bgcolor } from "@mui/system";
 import styled from "styled-components";
+import { Link, useHistory } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -47,77 +48,57 @@ const Agreement = styled.span`
   font-size: 12px;
   margin: 20px 0px;
 `;
-
-const Register = (props) => {
-  const [email, setEmail] = React.useState("");
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  child: {},
+}));
+const NewPassword = (props) => {
+  const [otp, setOtp] = React.useState();
   const [password, setPassword] = React.useState("");
-  const [fname, setfName] = React.useState("");
+  const [id, setId] = React.useState("");
   const [lname, setlName] = React.useState("");
+  const history = useHistory();
+  const _id = props.match.params.id;
 
   return (
     <Container>
       <Wrapper>
-        <Title>CREATE AN ACCOUNT</Title>
+        <Title>New Password</Title>
         <Form>
           <Input
-            placeholder="name"
-            value={fname}
+            placeholder="OTP"
+            value={otp}
             onChange={(e) => {
-              setfName(e.target.value);
+              setOtp(e.target.value);
             }}
           />
           <Input
-            placeholder="last name"
-            value={lname}
-            onChange={(e) => {
-              setlName(e.target.value);
-            }}
-          />
-          <Input placeholder="username" />
-          <Input
-            placeholder="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-          <Input
-            placeholder="password"
+            placeholder="New Password"
+            type="password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
           />
-          <Input
-            placeholder="confirm password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-          <Agreement>
-            By creating an account, I consent to the processing of my personal
-            data in accordance with the <b>PRIVACY POLICY</b>
-          </Agreement>
           <Button
             onClick={(e) => {
-              userService
-                .register(fname, email, password)
-                .then(() => {
-                  toast.success("Signup Successfull", {
-                    position: toast.POSITION.TOP_LEFT,
-                  });
-                  props.history.push("/login");
+              console.log(_id, otp, password);
+              buyerService
+                .resetPassword(_id, { otp, password }) //if gives error then check otp datatype
+                .then((data) => {
+                  console.log(data);
+                  history.push("/Login");
                 })
                 .catch((err) => {
                   console.log(err);
-                  toast.error(err.response.data, {
-                    position: toast.POSITION.TOP_LEFT,
-                  });
                 });
             }}
           >
-            CREATE
+            Save
           </Button>
         </Form>
       </Wrapper>
@@ -125,4 +106,4 @@ const Register = (props) => {
   );
 };
 
-export default Register;
+export default NewPassword;

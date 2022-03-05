@@ -4,6 +4,8 @@ import MenuBar from "./Components/MenuBar/MenuBar";
 import Footer from "./Components/Footer/Footer";
 import Login from "./Components/LoginPage/Login";
 import SignUp from "./Components/SignUpPage/SignUp";
+import ForgotPassword from "./Components/SignUpPage/ForgotPassword";
+import NewPassword from "./Components/SignUpPage/NewPassword";
 import HomePage from "./Components/HomePage/HomePage";
 import Cart from "./Components/Cart/Cart";
 import Favorite from "./Components/Favorites/Fvaorite";
@@ -22,10 +24,13 @@ function App() {
         <Route path="/" exact component={HomePage} />
         <Route path="/Login" exact component={Login} />
         <Route path="/Cart" exact component={Cart} />
+
         <Route path="/favorite" exact component={Favorite} />
         <Route path="/SignUp" exact component={SignUp} />
         <Route path="/AccountSettings" component={BuyerAccount} />
         <Route path="/ProductDetail" component={ProductDetail} />
+        <Route path="/forgotpassword" component={ForgotPassword} />
+        <Route path="/newpassword/:id" exact component={NewPassword} />
       </Switch>
 
       <Footer />

@@ -1,3 +1,5 @@
+import { Password } from "@mui/icons-material";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -48,22 +50,77 @@ const Button = styled.button`
   margin-left: 10px;
 `;
 
-const BuyerAccount = () => {
+const BuyerAccount = (props) => {
+  React.useEffect(() => {
+    // productService.getSingleProduct(id).then((data) => {
+    //   setfName(data.fname);
+    //   setlName(data.lname);
+    //   setContact(data.contact);
+    //   setAddress(data.address);
+    //   setPassword(data.password);
+    //   setcPassword(data.cpassword);
+    // });
+  }, []);
+  const [address, setAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [cPassword, setcPassword] = useState("");
+  const [fname, setfName] = useState("");
+  const [lname, setlName] = useState("");
+  const [contact, setContact] = useState("");
+  console.log(props);
   return (
     <Container>
       <Wrapper>
         <Title>Account Details</Title>
         <Form>
-          <Input placeholder="First Name" />
-          <Input placeholder="Last Name" />
-          <Input placeholder="Password" />
-          <Input placeholder="Confirm Password" />
+          <Input
+            placeholder="First Name"
+            value={fname}
+            onChange={(e) => {
+              setfName(e.target.value);
+            }}
+          />
+          <Input
+            placeholder="Last Name"
+            value={lname}
+            onChange={(e) => {
+              setfName(e.target.value);
+            }}
+          />
         </Form>
         <Form>
-          <Input placeholder="Contact" />
+          <Input
+            placeholder="Password"
+            value={password}
+            onChange={(e) => {
+              setfName(e.target.value);
+            }}
+          />
+          <Input
+            placeholder="Confirm Password"
+            value={cPassword}
+            onChange={(e) => {
+              setfName(e.target.value);
+            }}
+          />
         </Form>
         <Form>
-          <Input placeholder="Address" />
+          <Input
+            placeholder="Contact"
+            value={contact}
+            onChange={(e) => {
+              setfName(e.target.value);
+            }}
+          />
+        </Form>
+        <Form>
+          <Input
+            placeholder="Address"
+            value={address}
+            onChange={(e) => {
+              setfName(e.target.value);
+            }}
+          />
         </Form>
         <Button>Save</Button>
       </Wrapper>

@@ -1,5 +1,6 @@
 import axios from "axios";
 axios.defaults.baseURL = "http://localhost:3000/api/";
+axios.defaults.headers.common["auth-token"] = localStorage.getItem("token");
 class GenericService {
   constructor() {}
   get = (url) =>
@@ -39,6 +40,17 @@ class GenericService {
     new Promise((resolve, reject) => {
       axios
         .put(url, data)
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  patch = (url, data) =>
+    new Promise((resolve, reject) => {
+      axios
+        .patch(url, data)
         .then((res) => {
           resolve(res.data);
         })

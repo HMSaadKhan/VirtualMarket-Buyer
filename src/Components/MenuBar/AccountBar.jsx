@@ -4,7 +4,8 @@ import styled from "styled-components";
 import { AccountCircle, Call } from "@mui/icons-material";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import userService from "../../Services/UserService";
+import buyerService from "../../Services/BuyerService";
+import axios from "axios";
 
 const Container = styled.div`
   height: 40px;
@@ -32,7 +33,10 @@ const Hr = styled.hr`
   height: 1px;
 `;
 
-const AccountBar = () => {
+const AccountBar = (props) => {
+  const [fname, setfname] = useState("");
+  const [lname, setlname] = useState("");
+  console.log(axios.defaults.headers.common["auth-token"] );
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const handleMenuClose = () => {
@@ -49,32 +53,30 @@ const AccountBar = () => {
     history.push(event.target.getAttribute("value"));
     handleMenuClose();
   };
+  const handleLogout = () => {
+    history.push("/");
+    handleMenuClose();
+    buyerService.logout();
+  };
 
   const renderMenu = (
     <Menu anchorEl={anchorEl} open={isMenuOpen} onClose={handleMenuClose}>
-      {!userService.isLoggedIn() ? (
-        <>
+      {!buyerService.isLoggedIn() ? (
+        <div>
           <MenuItem value="/Login" onClick={handleChange}>
             Login
           </MenuItem>
           <MenuItem value="/SignUp" onClick={handleChange}>
             SignUp
           </MenuItem>
-        </>
+        </div>
       ) : (
-        <>
+        <div>
           <MenuItem value="/AccountSettings" onClick={handleChange}>
             Account
           </MenuItem>
-          <MenuItem
-            onClick={(e) => {
-              userService.logout();
-              window.location.href = "/";
-            }}
-          >
-            Logout
-          </MenuItem>
-        </>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        </div>
       )}
     </Menu>
   );
@@ -87,7 +89,15 @@ const AccountBar = () => {
           +0900 78601
         </Left>
         <Right>
-          <AccountCircle onClick={handleProfileMenuOpen} />
+          {/* {!userService.isLoggedIn() ? <div> <AccountCircle onClick={handleProfileMenuOpen} /></div> : <div>{userService.getUserName}</div>} */}
+          <div>
+            {" "}
+            <AccountCircle onClick={handleProfileMenuOpen} />
+            
+            <div>
+              {fname} {lname}
+            </div>
+          </div>
         </Right>
       </Wrapper>
       {renderMenu}

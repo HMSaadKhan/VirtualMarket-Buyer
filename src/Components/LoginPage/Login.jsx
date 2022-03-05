@@ -1,8 +1,9 @@
 import React from "react";
 import { makeStyles } from "@mui/styles";
-import { TextField } from "@material-ui/core";
-import userService from "../../Services/UserService";
+import { TextField, Button } from "@material-ui/core";
+import buyerService from "../../Services/BuyerService";
 import styled from "styled-components";
+import { Link, useHistory } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -41,7 +42,7 @@ const Input = styled.input`
   padding: 10px;
 `;
 
-const Button = styled.button`
+const Buttons = styled.button`
   width: 40%;
   border: none;
   padding: 15px 20px;
@@ -51,16 +52,17 @@ const Button = styled.button`
   margin-bottom: 10px;
 `;
 
-const Link = styled.a`
+const Links = styled.a`
   margin: 5px 0px;
   font-size: 12px;
   text-decoration: underline;
   cursor: pointer;
 `;
 
-const Login = () => {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+const Login = (props) => {
+  const [email, setEmail] = React.useState("hello@123.com");
+  const [password, setPassword] = React.useState("1234");
+  const history = useHistory();
   return (
     <>
       <Container>
@@ -84,11 +86,11 @@ const Login = () => {
             />
             <Button
               onClick={(e) => {
-                userService
+                buyerService
                   .login(email, password)
                   .then((data) => {
                     console.log(data);
-                    window.location.href = "/";
+                    history.push("/");
                   })
                   .catch((err) => {
                     console.log(err);
@@ -97,8 +99,7 @@ const Login = () => {
             >
               LOGIN
             </Button>
-            <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-            <Link>CREATE A NEW ACCOUNT</Link>
+            <Link to="/forgotpassword">Forgot Password</Link>
           </Form>
         </Wrapper>
       </Container>
