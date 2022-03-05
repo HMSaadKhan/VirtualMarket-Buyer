@@ -36,7 +36,30 @@ const Hr = styled.hr`
 const AccountBar = (props) => {
   const [fname, setfname] = useState("");
   const [lname, setlname] = useState("");
-  console.log(axios.defaults.headers.common["auth-token"] );
+  console.log(axios.defaults.headers.common["x-auth-token"]);
+  console.log(buyerService.getUserName());
+
+  const getData = () => {
+    buyerService
+      .getUserName()
+      .then((data) => {
+        console.log(data);
+        setfname(data.fName.charAt(0));
+        setlname(data.lName.charAt(0));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  // getData();
+  React.useEffect(getData, []);
+
+  // React.useEffect(() => {
+  //   buyerService.getUserName.then((data) => {
+  //     setfname(data.fName);
+  //     setlname(data.lName);
+  //   });
+  // }, []);
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const handleMenuClose = () => {
@@ -93,10 +116,7 @@ const AccountBar = (props) => {
           <div>
             {" "}
             <AccountCircle onClick={handleProfileMenuOpen} />
-            
-            <div>
-              {fname} {lname}
-            </div>
+            {fname} {lname}
           </div>
         </Right>
       </Wrapper>

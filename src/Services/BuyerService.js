@@ -38,10 +38,17 @@ class BuyerService extends GenericService {
     }
   };
 
-  getUserName = () => {
-    this.get("getName/");
-  };
-
+  getUserName = () =>
+    new Promise((resolve, reject) => {
+      this.get("buyers/getName")
+        .then((data) => {
+          console.log("get Name");
+          resolve(data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   forgotPassword = (email) =>
     new Promise((resolve, reject) => {
       this.post("buyers/forgotPassword", { email })
@@ -62,6 +69,27 @@ class BuyerService extends GenericService {
         })
         .catch((error) => {
           reject(error);
+        });
+    });
+
+  getUserDetails = () =>
+    new Promise((resolve, reject) => {
+      this.get("buyers/getDetails")
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  editUserDetails = () =>
+    new Promise((resolve, reject) => {
+      this.patch("buyers/editDetails")
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => {
+          reject(err);
         });
     });
 }
