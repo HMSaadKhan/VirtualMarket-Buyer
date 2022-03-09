@@ -29,7 +29,8 @@ const Wrapper = styled.div`
 
 const Title = styled.h1`
   font-size: 24px;
-  font-weight: 300;
+  font-weight: bold;
+  text-align: center;
 `;
 
 const Form = styled.form`
@@ -46,15 +47,15 @@ const Input = styled.input`
 
 const ForgotPassword = (props) => {
   const [email, setEmail] = React.useState("hello@123.com");
-  const [otp, setOtp] = React.useState("");
+  const [check, setCheck] = React.useState("false");
   const [id, setId] = React.useState("");
   const history = useHistory();
   return (
     <Container>
       <Wrapper>
         <Title>Forgot Password</Title>
-
         <Input
+          disabled={check}
           placeholder="Email"
           value={email}
           onChange={(e) => {
@@ -62,6 +63,8 @@ const ForgotPassword = (props) => {
           }}
         />
         <Button
+          variant="outlined"
+          color="primary"
           onClick={(e) => {
             userService
               .forgotPassword(email)
@@ -72,23 +75,35 @@ const ForgotPassword = (props) => {
               .catch((err) => {
                 console.log(err);
               });
+            setCheck(true);
           }}
         >
           Send Email
         </Button>
-
-        <Input
-          placeholder="OTP"
-          value={otp}
-          onChange={(e) => {
-            setOtp(e.target.value);
+        <br />
+            
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={(e) => {
+            setCheck(false);
           }}
-        />
-        <Button>Confirm</Button>
-
-        <Button onClick={()=>{history.push("/newpassword/"+id)}}>Next</Button>
+        >
+          Reset
+        </Button>
+        <br />
+        <br />
+        <Button
+          color="success"
+          variant="contained"
+          onClick={() => {
+            history.push("/newpassword/" + id);
+          }}
+        >
+          Next
+        </Button>
       </Wrapper>
-    </Container>  
+    </Container>
   );
 };
 

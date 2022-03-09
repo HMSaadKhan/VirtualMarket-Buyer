@@ -45,9 +45,9 @@ const Input = styled.input`
   padding: 10px;
 `;
 
-const NewPassword = (props) => {
-  const [otp, setOtp] = React.useState();
-  const [password, setPassword] = React.useState("");
+const ChangenewPassword = (props) => {
+  const [oldPassword, setOldPassword] = React.useState();
+  const [newPassword, setNewPassword] = React.useState("");
   const [id, setId] = React.useState("");
   const [lname, setlName] = React.useState("");
   const history = useHistory();
@@ -56,22 +56,23 @@ const NewPassword = (props) => {
   return (
     <Container>
       <Wrapper>
-        <Title>New Password</Title>
+        <Title>Change Password</Title>
         <Form>
           <Input
-            placeholder="OTP"
-            value={otp}
+            placeholder="Old Password"
+            type="Password"
+            value={oldPassword}
             onChange={(e) => {
-              setOtp(e.target.value);
+              setOldPassword(e.target.value);
             }}
           />
 
           <Input
             placeholder="New Password"
-            type="password"
-            value={password}
+            type="Password"
+            value={newPassword}
             onChange={(e) => {
-              setPassword(e.target.value);
+              setNewPassword(e.target.value);
             }}
           />
         </Form>
@@ -81,9 +82,9 @@ const NewPassword = (props) => {
           variant="contained"
           onClick={(e) => {
             buyerService
-              .resetPassword(_id, { otp, password }) //if gives error then check otp datatype
+              .changePassword({ oldPassword, newPassword }) //if gives error then check oldPassword datatype
               .then((data) => {
-                history.push("/Login");
+                history.push("/AccountSettings");
               })
               .catch((err) => {
                 console.log(err);
@@ -97,4 +98,4 @@ const NewPassword = (props) => {
   );
 };
 
-export default NewPassword;
+export default ChangenewPassword;

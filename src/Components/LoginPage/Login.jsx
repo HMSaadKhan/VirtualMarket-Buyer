@@ -1,9 +1,10 @@
 import React from "react";
 import { makeStyles } from "@mui/styles";
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button, Alert } from "@material-ui/core";
 import buyerService from "../../Services/BuyerService";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
   width: 100vw;
@@ -27,7 +28,8 @@ const Wrapper = styled.div`
 
 const Title = styled.h1`
   font-size: 24px;
-  font-weight: 300;
+  font-weight: bold;
+  text-align: center;
 `;
 
 const Form = styled.form`
@@ -40,23 +42,6 @@ const Input = styled.input`
   min-width: 40%;
   margin: 10px 0;
   padding: 10px;
-`;
-
-const Buttons = styled.button`
-  width: 40%;
-  border: none;
-  padding: 15px 20px;
-  background-color: teal;
-  color: white;
-  cursor: pointer;
-  margin-bottom: 10px;
-`;
-
-const Links = styled.a`
-  margin: 5px 0px;
-  font-size: 12px;
-  text-decoration: underline;
-  cursor: pointer;
 `;
 
 const Login = (props) => {
@@ -85,20 +70,32 @@ const Login = (props) => {
               }}
             />
             <Button
+              color="success"
+              variant="contained"
               onClick={(e) => {
                 buyerService
                   .login(email, password)
                   .then((data) => {
                     console.log(data);
-                    history.push("/");
+                    toast.success("Login Successfull", {
+                      position: toast.POSITION.BOTTOM_LEFT,
+                    });
+                    window.location.href = "/";
+                    //history.push("/");
+                    // setTimeout(() => {
+                    //   history.push("/");
+                    // }, 100);
                   })
                   .catch((err) => {
-                    console.log(err);
+                    toast.error(err.response.data, {
+                      position: toast.POSITION.BOTTOM_LEFT,
+                    });
                   });
               }}
             >
               LOGIN
             </Button>
+
             <Link to="/forgotpassword">Forgot Password</Link>
           </Form>
         </Wrapper>

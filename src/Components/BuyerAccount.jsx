@@ -1,6 +1,10 @@
-import { Password } from "@mui/icons-material";
+import { Password, WindowSharp } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
+import buyerService from "../Services/BuyerService";
+import { Button } from "@material-ui/core";
 import styled from "styled-components";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
   width: 100vw;
@@ -24,7 +28,8 @@ const Wrapper = styled.div`
 
 const Title = styled.h1`
   font-size: 24px;
-  font-weight: 300;
+  font-weight: bold;
+  text-align: center;
 `;
 
 const Form = styled.form`
@@ -39,52 +44,114 @@ const Input = styled.input`
   padding: 10px;
 `;
 
-const Button = styled.button`
-  width: 40%;
-  border: none;
-  padding: 15px 20px;
-  background-color: teal;
-  color: white;
-  cursor: pointer;
-  margin-bottom: 10px;
-  margin-left: 10px;
-`;
-
 const BuyerAccount = (props) => {
-  React.useEffect(() => {
-    // productService.getSingleProduct(id).then((data) => {
-    //   setfName(data.fname);
-    //   setlName(data.lname);
-    //   setContact(data.contact);
-    //   setAddress(data.address);
-    //   setPassword(data.password);
-    //   setcPassword(data.cpassword);
-    // });
-  }, []);
+  const getData = () => {
+    buyerService
+      .getUserDetails()
+      .then((data) => {
+        console.log(data);
+        setfName(data.fName);
+        setlName(data.lName);
+        setCity(data.city);
+        setEmail(data.email);
+        setAddress(data.address);
+        setphone(data.phone);
+        setPassword(data.password);
+        setVarified(data.varified);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(getData, []);
+
+  const [fName, setfName] = useState("");
+  const [lName, setlName] = useState("");
+  const [email, setEmail] = useState("");
+  const [city, setCity] = useState("");
+  const [phone, setphone] = useState("");
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
-  const [cPassword, setcPassword] = useState("");
-  const [fname, setfName] = useState("");
-  const [lname, setlName] = useState("");
-  const [contact, setContact] = useState("");
-  console.log(props);
+  const [varified, setVarified] = useState();
+  const [otp, setOtp] = useState("");
+  const [check, setCheck] = useState(false);
+
   return (
     <Container>
       <Wrapper>
         <Title>Account Details</Title>
+        <Button
+          onClick={() => {
+            setCheck(true);
+          }}
+        >
+          Verify Account
+        </Button>
+        {check ? (
+          <>
+            {!varified ? (
+              <div>
+                <Form>
+                  <Input
+                    placeholder="Verification Code"
+                    value={otp}
+                    onChange={(e) => {
+                      setOtp(e.target.value);
+                    }}
+                  />
+                </Form>
+                <Button color="success" variant="contained">
+                  Press me
+                </Button>
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </>
+        ) : (
+          <></>
+        )}
+
         <Form>
           <Input
             placeholder="First Name"
-            value={fname}
+            value={fName}
             onChange={(e) => {
               setfName(e.target.value);
             }}
           />
           <Input
             placeholder="Last Name"
-            value={lname}
+            value={lName}
             onChange={(e) => {
-              setfName(e.target.value);
+              setlName(e.target.value);
+            }}
+          />
+        </Form>
+        <Form>
+          <Input
+            disabled
+            placeholder="Email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <Input
+            placeholder="Phone Number"
+            value={phone}
+            onChange={(e) => {
+              setphone(e.target.value);
+            }}
+          />
+        </Form>
+        <Form>
+          <Input
+            placeholder="City"
+            value={city}
+            onChange={(e) => {
+              setCity(e.target.value);
             }}
           />
         </Form>
@@ -93,26 +160,11 @@ const BuyerAccount = (props) => {
             placeholder="Password"
             value={password}
             onChange={(e) => {
-              setfName(e.target.value);
-            }}
-          />
-          <Input
-            placeholder="Confirm Password"
-            value={cPassword}
-            onChange={(e) => {
-              setfName(e.target.value);
+              setPassword(e.target.value);
             }}
           />
         </Form>
-        <Form>
-          <Input
-            placeholder="Contact"
-            value={contact}
-            onChange={(e) => {
-              setfName(e.target.value);
-            }}
-          />
-        </Form>
+
         <Form>
           <Input
             placeholder="Address"
@@ -122,7 +174,39 @@ const BuyerAccount = (props) => {
             }}
           />
         </Form>
-        <Button>Save</Button>
+
+        <Button
+          color="success"
+          variant="contained"
+          onClick={(e) => {
+            buyerService
+              .editUserDetails({ fName, lName, phone, address, city })
+              .then((data) => {
+                console.log(data);
+
+                toast.error("Changes Saved Successfully", {
+                  position: toast.POSITION.BOTTOM_LEFT,
+                });
+              })
+              .catch((err) => {
+                console.log(err);
+                toast.error(err.response.data, {
+                  position: toast.POSITION.BOTTOM_LEFT,
+                });
+              });
+          }}
+        >
+          Save
+        </Button>
+        <Button
+          color="success"
+          variant="contained"
+          onClick={(e) => {
+            props.history.push("/changepassword");
+          }}
+        >
+          Save
+        </Button>
       </Wrapper>
     </Container>
   );

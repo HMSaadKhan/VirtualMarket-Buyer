@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { AccountCircle, Call } from "@mui/icons-material";
-import MenuItem from "@mui/material/MenuItem";
+import { AccountCircle, Call, WindowSharp } from "@mui/icons-material";
+import { MenuItem, Avatar } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import buyerService from "../../Services/BuyerService";
 import axios from "axios";
+import { IconButton } from "@material-ui/core";
 
 const Container = styled.div`
   height: 40px;
@@ -36,8 +37,6 @@ const Hr = styled.hr`
 const AccountBar = (props) => {
   const [fname, setfname] = useState("");
   const [lname, setlname] = useState("");
-  console.log(axios.defaults.headers.common["x-auth-token"]);
-  console.log(buyerService.getUserName());
 
   const getData = () => {
     buyerService
@@ -51,15 +50,9 @@ const AccountBar = (props) => {
         console.log(err);
       });
   };
-  // getData();
+
   React.useEffect(getData, []);
 
-  // React.useEffect(() => {
-  //   buyerService.getUserName.then((data) => {
-  //     setfname(data.fName);
-  //     setlname(data.lName);
-  //   });
-  // }, []);
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const handleMenuClose = () => {
@@ -77,13 +70,27 @@ const AccountBar = (props) => {
     handleMenuClose();
   };
   const handleLogout = () => {
-    history.push("/");
     handleMenuClose();
     buyerService.logout();
+    history.push("/");
   };
 
   const renderMenu = (
-    <Menu anchorEl={anchorEl} open={isMenuOpen} onClose={handleMenuClose}>
+    <Menu
+      id="basic-menu"
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "center",
+      }}
+      transformOrigin={{
+        vertical: "center",
+        horizontal: "left",
+      }}
+      keepMounted
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
       {!buyerService.isLoggedIn() ? (
         <div>
           <MenuItem value="/Login" onClick={handleChange}>
@@ -112,16 +119,17 @@ const AccountBar = (props) => {
           +0900 78601
         </Left>
         <Right>
-          {/* {!userService.isLoggedIn() ? <div> <AccountCircle onClick={handleProfileMenuOpen} /></div> : <div>{userService.getUserName}</div>} */}
-          <div>
-            {" "}
+          {!buyerService.isLoggedIn() ? (
             <AccountCircle onClick={handleProfileMenuOpen} />
-            {fname} {lname}
-          </div>
+          ) : (
+            <IconButton onClick={handleProfileMenuOpen}>
+              {fname}
+              {lname}
+            </IconButton>
+          )}
         </Right>
       </Wrapper>
       {renderMenu}
-      <Hr />
     </Container>
   );
 };

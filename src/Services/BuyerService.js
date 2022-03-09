@@ -12,16 +12,14 @@ class BuyerService extends GenericService {
         .then((token) => {
           console.log("login post");
           localStorage.setItem("token", token);
-          // axios.defaults.headers.common["auth-token"] =
-          //   localStorage.getItem("token");
+
           resolve(token);
         })
         .catch((err) => {
           reject(err);
         });
     });
-  register = (name, email, password) =>
-    this.post("buyers/signup", { password, email, name });
+  register = (data) => this.post("buyers/signup", data);
   logout = () => {
     localStorage.removeItem("token");
   };
@@ -82,9 +80,24 @@ class BuyerService extends GenericService {
           reject(err);
         });
     });
-  editUserDetails = () =>
+  editUserDetails = (data) =>
     new Promise((resolve, reject) => {
-      this.patch("buyers/editDetails")
+      console.log(data);
+      axios
+        .patch("buyers/editDetails", data)
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+
+  changePassword = (data) =>
+    new Promise((resolve, reject) => {
+      console.log(data);
+      axios
+        .patch("buyers/changePassword", data)
         .then((data) => {
           resolve(data);
         })

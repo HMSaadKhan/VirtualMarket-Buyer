@@ -21,24 +21,26 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 40%;
+  width: 35%;
   padding: 20px;
   background-color: white;
 `;
 
 const Title = styled.h1`
   font-size: 24px;
-  font-weight: 300;
+  font-weight: bold;
+  text-align: center;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;F
 `;
 
 const Input = styled.input`
   flex: 1;
-  min-width: 40%;
+  min-width: 30%;
   margin: 20px 10px 0px 0px;
   padding: 10px;
 `;
@@ -51,45 +53,46 @@ const Agreement = styled.span`
 const Register = (props) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [fname, setfName] = React.useState("");
-  const [lname, setlName] = React.useState("");
+  const [cpassword, setCPassword] = React.useState("");
+  const [fName, setfName] = React.useState("");
+  const [lName, setlName] = React.useState("");
 
   return (
     <Container>
       <Wrapper>
-        <Title>CREATE AN ACCOUNT</Title>
         <Form>
+          <Title>Sign Up</Title>
           <Input
-            placeholder="name"
-            value={fname}
+            placeholder="First name"
+            value={fName}
             onChange={(e) => {
               setfName(e.target.value);
             }}
           />
           <Input
-            placeholder="last name"
-            value={lname}
+            placeholder="Last name"
+            value={lName}
             onChange={(e) => {
               setlName(e.target.value);
             }}
           />
-          <Input placeholder="username" />
+
           <Input
-            placeholder="email"
+            placeholder="Email"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
           />
           <Input
-            placeholder="password"
+            placeholder="Password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
           />
           <Input
-            placeholder="confirm password"
+            placeholder="Confirm Password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
@@ -100,10 +103,12 @@ const Register = (props) => {
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
           <Button
+            color="success"
+            variant="contained"
             onClick={(e) => {
               userService
-                .register(fname, email, password)
-                .then(() => {
+                .register({ fName, lName, email, password })
+                .then((res) => {
                   toast.success("Signup Successfull", {
                     position: toast.POSITION.TOP_LEFT,
                   });
@@ -112,7 +117,7 @@ const Register = (props) => {
                 .catch((err) => {
                   console.log(err);
                   toast.error(err.response.data, {
-                    position: toast.POSITION.TOP_LEFT,
+                    position: toast.POSITION.BOTTOM_LEFT,
                   });
                 });
             }}
