@@ -35,7 +35,7 @@ function App() {
         <Route path="/AccountSettings" component={BuyerAccount} />
         <Route path="/ProductDetail" component={ProductDetail} />
         <Route path="/forgotpassword" component={ForgotPassword} />
-        <Route path="/newpassword/:id" exact component={NewPassword} />
+        <Route path="/resetPassword/:id" exact component={NewPassword} />
         <Route path="/changepassword/" exact component={ChangePassword} />
         <Route path="/not-found" component={NotFound} />
         <Route path="/" exact component={HomePage} />

@@ -50,6 +50,7 @@ const ForgotPassword = (props) => {
   const [check, setCheck] = React.useState("false");
   const [id, setId] = React.useState("");
   const history = useHistory();
+
   return (
     <Container>
       <Wrapper>
@@ -71,6 +72,7 @@ const ForgotPassword = (props) => {
               .then((data) => {
                 console.log(data._id);
                 setId(data._id);
+                history.push("/resetPassword/" + data._id);
               })
               .catch((err) => {
                 console.log(err);
@@ -81,7 +83,7 @@ const ForgotPassword = (props) => {
           Send Email
         </Button>
         <br />
-            
+
         <Button
           variant="outlined"
           color="primary"

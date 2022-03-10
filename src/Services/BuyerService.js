@@ -105,6 +105,20 @@ class BuyerService extends GenericService {
           reject(err);
         });
     });
+  verificationOTP = () => this.post("buyers/verificationOTP");
+
+  VerifyOtp = (data) =>
+    new Promise((resolve, reject) => {
+      console.log(data);
+      axios
+        .post("buyers/verify", data)
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
 }
 let buyerService = new BuyerService();
 export default buyerService;

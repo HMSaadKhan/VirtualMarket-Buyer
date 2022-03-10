@@ -53,7 +53,7 @@ const Agreement = styled.span`
 const Register = (props) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [cpassword, setCPassword] = React.useState("");
+  const [confirmPassword, setCPassword] = React.useState("");
   const [fName, setfName] = React.useState("");
   const [lName, setlName] = React.useState("");
 
@@ -93,9 +93,9 @@ const Register = (props) => {
           />
           <Input
             placeholder="Confirm Password"
-            value={password}
+            value={confirmPassword}
             onChange={(e) => {
-              setPassword(e.target.value);
+              setCPassword(e.target.value);
             }}
           />
           <Agreement>
@@ -107,10 +107,10 @@ const Register = (props) => {
             variant="contained"
             onClick={(e) => {
               userService
-                .register({ fName, lName, email, password })
+                .register({ fName, lName, email, password, confirmPassword })
                 .then((res) => {
                   toast.success("Signup Successfull", {
-                    position: toast.POSITION.TOP_LEFT,
+                    position: toast.POSITION.BOTTOM_LEFT,
                   });
                   props.history.push("/login");
                 })

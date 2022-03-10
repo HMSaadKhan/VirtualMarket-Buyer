@@ -57,7 +57,7 @@ const BuyerAccount = (props) => {
         setAddress(data.address);
         setphone(data.phone);
         setPassword(data.password);
-        setVarified(data.varified);
+        setVerified(data.verified);
       })
       .catch((err) => {
         console.log(err);
@@ -73,7 +73,7 @@ const BuyerAccount = (props) => {
   const [phone, setphone] = useState("");
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
-  const [varified, setVarified] = useState();
+  const [verified, setVerified] = useState();
   const [otp, setOtp] = useState("");
   const [check, setCheck] = useState(false);
 
@@ -81,36 +81,60 @@ const BuyerAccount = (props) => {
     <Container>
       <Wrapper>
         <Title>Account Details</Title>
-        <Button
-          onClick={() => {
-            setCheck(true);
-          }}
-        >
-          Verify Account
-        </Button>
-        {check ? (
-          <>
-            {!varified ? (
-              <div>
-                <Form>
-                  <Input
-                    placeholder="Verification Code"
-                    value={otp}
-                    onChange={(e) => {
-                      setOtp(e.target.value);
-                    }}
-                  />
-                </Form>
-                <Button color="success" variant="contained">
-                  Press me
-                </Button>
-              </div>
-            ) : (
-              <div></div>
-            )}
-          </>
+        {!verified ? (
+          <div>
+            <Button
+              onClick={() => {
+                setCheck(true);
+                buyerService
+                  .verificationOTP()
+                  .then((res) => {
+                    console.log(res);
+                    setCheck(true);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }}
+            >
+              Verify Account
+            </Button>
+          </div>
         ) : (
-          <></>
+          <div></div>
+        )}
+        {check ? (
+          <div>
+            <Form>
+              <Input
+                placeholder="Verification Code"
+                value={otp}
+                onChange={(e) => {
+                  setOtp(e.target.value);
+                }}
+              />
+            </Form>
+            <Button
+              color="success"
+              variant="contained"
+              onClick={() => {
+                buyerService
+                  .VerifyOtp({ otp })
+                  .then((res) => {
+                    console.log(res);
+                    setCheck(false);
+                    window.location.reload();
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }}
+            >
+              Verify
+            </Button>
+          </div>
+        ) : (
+          <div></div>
         )}
 
         <Form>
@@ -199,13 +223,13 @@ const BuyerAccount = (props) => {
           Save
         </Button>
         <Button
-          color="success"
+          color="primary"
           variant="contained"
           onClick={(e) => {
             props.history.push("/changepassword");
           }}
         >
-          Save
+          Change Password
         </Button>
       </Wrapper>
     </Container>
