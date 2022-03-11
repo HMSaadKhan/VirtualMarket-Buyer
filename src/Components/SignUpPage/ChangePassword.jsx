@@ -7,6 +7,8 @@ import { bgcolor } from "@mui/system";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 
+import Auth from "../../Components/AuthWrapper/Auth";
+
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -48,53 +50,52 @@ const Input = styled.input`
 const ChangenewPassword = (props) => {
   const [oldPassword, setOldPassword] = React.useState();
   const [newPassword, setNewPassword] = React.useState("");
-  const [id, setId] = React.useState("");
-  const [lname, setlName] = React.useState("");
   const history = useHistory();
-  const _id = props.match.params.id;
 
   return (
-    <Container>
-      <Wrapper>
-        <Title>Change Password</Title>
-        <Form>
-          <Input
-            placeholder="Old Password"
-            type="Password"
-            value={oldPassword}
-            onChange={(e) => {
-              setOldPassword(e.target.value);
-            }}
-          />
+    <Auth>
+      <Container>
+        <Wrapper>
+          <Title>Change Password</Title>
+          <Form>
+            <Input
+              placeholder="Old Password"
+              type="Password"
+              value={oldPassword}
+              onChange={(e) => {
+                setOldPassword(e.target.value);
+              }}
+            />
 
-          <Input
-            placeholder="New Password"
-            type="Password"
-            value={newPassword}
-            onChange={(e) => {
-              setNewPassword(e.target.value);
+            <Input
+              placeholder="New Password"
+              type="Password"
+              value={newPassword}
+              onChange={(e) => {
+                setNewPassword(e.target.value);
+              }}
+            />
+          </Form>
+          <br />
+          <Button
+            color="success"
+            variant="contained"
+            onClick={(e) => {
+              buyerService
+                .changePassword({ oldPassword, newPassword }) //if gives error then check oldPassword datatype
+                .then((data) => {
+                  history.push("/AccountSettings");
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             }}
-          />
-        </Form>
-        <br />
-        <Button
-          color="success"
-          variant="contained"
-          onClick={(e) => {
-            buyerService
-              .changePassword({ oldPassword, newPassword }) //if gives error then check oldPassword datatype
-              .then((data) => {
-                history.push("/AccountSettings");
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          }}
-        >
-          Save
-        </Button>
-      </Wrapper>
-    </Container>
+          >
+            Save
+          </Button>
+        </Wrapper>
+      </Container>
+    </Auth>
   );
 };
 

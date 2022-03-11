@@ -33,7 +33,7 @@ function App() {
         <Route path="/favorite" exact component={Favorite} />
         <Route path="/SignUp" exact component={SignUp} />
         <Route path="/AccountSettings" component={BuyerAccount} />
-        <Route path="/ProductDetail" component={ProductDetail} />
+        <Route path="/ProductDetail/" component={ProductDetail} />
         <Route path="/forgotpassword" component={ForgotPassword} />
         <Route path="/resetPassword/:id" exact component={NewPassword} />
         <Route path="/changepassword/" exact component={ChangePassword} />

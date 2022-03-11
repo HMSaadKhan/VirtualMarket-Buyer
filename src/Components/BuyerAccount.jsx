@@ -1,10 +1,11 @@
 import { Password, WindowSharp } from "@mui/icons-material";
 import React, { useState, useEffect } from "react";
 import buyerService from "../Services/BuyerService";
-import { Button } from "@material-ui/core";
+import { Button, Box } from "@material-ui/core";
 import styled from "styled-components";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Auth from "../Components/AuthWrapper/Auth";
 
 const Container = styled.div`
   width: 100vw;
@@ -56,7 +57,6 @@ const BuyerAccount = (props) => {
         setEmail(data.email);
         setAddress(data.address);
         setphone(data.phone);
-        setPassword(data.password);
         setVerified(data.verified);
       })
       .catch((err) => {
@@ -72,167 +72,166 @@ const BuyerAccount = (props) => {
   const [city, setCity] = useState("");
   const [phone, setphone] = useState("");
   const [address, setAddress] = useState("");
-  const [password, setPassword] = useState("");
   const [verified, setVerified] = useState();
   const [otp, setOtp] = useState("");
   const [check, setCheck] = useState(false);
 
   return (
-    <Container>
-      <Wrapper>
-        <Title>Account Details</Title>
-        {!verified ? (
-          <div>
-            <Button
-              onClick={() => {
-                setCheck(true);
-                buyerService
-                  .verificationOTP()
-                  .then((res) => {
-                    console.log(res);
+    <Auth>
+      <Container>
+        <Wrapper>
+          <Title>Account Details</Title>
+          {!verified ? (
+            <div>
+              <Box ml={1}>
+                <Button
+                  onClick={() => {
                     setCheck(true);
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
+                    buyerService
+                      .verificationOTP()
+                      .then((res) => {
+                        console.log(res);
+                        setCheck(true);
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
+                  }}
+                >
+                  Verify Account
+                </Button>
+              </Box>
+            </div>
+          ) : (
+            <div></div>
+          )}
+          {check ? (
+            <div>
+              <Form>
+                <Input
+                  placeholder="Verification Code"
+                  value={otp}
+                  onChange={(e) => {
+                    setOtp(e.target.value);
+                  }}
+                />
+              </Form>
+
+              <Box ml={1}>
+                <Button
+                  color="success"
+                  variant="contained"
+                  onClick={() => {
+                    buyerService
+                      .VerifyOtp({ otp })
+                      .then((res) => {
+                        console.log(res);
+                        setCheck(false);
+                        window.location.reload();
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
+                  }}
+                >
+                  Verify
+                </Button>
+              </Box>
+            </div>
+          ) : (
+            <div></div>
+          )}
+
+          <Form>
+            <Input
+              placeholder="First Name"
+              value={fName}
+              onChange={(e) => {
+                setfName(e.target.value);
               }}
-            >
-              Verify Account
-            </Button>
-          </div>
-        ) : (
-          <div></div>
-        )}
-        {check ? (
-          <div>
-            <Form>
-              <Input
-                placeholder="Verification Code"
-                value={otp}
-                onChange={(e) => {
-                  setOtp(e.target.value);
-                }}
-              />
-            </Form>
+            />
+            <Input
+              placeholder="Last Name"
+              value={lName}
+              onChange={(e) => {
+                setlName(e.target.value);
+              }}
+            />
+          </Form>
+          <Form>
+            <Input
+              disabled
+              placeholder="Email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
+            <Input
+              placeholder="Phone Number"
+              value={phone}
+              onChange={(e) => {
+                setphone(e.target.value);
+              }}
+            />
+          </Form>
+          <Form>
+            <Input
+              placeholder="City"
+              value={city}
+              onChange={(e) => {
+                setCity(e.target.value);
+              }}
+            />
+          </Form>
+          <Form>
+            <Input
+              placeholder="Address"
+              value={address}
+              onChange={(e) => {
+                setfName(e.target.value);
+              }}
+            />
+          </Form>
+          <Box ml={1}>
             <Button
               color="success"
               variant="contained"
-              onClick={() => {
+              onClick={(e) => {
                 buyerService
-                  .VerifyOtp({ otp })
-                  .then((res) => {
-                    console.log(res);
-                    setCheck(false);
-                    window.location.reload();
+                  .editUserDetails({ fName, lName, phone, address, city })
+                  .then((data) => {
+                    console.log(data);
+
+                    toast.success("Changes Saved Successfully", {
+                      position: toast.POSITION.BOTTOM_LEFT,
+                    });
                   })
                   .catch((err) => {
                     console.log(err);
+                    toast.error(err.response.data, {
+                      position: toast.POSITION.BOTTOM_LEFT,
+                    });
                   });
               }}
             >
-              Verify
+              Save
             </Button>
-          </div>
-        ) : (
-          <div></div>
-        )}
-
-        <Form>
-          <Input
-            placeholder="First Name"
-            value={fName}
-            onChange={(e) => {
-              setfName(e.target.value);
-            }}
-          />
-          <Input
-            placeholder="Last Name"
-            value={lName}
-            onChange={(e) => {
-              setlName(e.target.value);
-            }}
-          />
-        </Form>
-        <Form>
-          <Input
-            disabled
-            placeholder="Email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-          <Input
-            placeholder="Phone Number"
-            value={phone}
-            onChange={(e) => {
-              setphone(e.target.value);
-            }}
-          />
-        </Form>
-        <Form>
-          <Input
-            placeholder="City"
-            value={city}
-            onChange={(e) => {
-              setCity(e.target.value);
-            }}
-          />
-        </Form>
-        <Form>
-          <Input
-            placeholder="Password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-        </Form>
-
-        <Form>
-          <Input
-            placeholder="Address"
-            value={address}
-            onChange={(e) => {
-              setfName(e.target.value);
-            }}
-          />
-        </Form>
-
-        <Button
-          color="success"
-          variant="contained"
-          onClick={(e) => {
-            buyerService
-              .editUserDetails({ fName, lName, phone, address, city })
-              .then((data) => {
-                console.log(data);
-
-                toast.error("Changes Saved Successfully", {
-                  position: toast.POSITION.BOTTOM_LEFT,
-                });
-              })
-              .catch((err) => {
-                console.log(err);
-                toast.error(err.response.data, {
-                  position: toast.POSITION.BOTTOM_LEFT,
-                });
-              });
-          }}
-        >
-          Save
-        </Button>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={(e) => {
-            props.history.push("/changepassword");
-          }}
-        >
-          Change Password
-        </Button>
-      </Wrapper>
-    </Container>
+          </Box>
+          <Box m={1}>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={(e) => {
+                props.history.push("/changepassword");
+              }}
+            >
+              Change Password
+            </Button>
+          </Box>
+        </Wrapper>
+      </Container>
+    </Auth>
   );
 };
 

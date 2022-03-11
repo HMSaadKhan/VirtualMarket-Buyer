@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { cartItem } from "../../data";
 import CartItems from "./CartItems";
+import Auth from "../AuthWrapper/Auth";
 
 const Container = styled.div``;
 
@@ -73,42 +74,44 @@ const Button = styled.button`
 
 const Cart = () => {
   return (
-    <Container>
-      <Wrapper>
-        <Title>YOUR CART</Title>
-        <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
-          <TopButton type="filled">Clear Cart</TopButton>
-        </Top>
-        <Bottom>
-          <Info>
-            {cartItem.map((item) => (
-              <CartItems item={item} key={item.id} />
-            ))}
-          </Info>
-          <Summary>
-            <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-            <SummaryItem>
-              <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
-              <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
-              <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem type="total">
-              <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
-            </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
-          </Summary>
-        </Bottom>
-      </Wrapper>
-    </Container>
+    <Auth>
+      <Container>
+        <Wrapper>
+          <Title>YOUR CART</Title>
+          <Top>
+            <TopButton>CONTINUE SHOPPING</TopButton>
+            <TopButton type="filled">Clear Cart</TopButton>
+          </Top>
+          <Bottom>
+            <Info>
+              {cartItem.map((item) => (
+                <CartItems item={item} key={item.id} />
+              ))}
+            </Info>
+            <Summary>
+              <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+              <SummaryItem>
+                <SummaryItemText>Subtotal</SummaryItemText>
+                <SummaryItemPrice>$ 80</SummaryItemPrice>
+              </SummaryItem>
+              <SummaryItem>
+                <SummaryItemText>Estimated Shipping</SummaryItemText>
+                <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+              </SummaryItem>
+              <SummaryItem>
+                <SummaryItemText>Shipping Discount</SummaryItemText>
+                <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              </SummaryItem>
+              <SummaryItem type="total">
+                <SummaryItemText>Total</SummaryItemText>
+                <SummaryItemPrice>$ 80</SummaryItemPrice>
+              </SummaryItem>
+              <Button>CHECKOUT NOW</Button>
+            </Summary>
+          </Bottom>
+        </Wrapper>
+      </Container>
+    </Auth>
   );
 };
 

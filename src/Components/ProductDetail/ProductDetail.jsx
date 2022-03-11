@@ -80,7 +80,9 @@ const Button = styled.button`
   }
 `;
 
-const ProductDetail = () => {
+const ProductDetail = (props) => {
+  const _id = props.match.params.id;
+  console.log(_id); 
   return (
     <Container>
       <Wrapper>

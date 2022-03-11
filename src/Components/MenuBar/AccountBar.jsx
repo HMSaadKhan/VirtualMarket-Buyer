@@ -9,7 +9,7 @@ import axios from "axios";
 import { IconButton } from "@material-ui/core";
 
 const Container = styled.div`
-  height: 40px;
+  height: 50px;
   background-color: white;
 `;
 const Wrapper = styled.div`
@@ -25,13 +25,9 @@ const Right = styled.div`
 `;
 const Left = styled.div`
   display: flex;
-  padding: 3px;
+  padding: 5px;
   margin-left: 40px;
-`;
-const Hr = styled.hr`
-  background-color: #eee;
-  border: none;
-  height: 1px;
+
 `;
 
 const AccountBar = (props) => {

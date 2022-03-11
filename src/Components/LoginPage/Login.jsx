@@ -5,6 +5,7 @@ import buyerService from "../../Services/BuyerService";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import LoginAuth from "../AuthWrapper/LoginAuth"
 
 const Container = styled.div`
   width: 100vw;
@@ -49,7 +50,7 @@ const Login = (props) => {
   const [password, setPassword] = React.useState("1234");
   const history = useHistory();
   return (
-    <>
+    <LoginAuth>
       <Container>
         <Wrapper>
           <Title>SIGN IN</Title>
@@ -100,7 +101,7 @@ const Login = (props) => {
           </Form>
         </Wrapper>
       </Container>
-    </>
+    </LoginAuth>
   );
 };
 

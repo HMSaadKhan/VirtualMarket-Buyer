@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { bgcolor } from "@mui/system";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
+import LoginAuth from "../../Components/AuthWrapper/LoginAuth"
 
 const Container = styled.div`
   width: 100vw;
@@ -52,60 +53,39 @@ const ForgotPassword = (props) => {
   const history = useHistory();
 
   return (
-    <Container>
-      <Wrapper>
-        <Title>Forgot Password</Title>
-        <Input
-          disabled={check}
-          placeholder="Email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={(e) => {
-            userService
-              .forgotPassword(email)
-              .then((data) => {
-                console.log(data._id);
-                setId(data._id);
-                history.push("/resetPassword/" + data._id);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-            setCheck(true);
-          }}
-        >
-          Send Email
-        </Button>
-        <br />
-
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={(e) => {
-            setCheck(false);
-          }}
-        >
-          Reset
-        </Button>
-        <br />
-        <br />
-        <Button
-          color="success"
-          variant="contained"
-          onClick={() => {
-            history.push("/newpassword/" + id);
-          }}
-        >
-          Next
-        </Button>
-      </Wrapper>
-    </Container>
+    <LoginAuth><Container>
+    <Wrapper>
+      <Title>Forgot Password</Title>
+      <Input
+        disabled={check}
+        placeholder="Email"
+        value={email}
+        onChange={(e) => {
+          setEmail(e.target.value);
+        }}
+      />
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={(e) => {
+          userService
+            .forgotPassword(email)
+            .then((data) => {
+              console.log(data._id);
+              setId(data._id);
+              history.push("/resetPassword/" + data._id);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }}
+      >
+        Send Email
+      </Button>
+      <br />
+    </Wrapper>
+  </Container>
+  </LoginAuth>
   );
 };
 
