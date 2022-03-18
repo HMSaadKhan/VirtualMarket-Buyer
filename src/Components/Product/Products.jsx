@@ -1,6 +1,9 @@
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { popularProducts } from "../../data";
+import { Grid } from "@mui/material";
+import productService from "../../Services/ProductServices";
 import Product from "./Product";
+import ProductTest from "./ProductTest";
 
 const Wrapper = styled.div`
   flex: 1;
@@ -16,13 +19,29 @@ const Text = styled.div`
   padding-left: 20px;
 `;
 const Products = () => {
+  const [products, setProducts] = useState([]);
+
+  const getProducts = () => {
+    productService
+      .getProducts()
+      .then((data) => {
+        console.log(data);
+        setProducts(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  useEffect(getProducts, []);
   return (
     <Container>
       <Text> Products for You</Text>
       <Wrapper>
-        {popularProducts.map((item) => (
-          <Product item={item} key={item.id} />
-        ))}
+        <Grid container spacing={3}>
+          {products.map((product, index) => (
+            <ProductTest key={index} product={product} />
+          ))}
+        </Grid>
       </Wrapper>
     </Container>
   );

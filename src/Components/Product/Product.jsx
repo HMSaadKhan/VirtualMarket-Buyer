@@ -4,7 +4,9 @@ import {
   ShoppingCartOutlined,
 } from "@mui/icons-material";
 import styled from "styled-components";
+import { Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
 const Info = styled.div`
   opacity: 0;
@@ -66,31 +68,35 @@ const Icon = styled.div`
   }
 `;
 
-const Product = ({ item }) => {
-
-
+const Product = (props) => {
   const history = useHistory();
+  const { product } = props;
+
+  const [name, setName] = useState("");
 
   const handleChange = (event) => {
     history.push(event.target.getAttribute("value"));
-  }
-
+  };
 
   return (
     <Container>
-      <Circle />
-      <Image src={item.img} />
+      {/* <Circle />
+      <Image /> */}
+
       <Info>
-        <Icon>
+        {/* <Icon>
           <ShoppingCartOutlined />
         </Icon>
         <Icon>
-          <SearchOutlined value='/ProductDetail' onClick={handleChange}  />
+          <SearchOutlined value="/ProductDetail" onClick={handleChange} />
         </Icon>
         <Icon>
           <FavoriteBorderOutlined />
-        </Icon>
+        </Icon> */}
       </Info>
+      <h2>
+        <p>{product.name}</p>
+      </h2>
     </Container>
   );
 };

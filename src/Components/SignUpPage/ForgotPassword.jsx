@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { bgcolor } from "@mui/system";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
-import LoginAuth from "../../Components/AuthWrapper/LoginAuth"
+import LoginAuth from "../../Components/AuthWrapper/LoginAuth";
 
 const Container = styled.div`
   width: 100vw;
@@ -53,39 +53,40 @@ const ForgotPassword = (props) => {
   const history = useHistory();
 
   return (
-    <LoginAuth><Container>
-    <Wrapper>
-      <Title>Forgot Password</Title>
-      <Input
-        disabled={check}
-        placeholder="Email"
-        value={email}
-        onChange={(e) => {
-          setEmail(e.target.value);
-        }}
-      />
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={(e) => {
-          userService
-            .forgotPassword(email)
-            .then((data) => {
-              console.log(data._id);
-              setId(data._id);
-              history.push("/resetPassword/" + data._id);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }}
-      >
-        Send Email
-      </Button>
-      <br />
-    </Wrapper>
-  </Container>
-  </LoginAuth>
+    <LoginAuth>
+      <Container>
+        <Wrapper>
+          <Title>Forgot Password</Title>
+          <Input
+            disabled={check}
+            placeholder="Email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={(e) => {
+              userService
+                .forgotPassword(email)
+                .then((data) => {
+                  console.log(data._id);
+                  setId(data._id);
+                  history.push("/resetPassword/" + data._id);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }}
+          >
+            Send Email
+          </Button>
+          <br />
+        </Wrapper>
+      </Container>
+    </LoginAuth>
   );
 };
 

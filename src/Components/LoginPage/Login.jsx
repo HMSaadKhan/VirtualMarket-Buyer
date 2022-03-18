@@ -5,7 +5,7 @@ import buyerService from "../../Services/BuyerService";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import LoginAuth from "../AuthWrapper/LoginAuth"
+import LoginAuth from "../AuthWrapper/LoginAuth";
 
 const Container = styled.div`
   width: 100vw;
@@ -46,8 +46,8 @@ const Input = styled.input`
 `;
 
 const Login = (props) => {
-  const [email, setEmail] = React.useState("hello@123.com");
-  const [password, setPassword] = React.useState("1234");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const history = useHistory();
   return (
     <LoginAuth>

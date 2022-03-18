@@ -5,6 +5,7 @@ import userService from "../../Services/BuyerService";
 import { toast } from "react-toastify";
 import { bgcolor } from "@mui/system";
 import styled from "styled-components";
+import { Link, useHistory } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -86,6 +87,7 @@ const Register = (props) => {
           />
           <Input
             placeholder="Password"
+            type="password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
@@ -93,6 +95,7 @@ const Register = (props) => {
           />
           <Input
             placeholder="Confirm Password"
+            type="password"
             value={confirmPassword}
             onChange={(e) => {
               setCPassword(e.target.value);
@@ -124,6 +127,9 @@ const Register = (props) => {
           >
             CREATE
           </Button>
+          <Agreement>
+            Already Have an account? <Link to="/Login">Login</Link>
+          </Agreement>
         </Form>
       </Wrapper>
     </Container>

@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import { cartItem } from "../../data";
 import CartItems from "./CartItems";

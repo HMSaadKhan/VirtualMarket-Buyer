@@ -189,7 +189,7 @@ const BuyerAccount = (props) => {
               placeholder="Address"
               value={address}
               onChange={(e) => {
-                setfName(e.target.value);
+                setAddress(e.target.value);
               }}
             />
           </Form>
