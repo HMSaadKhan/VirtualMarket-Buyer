@@ -25,7 +25,6 @@ const Products = () => {
     productService
       .getProducts()
       .then((data) => {
-        console.log(data);
         setProducts(data);
       })
       .catch((e) => {

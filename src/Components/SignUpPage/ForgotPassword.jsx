@@ -74,7 +74,7 @@ const ForgotPassword = (props) => {
                 .then((data) => {
                   console.log(data._id);
                   setId(data._id);
-                  history.push("/resetPassword/" + data._id);
+                  history.push("resetPassword/" + data._id);
                 })
                 .catch((err) => {
                   console.log(err);

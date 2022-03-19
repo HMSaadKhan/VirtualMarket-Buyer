@@ -1,5 +1,10 @@
+import { flexbox } from "@material-ui/system";
 import { Add, Remove } from "@mui/icons-material";
+import { Card } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import productService from "../../Services/ProductServices";
 
 const Container = styled.div``;
 
@@ -43,8 +48,6 @@ const FilterContainer = styled.div`
   justify-content: space-between;
 `;
 
-
-
 const AddContainer = styled.div`
   width: 50%;
   display: flex;
@@ -79,30 +82,59 @@ const Button = styled.button`
     background-color: #f8f4f4;
   }
 `;
-
+const useStyles = makeStyles({
+  root: {
+    display: "flex",
+    maxWidth: 500,
+    margin: 20,
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  media: {
+    height: 140,
+  },
+  imageBox: {
+    width: 500,
+    height: 500,
+  },
+});
 const ProductDetail = (props) => {
+  const classes = useStyles();
+  const [productDetails, SetProductDetails] = useState("");
   const _id = props.match.params.id;
-  console.log(_id); 
+  console.log(_id);
+  const getDetails = () => {
+    productService
+      .getProductDetails(_id)
+      .then((data) => {
+        SetProductDetails(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(getDetails, []);
+  console.log(productDetails);
   return (
     <Container>
-      <Wrapper>
-        <ImgContainer>
-          <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
-        </ImgContainer>
+      <Wrapper className={classes.root}>
+        {productDetails ? (
+          <>
+            <Card>
+              <Image
+                className={classes.imageBox}
+                src={productDetails.images[0].link}
+              />
+            </Card>
+          </>
+        ) : (
+          <></>
+        )}
         <InfoContainer>
           <Title></Title>
-          <Desc>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-            iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-            tristique tortor pretium ut. Curabitur elit justo, consequat id
-            condimentum ac, volutpat ornare.
-          </Desc>
-          <Price>$ 20</Price>
-          <FilterContainer>
-            
-            
-          </FilterContainer>
+          <Desc>{productDetails.description}</Desc>
+          <Price>${productDetails.price}</Price>
+          <FilterContainer></FilterContainer>
           <AddContainer>
             <AmountContainer>
               <Remove />

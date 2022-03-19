@@ -7,6 +7,8 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -20,11 +22,16 @@ const useStyles = makeStyles({
 
 const ProductTest = (props) => {
   const classes = useStyles();
+  const history = useHistory();
   const { product } = props;
-  console.log(product.images[0].link);
+
+  const detailsScreen = () => {
+    history.push("ProductDetail/" + product._id);
+    console.log(product._id);
+  };
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} onClick={detailsScreen}>
       <CardActionArea>
         <CardMedia
           className={classes.media}

@@ -27,7 +27,6 @@ const Left = styled.div`
   display: flex;
   padding: 5px;
   margin-left: 40px;
-
 `;
 
 const AccountBar = (props) => {
@@ -46,8 +45,9 @@ const AccountBar = (props) => {
         console.log(err);
       });
   };
-
-  React.useEffect(getData, []);
+  {
+    buyerService.isLoggedIn() ? <>React.useEffect(getData, [])</> : <></>;
+  }
 
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
