@@ -1,12 +1,13 @@
 import { flexbox } from "@material-ui/system";
 import { Add, Remove } from "@mui/icons-material";
-import { Card } from "@mui/material";
+import { Card, Breadcrumbs, Typography, CardContent } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import productService from "../../Services/ProductServices";
-import { ArrowForwardIos, Home } from "@mui/icons-material";
+import { ArrowForwardIos, Home, NavigateNext } from "@mui/icons-material";
 import { TextField } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import "./ProductDetail.css";
 
 const ProductDetail = (props) => {
@@ -28,68 +29,70 @@ const ProductDetail = (props) => {
   return (
     <div>
       {productDetails ? (
-        <div>
-          <div className="DetailPage">
-            <div className="navigationBar">
-              <nav className="navigation">
-                <label className="labelIcon">
-                  <Home />
+        <div className="DetailPage">
+          <div className="navigationBar">
+            <nav className="navigation">
+              <Breadcrumbs
+                separator={<NavigateNext fontSize="small" />}
+                aria-label="breadcrumb"
+                className="labelIcon"
+              >
+                <Link underline="hover" to="/">
                   Home
-                </label>
-
-                <label className="arrowIcon">
-                  <ArrowForwardIos />
-                </label>
-
-                <label className="labelIcon">
-                  <a className="title" href="#">
-                    {productDetails.name}
-                  </a>
-                </label>
-              </nav>
-            </div>
-            <div className="mainContainer">
+                </Link>
+                <Typography color="text.primary">
+                  {productDetails.name}
+                </Typography>
+              </Breadcrumbs>
+            </nav>
+          </div>
+          <div className="mainContainer">
+            <>
               <div className="productPreview">
                 <img
                   src={productDetails.images[0].link}
                   alt="Product Preview"
-                />
-                {productDetails.images.map((image, index) => {
-                  return (
-                    <div key={image}>
-                      <img src={image} alt="" className="sellerUpdateImg" />
-                    </div>
-                  );
-                })}
+                ></img>
+                <div className="subimages">
+                  {productDetails.images.map((images, index) => {
+                    return (
+                      <div key={images} className="image">
+                        {console.log()}
+                        <img src={images.link} alt="images" />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
+            </>
+            <>
               <div className="productData">
                 <h1 className="productTitle">Samsung S21 Ultra</h1>
-                <p className="productPrice">Rs {productDetails.price}</p>
-                <p className="productDescription">
-                  {productDetails.description}
-                  <p className="productDescription">
-                    Processor Samsung Exynos 2100
-                  </p>
-                  <p className="productDescription">Front Camera 40MP</p>
-                  <p className="productDescription">
-                    Rear Camera 108MP + 12MP + 10MP + 10MP
-                  </p>
-                  <p className="productDescription">
-                    RAM 12GB Storage 128GB
-                    <p className="productDescription">
-                      Battery Capacity 5000mAh OS Android 11
-                    </p>
-                  </p>
-                </p>
+                <p className="productPrice">Rs 195,000</p>
+                <p className="productPrice">Product Description</p>
+                <ul>
+                  <li>6.80-inch (1440x3220)</li>
+                  <li>Processor Samsung Exynos 2100</li>
+                  <li>Front Camera 40MP</li>
+                  <li>6 Rear Camera 108MP + 12MP + 10MP + 10MP</li>
+                  <li>RAM 12GB Storage 128GB</li>
+                  <li>Battery Capacity 5000mAh OS Android 11</li>
+                </ul>
+                {/* <p className="productDescription">
+              <p className="productDescription">
+                Battery Capacity 5000mAh OS Android 11
+              </p>
+            </p> */}
 
-                <h3 className="sectionHeading">Select Quantity</h3>
+                <p className="sectionHeading">Select Quantity</p>
+
                 <div>
                   <TextField
                     id="outlined-number"
                     label="Quantity"
                     type="number"
                     required
-                    min={productDetails.minOrder}
+                    // value={1}
                     placeholder="e.g. 1"
                     InputLabelProps={{
                       shrink: true,
@@ -97,24 +100,70 @@ const ProductDetail = (props) => {
                     variant="outlined"
                   />
 
+                  <p className="productPrice">Warranty Period</p>
+                  <p className="productDescription">
+                    1 year manufacturer warranty for device
+                  </p>
+
+                  <p className="productPrice">Stock Available</p>
+                  <p className="productDescription">20 Items</p>
+
                   <h3 className="sectionHeading"></h3>
                   <div>
                     <button className="featureItem">Add To Cart</button>
                     <button className="featureItem2">Bargain</button>
-
-                    {productDetails.sampleOrder ? (
-                      <>
-                        <button className="featureItem2">Sample Order</button>
-                      </>
-                    ) : (
-                      <></>
-                    )}
                   </div>
                 </div>
-                <div className="sellerInfo">
-                  <p>Sold By:</p>
-                  <h3>{productDetails.seller.storeName}</h3>
-                </div>
+              </div>
+            </>
+            <div className="sellerDetails">
+              <div className="card1">
+                <Card sx={{ minWidth: 275 }}>
+                  <CardContent>
+                    <Typography
+                      sx={{ fontSize: 14 }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      Shop Name
+                    </Typography>
+                    <Typography variant="h8" component="div">
+                      AM Traders
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </div>
+              <div className="card1">
+                <Card sx={{ minWidth: 275 }}>
+                  <CardContent>
+                    <Typography
+                      sx={{ fontSize: 14 }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      Shop Address
+                    </Typography>
+                    <Typography variant="h8" component="div">
+                      Shop.no.24 Shah Alam Market Lahore
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </div>
+              <div className="card1">
+                <Card sx={{ minWidth: 275 }}>
+                  <CardContent>
+                    <Typography
+                      sx={{ fontSize: 14 }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      Phone No
+                    </Typography>
+                    <Typography variant="h8" component="div">
+                      03024576453
+                    </Typography>
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </div>
