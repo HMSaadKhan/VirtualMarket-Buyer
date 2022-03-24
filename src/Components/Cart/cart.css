@@ -1,0 +1,122 @@
+.container > {
+  width: 100%;
+}
+
+.small-container {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  padding: 5px;
+}
+
+.product-detail {
+  box-shadow: 5px 5px 5px #d3d3d3;
+}
+
+.cart-info {
+  display: flex;
+  align-items: center;
+}
+
+cart-info h6 {
+  margin-top: 10px;
+}
+
+.paragraph {
+  float: left;
+}
+.cart-info img {
+  width: 150px;
+}
+
+.top-heading-banner th {
+  padding: 1px 0px;
+  color: white;
+  background: black;
+}
+
+.product-detail td {
+  padding: 10px 50px;
+  text-align: center;
+}
+
+#quantity-text {
+  width: 40px;
+  height: 30px;
+}
+
+.total-price {
+  width: 30%;
+  height: 190px;
+  margin-top: 0%;
+  margin-left: 1%;
+  box-shadow: 3px 3px 10px #d3d3d3;
+}
+
+.total-price h5 {
+  font-weight: 600;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.total-price td {
+  line-height: 30px;
+  padding: 1px 50px;
+  font-size: 15px;
+}
+
+.checkout-btn {
+  margin-top: 20px;
+}
+
+.cart-btn {
+  margin-top: 40px;
+
+  width: 100%;
+  background: black;
+  color: white;
+  border: none;
+  padding: 10px 5px;
+}
+
+/* Adding further CSS */
+
+/* Element | http://localhost:3000/cart */
+
+.cardContent {
+  justify-content: space-around;
+  display: flex;
+  padding: 30px;
+  margin: auto;
+  align-items: center;
+}
+.cartImage {
+  float: left;
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  margin: 10px;
+  border: 1px solid #ddd;
+}
+.cardContent > div > span {
+  display: flex;
+  padding-top: 10px;
+  width: 200px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.clearCartButton {
+  margin-left: 49%;
+  padding-top: 2%;
+  margin-bottom: 1%;
+}
+.quantityInput {
+  display: flex;
+}
+.quantityInput > input{
+  width: 30px;
+}
+.btn-quantity {
+  cursor: pointer;
+}

@@ -1,118 +1,85 @@
-import React from "react";
-import styled from "styled-components";
-import { cartItem } from "../../data";
+import React, { useEffect, useState } from "react";
+import "./cart.css";
+import { Button, Card, CardContent, Grid } from "@mui/material";
 import CartItems from "./CartItems";
-import Auth from "../AuthWrapper/Auth";
+import DeleteIcon from "@mui/icons-material/Delete";
+import cartService from "../../Services/CartServices";
+import { Add, Remove, Delete } from "@mui/icons-material";
 
-const Container = styled.div``;
+const Cart = (props) => {
+  const [cartItem, setCartItem] = useState([]);
+  const getCartItems = async () => {
+    await cartService
+      .getCart()
+      .then((data) => {
+        console.log(data);
+        console.log("get cart items");
 
-const Wrapper = styled.div`
-  padding: 20px;
-`;
-
-const Title = styled.h1`
-  font-weight: 300;
-  text-align: center;
-`;
-
-const Top = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px;
-`;
-
-const TopButton = styled.button`
-  padding: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  border: ${(props) => props.type === "filled" && "none"};
-  background-color: ${(props) =>
-    props.type === "filled" ? "black" : "transparent"};
-  color: ${(props) => props.type === "filled" && "white"};
-`;
-
-const Bottom = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const Info = styled.div`
-  flex: 3;
-`;
-
-const Summary = styled.div`
-  flex: 1;
-  border: 0.5px solid lightgray;
-  border-radius: 10px;
-  padding: 20px;
-  height: 50vh;
-`;
-
-const SummaryTitle = styled.h1`
-  font-weight: 200;
-`;
-
-const SummaryItem = styled.div`
-  margin: 30px 0px;
-  display: flex;
-  justify-content: space-between;
-  font-weight: ${(props) => props.type === "total" && "500"};
-  font-size: ${(props) => props.type === "total" && "24px"};
-`;
-
-const SummaryItemText = styled.span``;
-
-const SummaryItemPrice = styled.span``;
-
-const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: black;
-  color: white;
-  font-weight: 600;
-`;
-
-const Cart = () => {
+        setCartItem(data.items);
+        console.log(cartItem);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(getCartItems, []);
+  console.log(cartItem);
+  const clearCart = () => {
+    cartService
+      .clearCart()
+      .then((data) => {
+        console.log(data);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
-    <Auth>
-      <Container>
-        <Wrapper>
-          <Title>YOUR CART</Title>
-          <Top>
-            <TopButton>CONTINUE SHOPPING</TopButton>
-            <TopButton type="filled">Clear Cart</TopButton>
-          </Top>
-          <Bottom>
-            <Info>
-              {cartItem.map((item) => (
-                <CartItems item={item} key={item.id} />
-              ))}
-            </Info>
-            <Summary>
-              <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-              <SummaryItem>
-                <SummaryItemText>Subtotal</SummaryItemText>
-                <SummaryItemPrice>$ 80</SummaryItemPrice>
-              </SummaryItem>
-              <SummaryItem>
-                <SummaryItemText>Estimated Shipping</SummaryItemText>
-                <SummaryItemPrice>$ 5.90</SummaryItemPrice>
-              </SummaryItem>
-              <SummaryItem>
-                <SummaryItemText>Shipping Discount</SummaryItemText>
-                <SummaryItemPrice>$ -5.90</SummaryItemPrice>
-              </SummaryItem>
-              <SummaryItem type="total">
-                <SummaryItemText>Total</SummaryItemText>
-                <SummaryItemPrice>$ 80</SummaryItemPrice>
-              </SummaryItem>
-              <Button>CHECKOUT NOW</Button>
-            </Summary>
-          </Bottom>
-        </Wrapper>
-      </Container>
-    </Auth>
+    <>
+      <div className="clearCartButton">
+        <Button variant="contained" onClick={clearCart}>
+          Clear Cart
+        </Button>
+      </div>
+      <div className="small-container cart-page">
+        <Grid container ml={7} spacing={4}>
+          {console.log(cartItem)}
+          {cartItem.map((item, id) => (
+            <CartItems item={item} key={id} getCartItems={getCartItems} />
+          ))}
+        </Grid>
+        <div className="total-price">
+          <table>
+            <h5>Cart Total</h5>
+            <tr>
+              <td>SubTotal</td>
+              <td>180,000</td>
+            </tr>
+            <tr>
+              <td>Shipping</td>
+              <td>1000</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td>181,000</td>
+            </tr>
+          </table>
+          <div>
+            <Button variant="contained" className="checkout-btn cart-btn">
+              Checkout
+            </Button>
+            <br />
+            <Button
+              variant="contained"
+              className="continue-shopping-btn cart-btn"
+            >
+              Continue Shopping
+            </Button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

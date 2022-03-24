@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import { Badge, Menu, MenuItem, IconButton } from "@mui/material";
 import { Search, Chat, ShoppingCart, Notifications } from "@mui/icons-material";
+import cartService from "../../Services/CartServices";
 
 const Container = styled.div`
   height: 70px;
@@ -41,12 +42,19 @@ const RightComponents = styled.div`
 `;
 
 const MenuBar = () => {
+  const [qty, setQty] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
+  const getCartCount = () => {
+    cartService.getQty().then((data) => {
+      console.log(data.data.items.length);
+      setQty(data.data.items.length);
+    });
+  };
+  useEffect(getCartCount, []);
   // const handleProfileMenuOpen = (event) => {
   //   setAnchorEl(event.currentTarget);
   // };
@@ -80,17 +88,12 @@ const MenuBar = () => {
           <RightComponents>
             <Chat />
           </RightComponents>
-          <RightComponents>
-            <IconButton size="large">
-              <Badge badgeContent={17} color="error">
-                <Notifications />
-              </Badge>
-            </IconButton>
-          </RightComponents>
 
           <RightComponents>
             <IconButton component={Link} to="/Cart">
-              <ShoppingCart />
+              <Badge badgeContent={qty} color="error">
+                <ShoppingCart />
+              </Badge>
             </IconButton>
           </RightComponents>
         </RightCorner>

@@ -12,7 +12,8 @@ import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 500,
+    height: "auto",
+    minWidth: "300",
     margin: 20,
   },
   media: {
@@ -31,7 +32,11 @@ const ProductTest = (props) => {
   };
 
   return (
-    <Card className={classes.root} onClick={detailsScreen}>
+    <Card
+      className={classes.root}
+      sx={{ minWidth: 200 }}
+      onClick={detailsScreen}
+    >
       <CardActionArea>
         <CardMedia
           className={classes.media}

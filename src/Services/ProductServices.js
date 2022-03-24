@@ -3,8 +3,6 @@ class ProductsService extends GenericService {
   constructor() {
     super();
   }
-  deleteProduct = (_id) => this.delete("products/" + _id);
-  updateProduct = (_id, data) => this.put("products/" + _id, data);
   getProducts = () => this.get("products/all");
   getProductDetails = (_id) =>
     new Promise((resolve, reject) => {

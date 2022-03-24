@@ -45,9 +45,7 @@ const AccountBar = (props) => {
         console.log(err);
       });
   };
-  {
-    buyerService.isLoggedIn() ? <>React.useEffect(getData, [])</> : <></>;
-  }
+  React.useEffect(getData, []);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);

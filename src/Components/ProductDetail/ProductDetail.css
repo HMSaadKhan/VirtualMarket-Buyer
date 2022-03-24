@@ -35,7 +35,6 @@
 nav {
   background-color: #4d8b31;
   height: 40px;
-  width: 100%;
   padding: 0 20px;
 }
 .mainContainer {
@@ -49,33 +48,54 @@ nav {
 }
 
 .productPreview {
-  width: 40%;
+  width: 70%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 170px;
+  margin-bottom: 90px;
 }
 
 .productPreview > img {
-  width: 70%;
-  height: 70%;
+  float: left;
+  width: 50%;
+  height: 50%;
+  background-size: cover;
   align-items: center;
 }
+.mainImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+
+  border: 1px solid #ddd;
+}
+
 .subimages {
-  width: 30px;
   display: flex;
-  height: auto;
+  flex-wrap: wrap;
+  padding: 5px;
   align-items: center;
   align-content: center;
   flex-direction: row;
 }
 .subimages > img {
-  height: auto;
-  width: 100%;
   object-fit: cover;
+}
+#quantity-text {
+  width: 40px;
+  height: 30px;
+}
+.images {
+  float: left;
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  margin: 5px;
+  border: 1px solid #ddd;
 }
 .productData {
   width: 50%;
-  margin-left: 15px;
+  margin-left: 170px;
   margin-right: 15px;
   margin-bottom: 130px;
 }
@@ -146,7 +166,8 @@ nav {
   font-weight: 400px;
 }
 .sellerDetails {
-  margin-bottom: 250px;
+  margin-bottom: 150px;
+  margin-left: 130px;
 }
 .card1 {
   margin-top: 10px;
@@ -156,4 +177,12 @@ nav {
 .sellerName {
   margin-top: 10px;
   font-weight: 600;
+}
+.quantityInput {
+  display: flex;
+  align-items: center;
+}
+.quantityInput > input {
+  width: 30px;
+  height: 20px;
 }
