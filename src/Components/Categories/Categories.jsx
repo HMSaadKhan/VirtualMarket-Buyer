@@ -16,7 +16,9 @@ const Wrapper = styled.div`
   justify-content: space-between;
 `;
 
-const Categories = ({ item }) => {
+
+
+const Categories = () => {
   return (
     <Container>
       <Text>Categories</Text>

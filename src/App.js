@@ -22,18 +22,27 @@ import NotFound from "./Components/NotFound/NotFound";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function App() {
+  const [refreshCart, setRefreshCart] = React.useState();
+  const getStateChanged = (data) => {
+    console.log(data);
+    setRefreshCart(data);
+  };
   return (
     <Router>
       <ToastContainer />
       <AccountBar />
-      <MenuBar />
+      <MenuBar refreshCart={refreshCart} />
       <Switch>
         <Route path="/Login" exact component={Login} />
-        <Route path="/Cart" exact component={Cart} />
+        <Route path="/Cart">
+          <Cart stateChanged={getStateChanged} />
+        </Route>
         <Route path="/favorite" exact component={Favorite} />
         <Route path="/SignUp" exact component={SignUp} />
         <Route path="/AccountSettings" component={BuyerAccount} />
-        <Route path="/ProductDetail/:id/" component={ProductDetail} />
+        <Route path="/ProductDetail/:id/"component={ProductDetail}/>
+          
+        
         <Route path="/forgotpassword" component={ForgotPassword} />
         <Route path="/resetPassword/:id/" exact component={NewPassword} />
         <Route path="/changepassword/" exact component={ChangePassword} />

@@ -71,10 +71,10 @@ class CartService extends GenericService {
           reject(err);
         });
     });
-  getQty = (_id) =>
+  getQty = () =>
     new Promise((resolve, reject) => {
       axios
-        .get("carts/get")
+        .get("carts/count")
         .then((data) => {
           resolve(data);
         })

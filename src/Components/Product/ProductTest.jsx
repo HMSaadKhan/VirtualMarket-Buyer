@@ -26,16 +26,12 @@ const ProductTest = (props) => {
   const history = useHistory();
   const { product } = props;
 
-  const detailsScreen = () => {
-    history.push("ProductDetail/" + product._id);
-    console.log(product._id);
-  };
-
   return (
     <Card
       className={classes.root}
+      component={Link}
       sx={{ minWidth: 200 }}
-      onClick={detailsScreen}
+      to={{ pathname: `ProductDetail/${product._id}` }}
     >
       <CardActionArea>
         <CardMedia

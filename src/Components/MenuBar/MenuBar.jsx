@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
+import useState from "react-usestateref";
 
 import { Badge, Menu, MenuItem, IconButton } from "@mui/material";
 import { Search, Chat, ShoppingCart, Notifications } from "@mui/icons-material";
@@ -41,20 +42,22 @@ const RightComponents = styled.div`
   margin-left: 10px;
 `;
 
-const MenuBar = () => {
-  const [qty, setQty] = useState(0);
+const MenuBar = (props) => {
+  const [qty, setQty, qtyRef] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
+
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
   const getCartCount = () => {
     cartService.getQty().then((data) => {
-      console.log(data.data.items.length);
-      setQty(data.data.items.length);
+      console.log(data.data.count);
+
+      setQty(data.data.count);
     });
   };
-  useEffect(getCartCount, []);
+  useEffect(getCartCount, [props.refreshCart]);
   // const handleProfileMenuOpen = (event) => {
   //   setAnchorEl(event.currentTarget);
   // };
@@ -99,8 +102,11 @@ const MenuBar = () => {
         </RightCorner>
       </Wrapper>
       {renderMenu}
+
     </Container>
   );
 };
 
 export default MenuBar;
+// export {getCartCount}
+

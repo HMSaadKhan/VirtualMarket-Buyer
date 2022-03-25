@@ -49,8 +49,8 @@ cart-info h6 {
 .total-price {
   width: 30%;
   height: 190px;
-  margin-top: 0%;
-  margin-left: 1%;
+  margin-bottom: 50%;
+  margin-right: 3%;
   box-shadow: 3px 3px 10px #d3d3d3;
 }
 
@@ -71,13 +71,12 @@ cart-info h6 {
 }
 
 .cart-btn {
-  margin-top: 40px;
-
+  margin-top: 30px;
   width: 100%;
   background: black;
   color: white;
   border: none;
-  padding: 10px 5px;
+  padding: 10px 10px;
 }
 
 /* Adding further CSS */
@@ -114,7 +113,7 @@ cart-info h6 {
 .quantityInput {
   display: flex;
 }
-.quantityInput > input{
+.quantityInput > input {
   width: 30px;
 }
 .btn-quantity {

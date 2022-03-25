@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./cart.css";
 import { Button, Card, CardContent, Grid } from "@mui/material";
 import CartItems from "./CartItems";
 import DeleteIcon from "@mui/icons-material/Delete";
 import cartService from "../../Services/CartServices";
 import { Add, Remove, Delete } from "@mui/icons-material";
-
+import useState from "react-usestateref";
 const Cart = (props) => {
-  const [cartItem, setCartItem] = useState([]);
+  console.log(props);
+  const [cartItem, setCartItem, cartItemRef] = useState([]);
+  const [cartValues, setCartValues] = useState([]);
   const getCartItems = async () => {
     await cartService
       .getCart()
       .then((data) => {
         console.log(data);
-        console.log("get cart items");
-
         setCartItem(data.items);
-        console.log(cartItem);
+        console.log("get cart items");
+        setCartValues(data);
       })
       .catch((err) => {
         console.log(err);
@@ -29,11 +30,24 @@ const Cart = (props) => {
       .clearCart()
       .then((data) => {
         console.log(data);
-        window.location.reload();
+        setCartItem(null);
+        props.stateChanged(data);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+  const getProductId = (data) => {
+    console.log(data);
+    props.stateChanged(data);
+    setCartItem((items) => {
+      return items.filter((item) => {
+        return item._id !== data;
+      });
+    });
+  };
+  const productQtyChange = (data) => {
+    setCartItem(cartItemRef.current);
   };
   return (
     <>
@@ -42,40 +56,44 @@ const Cart = (props) => {
           Clear Cart
         </Button>
       </div>
+
       <div className="small-container cart-page">
-        <Grid container ml={7} spacing={4}>
-          {console.log(cartItem)}
-          {cartItem.map((item, id) => (
-            <CartItems item={item} key={id} getCartItems={getCartItems} />
-          ))}
-        </Grid>
+        {cartItem ? (
+          <div ml={3}>
+            {cartItem.map((item) => (
+              <CartItems
+                item={item}
+                key={item._id}
+                getCartItems={getCartItems}
+                getProductId={getProductId}
+                productQtyChange={productQtyChange}
+              />
+            ))}
+          </div>
+        ) : null}
+
         <div className="total-price">
           <table>
             <h5>Cart Total</h5>
             <tr>
               <td>SubTotal</td>
-              <td>180,000</td>
+              <td>{cartValues.subTotal}</td>
             </tr>
             <tr>
               <td>Shipping</td>
-              <td>1000</td>
+              {/* <td>{cartValues.seller.deliveryCharge}</td> */}
             </tr>
             <tr>
               <td>Total</td>
-              <td>181,000</td>
+              <td>{cartValues.total}</td>
             </tr>
           </table>
           <div>
-            <Button variant="contained" className="checkout-btn cart-btn">
-              Checkout
-            </Button>
+            <button className="checkout-btn cart-btn">Checkout</button>
             <br />
-            <Button
-              variant="contained"
-              className="continue-shopping-btn cart-btn"
-            >
+            <button className="continue-shopping-btn cart-btn">
               Continue Shopping
-            </Button>
+            </button>
           </div>
         </div>
       </div>

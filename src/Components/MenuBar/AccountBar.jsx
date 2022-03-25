@@ -37,7 +37,6 @@ const AccountBar = (props) => {
     buyerService
       .getUserName()
       .then((data) => {
-        console.log(data);
         setfname(data.fName.charAt(0));
         setlname(data.lName.charAt(0));
       })

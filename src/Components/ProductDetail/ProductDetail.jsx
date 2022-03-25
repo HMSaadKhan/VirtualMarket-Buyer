@@ -8,7 +8,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import productService from "../../Services/ProductServices";
 import cartService from "../../Services/CartServices";
@@ -16,13 +16,18 @@ import { ArrowForwardIos, Home, NavigateNext } from "@mui/icons-material";
 import { TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import "./ProductDetail.css";
-
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import useState from "react-usestateref";
 const ProductDetail = (props) => {
+  console.log(props);
   const product = props.match.params.id;
   console.log(product);
-  const [productDetails, SetProductDetails] = useState("");
-  const [quantity, SetQuantity] = useState();
-  const [minButton, setminButton] = useState(true);
+  const [productDetails, SetProductDetails, productDetailsRef] = useState("");
+  const [quantity, SetQuantity, quantityRef] = useState();
+  const [minusButtonCheck, setMinusButton, minRef] = useState(true);
+  const [plusButtonCheck, setPlusButton, plusRef] = useState(false);
+
   const [type, setType] = useState("DEFAULT");
 
   const getDetails = () => {
@@ -44,20 +49,37 @@ const ProductDetail = (props) => {
       .addToCart({ product, quantity, type })
       .then((data) => {
         console.log(data);
+
+        // toast.error(data.response.data, {
+        //   position: toast.POSITION.BOTTOM_LEFT,
+        // });
       })
       .catch((error) => {
         console.log(error);
+        // toast.error(error.response.data, {
+        //   position: toast.POSITION.BOTTOM_LEFT,
+        // });
       });
   };
   const minusButton = () => {
-    SetQuantity(quantity - 1);
-    // if (quantity <= productDetails.minOrder) minButton = true;
+    if (quantity <= productDetails.minOrder) {
+      setMinusButton(false);
+      setPlusButton(false);
+      console.log(`minusif${quantity}`);
+    } else {
+      SetQuantity(quantity - 1);
+      setPlusButton(false);
+    }
   };
+
   const plusButton = () => {
-    SetQuantity(quantity + 1);
-    // if (minButton) {
-    //   if (quantity > productDetails.minOrder) minButton = false;
-    // }
+    if (quantity >= productDetails.stock) {
+      setPlusButton(true);
+      setMinusButton(false);
+    } else {
+      setMinusButton(false);
+      SetQuantity(quantity + 1);
+    }
   };
 
   return (
@@ -111,11 +133,11 @@ const ProductDetail = (props) => {
 
                 <div>
                   <div className="quantityInput">
-                    <IconButton>
+                    <IconButton disabled={minusButtonCheck}>
                       <Remove onClick={minusButton} />
                     </IconButton>
                     <input value={quantity} />
-                    <IconButton>
+                    <IconButton disabled={plusButtonCheck}>
                       <Add className="btn-quantity" onClick={plusButton} />
                     </IconButton>
                   </div>
