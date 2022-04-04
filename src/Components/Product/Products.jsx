@@ -32,6 +32,9 @@ const Products = () => {
       });
   };
   useEffect(getProducts, []);
+  const electronics = products.filter((electronics) => {
+    return electronics.price >= 1000;
+  });
   return (
     <Container>
       <Text> Products for You</Text>

@@ -1,0 +1,31 @@
+.border {
+  border-radius: 1;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+.categoryTitle {
+  font-size: 25px;
+  font-weight: bolder;
+  margin: 10px 40px 10px 40px;
+}
+.title {
+  background-color: bisque;
+}
+
+.categories {
+  display: flex;
+  flex-direction: row;
+  font-size: large;
+}
+.category {
+  margin: 0px 20px 0px 20px;
+  cursor: pointer;
+}
+.rightCorner {
+  margin: 0px 20px 0px 20px;
+}

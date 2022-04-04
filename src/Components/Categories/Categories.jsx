@@ -1,34 +1,34 @@
-import styled from "styled-components";
-//import CategoryItem from "./CategoryItem";
-//import { category } from "../../data";
+import React, { useState } from "react";
+import "./category.css";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import { Box, Button, Typography } from "@mui/material";
+import categoryService from "../../Services/CategoryService";
 
-const Container = styled.div``;
-const Text = styled.div`
-  font-size: 30px;
-  padding-left: 20px;
-`;
-const Wrapper = styled.div`
-  flex: 1;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 20px;
-  height: 100%;
-  justify-content: space-between;
-`;
-
-
-
-const Categories = () => {
+export default function Categories() {
+  const [categories, setcategories] = useState([]);
+  const category = ["Electronics", "Health", "LifStyle", "Food"];
   return (
-    <Container>
-      <Text>Categories</Text>
-      <Wrapper>
-        {/* {category.map((item) => (
-          <CategoryItem item={item} key={item.id} />
-        ))} */}
-      </Wrapper>
-    </Container>
-  );
-};
+    <div className="border">
+      <div className="content">
+        <div className="title">
+          <div className="categoryTitle">Catergories</div>
+        </div>
 
-export default Categories;
+        <div className="categories">
+          {category.map((item) => {
+            return (
+              <div component={Button} className="category">
+                {item}
+              </div>
+            );
+          })}
+        </div>
+        <div className="categories">
+          <div className="rightCorner">Login</div>
+          <div>Signup</div>
+        </div>
+      </div>
+    </div>
+  );
+}

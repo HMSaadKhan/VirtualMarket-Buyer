@@ -9,6 +9,13 @@ const HomePage = () => {
     <Container>
       <Categories />
       <Products />
+      <Products />
+      <Products />
+      <Products />
+      <Products />
+      <Products />
+      <Products />
+      <Products />
     </Container>
   );
 };

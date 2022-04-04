@@ -23,7 +23,7 @@ const Cart = (props) => {
         console.log(err);
       });
   };
-  useEffect(getCartItems, []);
+  useEffect(getCartItems, [cartValues]);
   console.log(cartItem);
   const clearCart = () => {
     cartService
@@ -31,6 +31,7 @@ const Cart = (props) => {
       .then((data) => {
         console.log(data);
         setCartItem(null);
+        setCartValues(null);
         props.stateChanged(data);
       })
       .catch((err) => {

@@ -1,0 +1,101 @@
+/* body {
+  background-color: rgb(231, 180, 112);
+} */
+
+.container {
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+  background-color: orange;
+  width: 350px;
+  margin-top: -60px;
+}
+
+p.mb-1 {
+  font-size: 25px;
+  color: black;
+}
+
+.btn-primary {
+  border: none;
+  background: rgb(219, 156, 38);
+  margin-bottom: 60px;
+}
+
+.btn-primary small {
+  color: white;
+}
+
+.btn-primary span {
+  font-size: 13px;
+}
+
+.card.two {
+  font: 400;
+  /* border-top-right-radius: 60px; */
+  /* border-top-left-radius: 0 */
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.form-control {
+  border: none;
+  border-radius: 0;
+  outline: 0;
+  border-bottom: 1.5px solid #e6ebee;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-radius: 0;
+  border-bottom: 2px solid black;
+}
+
+.form-control-placeholder {
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  transition: all 200ms;
+  opacity: 0.5;
+  font-size: 80%;
+}
+
+.form-control:focus + .form-control-placeholder,
+.form-control:valid + .form-control-placeholder {
+  font-size: 80%;
+  transform: translate3d(0, -90%, 0);
+  opacity: 1;
+  top: 10px;
+  color: black;
+}
+
+.btn-block {
+  border: none;
+  border-radius: 8px;
+  background-color: orange;
+  padding: 10px 0 12px;
+}
+
+.btn-block:focus {
+  box-shadow: none;
+}
+
+.btn-block span {
+  font-size: 15px;
+  color: white;
+}
+
+.color {
+  color: red;
+}
+
+.btn-primary:hover{
+  background-color: rgb(182, 120, 4);
+}

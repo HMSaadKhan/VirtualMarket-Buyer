@@ -29,9 +29,10 @@ const ProductTest = (props) => {
   return (
     <Card
       className={classes.root}
-      component={Link}
       sx={{ minWidth: 200 }}
-      to={{ pathname: `ProductDetail/${product._id}` }}
+      onClick={() => {
+        history.push("productDetail/" + product._id);
+      }}
     >
       <CardActionArea>
         <CardMedia

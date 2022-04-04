@@ -1,0 +1,27 @@
+.grow {
+  display: flex;
+
+  flex: 1;
+}
+.title {
+  display: "none";
+}
+.search {
+  position: "relative";
+  width: 100%;
+  margin-left: 25%;
+}
+.searchIcon {
+  padding: 2;
+  height: "100%";
+  position: "absolute";
+  pointer-events: "none";
+  display: "flex";
+  align-items: "center";
+  justify-content: "center";
+}
+.searchInput {
+  border: 3px;
+  height: 25px;
+  width: 500px;
+}

@@ -19,10 +19,11 @@ import "./ProductDetail.css";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import useState from "react-usestateref";
+import { useParams } from "react-router-dom";
 const ProductDetail = (props) => {
   console.log(props);
-  const product = props.match.params.id;
-  console.log(product);
+  const product = useParams();
+  console.log(product.id);
   const [productDetails, SetProductDetails, productDetailsRef] = useState("");
   const [quantity, SetQuantity, quantityRef] = useState();
   const [minusButtonCheck, setMinusButton, minRef] = useState(true);
@@ -32,7 +33,7 @@ const ProductDetail = (props) => {
 
   const getDetails = () => {
     productService
-      .getProductDetails(product)
+      .getProductDetails(product.id)
       .then((data) => {
         console.log(data);
         SetProductDetails(data);
@@ -46,9 +47,10 @@ const ProductDetail = (props) => {
 
   const addToCart = () => {
     cartService
-      .addToCart({ product, quantity, type })
+      .addToCart({ product:product.id, quantity, type })
       .then((data) => {
         console.log(data);
+        props.stateChanged(data);
 
         // toast.error(data.response.data, {
         //   position: toast.POSITION.BOTTOM_LEFT,
@@ -158,6 +160,7 @@ const ProductDetail = (props) => {
                       Add To Cart
                     </button>
                     <button className="featureItem2">Bargain</button>
+                    <button className="featureItem2">Custom Order </button>
                   </div>
                 </div>
               </div>

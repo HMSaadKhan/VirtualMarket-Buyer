@@ -21,6 +21,8 @@ import ProductDetail from "./Components/ProductDetail/ProductDetail";
 import NotFound from "./Components/NotFound/NotFound";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import SignUp2 from "./newpagesBuyer/Signup/Singnup";
 function App() {
   const [refreshCart, setRefreshCart] = React.useState();
   const getStateChanged = (data) => {
@@ -28,31 +30,39 @@ function App() {
     setRefreshCart(data);
   };
   return (
-    <Router>
-      <ToastContainer />
-      <AccountBar />
-      <MenuBar refreshCart={refreshCart} />
-      <Switch>
-        <Route path="/Login" exact component={Login} />
-        <Route path="/Cart">
-          <Cart stateChanged={getStateChanged} />
-        </Route>
-        <Route path="/favorite" exact component={Favorite} />
-        <Route path="/SignUp" exact component={SignUp} />
-        <Route path="/AccountSettings" component={BuyerAccount} />
-        <Route path="/ProductDetail/:id/"component={ProductDetail}/>
-          
-        
-        <Route path="/forgotpassword" component={ForgotPassword} />
-        <Route path="/resetPassword/:id/" exact component={NewPassword} />
-        <Route path="/changepassword/" exact component={ChangePassword} />
-        <Route path="/not-found" component={NotFound} />
-        <Route path="/" exact component={HomePage} />
-        <Redirect to="/not-found" />
-      </Switch>
+    <div>
+      <Router>
+        <ToastContainer />
+        <AccountBar />
+        <MenuBar refreshCart={refreshCart} />
+        <Switch>
+          <Route path="/Login" exact component={Login} />
+          <Route path="/Cart">
+            <Cart stateChanged={getStateChanged} />
+          </Route>
+          <Route path="/favorite" exact component={Favorite} />
+          <Route path="/SignUp" exact component={SignUp} />
+          <Route path="/AccountSettings" component={BuyerAccount} />
+          <Route path="/ProductDetail/:id/">
+            <ProductDetail stateChanged={getStateChanged} />
+          </Route>
+          <Route path="/forgotpassword" component={ForgotPassword} />
+          <Route path="/resetPassword/:id/" exact component={NewPassword} />
+          <Route path="/changepassword/" exact component={ChangePassword} />
+          <Route path="/not-found" component={NotFound} />
 
-      <Footer />
-    </Router>
+          <Route path="/SignUp2" exact component={SignUp2} />
+          <Route path="/forgotpassword2" component={ForgotPassword} />
+          <Route path="/resetPassword2" exact component={NewPassword} />
+          <Route path="/changepassword2" exact component={ChangePassword} />
+
+          <Route path="/" exact component={HomePage} />
+          <Redirect to="/not-found" />
+        </Switch>
+
+        <Footer />
+      </Router>
+    </div>
   );
 }
 
