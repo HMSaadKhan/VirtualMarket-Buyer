@@ -5,6 +5,9 @@
   justify-content: space-between;
   box-sizing: border-box;
 }
+.DetailPage {
+  background-color: #fafafa;
+}
 
 .title {
   align-items: center;
@@ -185,4 +188,11 @@ nav {
 .quantityInput > input {
   width: 30px;
   height: 20px;
+}
+.mainImage {
+  background-color: #4d8b31;
+  display: inline-block;
+  height: 300px;
+  width: 400px;
+  object-fit: contain;
 }

@@ -1,12 +1,50 @@
 import React, { useEffect } from "react";
 import "./cart.css";
-import { Button, Card, CardContent, Grid } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Box,
+  Typography,
+} from "@mui/material";
 import CartItems from "./CartItems";
 import DeleteIcon from "@mui/icons-material/Delete";
 import cartService from "../../Services/CartServices";
 import { Add, Remove, Delete } from "@mui/icons-material";
 import useState from "react-usestateref";
+import { makeStyles } from "@material-ui/styles";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    width: "100%",
+    backgroundColor: "#ba6a62",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#ba6a64",
+      color: "#ffff",
+    },
+  },
+  root: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  clearCartButton: {
+    display: "flex",
+    flexDirection: "row",
+    marginLeft: "49%",
+    paddingTop: "2%",
+    marginBottom: "1%",
+    width: "20%",
+  },
+}));
 const Cart = (props) => {
+  const classes = useStyles();
+  const history = useHistory();
+
   console.log(props);
   const [cartItem, setCartItem, cartItemRef] = useState([]);
   const [cartValues, setCartValues] = useState([]);
@@ -23,7 +61,7 @@ const Cart = (props) => {
         console.log(err);
       });
   };
-  useEffect(getCartItems, [cartValues]);
+  useEffect(getCartItems, []);
   console.log(cartItem);
   const clearCart = () => {
     cartService
@@ -31,7 +69,7 @@ const Cart = (props) => {
       .then((data) => {
         console.log(data);
         setCartItem(null);
-        setCartValues(null);
+
         props.stateChanged(data);
       })
       .catch((err) => {
@@ -50,52 +88,101 @@ const Cart = (props) => {
   const productQtyChange = (data) => {
     setCartItem(cartItemRef.current);
   };
+  const getDeliveryDetails = async () => {
+    await cartService
+      .buyerDeliveryDetails()
+      .then((data) => {
+        console.log(data.data);
+        props.getShippingDetails(data.data);
+        history.push("/check-out");
+      })
+      .catch((err) => {
+        toast.error(err.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+      });
+  };
+
   return (
     <>
-      <div className="clearCartButton">
-        <Button variant="contained" onClick={clearCart}>
+      <div className={classes.clearCartButton}>
+        <Button
+          className={classes.button}
+          variant="contained"
+          onClick={clearCart}
+        >
           Clear Cart
         </Button>
       </div>
 
-      <div className="small-container cart-page">
-        {cartItem ? (
-          <div ml={3}>
-            {cartItem.map((item) => (
-              <CartItems
-                item={item}
-                key={item._id}
-                getCartItems={getCartItems}
-                getProductId={getProductId}
-                productQtyChange={productQtyChange}
-              />
-            ))}
-          </div>
-        ) : null}
+      <div className={classes.root}>
+        <div>
+          {cartItem ? (
+            <Box m={2}>
+              {cartItem.map((item) => (
+                <CartItems
+                  item={item}
+                  key={item._id}
+                  getCartItems={getCartItems}
+                  getProductId={getProductId}
+                  productQtyChange={productQtyChange}
+                />
+              ))}
+            </Box>
+          ) : (
+            <div></div>
+          )}
+        </div>
+        <div>
+          <Box m={2} sx={{ width: 300 }}>
+            <Card sx={{ backgroundColor: "white" }}>
+              <CardContent>
+                <Typography sx={{ fontSize: 18, fontWeight: "bold" }}>
+                  Cart Total
+                </Typography>
 
-        <div className="total-price">
-          <table>
-            <h5>Cart Total</h5>
-            <tr>
-              <td>SubTotal</td>
-              <td>{cartValues.subTotal}</td>
-            </tr>
-            <tr>
-              <td>Shipping</td>
-              {/* <td>{cartValues.seller.deliveryCharge}</td> */}
-            </tr>
-            <tr>
-              <td>Total</td>
-              <td>{cartValues.total}</td>
-            </tr>
-          </table>
-          <div>
-            <button className="checkout-btn cart-btn">Checkout</button>
-            <br />
-            <button className="continue-shopping-btn cart-btn">
-              Continue Shopping
-            </button>
-          </div>
+                <Typography sx={{ display: "flex " }}>
+                  Subtotal
+                  <Box ml={8}>
+                    <Typography>Subtotal value </Typography>
+                  </Box>
+                </Typography>
+                <Typography sx={{ display: "flex " }}>
+                  Shipping{" "}
+                  <Box ml={8}>
+                    <Typography>shipping value </Typography>
+                  </Box>
+                </Typography>
+                <Typography sx={{ display: "flex " }}>
+                  total{" "}
+                  <Box ml={12}>
+                    <Typography>total value </Typography>
+                  </Box>
+                </Typography>
+              </CardContent>
+              <Box>
+                <Button
+                  className={classes.button}
+                  variant="contained"
+                  onClick={() => {
+                    getDeliveryDetails();
+                  }}
+                >
+                  Place Order{" "}
+                </Button>
+              </Box>
+              <Box mt={2}>
+                <Button
+                  className={classes.button}
+                  onClick={() => {
+                    history.push("/");
+                  }}
+                >
+                  Continue Shopping{" "}
+                </Button>
+              </Box>
+            </Card>
+          </Box>
         </div>
       </div>
     </>

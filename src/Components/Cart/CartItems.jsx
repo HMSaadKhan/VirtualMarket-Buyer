@@ -1,11 +1,8 @@
 import { Add, Remove, Delete } from "@mui/icons-material";
 import React, { useEffect } from "react";
 import { Button, Card, IconButton, TextField } from "@mui/material";
-import LoadingScreen from "react-loading-screen";
-import useState from "react-usestateref";
 import "./cart.css";
-import styled from "styled-components";
-import { withRouter } from "react-router";
+
 import cartService from "../../Services/CartServices";
 
 const CartItems = (props) => {
@@ -16,7 +13,7 @@ const CartItems = (props) => {
   console.log(qty);
   const _id = props.item._id;
   console.log(_id);
- 
+
   const plusButton = async () => {
     await cartService
       .incQty(_id)
@@ -52,7 +49,7 @@ const CartItems = (props) => {
   };
   return (
     <div>
-      <Card m={2} sx={{ minWidth: 800 }}>
+      <Card m={2} sx={{ width: 800 }}>
         <div className="cardContent">
           <div>
             <img
@@ -71,7 +68,7 @@ const CartItems = (props) => {
             <IconButton>
               <Remove onClick={minusButton} />
             </IconButton>
-            <input value={qty}  />
+            <input value={qty} />
             <IconButton>
               <Add className="btn-quantity" onClick={plusButton} />
             </IconButton>
@@ -87,4 +84,4 @@ const CartItems = (props) => {
   );
 };
 
-export default withRouter(CartItems);
+export default CartItems;

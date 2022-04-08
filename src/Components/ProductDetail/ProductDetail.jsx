@@ -20,6 +20,7 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import useState from "react-usestateref";
 import { useParams } from "react-router-dom";
+import CommentsDisplay from "../Comments/CommentsDisplay";
 const ProductDetail = (props) => {
   console.log(props);
   const product = useParams();
@@ -28,6 +29,7 @@ const ProductDetail = (props) => {
   const [quantity, SetQuantity, quantityRef] = useState();
   const [minusButtonCheck, setMinusButton, minRef] = useState(true);
   const [plusButtonCheck, setPlusButton, plusRef] = useState(false);
+  const [imageIndex, setImageIndex, imageIndexRef] = useState(0);
 
   const [type, setType] = useState("DEFAULT");
 
@@ -47,7 +49,7 @@ const ProductDetail = (props) => {
 
   const addToCart = () => {
     cartService
-      .addToCart({ product:product.id, quantity, type })
+      .addToCart({ product: product.id, quantity, type })
       .then((data) => {
         console.log(data);
         props.stateChanged(data);
@@ -88,31 +90,15 @@ const ProductDetail = (props) => {
     <div>
       {productDetails ? (
         <div className="DetailPage">
-          <div className="navigationBar">
-            {/* <nav className="navigation">
-              <Breadcrumbs
-                separator={<NavigateNext fontSize="small" />}
-                aria-label="breadcrumb"
-                className="labelIcon"
-              >
-                <Link underline="hover" to="/">
-                  Home
-                </Link>
-                <Typography color="text.primary">
-                  {productDetails.name}
-                </Typography>
-              </Breadcrumbs>
-            </nav> */}
-          </div>
           <div className="mainContainer">
             <div className="productPreview">
-              <>
+              <div className="mainImage">
                 <img
                   className="mainImage"
-                  src={productDetails.images[0].link}
+                  src={productDetails.images[imageIndex].link}
                   alt="Product Preview"
-                ></img>
-              </>
+                />
+              </div>
               <div className="subimages">
                 {productDetails.images.map((images, index) => (
                   <img
@@ -120,6 +106,9 @@ const ProductDetail = (props) => {
                     key={index}
                     src={images.link}
                     alt="images"
+                    onClick={(e) => {
+                      setImageIndex(index);
+                    }}
                   />
                 ))}
               </div>
@@ -227,6 +216,7 @@ const ProductDetail = (props) => {
               </div>
             </div>
           </div>
+          <CommentsDisplay />
         </div>
       ) : (
         <div></div>

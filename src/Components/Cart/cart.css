@@ -119,3 +119,12 @@ cart-info h6 {
 .btn-quantity {
   cursor: pointer;
 }
+.buttons {
+  background-color: #ba6a62;
+}
+
+.cardContainer {
+  display: flex;
+  
+  justify-content: space-between;
+}

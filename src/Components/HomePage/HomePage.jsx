@@ -1,22 +1,37 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import Categories from "../Categories/Categories";
 import Products from "../Product/Products";
 import styled from "styled-components";
+import { makeStyles } from "@material-ui/styles";
+import categoryService from "../../Services/CategoryService";
 
-const Container = styled.div``;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    background: "#fafafa",
+  },
+}));
 const HomePage = () => {
+  const [categories, setCategories] = useState([]);
+
+  const getCategory = () => {
+    categoryService
+      .GetCategories()
+      .then((data) => {
+        console.log(data);
+        setCategories(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  useEffect(getCategory, []);
+  const classes = useStyles();
   return (
-    <Container>
-      <Categories />
-      <Products />
-      <Products />
-      <Products />
-      <Products />
-      <Products />
-      <Products />
-      <Products />
-      <Products />
-    </Container>
+    <div className={classes.root}>
+      {categories.map((product) => (
+        <Products _id={product._id} name={product.name} />
+      ))}
+    </div>
   );
 };
 

@@ -21,13 +21,19 @@ import ProductDetail from "./Components/ProductDetail/ProductDetail";
 import NotFound from "./Components/NotFound/NotFound";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Categories from "./Components/Categories/Categories";
 import SignUp2 from "./newpagesBuyer/Signup/Singnup";
+import CheckOut from "./Components/CheckOut/CheckOut";
 function App() {
   const [refreshCart, setRefreshCart] = React.useState();
+  const [shippingDetails, setshippingDetails] = React.useState();
   const getStateChanged = (data) => {
     console.log(data);
     setRefreshCart(data);
+  };
+  const getShippingDetails = (data) => {
+    console.log(data);
+    setshippingDetails(data);
   };
   return (
     <div>
@@ -35,10 +41,14 @@ function App() {
         <ToastContainer />
         <AccountBar />
         <MenuBar refreshCart={refreshCart} />
+        <Categories />
         <Switch>
           <Route path="/Login" exact component={Login} />
           <Route path="/Cart">
-            <Cart stateChanged={getStateChanged} />
+            <Cart
+              stateChanged={getStateChanged}
+              getShippingDetails={getShippingDetails}
+            />
           </Route>
           <Route path="/favorite" exact component={Favorite} />
           <Route path="/SignUp" exact component={SignUp} />
@@ -49,6 +59,10 @@ function App() {
           <Route path="/forgotpassword" component={ForgotPassword} />
           <Route path="/resetPassword/:id/" exact component={NewPassword} />
           <Route path="/changepassword/" exact component={ChangePassword} />
+          <Route path="/check-out/">
+            <CheckOut shippingDetails={shippingDetails} />
+          </Route>
+
           <Route path="/not-found" component={NotFound} />
 
           <Route path="/SignUp2" exact component={SignUp2} />

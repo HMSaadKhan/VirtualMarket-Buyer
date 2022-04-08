@@ -16,8 +16,11 @@ const useStyles = makeStyles({
     minWidth: "300",
     margin: 20,
   },
-  media: {
-    height: 140,
+  media: {},
+  image: {
+    height: "100px",
+    width: "100px",
+    backgroundSize: "stretch",
   },
 });
 
@@ -35,11 +38,15 @@ const ProductTest = (props) => {
       }}
     >
       <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={product.images[0].link}
-          title={product.name}
-        />
+        <div>
+          <CardMedia
+            component="img"
+            height="300"
+            // className={classes.media}
+            image={product.images[0].link}
+            title={product.name}
+          />
+        </div>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {product.name}

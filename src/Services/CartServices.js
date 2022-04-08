@@ -82,6 +82,40 @@ class CartService extends GenericService {
           reject(err);
         });
     });
+  buyerDeliveryDetails = () =>
+    new Promise((resolve, reject) => {
+      axios
+        .get("buyers/getDeliveryDetails")
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  SellerPaymentMethod = () =>
+    new Promise((resolve, reject) => {
+      axios
+        .get("carts/getSellerPaymentMethods/")
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  CashOnDelivery = (data) =>
+    new Promise((resolve, reject) => {
+      console.log(data);
+      axios
+        .post("orders/codCheckout", data)
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
 }
 
 let cartService = new CartService();

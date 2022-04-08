@@ -1,34 +1,68 @@
-import React, { useState } from "react";
-import "./category.css";
+import React, { useEffect, useState } from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { Box, Button, Typography } from "@mui/material";
 import categoryService from "../../Services/CategoryService";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    border: 1,
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  categoriesHeading: {
+    marginLeft: "40px",
+    marginRight: "40px",
+    marginTop: "10px",
+    marginBottom: "10px",
+    fontSize: "20px",
+    fontWeight: "bold",
+  },
+  categoryText: {},
+  button: {
+    color: "#ba6a62",
+    backgroundColor: "#fff",
+    marginLeft: "10px",
+    fontWeight: "bold",
+    "&:hover": {
+      backgroundColor: "#ba6a64",
+      color: "#ffff",
+    },
+  },
+}));
 
 export default function Categories() {
-  const [categories, setcategories] = useState([]);
-  const category = ["Electronics", "Health", "LifStyle", "Food"];
-  return (
-    <div className="border">
-      <div className="content">
-        <div className="title">
-          <div className="categoryTitle">Catergories</div>
-        </div>
+  const classes = useStyles();
+  const [categories, setCategories] = useState([]);
 
-        <div className="categories">
-          {category.map((item) => {
-            return (
-              <div component={Button} className="category">
-                {item}
-              </div>
-            );
-          })}
-        </div>
-        <div className="categories">
-          <div className="rightCorner">Login</div>
-          <div>Signup</div>
-        </div>
-      </div>
-    </div>
+  const getCategory = () => {
+    categoryService
+      .GetCategories()
+      .then((data) => {
+        console.log(data);
+        setCategories(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  useEffect(getCategory, []);
+  return (
+    <Box className={classes.root}>
+      <Box sx={{ backgroundColor: "#ba6a62", color: "white" }}>
+        <Typography className={classes.categoriesHeading}>
+          Catergories
+        </Typography>
+      </Box>
+      <Box className="categories">
+        {categories.map((item) => {
+          return <Button className={classes.button}>{item.name}</Button>;
+        })}
+      </Box>
+      <Box></Box>
+      <Box></Box>
+    </Box>
   );
 }
