@@ -12,29 +12,29 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import Radio from "@mui/material/Radio";
-import { makeStyles } from "@material-ui/styles";
+  import { makeStyles } from "@material-ui/styles";
 
-const useStyles = makeStyles((theme) => ({
-  textField: {
-    display: "flex",
-  },
-  root: {
-    display: "flex",
-    justifyContent: "space-around",
-  },
-  button: {
-    marginLeft: 5,
-    width: "100%",
-    backgroundColor: "#ba6a62",
-    color: "#fff",
-    "&:hover": {
-      backgroundColor: "#ba6a64",
-      color: "#ffff",
+  const useStyles = makeStyles((theme) => ({
+    textField: {
+      display: "flex",
     },
-  },
-  cardDetails: {},
-  innerContainer: { display: "flex", flexDirection: "column", width: 800 },
-}));
+    root: {
+      display: "flex",
+      justifyContent: "space-around",
+    },
+    button: {
+      marginLeft: 5,
+      width: "100%",
+      backgroundColor: "#ba6a62",
+      color: "#fff",
+      "&:hover": {
+        backgroundColor: "#ba6a64",
+        color: "#ffff",
+      },
+    },
+    cardDetails: {},
+    innerContainer: { display: "flex", flexDirection: "column", width: 800 },
+  }));
 
 export default function CheckOutSideBar(props) {
   const classes = useStyles();

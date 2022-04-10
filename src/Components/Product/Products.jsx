@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Grid } from "@mui/material";
 import productService from "../../Services/ProductServices";
-import Product from "./Product";
-import ProductTest from "./ProductTest";
+
+import ProductTest from "./ProductComponent";
 import { Typography } from "@material-ui/core";
 
 const Products = (props) => {
@@ -44,7 +44,7 @@ const Products = (props) => {
             {name}
           </Typography>
 
-          <Grid container justifyContent="center" spacing={3}>
+          <Grid container justifyContent="center" spacing={2}>
             {products.map((product, index) => (
               <ProductTest key={index} product={product} />
             ))}

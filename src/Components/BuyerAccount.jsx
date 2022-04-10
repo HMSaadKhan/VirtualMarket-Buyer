@@ -6,6 +6,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Auth from "../Components/AuthWrapper/Auth";
+import OrderMenu from "./OrderList/OrderMenu";
 
 const Container = styled.div`
   width: 100vw;
@@ -78,6 +79,7 @@ const BuyerAccount = (props) => {
 
   return (
     <Auth>
+      <OrderMenu />
       <Container>
         <Wrapper>
           <Title>Account Details</Title>

@@ -98,6 +98,9 @@ const AccountBar = (props) => {
           <MenuItem value="/AccountSettings" onClick={handleChange}>
             Account
           </MenuItem>
+          <MenuItem value="/orders" onClick={handleChange}>
+            Orders
+          </MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </div>
       )}

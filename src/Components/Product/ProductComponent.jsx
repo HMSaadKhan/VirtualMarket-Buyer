@@ -9,22 +9,18 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import Box from "@mui/material/Box";
 
 const useStyles = makeStyles({
-  root: {
-    height: "auto",
-    minWidth: "300",
-    margin: 20,
-  },
-  media: {},
-  image: {
-    height: "100px",
-    width: "100px",
-    backgroundSize: "stretch",
+  root: { width: "200px", margin: 20 },
+  media: {
+    width: "200px",
+    height: "200px",
+    objectFit: "contain",
   },
 });
 
-const ProductTest = (props) => {
+const ProductComponent = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const { product } = props;
@@ -38,25 +34,23 @@ const ProductTest = (props) => {
       }}
     >
       <CardActionArea>
-        <div>
-          <CardMedia
-            component="img"
-            height="300"
-            // className={classes.media}
-            image={product.images[0].link}
-            title={product.name}
-          />
-        </div>
-        <CardContent>
+        <CardMedia
+          className={classes.media}
+          component="img"
+          image={product.images[0].link}
+          title={product.name}
+        />
+
+        <Box ml={1}>
           <Typography gutterBottom variant="h5" component="h2">
             {product.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             PKR:{product.price}
           </Typography>
-        </CardContent>
+        </Box>
       </CardActionArea>
     </Card>
   );
 };
-export default ProductTest;
+export default ProductComponent;

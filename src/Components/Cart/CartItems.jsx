@@ -1,18 +1,38 @@
 import { Add, Remove, Delete } from "@mui/icons-material";
 import React, { useEffect } from "react";
-import { Button, Card, IconButton, TextField } from "@mui/material";
-import "./cart.css";
-
+import {
+  Button,
+  Card,
+  IconButton,
+  TextField,
+  Typography,
+  Box,
+} from "@mui/material";
 import cartService from "../../Services/CartServices";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    padding: "30px",
+    margin: "auto",
+  },
+  image: {
+    width: "100px",
+    height: "100px",
+    objectFit: "contain",
+  },
+}));
 
 const CartItems = (props) => {
-  console.log(props);
-  const { getCartItems, getProductId } = props;
-  // const [qty, setQty] = useState(0);
-  const qty = props.item.quantity;
-  console.log(qty);
+  console.log(props.item);
+  const classes = useStyles();
+  const { getCartItems, getProductId, item } = props;
+  const qty = item.quantity;
   const _id = props.item._id;
-  console.log(_id);
 
   const plusButton = async () => {
     await cartService
@@ -49,22 +69,26 @@ const CartItems = (props) => {
   };
   return (
     <div>
-      <Card m={2} sx={{ width: 800 }}>
-        <div className="cardContent">
-          <div>
-            <img
-              className="cartImage"
-              src={props.item.product.images[0].link}
-              alt="image"
-            />
-            <span>{props.item.product.name}</span>
-            <br />
-            <span>
-              {!props.item.type == "DEFAULT" ? <>props.item.type</> : <></>}
-            </span>
-          </div>
-          <div className="Price">PKR {props.item.product.price}</div>
-          <div className="quantityInput">
+      <Card sx={{ width: 800, margin: "10px" }}>
+        <Box className={classes.root}>
+          <Box>
+            <img className={classes.image} src={item.product.images[0].link} />
+          </Box>
+          <Box>
+            <Typography>{item.product.name}</Typography>
+            {item.type == "DEFAULT" ? (
+              <></>
+            ) : (
+              <Typography sx={{ mt: 1.5 }} color="text.secondary">
+                {item.type}
+              </Typography>
+            )}
+          </Box>
+          <Typography sx={{ color: "#ba6a62" }}>
+            {item.product.price}
+          </Typography>
+
+          <Box className="quantityInput">
             <IconButton>
               <Remove onClick={minusButton} />
             </IconButton>
@@ -72,13 +96,15 @@ const CartItems = (props) => {
             <IconButton>
               <Add className="btn-quantity" onClick={plusButton} />
             </IconButton>
-          </div>
-          <div className="Price">PKR {qty * props.item.product.price}</div>
+          </Box>
 
-          <div>
+          <Typography sx={{ fontWeight: "bold", color: "#ba6a62" }}>
+            {item.totalPrice}
+          </Typography>
+          <Box>
             <Delete onClick={deleteButton} />
-          </div>
-        </div>
+          </Box>
+        </Box>
       </Card>
     </div>
   );

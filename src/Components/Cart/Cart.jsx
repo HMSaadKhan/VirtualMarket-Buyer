@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./cart.css";
+
 import {
   Button,
   Card,
@@ -48,6 +48,9 @@ const Cart = (props) => {
   console.log(props);
   const [cartItem, setCartItem, cartItemRef] = useState([]);
   const [cartValues, setCartValues] = useState([]);
+  const [subtotal, setsubtotal] = useState(0);
+  const [deliveryCharge, setdeliveryCharge] = useState(0);
+  const [total, settotal] = useState(0);
   const getCartItems = async () => {
     await cartService
       .getCart()
@@ -55,21 +58,26 @@ const Cart = (props) => {
         console.log(data);
         setCartItem(data.items);
         console.log("get cart items");
-        setCartValues(data);
+        settotal(data.total);
+        setdeliveryCharge(data.seller.deliveryCharge);
+        setsubtotal(data.subTotal);
       })
       .catch((err) => {
         console.log(err);
       });
   };
   useEffect(getCartItems, []);
-  console.log(cartItem);
+
   const clearCart = () => {
     cartService
       .clearCart()
       .then((data) => {
         console.log(data);
         setCartItem(null);
-
+        settotal(0);
+        setsubtotal(0);
+        setdeliveryCharge(0);
+        getCartItems();
         props.stateChanged(data);
       })
       .catch((err) => {
@@ -88,12 +96,10 @@ const Cart = (props) => {
   const productQtyChange = (data) => {
     setCartItem(cartItemRef.current);
   };
-  const getDeliveryDetails = async () => {
+  const ProceedtoCheckOut = async () => {
     await cartService
-      .buyerDeliveryDetails()
+      .ProceedToCheckOut()
       .then((data) => {
-        console.log(data.data);
-        props.getShippingDetails(data.data);
         history.push("/check-out");
       })
       .catch((err) => {
@@ -105,6 +111,7 @@ const Cart = (props) => {
 
   return (
     <>
+      {console.log(cartItem)}
       <div className={classes.clearCartButton}>
         <Button
           className={classes.button}
@@ -143,20 +150,20 @@ const Cart = (props) => {
 
                 <Typography sx={{ display: "flex " }}>
                   Subtotal
-                  <Box ml={8}>
-                    <Typography>Subtotal value </Typography>
+                  <Box ml={8.5}>
+                    <Typography>{subtotal}</Typography>
                   </Box>
                 </Typography>
                 <Typography sx={{ display: "flex " }}>
                   Shipping{" "}
                   <Box ml={8}>
-                    <Typography>shipping value </Typography>
+                    <Typography>{deliveryCharge}</Typography>
                   </Box>
                 </Typography>
                 <Typography sx={{ display: "flex " }}>
                   total{" "}
                   <Box ml={12}>
-                    <Typography>total value </Typography>
+                    <Typography>{total}</Typography>
                   </Box>
                 </Typography>
               </CardContent>
@@ -165,7 +172,7 @@ const Cart = (props) => {
                   className={classes.button}
                   variant="contained"
                   onClick={() => {
-                    getDeliveryDetails();
+                    ProceedtoCheckOut();
                   }}
                 >
                   Place Order{" "}

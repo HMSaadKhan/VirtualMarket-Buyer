@@ -24,6 +24,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Categories from "./Components/Categories/Categories";
 import SignUp2 from "./newpagesBuyer/Signup/Singnup";
 import CheckOut from "./Components/CheckOut/CheckOut";
+import Orders from "./Components/OrderList/Orders";
 function App() {
   const [refreshCart, setRefreshCart] = React.useState();
   const [shippingDetails, setshippingDetails] = React.useState();
@@ -36,47 +37,46 @@ function App() {
     setshippingDetails(data);
   };
   return (
-    <div>
-      <Router>
-        <ToastContainer />
-        <AccountBar />
-        <MenuBar refreshCart={refreshCart} />
-        <Categories />
-        <Switch>
-          <Route path="/Login" exact component={Login} />
-          <Route path="/Cart">
-            <Cart
-              stateChanged={getStateChanged}
-              getShippingDetails={getShippingDetails}
-            />
-          </Route>
-          <Route path="/favorite" exact component={Favorite} />
-          <Route path="/SignUp" exact component={SignUp} />
-          <Route path="/AccountSettings" component={BuyerAccount} />
-          <Route path="/ProductDetail/:id/">
-            <ProductDetail stateChanged={getStateChanged} />
-          </Route>
-          <Route path="/forgotpassword" component={ForgotPassword} />
-          <Route path="/resetPassword/:id/" exact component={NewPassword} />
-          <Route path="/changepassword/" exact component={ChangePassword} />
-          <Route path="/check-out/">
-            <CheckOut shippingDetails={shippingDetails} />
-          </Route>
+    <Router>
+      <ToastContainer />
+      <AccountBar />
+      <MenuBar refreshCart={refreshCart} />
+      <Categories />
+      <Switch>
+        <Route path="/Login" exact component={Login} />
+        <Route path="/Cart">
+          <Cart
+            stateChanged={getStateChanged}
+            getShippingDetails={getShippingDetails}
+          />
+        </Route>
+        {/* <Route path="/favorite" exact component={Favorite} /> */}
+        <Route path="/SignUp" exact component={SignUp} />
+        <Route path="/AccountSettings" component={BuyerAccount} />
+        <Route path="/Orders" component={Orders} />
+        <Route path="/ProductDetail/:id/">
+          <ProductDetail stateChanged={getStateChanged} />
+        </Route>
+        <Route path="/forgotpassword" component={ForgotPassword} />
+        <Route path="/resetPassword/:id/" exact component={NewPassword} />
+        <Route path="/changepassword/" exact component={ChangePassword} />
+        <Route path="/check-out/">
+          <CheckOut stateChanged={getStateChanged} />
+        </Route>
 
-          <Route path="/not-found" component={NotFound} />
+        <Route path="/not-found" component={NotFound} />
 
-          <Route path="/SignUp2" exact component={SignUp2} />
-          <Route path="/forgotpassword2" component={ForgotPassword} />
-          <Route path="/resetPassword2" exact component={NewPassword} />
-          <Route path="/changepassword2" exact component={ChangePassword} />
+        <Route path="/SignUp2" exact component={SignUp2} />
+        <Route path="/forgotpassword2" component={ForgotPassword} />
+        <Route path="/resetPassword2" exact component={NewPassword} />
+        <Route path="/changepassword2" exact component={ChangePassword} />
 
-          <Route path="/" exact component={HomePage} />
-          <Redirect to="/not-found" />
-        </Switch>
+        <Route path="/" exact component={HomePage} />
+        <Redirect to="/not-found" />
+      </Switch>
 
-        <Footer />
-      </Router>
-    </div>
+      <Footer />
+    </Router>
   );
 }
 

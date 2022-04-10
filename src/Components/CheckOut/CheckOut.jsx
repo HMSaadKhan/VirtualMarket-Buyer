@@ -11,6 +11,8 @@ import CheckOutSideBar from "./CheckOutSideBar";
 import ItemCard from "./ItemCard";
 import CardDetails from "./CardDetails";
 import cartService from "../../Services/CartServices";
+import CartItems from "../Cart/CartItems";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -26,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CheckOut(props) {
+  const history = useHistory();
   console.log(props);
   const { shippingDetails } = props;
   const classes = useStyles();
@@ -67,7 +70,7 @@ export default function CheckOut(props) {
         console.log(err);
       });
   };
-  useEffect(getDeliveryDetails, []);
+  useEffect(getDeliveryDetails, [CartItems]);
 
   const handleName = (data) => {
     console.log(data);
@@ -97,11 +100,13 @@ export default function CheckOut(props) {
       });
   };
   useEffect(PaymentMethods, []);
-  const paymentProceed = () => {
-    cartService
+  const paymentProceed = async () => {
+    await cartService
       .CashOnDelivery({ name, address, phone, city })
       .then((data) => {
         console.log(data);
+        props.stateChanged(data);
+        history.push("/");
       })
       .catch((err) => {
         console.log(err);

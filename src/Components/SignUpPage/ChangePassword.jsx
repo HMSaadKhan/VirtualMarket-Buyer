@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 
 import Auth from "../../Components/AuthWrapper/Auth";
+import OrderMenu from "../OrderList/OrderMenu";
 
 const Container = styled.div`
   width: 100vw;
@@ -55,6 +56,7 @@ const ChangenewPassword = (props) => {
   return (
     <Auth>
       <Container>
+        <OrderMenu />
         <Wrapper>
           <Title>Change Password</Title>
           <Form>
