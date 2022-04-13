@@ -134,7 +134,7 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
                 >
                   City{" "}
                   <Typography ml={6} className={classes.text}>
-                    {order.deliveryCity}
+                    {order.deliveryCity.name}
                   </Typography>
                 </Typography>
                 <Typography

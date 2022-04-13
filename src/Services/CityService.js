@@ -1,13 +1,13 @@
 import GenericService from "./GenericService";
 
-class CategoryService extends GenericService {
+class CityService extends GenericService {
   constructor() {
     super();
   }
 
-  GetCategories = () =>
+  GetCities = () =>
     new Promise((resolve, reject) => {
-      this.get("categories/getAll")
+      this.get("cities/getAll")
         .then((data) => {
           resolve(data);
         })
@@ -16,5 +16,5 @@ class CategoryService extends GenericService {
         });
     });
 }
-let categoryService = new CategoryService();
-export default categoryService;
+let cityService = new CityService();
+export default cityService;

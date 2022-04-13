@@ -4,6 +4,7 @@ import CardContent from "@material-ui/core/CardContent";
 import { Box, Button, Typography } from "@mui/material";
 import categoryService from "../../Services/CategoryService";
 import { makeStyles } from "@material-ui/styles";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,13 +36,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Categories() {
   const classes = useStyles();
+  const history = useHistory();
   const [categories, setCategories] = useState([]);
 
   const getCategory = () => {
     categoryService
       .GetCategories()
       .then((data) => {
-        console.log(data);
         setCategories(data);
       })
       .catch((error) => {
@@ -58,7 +59,16 @@ export default function Categories() {
       </Box>
       <Box className="categories">
         {categories.map((item) => {
-          return <Button className={classes.button}>{item.name}</Button>;
+          return (
+            <Button
+              className={classes.button}
+              onClick={(e) => {
+                history.push("/" + item._id);
+              }}
+            >
+              {item.name}
+            </Button>
+          );
         })}
       </Box>
       <Box></Box>

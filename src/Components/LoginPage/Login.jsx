@@ -73,8 +73,8 @@ const Login = (props) => {
             <Button
               color="success"
               variant="contained"
-              onClick={(e) => {
-                buyerService
+              onClick={async (e) => {
+                await buyerService
                   .login(email, password)
                   .then((data) => {
                     console.log(data);

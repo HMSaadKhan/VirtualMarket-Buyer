@@ -13,6 +13,7 @@ import CardDetails from "./CardDetails";
 import cartService from "../../Services/CartServices";
 import CartItems from "../Cart/CartItems";
 import { useHistory } from "react-router-dom";
+import cityService from "../../Services/CityService";
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CheckOut(props) {
   const history = useHistory();
-  console.log(props);
+
   const { shippingDetails } = props;
   const classes = useStyles();
   const [cartItem, setCartItem] = useState([]);
@@ -37,9 +38,27 @@ export default function CheckOut(props) {
   const [deliveryCharge, setdeliveryCharge] = useState();
   const [name, setname] = useState();
   const [address, setaddress] = useState();
-  const [city, setcity] = useState();
+  const [city, setCity] = useState();
   const [phone, setphone] = useState();
+  const [cities, setcities] = useState([]);
   const [onlinePaymentOption, setonlinePaymentOption] = useState();
+
+  const getCities = () => {
+    cityService
+      .GetCities()
+      .then((data) => {
+        setcities(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  React.useEffect(getCities, []);
+
+  const selectChange = (e) => {
+    setCity(e.target.value);
+  };
+
   const getCartItems = async () => {
     await cartService
       .getCart()
@@ -63,7 +82,7 @@ export default function CheckOut(props) {
         console.log("get Delivery Details");
         setname(data.data.name);
         setaddress(data.data.address);
-        setcity(data.data.city.name);
+        setCity(data.data.city._id);
         setphone(data.data.phone);
       })
       .catch((err) => {
@@ -73,26 +92,19 @@ export default function CheckOut(props) {
   useEffect(getDeliveryDetails, [CartItems]);
 
   const handleName = (data) => {
-    console.log(data);
     setname(data);
   };
   const handleAddress = (data) => {
-    console.log(data);
     setaddress(data);
   };
-  const handleCity = (data) => {
-    console.log(data);
-    setcity(data);
-  };
+
   const handlePhone = (data) => {
-    console.log(data);
     setphone(data);
   };
   const PaymentMethods = () => {
     cartService
       .SellerPaymentMethod()
       .then((data) => {
-        console.log(data.data.onlinePaymentOption);
         setonlinePaymentOption(data.data.onlinePaymentOption);
       })
       .catch((err) => {
@@ -104,7 +116,6 @@ export default function CheckOut(props) {
     await cartService
       .CashOnDelivery({ name, address, phone, city })
       .then((data) => {
-        console.log(data);
         props.stateChanged(data);
         history.push("/");
       })
@@ -127,7 +138,7 @@ export default function CheckOut(props) {
           </CardContent>
         </Card>
         <br />
-        {console.log(onlinePaymentOption)}
+
         {onlinePaymentOption ? <CardDetails /> : <></>}
       </Box>
       {cartValues ? (
@@ -138,8 +149,9 @@ export default function CheckOut(props) {
           handlePhone={handlePhone}
           name={name}
           handleName={handleName}
+          cities={cities}
           city={city}
-          handleCity={handleCity}
+          selectChange={selectChange}
           address={address}
           handleAdress={handleAddress}
           paymentProceed={paymentProceed}

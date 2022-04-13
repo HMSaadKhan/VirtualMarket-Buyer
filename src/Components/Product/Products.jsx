@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Grid } from "@mui/material";
 import productService from "../../Services/ProductServices";
 
-import ProductTest from "./ProductComponent";
+import ProductComponent from "./ProductComponent";
 import { Typography } from "@material-ui/core";
 
 const Products = (props) => {
@@ -46,7 +46,7 @@ const Products = (props) => {
 
           <Grid container justifyContent="center" spacing={2}>
             {products.map((product, index) => (
-              <ProductTest key={index} product={product} />
+              <ProductComponent key={index} product={product} />
             ))}
           </Grid>
         </>

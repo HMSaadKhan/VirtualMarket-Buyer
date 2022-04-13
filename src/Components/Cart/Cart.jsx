@@ -48,7 +48,7 @@ const Cart = (props) => {
   console.log(props);
   const [cartItem, setCartItem, cartItemRef] = useState([]);
   const [cartValues, setCartValues] = useState([]);
-  const [subtotal, setsubtotal] = useState(0);
+  const [subtotal, setsubtotal, subtotalRef] = useState(0);
   const [deliveryCharge, setdeliveryCharge] = useState(0);
   const [total, settotal] = useState(0);
   const getCartItems = async () => {
@@ -56,6 +56,11 @@ const Cart = (props) => {
       .getCart()
       .then((data) => {
         console.log(data);
+        if (data.status == 200) {
+          toast.success(data.statusText, {
+            position: toast.POSITION.BOTTOM_LEFT,
+          });
+        }
         setCartItem(data.items);
         console.log("get cart items");
         settotal(data.total);
@@ -63,7 +68,15 @@ const Cart = (props) => {
         setsubtotal(data.subTotal);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
+        
+        if (err.response.data === "No Items in Cart") {
+          console.log("I ran");
+          setCartItem(null);
+          settotal(0);
+          setsubtotal(0);
+          setdeliveryCharge(0);
+        }
       });
   };
   useEffect(getCartItems, []);
@@ -151,7 +164,7 @@ const Cart = (props) => {
                 <Typography sx={{ display: "flex " }}>
                   Subtotal
                   <Box ml={8.5}>
-                    <Typography>{subtotal}</Typography>
+                    <Typography>{subtotalRef.current}</Typography>
                   </Box>
                 </Typography>
                 <Typography sx={{ display: "flex " }}>

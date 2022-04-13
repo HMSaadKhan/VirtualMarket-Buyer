@@ -61,7 +61,9 @@ const CartItems = (props) => {
       .deleteItem(_id)
       .then((e) => {
         console.log(e);
+
         getProductId(_id);
+        getCartItems();
       })
       .catch((error) => {
         console.log(error);

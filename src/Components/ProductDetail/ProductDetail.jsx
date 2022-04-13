@@ -53,16 +53,15 @@ const ProductDetail = (props) => {
       .then((data) => {
         console.log(data);
         props.stateChanged(data);
-
-        // toast.error(data.response.data, {
-        //   position: toast.POSITION.BOTTOM_LEFT,
-        // });
+        toast.error(data.statusText, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
       })
       .catch((error) => {
-        console.log(error);
-        // toast.error(error.response.data, {
-        //   position: toast.POSITION.BOTTOM_LEFT,
-        // });
+        console.log(error.response);
+        toast.error(error.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
       });
   };
   const minusButton = () => {

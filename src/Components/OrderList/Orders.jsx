@@ -44,7 +44,6 @@ export default function Orders(props) {
 
   return (
     <Box className={classes.root}>
-      <OrderMenu />
       <Box sx={{ width: "50%", marginLeft: "2%" }}>
         <Box>
           {orderDetails.length > 0 ? (

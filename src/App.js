@@ -25,6 +25,7 @@ import Categories from "./Components/Categories/Categories";
 import SignUp2 from "./newpagesBuyer/Signup/Singnup";
 import CheckOut from "./Components/CheckOut/CheckOut";
 import Orders from "./Components/OrderList/Orders";
+import ProductsByCategory from "./Components/HomePage/ProductsByCategory";
 function App() {
   const [refreshCart, setRefreshCart] = React.useState();
   const [shippingDetails, setshippingDetails] = React.useState();
@@ -70,6 +71,7 @@ function App() {
         <Route path="/forgotpassword2" component={ForgotPassword} />
         <Route path="/resetPassword2" exact component={NewPassword} />
         <Route path="/changepassword2" exact component={ChangePassword} />
+        <Route path="/:id" exact component={ProductsByCategory} />
 
         <Route path="/" exact component={HomePage} />
         <Redirect to="/not-found" />

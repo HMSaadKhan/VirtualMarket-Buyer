@@ -9,36 +9,38 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Radio from "@mui/material/Radio";
-  import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/styles";
+import Select from "@mui/material/Select";
+import { MenuItem } from "@mui/material";
 
-  const useStyles = makeStyles((theme) => ({
-    textField: {
-      display: "flex",
+const useStyles = makeStyles((theme) => ({
+  textField: {
+    display: "flex",
+  },
+  root: {
+    display: "flex",
+    justifyContent: "space-around",
+  },
+  button: {
+    marginLeft: 5,
+    width: "100%",
+    backgroundColor: "#ba6a62",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#ba6a64",
+      color: "#ffff",
     },
-    root: {
-      display: "flex",
-      justifyContent: "space-around",
-    },
-    button: {
-      marginLeft: 5,
-      width: "100%",
-      backgroundColor: "#ba6a62",
-      color: "#fff",
-      "&:hover": {
-        backgroundColor: "#ba6a64",
-        color: "#ffff",
-      },
-    },
-    cardDetails: {},
-    innerContainer: { display: "flex", flexDirection: "column", width: 800 },
-  }));
+  },
+  cardDetails: {},
+  innerContainer: { display: "flex", flexDirection: "column", width: 800 },
+}));
 
 export default function CheckOutSideBar(props) {
   const classes = useStyles();
-  console.log(props);
+  console.log(props.city);
   const {
     cartValues,
     deliveryCharge,
@@ -49,7 +51,8 @@ export default function CheckOutSideBar(props) {
     handleAddress,
     handlePhone,
     phone,
-    handleCity,
+    selectChange,
+    cities,
     city,
     paymentProceed,
   } = props;
@@ -128,15 +131,25 @@ export default function CheckOutSideBar(props) {
                     handleAddress(e.target.value);
                   }}
                 />
-                <TextField
-                  value={city}
-                  label="City"
-                  size="small"
-                  InputLabelProps={{ shrink: city ? true : false }}
-                  onChange={(e) => {
-                    handleCity(e.target.value);
-                  }}
-                />
+                <Box ml={1} mt={0.5}>
+                  <FormControl sx={{ minWidth: 215 }}>
+                    <InputLabel>City</InputLabel>
+
+                    <Select
+                      size="small"
+                      value={city}
+                      onChange={(e) => {
+                        selectChange(e);
+                      }}
+                    >
+                      {cities.map((item) => (
+                        <MenuItem key={item} value={item._id}>
+                          {item.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
               </Box>
               <Divider />
               {/* <Box>
