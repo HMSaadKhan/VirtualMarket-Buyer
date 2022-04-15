@@ -2,34 +2,14 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { AccountCircle, Call, WindowSharp } from "@mui/icons-material";
-import { MenuItem, Avatar } from "@mui/material";
+import { MenuItem, Avatar, Typography } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import buyerService from "../../Services/BuyerService";
 import axios from "axios";
 import { IconButton } from "@material-ui/core";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-const Container = styled.div`
-  height: 50px;
-  background-color: white;
-`;
-const Wrapper = styled.div`
-  padding: 4px 7px;
-  display: flex;
-  align-item: center;
-  justify-content: space-between;
-`;
-const Right = styled.div`
-  display: flex;
-  padding: 3px;
-  margin-right: 100px;
-`;
-const Left = styled.div`
-  display: flex;
-  padding: 5px;
-  margin-left: 40px;
-`;
-
-const AccountBar = (props) => {
+const AccountIcon = (props) => {
   const [fname, setfname] = useState("");
   const [lname, setlname] = useState("");
 
@@ -37,8 +17,8 @@ const AccountBar = (props) => {
     buyerService
       .getUserName()
       .then((data) => {
-        setfname(data.fName.charAt(0));
-        setlname(data.lName.charAt(0));
+        setfname(data.fName.charAt(0).toUpperCase());
+        setlname(data.lName.charAt(0).toUpperCase());
       })
       .catch((err) => {
         console.log(err);
@@ -72,14 +52,6 @@ const AccountBar = (props) => {
     <Menu
       id="basic-menu"
       anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "center",
-      }}
-      transformOrigin={{
-        vertical: "center",
-        horizontal: "left",
-      }}
       keepMounted
       open={isMenuOpen}
       onClose={handleMenuClose}
@@ -108,26 +80,23 @@ const AccountBar = (props) => {
   );
 
   return (
-    <Container>
-      <Wrapper>
-        <Left>
-          <Call />
-          +0900 78601
-        </Left>
-        <Right>
-          {!buyerService.isLoggedIn() ? (
-            <AccountCircle onClick={handleProfileMenuOpen} />
-          ) : (
-            <IconButton onClick={handleProfileMenuOpen}>
-              {fname}
-              {lname}
-            </IconButton>
-          )}
-        </Right>
-      </Wrapper>
+    <div>
+      {!buyerService.isLoggedIn() ? (
+        <AccountCircleIcon onClick={handleProfileMenuOpen} />
+      ) : (
+        <Avatar
+          sx={{ width: 24, height: 24, bgcolor: "#ba6a62" }}
+          onClick={handleProfileMenuOpen}
+        >
+          <Typography sx={{ width: 16, height: 16, marginBottom: "6px", marginRight: "4px"}}>
+            {fname}
+            {lname}
+          </Typography>
+        </Avatar>
+      )}
       {renderMenu}
-    </Container>
+    </div>
   );
 };
 
-export default AccountBar;
+export default AccountIcon;

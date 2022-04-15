@@ -14,7 +14,7 @@ import Box from "@mui/material/Box";
 const useStyles = makeStyles({
   root: { width: "200px", margin: 20 },
   media: {
-    width: "200px",
+    width: "180px",
     height: "200px",
     objectFit: "contain",
   },
@@ -41,13 +41,18 @@ const ProductComponent = (props) => {
           title={product.name}
         />
 
-        <Box ml={1}>
-          <Typography gutterBottom variant="h5" component="h2">
-            {product.name}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            PKR:{product.price}
-          </Typography>
+        <Box ml={1} sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Box>
+            <Typography sx={{ fontSize: "16px" }}>{product.name}</Typography>
+            <Typography mr={1} sx={{ fontWeight: "bold", color: "#ba6a62" }}>
+              PKR:{product.price}
+            </Typography>
+          </Box>
+          <Box>
+            <Typography mr={1}sx={{ fontSize: "12px" }}>
+              MoQ:{product.name}
+            </Typography>
+          </Box>
         </Box>
       </CardActionArea>
     </Card>

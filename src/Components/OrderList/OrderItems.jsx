@@ -10,13 +10,8 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import orderService from "../../Services/OrderService";
 import { Divider } from "@material-ui/core";
+import CommentWriting from "../Comments/CommentWriting";
 
-const steps = [
-  "Received Date",
-  "Packaging Date",
-  "Shipping Date",
-  "completion Date",
-];
 const useStyles = makeStyles((theme) => ({
   root: {
     // display: "flex",
@@ -26,9 +21,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function OrderItems({ items }) {
+export default function OrderItems({ items, orderStatus, orderId }) {
   const classes = useStyles();
-
+  console.log(items);
   return (
     <>
       {" "}
@@ -49,6 +44,13 @@ export default function OrderItems({ items }) {
         <Box sx={{ width: "25%" }}>
           <Typography>{items.totalPrice}</Typography>
         </Box>
+        {orderStatus === "DELIVERED" ? (
+          <Box sx={{ width: "25%" }}>
+            <CommentWriting orderId={orderId} itemId={items._id} />
+          </Box>
+        ) : (
+          <></>
+        )}
       </Box>
       <Divider />
     </>

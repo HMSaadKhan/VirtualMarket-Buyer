@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   container: { width: "50%" },
 }));
 
-export default function CommentsDisplay(props) {
+export default function CommentsDisplay({ review }) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -22,22 +22,11 @@ export default function CommentsDisplay(props) {
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <CardContent sx={{ flex: "1 0 auto" }}>
               <Typography>
-                <Rating name="read-only" value={0} readOnly />
+                <Rating name="read-only" value={review.rating} readOnly />
               </Typography>
               <Typography sx={{ color: "#ba6a62" }}>by Saad Khan</Typography>
 
-              <Typography>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of
-                Lorem Ipsum.
-              </Typography>
+              <Typography>{review.comment}</Typography>
             </CardContent>
           </Box>
         </Card>

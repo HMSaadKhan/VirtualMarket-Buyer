@@ -10,14 +10,8 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import OrderItems from "./OrderItems";
 import Divider from "@mui/material/Divider";
-import orderService from "../../Services/OrderService";
+import moment from "moment";
 
-const steps = [
-  "Received Date",
-  "Packaging Date",
-  "Shipping Date",
-  "completion Date",
-];
 const useStyles = makeStyles((theme) => ({
   heading: {
     color: "#ba6a62",
@@ -39,15 +33,26 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
   const classes = useStyles();
   const [buttonLabel, setbuttonLabel] = useState("");
   const [dates, setdates] = useState([]);
-  const dateNames = [
-    "Placed Date",
-    "Packaging Date",
-    "Shipping Date",
-    "Completing Date",
-  ];
+  const [index, setindex] = useState();
+
+  const ButtonLabel = () => {
+    if (order.status == "PLACED") {
+      setindex(1);
+    }
+    if (order.status == "PACKAGING") {
+      setindex(2);
+    }
+    if (order.status == "SHIPPING") {
+      setindex(3);
+    }
+    if (order.status == "DELIVERED") {
+      setindex(4);
+    }
+  };
+  useEffect(ButtonLabel, []);
 
   return (
-    <Box>
+    <Box m={3}>
       <Card sx={{ width: "100%", height: "80%" }}>
         <CardContent>
           <Card sx={{ margin: "10px" }}>
@@ -94,13 +99,23 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
                 <Box sx={{ width: "25%" }}>
                   <Typography className={classes.heading}>Price</Typography>
                 </Box>
+                {order.status === "DELIVERED" ? (
+                  <Box sx={{ width: "25%" }}></Box>
+                ) : (
+                  <></>
+                )}
               </Box>
             </CardContent>
           </Card>
           <Card sx={{ margin: "10px" }}>
             <CardContent>
-              {order.items.map((items) => (
-                <OrderItems items={items} key={items.id} />
+              {order.items.map((items, index) => (
+                <OrderItems
+                  orderId={order._id}
+                  orderStatus={order.status}
+                  items={items}
+                  key={index}
+                />
               ))}
             </CardContent>
           </Card>
@@ -186,7 +201,7 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
               sx={{
                 "& .MuiStepIcon-active": { color: "red" },
               }}
-              activeStep={0}
+              activeStep={index}
               alternativeLabel
             >
               {order.events.map((label) => (
@@ -194,7 +209,7 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
                   <StepLabel>
                     {label.name}
                     <br />
-                    {label.date}
+                    {moment(label.date).format("MMMM Do YYYY")}
                   </StepLabel>
                 </Step>
               ))}

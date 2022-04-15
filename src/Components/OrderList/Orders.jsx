@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: "10px",
   },
 }));
 
@@ -44,7 +43,7 @@ export default function Orders(props) {
 
   return (
     <Box className={classes.root}>
-      <Box sx={{ width: "50%", marginLeft: "2%" }}>
+      <Box sx={{}}>
         <Box>
           {orderDetails.length > 0 ? (
             <>
@@ -59,7 +58,7 @@ export default function Orders(props) {
                 mt={25}
                 sx={{ fontSize: "20px", fontWeight: "bold", color: "red" }}
               >
-                No {status} Orders Yet
+                No Orders Yet
               </Typography>
             </>
           )}

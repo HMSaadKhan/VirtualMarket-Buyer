@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Grid } from "@mui/material";
+import { Typography, Grid, Box } from "@mui/material";
 import productService from "../../Services/ProductServices";
 
 import ProductComponent from "./ProductComponent";
-import { Typography } from "@material-ui/core";
 
 const Products = (props) => {
   console.log(props);
@@ -40,10 +39,19 @@ const Products = (props) => {
     <div>
       {products.length > 0 ? (
         <>
-          <Typography sx={{ textAlign: "center", m: 1, fontSize: 50 }}>
-            {name}
-          </Typography>
-
+          <Box sx={{ backgroundColor: "#ba6a62", color: "white" }}>
+            <Typography
+              sx={{
+                marginLeft: "20%",
+                marginTop: "10px",
+                marginBottom: "10px",
+                fontSize: "30px",
+                fontWeight: "bold",
+              }}
+            >
+              {name}
+            </Typography>
+          </Box>
           <Grid container justifyContent="center" spacing={2}>
             {products.map((product, index) => (
               <ProductComponent key={index} product={product} />

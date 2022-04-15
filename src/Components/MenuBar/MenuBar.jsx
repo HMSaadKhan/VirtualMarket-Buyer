@@ -4,6 +4,7 @@ import styled from "styled-components";
 import useState from "react-usestateref";
 import { Badge } from "@mui/material";
 import { makeStyles } from "@material-ui/styles";
+import AccountIcon from "./AccountBar";
 import {
   AppBar,
   Toolbar,
@@ -11,14 +12,9 @@ import {
   TextField,
   Button,
   Box,
-} from "@material-ui/core";
-import {
-  Search,
-  Chat,
-  ShoppingCart,
-  Notifications,
-  AccountCircleSharp,
-} from "@mui/icons-material";
+} from "@mui/material";
+import { Search, Chat, ShoppingCart } from "@mui/icons-material";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import cartService from "../../Services/CartServices";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: "1rem",
   },
   root: {
-    background: "inherit",
+    background: "white",
   },
   search: {
     display: "flex",
@@ -54,26 +50,19 @@ const useStyles = makeStyles((theme) => ({
 const MenuBar = (props) => {
   const [qty, setQty, qtyRef] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
-  const isMenuOpen = Boolean(anchorEl);
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
   const getCartCount = () => {
     cartService.getQty().then((data) => {
       setQty(data.data.count);
     });
   };
   useEffect(getCartCount, [props.refreshCart]);
-  // const handleProfileMenuOpen = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
 
   const history = useHistory();
 
   const classes = useStyles();
   return (
-    <AppBar className={classes.root} position="static">
+    <AppBar sx={{ background: "white" }} position="static">
       <Toolbar
         sx={{
           display: "flex",
@@ -82,10 +71,14 @@ const MenuBar = (props) => {
         }}
       >
         <div>
-          <Typography variant="h6">
-            <Link to="/" className={classes.link}>
-              VirtualMarket
-            </Link>
+          <Typography
+            sx={{ color: "#ba6a62", fontWeight: "bold", cursor: "pointer" }}
+            variant="h6"
+            onClick={(e) => {
+              history.push("/");
+            }}
+          >
+            VirtualMarket
           </Typography>
         </div>
         <div className={classes.search}>
@@ -102,12 +95,13 @@ const MenuBar = (props) => {
         </div>
         <div className={classes.iconContainer}>
           <div className={classes.icon}>
-            <AccountCircleSharp color="action" />
+            <AccountIcon />
           </div>
           <div className={classes.icon}>
             <Badge badgeContent={qty} color="error">
-              <ShoppingCart
-                color="action"
+              <ShoppingCartOutlinedIcon
+                fontSize="medium"
+                sx={{ color: "#ba6a62" }}
                 onClick={() => {
                   history.push("/cart");
                 }}

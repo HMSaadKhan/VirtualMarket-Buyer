@@ -1,12 +1,6 @@
 import { flexbox } from "@material-ui/system";
 import { Add, Remove } from "@mui/icons-material";
-import {
-  Card,
-  Breadcrumbs,
-  Typography,
-  CardContent,
-  IconButton,
-} from "@mui/material";
+import { Card, Box, Typography, CardContent, IconButton } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useEffect } from "react";
 import styled from "styled-components";
@@ -21,6 +15,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import useState from "react-usestateref";
 import { useParams } from "react-router-dom";
 import CommentsDisplay from "../Comments/CommentsDisplay";
+import reviewService from "../../Services/ReviewService";
 const ProductDetail = (props) => {
   console.log(props);
   const product = useParams();
@@ -30,6 +25,7 @@ const ProductDetail = (props) => {
   const [minusButtonCheck, setMinusButton, minRef] = useState(true);
   const [plusButtonCheck, setPlusButton, plusRef] = useState(false);
   const [imageIndex, setImageIndex, imageIndexRef] = useState(0);
+  const [reviews, setreviews] = useState([]);
 
   const [type, setType] = useState("DEFAULT");
 
@@ -53,7 +49,7 @@ const ProductDetail = (props) => {
       .then((data) => {
         console.log(data);
         props.stateChanged(data);
-        toast.error(data.statusText, {
+        toast.success(data.statusText, {
           position: toast.POSITION.BOTTOM_LEFT,
         });
       })
@@ -84,6 +80,19 @@ const ProductDetail = (props) => {
       SetQuantity(quantity + 1);
     }
   };
+
+  const getReviews = () => {
+    reviewService
+      .ReviewGet(product.id)
+      .then((data) => {
+        console.log(data);
+        setreviews(data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+  useEffect(getReviews, []);
 
   return (
     <div>
@@ -215,7 +224,11 @@ const ProductDetail = (props) => {
               </div>
             </div>
           </div>
-          <CommentsDisplay />
+          <Box>
+            {reviews.map((review) => (
+              <CommentsDisplay review={review} key={review._id} />
+            ))}
+          </Box>
         </div>
       ) : (
         <div></div>

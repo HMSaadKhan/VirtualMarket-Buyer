@@ -41,7 +41,7 @@ export default function OrderMenu() {
   const history = useHistory();
 
   return (
-    <Box sx={{ width: "20%" }}>
+    <Box>
       <Card className={classes.root}>
         <>
           <Button
