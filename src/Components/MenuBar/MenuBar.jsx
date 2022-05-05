@@ -15,6 +15,8 @@ import {
 } from "@mui/material";
 import { Search, Chat, ShoppingCart } from "@mui/icons-material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+
+import Favorite from "@mui/icons-material/Favorite";
 import cartService from "../../Services/CartServices";
 
 const useStyles = makeStyles((theme) => ({
@@ -94,6 +96,15 @@ const MenuBar = (props) => {
           </Search>
         </div>
         <div className={classes.iconContainer}>
+          <div className={classes.icon}>
+            <Favorite
+              fontSize="medium"
+              sx={{ color: "#ba6a62" }}
+              onClick={() => {
+                history.push("/favorite");
+              }}
+            />
+          </div>
           <div className={classes.icon}>
             <AccountIcon />
           </div>

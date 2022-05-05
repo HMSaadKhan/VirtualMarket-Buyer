@@ -1,106 +1,117 @@
 import React from "react";
-import { makeStyles } from "@mui/styles";
-import { TextField, Button, Alert } from "@material-ui/core";
-import buyerService from "../../Services/BuyerService";
-import styled from "styled-components";
-import { Link, useHistory } from "react-router-dom";
+import {
+  TextField,
+  Button,
+  Card,
+  Box,
+  Typography,
+  CardContent,
+} from "@mui/material";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import LoginAuth from "../AuthWrapper/LoginAuth";
-
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url("https://i.imgur.com/KgQYNYv.jpg") center;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Wrapper = styled.div`
-  width: 25%;
-  padding: 20px;
-  background-color: white;
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Input = styled.input`
-  flex: 1;
-  min-width: 40%;
-  margin: 10px 0;
-  padding: 10px;
-`;
+import buyerService from "../../Services/BuyerService";
 
 const Login = (props) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const history = useHistory();
+  const direct = () => {
+    window.location.href = "/";
+  };
   return (
     <LoginAuth>
-      <Container>
-        <Wrapper>
-          <Title>SIGN IN</Title>
-          <Form>
-            <Input
-              placeholder="Email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
-            <Input
-              placeholder="password"
-              type="password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-            <Button
-              color="success"
-              variant="contained"
-              onClick={async (e) => {
-                await buyerService
-                  .login(email, password)
-                  .then((data) => {
-                    console.log(data);
-                    toast.success("Login Successfull", {
-                      position: toast.POSITION.BOTTOM_LEFT,
-                    });
-                    window.location.href = "/";
-                    //history.push("/");
-                    // setTimeout(() => {
-                    //   history.push("/");
-                    // }, 100);
-                  })
-                  .catch((err) => {
-                    toast.error(err.response.data, {
-                      position: toast.POSITION.BOTTOM_LEFT,
-                    });
-                  });
-              }}
-            >
-              LOGIN
-            </Button>
-
-            <Link to="/forgotpassword">Forgot Password</Link>
-          </Form>
-        </Wrapper>
-      </Container>
+      <Box>
+        <Box
+          // sx={{ paddingLeft: "40%", paddingTop: "5%", paddingBottom: "5%" }}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            paddingTop: "5%",
+            paddingBottom: "5%",
+          }}
+        >
+          <Card sx={{ width: "20%", padding: "20px" }}>
+            <CardContent>
+              <Typography
+                sx={{
+                  fontWeight: "bold",
+                  color: "#ba6a62",
+                  fontSize: "30px",
+                  marginLeft: "25%",
+                }}
+              >
+                SIGN IN
+              </Typography>
+              <Box sx={{}}>
+                <>
+                  <TextField
+                    required
+                    fullWidth
+                    id="filled-required"
+                    label="Email"
+                    variant="standard"
+                    defaultValue={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                  />
+                </>
+                <>
+                  <TextField
+                    label="Password"
+                    type="password"
+                    fullWidth
+                    variant="standard"
+                    autoComplete="current-password"
+                    defaultValue={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                  />
+                </>
+                <Box mt={2}>
+                  <Button
+                    sx={{
+                      color: "#ffff",
+                      backgroundColor: "#ba6a62",
+                      fontWeight: "bold",
+                      "&:hover": {
+                        backgroundColor: "#ba6a67",
+                        color: "#fafafa",
+                      },
+                    }}
+                    variant="contained"
+                    onClick={async (e) => {
+                      await buyerService
+                        .login(email, password)
+                        .then((data) => {
+                          console.log(data);
+                          toast.success("Login Successfull", {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                          });
+                          setTimeout(direct, 5000);
+                        })
+                        .catch((err) => {
+                          toast.error(err.response.data, {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                          });
+                        });
+                    }}
+                  >
+                    LOGIN
+                  </Button>
+                </Box>
+                <Box mt={1}>
+                  <Typography>
+                    Don't have an account? <Link to="/signup">SignUp</Link>
+                  </Typography>
+                  <Link to="/forgotpassword">Forgot Password</Link>
+                </Box>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+      </Box>
     </LoginAuth>
   );
 };

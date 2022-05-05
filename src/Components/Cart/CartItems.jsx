@@ -1,5 +1,5 @@
 import { Add, Remove, Delete } from "@mui/icons-material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -33,7 +33,16 @@ const CartItems = (props) => {
   const { getCartItems, getProductId, item } = props;
   const qty = item.quantity;
   const _id = props.item._id;
-
+  const [samplePrice, setsamplePrice] = useState(0);
+  const [check, setcheck] = useState(false);
+  const checkDisable = () => {
+    if (item.type === "SAMPLE") {
+      setcheck(true);
+    } else {
+      setcheck(false);
+    }
+  };
+  useEffect(checkDisable, []);
   const plusButton = async () => {
     await cartService
       .incQty(_id)
@@ -73,10 +82,10 @@ const CartItems = (props) => {
     <div>
       <Card sx={{ width: 800, margin: "10px" }}>
         <Box className={classes.root}>
-          <Box>
+          <Box sx={{ width: "20%" }}>
             <img className={classes.image} src={item.product.images[0].link} />
           </Box>
-          <Box>
+          <Box sx={{ width: "25%" }}>
             <Typography>{item.product.name}</Typography>
             {item.type == "DEFAULT" ? (
               <></>
@@ -86,23 +95,39 @@ const CartItems = (props) => {
               </Typography>
             )}
           </Box>
-          <Typography sx={{ color: "#ba6a62" }}>
-            {item.product.price}
-          </Typography>
-
-          <Box className="quantityInput">
-            <IconButton>
-              <Remove onClick={minusButton} />
-            </IconButton>
-            <input value={qty} />
-            <IconButton>
-              <Add className="btn-quantity" onClick={plusButton} />
-            </IconButton>
+          <Box sx={{ width: "20%" }}>
+            <Typography sx={{ color: "#ba6a62" }}>
+              PKR.{item.product.price}
+            </Typography>
           </Box>
-
-          <Typography sx={{ fontWeight: "bold", color: "#ba6a62" }}>
-            {item.totalPrice}
-          </Typography>
+          <Box sx={{ width: "30%" }}>
+            <Box
+              sx={{
+                display: "flex ",
+                alignItems: "center",
+              }}
+            >
+              <IconButton disabled={check}>
+                <Remove onClick={minusButton} />
+              </IconButton>
+              <Box sx={{ width: "50%" }}>
+                <TextField size="small" value={qty} />
+              </Box>
+              <IconButton disabled={check}>
+                <Add onClick={plusButton} />
+              </IconButton>
+            </Box>
+          </Box>
+          <Box sx={{ width: "20%" }}>
+            <Typography
+              sx={{
+                fontWeight: "bold",
+                color: "#ba6a62",
+              }}
+            >
+              PKR.{item.totalPrice}
+            </Typography>
+          </Box>
           <Box>
             <Delete onClick={deleteButton} />
           </Box>

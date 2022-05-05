@@ -16,17 +16,18 @@ import ChangePassword from "./Components/SignUpPage/ChangePassword";
 import HomePage from "./Components/HomePage/HomePage";
 import Cart from "./Components/Cart/Cart";
 import Favorite from "./Components/Favorites/Fvaorite";
-import AccountBar from "./Components/MenuBar/AccountBar";
-import BuyerAccount from "./Components/BuyerAccount";
+
+import BuyerAccount from "./Components/BuyerAccount/BuyerAccount";
 import ProductDetail from "./Components/ProductDetail/ProductDetail";
 import NotFound from "./Components/NotFound/NotFound";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Categories from "./Components/Categories/Categories";
 import SignUp2 from "./newpagesBuyer/Signup/Singnup";
 import CheckOut from "./Components/CheckOut/CheckOut";
 import Orders from "./Components/OrderList/Orders";
 import ProductsByCategory from "./Components/HomePage/ProductsByCategory";
+import Warranty from "./Components/Warranty/Warranty";
 function App() {
   const [refreshCart, setRefreshCart] = React.useState();
   const getStateChanged = (data) => {
@@ -45,7 +46,7 @@ function App() {
           <Route path="/Cart">
             <Cart stateChanged={getStateChanged} />
           </Route>
-          {/* <Route path="/favorite" exact component={Favorite} /> */}
+          <Route path="/favorite" exact component={Favorite} />
           <Route path="/SignUp" exact component={SignUp} />
           <Route path="/AccountSettings" component={BuyerAccount} />
           <Route path="/Orders" component={Orders} />
@@ -55,6 +56,7 @@ function App() {
           <Route path="/forgotpassword" component={ForgotPassword} />
           <Route path="/resetPassword/:id/" exact component={NewPassword} />
           <Route path="/changepassword/" exact component={ChangePassword} />
+          <Route path="/warranty/" component={Warranty} />
           <Route path="/check-out/">
             <CheckOut stateChanged={getStateChanged} />
           </Route>

@@ -1,103 +1,106 @@
 import React from "react";
-import { makeStyles } from "@mui/styles";
-import { TextField, Button, Grid, Paper } from "@material-ui/core";
-import buyerService from "../../Services/BuyerService";
+import {
+  TextField,
+  Button,
+  Card,
+  Box,
+  Typography,
+  CardContent,
+} from "@mui/material";
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { bgcolor } from "@mui/system";
-import styled from "styled-components";
-import { Link, useHistory } from "react-router-dom";
-
-import Auth from "../../Components/AuthWrapper/Auth";
-import OrderMenu from "../OrderList/OrderMenu";
-
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url("https://i.imgur.com/KgQYNYv.jpg    ") center;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Wrapper = styled.div`
-  width: 25%;
-  padding: 20px;
-  background-color: white;
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const Input = styled.input`
-  flex: 1;
-  min-width: 40%;
-  margin: 20px 10px 0px 0px;
-  padding: 10px;
-`;
+import buyerService from "../../Services/BuyerService";
 
 const ChangenewPassword = (props) => {
   const [oldPassword, setOldPassword] = React.useState();
   const [newPassword, setNewPassword] = React.useState("");
   const history = useHistory();
-
   return (
-    <Auth>
-      <Container>
-        <OrderMenu />
-        <Wrapper>
-          <Title>Change Password</Title>
-          <Form>
-            <Input
-              placeholder="Old Password"
-              type="Password"
-              value={oldPassword}
-              onChange={(e) => {
-                setOldPassword(e.target.value);
-              }}
-            />
+    <>
+      <Box>
+        <Box
+          // sx={{ paddingLeft: "40%", paddingTop: "5%", paddingBottom: "5%" }}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            paddingTop: "5%",
+            paddingBottom: "5%",
+          }}
+        >
+          <Card sx={{ width: "20%", padding: "20px" }}>
+            <CardContent>
+              <Typography
+                sx={{
+                  fontWeight: "bold",
+                  color: "#ba6a62",
+                  fontSize: "18px",
+                  marginLeft: "20%",
+                }}
+              >
+                UPDATE PASSWORD
+              </Typography>
+              <Box sx={{}}>
+                <>
+                  <TextField
+                    variant="standard"
+                    fullWidth
+                    label="Old Password"
+                    type="Password"
+                    value={oldPassword}
+                    onChange={(e) => {
+                      setOldPassword(e.target.value);
+                    }}
+                  />
+                </>
+                <>
+                  <TextField
+                    label="Password"
+                    type="password"
+                    fullWidth
+                    variant="standard"
+                    value={newPassword}
+                    onChange={(e) => {
+                      setNewPassword(e.target.value);
+                    }}
+                  />
+                </>
 
-            <Input
-              placeholder="New Password"
-              type="Password"
-              value={newPassword}
-              onChange={(e) => {
-                setNewPassword(e.target.value);
-              }}
-            />
-          </Form>
-          <br />
-          <Button
-            color="success"
-            variant="contained"
-            onClick={(e) => {
-              buyerService
-                .changePassword({ oldPassword, newPassword }) //if gives error then check oldPassword datatype
-                .then((data) => {
-                  history.push("/AccountSettings");
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            }}
-          >
-            Save
-          </Button>
-        </Wrapper>
-      </Container>
-    </Auth>
+                <Box mt={2}>
+                  <Button
+                    sx={{
+                      color: "#ffff",
+                      backgroundColor: "#ba6a62",
+                      fontWeight: "bold",
+                      "&:hover": {
+                        backgroundColor: "#ba6a67",
+                        color: "#fafafa",
+                      },
+                    }}
+                    onClick={async (e) => {
+                      await buyerService
+                        .changePassword({ oldPassword, newPassword }) //if gives error then check oldPassword datatype
+                        .then((data) => {
+                          toast.success(data.data, {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                          });
+                          history.push("/AccountSettings");
+                        })
+                        .catch((err) => {
+                          toast.error(err.response.data, {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                          });
+                        });
+                    }}
+                  >
+                    Update Password
+                  </Button>
+                </Box>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+      </Box>
+    </>
   );
 };
 

@@ -6,7 +6,6 @@ import productService from "../../Services/ProductServices";
 import ProductComponent from "./ProductComponent";
 
 const Products = (props) => {
-  console.log(props);
   const { _id, name } = props;
 
   const [products, setProducts] = useState([]);
@@ -26,7 +25,6 @@ const Products = (props) => {
     await productService
       .getFiveByCategory(props._id)
       .then((data) => {
-        console.log(data);
         setProducts(data);
       })
       .catch((e) => {

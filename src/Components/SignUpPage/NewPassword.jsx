@@ -1,100 +1,107 @@
 import React from "react";
-import { makeStyles } from "@mui/styles";
-import { TextField, Button, Grid, Paper } from "@material-ui/core";
-import buyerService from "../../Services/BuyerService";
+import {
+  TextField,
+  Button,
+  Card,
+  Box,
+  Typography,
+  CardContent,
+} from "@mui/material";
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { bgcolor } from "@mui/system";
-import styled from "styled-components";
-import { Link, useHistory } from "react-router-dom";
+import buyerService from "../../Services/BuyerService";
 
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url("https://i.imgur.com/KgQYNYv.jpg    ") center;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Wrapper = styled.div`
-  width: 25%;
-  padding: 20px;
-  background-color: white;
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const Input = styled.input`
-  flex: 1;
-  min-width: 40%;
-  margin: 20px 10px 0px 0px;
-  padding: 10px;
-`;
-
-const NewPassword = (props) => {
+const ChangenewPassword = (props) => {
   const [otp, setOtp] = React.useState();
   const [password, setPassword] = React.useState("");
-  const [id, setId] = React.useState("");
-  const [lname, setlName] = React.useState("");
   const history = useHistory();
   const _id = props.match.params.id;
-
   return (
-    <Container>
-      <Wrapper>
-        <Title>New Password</Title>
-        <Form>
-          <Input
-            placeholder="OTP"
-            value={otp}
-            onChange={(e) => {
-              setOtp(e.target.value);
-            }}
-          />
-
-          <Input
-            placeholder="New Password"
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-        </Form>
-        <br />
-        <Button
-          color="success"
-          variant="contained"
-          onClick={(e) => {
-            buyerService
-              .resetPassword(_id, { otp, password }) //if gives error then check otp datatype
-              .then((data) => {
-                history.push("/Login");
-              })
-              .catch((err) => {
-                console.log(err);
-              });
+    <>
+      <Box>
+        <Box
+          // sx={{ paddingLeft: "40%", paddingTop: "5%", paddingBottom: "5%" }}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            paddingTop: "5%",
+            paddingBottom: "5%",
           }}
         >
-          Save
-        </Button>
-      </Wrapper>
-    </Container>
+          <Card sx={{ width: "20%", padding: "20px" }}>
+            <CardContent>
+              <Typography
+                sx={{
+                  fontWeight: "bold",
+                  color: "#ba6a62",
+                  fontSize: "18px",
+                  marginLeft: "20%",
+                }}
+              >
+                NEW PASSWORD
+              </Typography>
+              <Box sx={{}}>
+                <>
+                  <TextField
+                    label="OTP"
+                    fullWidth
+                    variant="standard"
+                    value={otp}
+                    onChange={(e) => {
+                      setOtp(e.target.value);
+                    }}
+                  />
+                </>
+                <>
+                  <TextField
+                    variant="standard"
+                    fullWidth
+                    label="New Password"
+                    type="Password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                  />
+                </>
+
+                <Box mt={2}>
+                  <Button
+                    sx={{
+                      color: "#ffff",
+                      backgroundColor: "#ba6a62",
+                      fontWeight: "bold",
+                      "&:hover": {
+                        backgroundColor: "#ba6a67",
+                        color: "#fafafa",
+                      },
+                    }}
+                    onClick={async (e) => {
+                      await buyerService
+                        .resetPassword(_id, { otp, password }) //if gives error then check otp datatype
+                        .then((data) => {
+                          toast.success(data.data, {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                          });
+                          history.push("/Login");
+                        })
+                        .catch((err) => {
+                          toast.error(err.response.data, {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                          });
+                        });
+                    }}
+                  >
+                    Update Password
+                  </Button>
+                </Box>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+      </Box>
+    </>
   );
 };
 
-export default NewPassword;
+export default ChangenewPassword;

@@ -102,6 +102,7 @@ export default function CheckOutSideBar(props) {
               <Box
                 sx={{
                   "& .MuiTextField-root": { m: 1, width: "25ch" },
+                  "& .MuiSelect-root": { m: 1, width: "25ch" },
                 }}
               >
                 <TextField
@@ -131,11 +132,12 @@ export default function CheckOutSideBar(props) {
                     handleAddress(e.target.value);
                   }}
                 />
-                <Box ml={1} mt={0.5}>
+                <Box ml={1} mt={0.5} mb={0.5}>
                   <FormControl sx={{ minWidth: 215 }}>
                     <InputLabel>City</InputLabel>
 
                     <Select
+                      label="City"
                       size="small"
                       value={city}
                       onChange={(e) => {
@@ -186,7 +188,16 @@ export default function CheckOutSideBar(props) {
               </Box> */}
               <Divider />
               <Button
-                className={classes.button}
+                sx={{
+                  margin: "5px",
+                  width: "100%",
+                  backgroundColor: "#ba6a62",
+                  color: "#fff",
+                  "&:hover": {
+                    backgroundColor: "#ba6a64",
+                    color: "#ffff",
+                  },
+                }}
                 onClick={() => {
                   paymentProceed();
                 }}

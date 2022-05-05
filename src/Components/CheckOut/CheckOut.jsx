@@ -14,7 +14,7 @@ import cartService from "../../Services/CartServices";
 import CartItems from "../Cart/CartItems";
 import { useHistory } from "react-router-dom";
 import cityService from "../../Services/CityService";
-
+import Auth from "../AuthWrapper/Auth";
 const useStyles = makeStyles((theme) => ({
   textField: {
     display: "flex",
@@ -31,15 +31,14 @@ const useStyles = makeStyles((theme) => ({
 export default function CheckOut(props) {
   const history = useHistory();
 
-  const { shippingDetails } = props;
   const classes = useStyles();
   const [cartItem, setCartItem] = useState([]);
   const [cartValues, setCartValues] = useState([]);
   const [deliveryCharge, setdeliveryCharge] = useState();
-  const [name, setname] = useState();
-  const [address, setaddress] = useState();
-  const [city, setCity] = useState();
-  const [phone, setphone] = useState();
+  const [name, setname] = useState("");
+  const [address, setaddress] = useState("");
+  const [city, setCity] = useState("");
+  const [phone, setphone] = useState("");
   const [cities, setcities] = useState([]);
   const [onlinePaymentOption, setonlinePaymentOption] = useState();
 
@@ -125,40 +124,44 @@ export default function CheckOut(props) {
   };
 
   return (
-    <Box className={classes.root}>
-      <Box m={2}>
-        <Typography sx={{ fontSize: 18, fontWeight: "bold", color: "#ba6a62" }}>
-          Make Your CheckOut Here
-        </Typography>
-        <Card sx={{ width: 600 }}>
-          <CardContent>
-            {cartItem.map((item) => (
-              <ItemCard item={item} key={item._id} />
-            ))}
-          </CardContent>
-        </Card>
-        <br />
+    <Auth>
+      <Box className={classes.root}>
+        <Box m={2}>
+          <Typography
+            sx={{ fontSize: 18, fontWeight: "bold", color: "#ba6a62" }}
+          >
+            Make Your CheckOut Here
+          </Typography>
+          <Card sx={{ width: 600 }}>
+            <CardContent>
+              {cartItem.map((item) => (
+                <ItemCard item={item} key={item._id} />
+              ))}
+            </CardContent>
+          </Card>
+          <br />
 
-        {onlinePaymentOption ? <CardDetails /> : <></>}
+          {onlinePaymentOption ? <CardDetails /> : <></>}
+        </Box>
+        {cartValues ? (
+          <CheckOutSideBar
+            deliveryCharge={deliveryCharge}
+            cartValues={cartValues}
+            phone={phone}
+            handlePhone={handlePhone}
+            name={name}
+            handleName={handleName}
+            cities={cities}
+            city={city}
+            selectChange={selectChange}
+            address={address}
+            handleAdress={handleAddress}
+            paymentProceed={paymentProceed}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
-      {cartValues ? (
-        <CheckOutSideBar
-          deliveryCharge={deliveryCharge}
-          cartValues={cartValues}
-          phone={phone}
-          handlePhone={handlePhone}
-          name={name}
-          handleName={handleName}
-          cities={cities}
-          city={city}
-          selectChange={selectChange}
-          address={address}
-          handleAdress={handleAddress}
-          paymentProceed={paymentProceed}
-        />
-      ) : (
-        <></>
-      )}
-    </Box>
+    </Auth>
   );
 }

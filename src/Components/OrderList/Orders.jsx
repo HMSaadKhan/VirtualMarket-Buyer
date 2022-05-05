@@ -11,6 +11,7 @@ import StepLabel from "@mui/material/StepLabel";
 import orderService from "../../Services/OrderService";
 import OrderComponent from "./OrderComponent";
 import OrderMenu from "./OrderMenu";
+import Auth from "../AuthWrapper/Auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,28 +43,30 @@ export default function Orders(props) {
   React.useEffect(Orders, []);
 
   return (
-    <Box className={classes.root}>
-      <Box sx={{}}>
-        <Box>
-          {orderDetails.length > 0 ? (
-            <>
-              {orderDetails.map((order) => (
-                <OrderComponent order={order} key={order._id} />
-              ))}
-            </>
-          ) : (
-            <>
-              <Typography
-                ml={30}
-                mt={25}
-                sx={{ fontSize: "20px", fontWeight: "bold", color: "red" }}
-              >
-                No Orders Yet
-              </Typography>
-            </>
-          )}
+    <Auth>
+      <Box className={classes.root}>
+        <Box sx={{ width: "50%" }}>
+          <Box>
+            {orderDetails.length > 0 ? (
+              <>
+                {orderDetails.map((order) => (
+                  <OrderComponent order={order} key={order._id} />
+                ))}
+              </>
+            ) : (
+              <>
+                <Typography
+                  ml={30}
+                  mt={25}
+                  sx={{ fontSize: "20px", fontWeight: "bold", color: "red" }}
+                >
+                  No Orders Yet
+                </Typography>
+              </>
+            )}
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </Auth>
   );
 }

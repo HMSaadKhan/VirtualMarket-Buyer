@@ -17,7 +17,6 @@ const HomePage = () => {
     categoryService
       .GetCategories()
       .then((data) => {
-        console.log(data);
         setCategories(data);
       })
       .catch((error) => {
@@ -29,7 +28,7 @@ const HomePage = () => {
   return (
     <div className={classes.root}>
       {categories.map((product) => (
-        <Products _id={product._id} name={product.name} />
+        <Products _id={product._id} name={product.name} key={product._id} />
       ))}
     </div>
   );

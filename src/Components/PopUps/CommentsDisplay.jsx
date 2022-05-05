@@ -9,8 +9,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     justifyContent: "center",
+    margin: "20px",
   },
-  container: { width: "50%" },
+  container: { width: "40%" },
 }));
 
 export default function CommentsDisplay({ review }) {
@@ -22,9 +23,17 @@ export default function CommentsDisplay({ review }) {
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <CardContent sx={{ flex: "1 0 auto" }}>
               <Typography>
-                <Rating name="read-only" value={review.rating} readOnly />
+                <Rating
+                  name="read-only"
+                  value={review.rating}
+                  readOnly
+                  precision={0.5}
+                />
               </Typography>
-              <Typography sx={{ color: "#ba6a62" }}>by Saad Khan</Typography>
+              <Typography sx={{ color: "#ba6a62" }}>
+                by <span>{review.Buyer.fName} </span>
+                <span>{review.Buyer.lName}</span>
+              </Typography>
 
               <Typography>{review.comment}</Typography>
             </CardContent>

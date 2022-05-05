@@ -40,20 +40,22 @@ const ProductComponent = (props) => {
           image={product.images[0].link}
           title={product.name}
         />
+        <CardContent>
+          <Box>
+            <Box>
+              <Typography sx={{ fontSize: "18px" }}>{product.name}</Typography>
+              <Typography
+                sx={{ fontSize: "18px", fontWeight: "bold", color: "#ba6a62" }}
+              >
+                PKR:{product.price}
+              </Typography>
+            </Box>
 
-        <Box ml={1} sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Box>
-            <Typography sx={{ fontSize: "16px" }}>{product.name}</Typography>
-            <Typography mr={1} sx={{ fontWeight: "bold", color: "#ba6a62" }}>
-              PKR:{product.price}
+            <Typography sx={{ fontSize: "14px" }}>
+              MoQ:{product.minOrder}
             </Typography>
           </Box>
-          <Box>
-            <Typography mr={1}sx={{ fontSize: "12px" }}>
-              MoQ:{product.name}
-            </Typography>
-          </Box>
-        </Box>
+        </CardContent>
       </CardActionArea>
     </Card>
   );

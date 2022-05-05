@@ -1,44 +1,20 @@
 import React, { useEffect } from "react";
 
-import {
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  Box,
-  Typography,
-} from "@mui/material";
+import { Button, Card, CardContent, Box, Typography } from "@mui/material";
 import CartItems from "./CartItems";
-import DeleteIcon from "@mui/icons-material/Delete";
 import cartService from "../../Services/CartServices";
-import { Add, Remove, Delete } from "@mui/icons-material";
+
 import useState from "react-usestateref";
 import { makeStyles } from "@material-ui/styles";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import Auth from "../AuthWrapper/Auth";
 
 const useStyles = makeStyles((theme) => ({
-  button: {
-    width: "100%",
-    backgroundColor: "#ba6a62",
-    color: "#fff",
-    "&:hover": {
-      backgroundColor: "#ba6a64",
-      color: "#ffff",
-    },
-  },
   root: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-  },
-  clearCartButton: {
-    display: "flex",
-    flexDirection: "row",
-    marginLeft: "49%",
-    paddingTop: "2%",
-    marginBottom: "1%",
-    width: "20%",
   },
 }));
 const Cart = (props) => {
@@ -48,9 +24,10 @@ const Cart = (props) => {
   console.log(props);
   const [cartItem, setCartItem, cartItemRef] = useState([]);
   const [cartValues, setCartValues] = useState([]);
-  const [subtotal, setsubtotal, subtotalRef] = useState(0);
-  const [deliveryCharge, setdeliveryCharge] = useState(0);
-  const [total, settotal] = useState(0);
+  const [subtotal, setsubtotal, subtotalRef] = useState();
+  const [deliveryCharge, setdeliveryCharge] = useState();
+  const [total, settotal] = useState();
+  
   const getCartItems = async () => {
     await cartService
       .getCart()
@@ -63,19 +40,19 @@ const Cart = (props) => {
         }
         setCartItem(data.items);
         console.log("get cart items");
+        console.log(data);
         settotal(data.total);
         setdeliveryCharge(data.seller.deliveryCharge);
         setsubtotal(data.subTotal);
       })
       .catch((err) => {
         console.log(err.response);
-        
+
         if (err.response.data === "No Items in Cart") {
-          console.log("I ran");
           setCartItem(null);
-          settotal(0);
-          setsubtotal(0);
-          setdeliveryCharge(0);
+          settotal();
+          setsubtotal();
+          setdeliveryCharge();
         }
       });
   };
@@ -106,9 +83,9 @@ const Cart = (props) => {
       });
     });
   };
-  const productQtyChange = (data) => {
-    setCartItem(cartItemRef.current);
-  };
+  // const productQtyChange = (data) => {
+  //   setCartItem(cartItemRef.current);
+  // };
   const ProceedtoCheckOut = async () => {
     await cartService
       .ProceedToCheckOut()
@@ -123,11 +100,19 @@ const Cart = (props) => {
   };
 
   return (
-    <>
+    <Auth>
       {console.log(cartItem)}
       <div className={classes.clearCartButton}>
         <Button
-          className={classes.button}
+          sx={{
+            width: "100%",
+            backgroundColor: "#ba6a62",
+            color: "#fff",
+            "&:hover": {
+              backgroundColor: "#ba6a64",
+              color: "#ffff",
+            },
+          }}
           variant="contained"
           onClick={clearCart}
         >
@@ -145,7 +130,7 @@ const Cart = (props) => {
                   key={item._id}
                   getCartItems={getCartItems}
                   getProductId={getProductId}
-                  productQtyChange={productQtyChange}
+                  // productQtyChange={productQtyChange}
                 />
               ))}
             </Box>
@@ -182,7 +167,15 @@ const Cart = (props) => {
               </CardContent>
               <Box>
                 <Button
-                  className={classes.button}
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#ba6a62",
+                    color: "#fff",
+                    "&:hover": {
+                      backgroundColor: "#ba6a64",
+                      color: "#ffff",
+                    },
+                  }}
                   variant="contained"
                   onClick={() => {
                     ProceedtoCheckOut();
@@ -193,7 +186,15 @@ const Cart = (props) => {
               </Box>
               <Box mt={2}>
                 <Button
-                  className={classes.button}
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#ba6a62",
+                    color: "#fff",
+                    "&:hover": {
+                      backgroundColor: "#ba6a64",
+                      color: "#ffff",
+                    },
+                  }}
                   onClick={() => {
                     history.push("/");
                   }}
@@ -205,7 +206,7 @@ const Cart = (props) => {
           </Box>
         </div>
       </div>
-    </>
+    </Auth>
   );
 };
 

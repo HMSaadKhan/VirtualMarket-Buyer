@@ -40,7 +40,6 @@ class BuyerService extends GenericService {
     new Promise((resolve, reject) => {
       this.get("buyers/getName")
         .then((data) => {
-          console.log("get Name");
           resolve(data);
         })
         .catch((err) => {

@@ -29,12 +29,14 @@ const ItemCard = ({ item }) => {
             </Typography>
           )}
         </Box>
-        <Typography sx={{ color: "#ba6a62" }}>{item.product.price}</Typography>
+        <Typography sx={{ color: "#ba6a62" }}>
+          PKR.{item.product.price}
+        </Typography>
 
         <Typography>{item.quantity}</Typography>
 
         <Typography sx={{ fontWeight: "bold", color: "#ba6a62" }}>
-          {item.totalPrice}
+          PKR.{item.totalPrice}
         </Typography>
       </Box>
       <Divider />

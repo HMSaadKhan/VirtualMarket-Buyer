@@ -42,9 +42,10 @@ export default function Categories() {
         </Typography>
       </Box>
       <Box className="categories">
-        {categories.map((item) => {
+        {categories.map((item, index) => {
           return (
             <Button
+              key={index}
               sx={{
                 color: "#ba6a62",
                 backgroundColor: "#fff",

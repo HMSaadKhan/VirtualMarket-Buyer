@@ -31,21 +31,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function OrderComponent({ order, ChangeOrderStatus }) {
   const classes = useStyles();
-  const [buttonLabel, setbuttonLabel] = useState("");
-  const [dates, setdates] = useState([]);
   const [index, setindex] = useState();
 
   const ButtonLabel = () => {
-    if (order.status == "PLACED") {
+    if (order.status === "PLACED") {
       setindex(1);
     }
-    if (order.status == "PACKAGING") {
+    if (order.status === "PACKAGING") {
       setindex(2);
     }
-    if (order.status == "SHIPPING") {
+    if (order.status === "SHIPPING") {
       setindex(3);
     }
-    if (order.status == "DELIVERED") {
+    if (order.status === "DELIVERED") {
       setindex(4);
     }
   };
@@ -100,7 +98,7 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
                   <Typography className={classes.heading}>Price</Typography>
                 </Box>
                 {order.status === "DELIVERED" ? (
-                  <Box sx={{ width: "25%" }}></Box>
+                  <Box sx={{ width: "25%", backgroundColor: "red" }}></Box>
                 ) : (
                   <></>
                 )}
@@ -215,20 +213,6 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
               ))}
             </Stepper>
           </Box>
-          {order.status == "COMPLETED" ? (
-            <Box sx={{ marginLeft: "74%" }}>
-              <Button
-                className={classes.button}
-                onClick={(e) => {
-                  ChangeOrderStatus(order._id);
-                }}
-              >
-                Write Review
-              </Button>
-            </Box>
-          ) : (
-            <></>
-          )}
         </CardContent>
       </Card>
       <Divider />

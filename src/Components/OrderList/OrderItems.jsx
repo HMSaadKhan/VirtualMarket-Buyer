@@ -10,7 +10,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import orderService from "../../Services/OrderService";
 import { Divider } from "@material-ui/core";
-import CommentWriting from "../Comments/CommentWriting";
+import CommentWriting from "../PopUps/CommentWriting";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +44,7 @@ export default function OrderItems({ items, orderStatus, orderId }) {
         <Box sx={{ width: "25%" }}>
           <Typography>{items.totalPrice}</Typography>
         </Box>
-        {orderStatus === "DELIVERED" ? (
+        {orderStatus === "DELIVERED" && items.reviewed === false ? (
           <Box sx={{ width: "25%" }}>
             <CommentWriting orderId={orderId} itemId={items._id} />
           </Box>

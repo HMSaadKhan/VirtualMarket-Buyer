@@ -1,139 +1,178 @@
 import React from "react";
-import { makeStyles } from "@mui/styles";
-import { TextField, Button, Grid, Paper } from "@material-ui/core";
+import { styled } from "@mui/material/styles";
+
+import {
+  Card,
+  CardContent,
+  TextField,
+  Button,
+  Box,
+  Typography,
+} from "@mui/material";
 import userService from "../../Services/BuyerService";
 import { toast } from "react-toastify";
-import { bgcolor } from "@mui/system";
-import styled from "styled-components";
-import { Link, useHistory } from "react-router-dom";
 
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url("https://i.imgur.com/KgQYNYv.jpg    ") center;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+import { Link } from "react-router-dom";
 
-const Wrapper = styled.div`
-  width: 35%;
-  padding: 20px;
-  background-color: white;
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;F
-`;
-
-const Input = styled.input`
-  flex: 1;
-  min-width: 30%;
-  margin: 20px 10px 0px 0px;
-  padding: 10px;
-`;
-
-const Agreement = styled.span`
-  font-size: 12px;
-  margin: 20px 0px;
-`;
-
-const Register = (props) => {
+const BuyerAccount = (props) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setCPassword] = React.useState("");
   const [fName, setfName] = React.useState("");
   const [lName, setlName] = React.useState("");
 
-  return (
-    <Container>
-      <Wrapper>
-        <Form>
-          <Title>Sign Up</Title>
-          <Input
-            placeholder="First name"
-            value={fName}
-            onChange={(e) => {
-              setfName(e.target.value);
-            }}
-          />
-          <Input
-            placeholder="Last name"
-            value={lName}
-            onChange={(e) => {
-              setlName(e.target.value);
-            }}
-          />
+  const StyledButton = styled(Button)({
+    width: "100%",
+    color: "#ffff",
+    backgroundColor: "#ba6a62",
+    fontWeight: "bold",
+    "&:hover": {
+      backgroundColor: "#C78781",
+      color: "#fafafa",
+    },
+  });
+  const StyledBox = styled(Box)({
+    margin: "10px",
+  });
+  const Container = styled(Box)({
+    display: "flex",
+    justifyContent: "center",
+    paddingTop: "5%",
+    paddingBottom: "5%",
+  });
 
-          <Input
-            placeholder="Email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-          <Input
-            placeholder="Password"
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-          <Input
-            placeholder="Confirm Password"
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => {
-              setCPassword(e.target.value);
-            }}
-          />
-          <Agreement>
-            By creating an account, I consent to the processing of my personal
-            data in accordance with the <b>PRIVACY POLICY</b>
-          </Agreement>
-          <Button
-            color="success"
-            variant="contained"
-            onClick={(e) => {
-              userService
-                .register({ fName, lName, email, password, confirmPassword })
-                .then((res) => {
-                  toast.success("Signup Successfull", {
-                    position: toast.POSITION.BOTTOM_LEFT,
-                  });
-                  props.history.push("/login");
-                })
-                .catch((err) => {
-                  console.log(err);
-                  toast.error(err.response.data, {
-                    position: toast.POSITION.BOTTOM_LEFT,
-                  });
-                });
-            }}
-          >
-            CREATE
-          </Button>
-          <Agreement>
-            Already Have an account? <Link to="/Login">Login</Link>
-          </Agreement>
-        </Form>
-      </Wrapper>
-    </Container>
+  const Wrapper = styled(Box)({
+    display: "flex",
+    justifyContent: "center",
+  });
+
+  return (
+    <>
+      <Container>
+        <Box m={1}>
+          <Card sx={{ maxWidth: "100%", minWidth: "40%" }}>
+            <CardContent>
+              <Wrapper>
+                <Typography
+                  sx={{
+                    color: "#ba6a62",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  SignUp
+                </Typography>
+              </Wrapper>
+
+              <StyledBox sx={{ display: "flex" }}>
+                <StyledBox>
+                  <TextField
+                    variant="standard"
+                    label="First Name"
+                    placeholder="First Name"
+                    size="small"
+                    value={fName}
+                    onChange={(e) => {
+                      setfName(e.target.value);
+                    }}
+                  />
+                </StyledBox>
+                <StyledBox>
+                  <TextField
+                    variant="standard"
+                    label="Last Name"
+                    placeholder="Last Name"
+                    size="small"
+                    value={lName}
+                    onChange={(e) => {
+                      setlName(e.target.value);
+                    }}
+                  />
+                </StyledBox>
+              </StyledBox>
+              <StyledBox sx={{ display: "flex " }}>
+                <StyledBox sx={{ width: "100%" }}>
+                  <TextField
+                    variant="standard"
+                    size="small"
+                    label="Email"
+                    fullWidth
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                  />
+                </StyledBox>
+              </StyledBox>
+              <StyledBox sx={{ display: "flex ", alignItems: "center" }}>
+                <StyledBox>
+                  <TextField
+                    variant="standard"
+                    label="Password"
+                    placeholder="Password"
+                    size="small"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                  />
+                </StyledBox>
+                <StyledBox>
+                  <TextField
+                    variant="standard"
+                    label="Confirm Password"
+                    placeholder="Confirm Password"
+                    value={confirmPassword}
+                    size="small"
+                    onChange={(e) => {
+                      setCPassword(e.target.value);
+                    }}
+                  />
+                </StyledBox>
+              </StyledBox>
+              <StyledBox>
+                <StyledBox sx={{ width: "95%" }}>
+                  <StyledButton
+                    variant="contained"
+                    onClick={(e) => {
+                      userService
+                        .register({
+                          fName,
+                          lName,
+                          email,
+                          password,
+                          confirmPassword,
+                        })
+                        .then((res) => {
+                          toast.success("Signup Successfull", {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                          });
+                          props.history.push("/login");
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                          toast.error(err.response.data, {
+                            position: toast.POSITION.BOTTOM_LEFT,
+                          });
+                        });
+                    }}
+                  >
+                    Sign Up
+                  </StyledButton>
+                </StyledBox>
+                <StyledBox>
+                  <Typography>
+                    Already Have an account? <Link to="/Login">Login</Link>
+                  </Typography>
+                </StyledBox>
+              </StyledBox>
+            </CardContent>
+          </Card>
+        </Box>
+      </Container>
+    </>
   );
 };
 
-export default Register;
+export default BuyerAccount;

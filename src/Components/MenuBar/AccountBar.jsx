@@ -45,6 +45,7 @@ const AccountIcon = (props) => {
   const handleLogout = () => {
     handleMenuClose();
     buyerService.logout();
+    window.location.reload();
     history.push("/");
   };
 
@@ -73,6 +74,9 @@ const AccountIcon = (props) => {
           <MenuItem value="/orders" onClick={handleChange}>
             Orders
           </MenuItem>
+          <MenuItem value="/warranty" onClick={handleChange}>
+            Warranty
+          </MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </div>
       )}
@@ -82,13 +86,24 @@ const AccountIcon = (props) => {
   return (
     <div>
       {!buyerService.isLoggedIn() ? (
-        <AccountCircleIcon onClick={handleProfileMenuOpen} />
+        <AccountCircleIcon
+          fontSize="medium"
+          sx={{ color: "#ba6a62" }}
+          onClick={handleProfileMenuOpen}
+        />
       ) : (
         <Avatar
           sx={{ width: 24, height: 24, bgcolor: "#ba6a62" }}
           onClick={handleProfileMenuOpen}
         >
-          <Typography sx={{ width: 16, height: 16, marginBottom: "6px", marginRight: "4px"}}>
+          <Typography
+            sx={{
+              width: 16,
+              height: 16,
+              marginBottom: "6px",
+              marginRight: "4px",
+            }}
+          >
             {fname}
             {lname}
           </Typography>
