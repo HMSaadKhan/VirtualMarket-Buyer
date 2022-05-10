@@ -1,36 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Box, Typography } from "@mui/material";
 import WarrantyComponent from "./WarrantyComponent";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@mui/styles";
 import MenuSideBar from "../MenuSideBar";
 import Auth from "../AuthWrapper/Auth";
+import warrantyService from "../../Services/WarrantyService";
+import favoriteService from "../../Services/FavoritesService";
+import moment from "moment";
 
-const useStyles = makeStyles((theme) => ({
-  button: {
-    width: "100%",
-    backgroundColor: "#ba6a62",
-    color: "#fff",
-    "&:hover": {
-      backgroundColor: "#ba6a64",
-      color: "#ffff",
-    },
-  },
+const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
   },
-  clearCartButton: {
-    display: "flex",
-    flexDirection: "row",
-    marginLeft: "49%",
-    paddingTop: "2%",
-    marginBottom: "1%",
-    width: "20%",
-  },
-}));
+});
 const Warranty = (props) => {
+  const [warranties, setwarranties] = useState();
+  const getWarranties = () => {
+    warrantyService.getWarranty().then((warranty) => {
+      console.log(warranty.data);
+      setwarranties(warranty.data);
+    });
+  };
+  useEffect(getWarranties, []);
   const classes = useStyles();
   return (
     <Auth>
@@ -48,11 +42,17 @@ const Warranty = (props) => {
         </Typography>
       </Box>
       <Box sx={{ display: "flex ", justifyContent: "center" }}>
-        <Box m={2}>
-          <MenuSideBar />
-        </Box>
         <Box className={classes.root}>
-          <WarrantyComponent />
+          {console.log(warranties)}
+          {warranties ? (
+            <Box>
+              {warranties.map((warranty, index) => (
+                <WarrantyComponent key={index} warranty={warranty} />
+              ))}
+            </Box>
+          ) : (
+            <></>
+          )}
         </Box>
       </Box>
     </Auth>

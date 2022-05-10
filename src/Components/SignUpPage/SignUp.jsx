@@ -20,7 +20,7 @@ const BuyerAccount = (props) => {
   const [confirmPassword, setCPassword] = React.useState("");
   const [fName, setfName] = React.useState("");
   const [lName, setlName] = React.useState("");
-
+ 
   const StyledButton = styled(Button)({
     width: "100%",
     color: "#ffff",

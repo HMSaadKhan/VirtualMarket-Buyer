@@ -5,18 +5,21 @@ import CartItems from "./CartItems";
 import cartService from "../../Services/CartServices";
 
 import useState from "react-usestateref";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@mui/styles";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import Auth from "../AuthWrapper/Auth";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-around",
   },
-}));
+  sidebar: {
+    position: "fixed",
+  },
+});
 const Cart = (props) => {
   const classes = useStyles();
   const history = useHistory();
@@ -27,7 +30,7 @@ const Cart = (props) => {
   const [subtotal, setsubtotal, subtotalRef] = useState();
   const [deliveryCharge, setdeliveryCharge] = useState();
   const [total, settotal] = useState();
-  
+
   const getCartItems = async () => {
     await cartService
       .getCart()
@@ -120,26 +123,35 @@ const Cart = (props) => {
         </Button>
       </div>
 
-      <div className={classes.root}>
-        <div>
-          {cartItem ? (
-            <Box m={2}>
-              {cartItem.map((item) => (
-                <CartItems
-                  item={item}
-                  key={item._id}
-                  getCartItems={getCartItems}
-                  getProductId={getProductId}
-                  // productQtyChange={productQtyChange}
-                />
-              ))}
-            </Box>
-          ) : (
-            <div></div>
-          )}
-        </div>
-        <div>
-          <Box m={2} sx={{ width: 300 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
+        <Box></Box>
+        <Box>
+          <Box>
+            {cartItem ? (
+              <Box m={2}>
+                {cartItem.map((item) => (
+                  <CartItems
+                    item={item}
+                    key={item._id}
+                    getCartItems={getCartItems}
+                    getProductId={getProductId}
+                    // productQtyChange={productQtyChange}
+                  />
+                ))}
+              </Box>
+            ) : (
+              <div></div>
+            )}
+          </Box>
+        </Box>
+        <Box>
+          <Box position="fixed" m={2} sx={{ width: 300 }}>
             <Card sx={{ backgroundColor: "white" }}>
               <CardContent>
                 <Typography sx={{ fontSize: 18, fontWeight: "bold" }}>
@@ -204,8 +216,8 @@ const Cart = (props) => {
               </Box>
             </Card>
           </Box>
-        </div>
-      </div>
+        </Box>
+      </Box>
     </Auth>
   );
 };

@@ -89,7 +89,7 @@ const Login = (props) => {
                           toast.success("Login Successfull", {
                             position: toast.POSITION.BOTTOM_LEFT,
                           });
-                          setTimeout(direct, 5000);
+                          setTimeout(direct, 1000);
                         })
                         .catch((err) => {
                           toast.error(err.response.data, {

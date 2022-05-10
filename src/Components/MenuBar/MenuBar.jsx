@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
 const MenuBar = (props) => {
   const [qty, setQty, qtyRef] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [search, setSearch] = useState("");
 
   const getCartCount = () => {
     cartService.getQty().then((data) => {
@@ -90,10 +91,16 @@ const MenuBar = (props) => {
             label="Search field"
             type="search"
             variant="standard"
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
           />
-          <Search sx={{ color: "#ba6a62" }}>
-            <Search />
-          </Search>
+          <Search
+            sx={{ color: "#ba6a62" }}
+            onClick={(e) => {
+              history.push("/search/" + search);
+            }}
+          />
         </div>
         <div className={classes.iconContainer}>
           <div className={classes.icon}>

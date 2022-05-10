@@ -58,7 +58,7 @@ export default function Categories() {
                 },
               }}
               onClick={(e) => {
-                history.push("/" + item._id);
+                history.push("/" + item.name + "/" + item._id);
               }}
             >
               {item.name}

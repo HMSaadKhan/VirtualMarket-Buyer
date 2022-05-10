@@ -8,6 +8,7 @@ import {
 import { Box } from "@mui/material";
 import MenuBar from "./Components/MenuBar/MenuBar";
 import Footer from "./Components/Footer/Footer";
+
 import Login from "./Components/LoginPage/Login";
 import SignUp from "./Components/SignUpPage/SignUp";
 import ForgotPassword from "./Components/SignUpPage/ForgotPassword";
@@ -23,10 +24,11 @@ import NotFound from "./Components/NotFound/NotFound";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Categories from "./Components/Categories/Categories";
-import SignUp2 from "./newpagesBuyer/Signup/Singnup";
+
 import CheckOut from "./Components/CheckOut/CheckOut";
 import Orders from "./Components/OrderList/Orders";
 import ProductsByCategory from "./Components/HomePage/ProductsByCategory";
+import ProductsBySearch from "./Components/HomePage/ProductsBySearch";
 import Warranty from "./Components/Warranty/Warranty";
 function App() {
   const [refreshCart, setRefreshCart] = React.useState();
@@ -63,17 +65,14 @@ function App() {
 
           <Route path="/not-found" component={NotFound} />
 
-          <Route path="/SignUp2" exact component={SignUp2} />
-          <Route path="/forgotpassword2" component={ForgotPassword} />
-          <Route path="/resetPassword2" exact component={NewPassword} />
-          <Route path="/changepassword2" exact component={ChangePassword} />
-          <Route path="/:id" exact component={ProductsByCategory} />
+          <Route path="/:name/:id" exact component={ProductsByCategory} />
+          <Route path="/search/:id" exact component={ProductsBySearch} />
 
           <Route path="/" exact component={HomePage} />
           <Redirect to="/not-found" />
         </Switch>
 
-        <Footer />
+        {/* <Footer /> */}
       </Box>
     </Router>
   );

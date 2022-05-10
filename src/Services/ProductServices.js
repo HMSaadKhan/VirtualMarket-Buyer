@@ -1,4 +1,5 @@
 import GenericService from "./GenericService";
+import axios from "axios";
 class ProductsService extends GenericService {
   constructor() {
     super();
@@ -26,8 +27,17 @@ class ProductsService extends GenericService {
     });
   getByCategory = (_id) =>
     new Promise((resolve, reject) => {
-      console.log(_id);
       this.get("products/getByCategory/" + _id)
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  getBySearch = (key) =>
+    new Promise((resolve, reject) => {
+      this.get("products/search/" + key)
         .then((data) => {
           resolve(data);
         })

@@ -92,9 +92,6 @@ const BuyerAccount = (props) => {
   return (
     <Auth>
       <Container>
-        <Box>
-          <MenuSideBar />
-        </Box>
         <Box m={1}>
           <Card sx={{ maxWidth: "100%", minWidth: "40%" }}>
             <CardContent>
