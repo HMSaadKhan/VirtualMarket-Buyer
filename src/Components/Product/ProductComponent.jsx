@@ -24,6 +24,7 @@ const ProductComponent = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const { product } = props;
+  console.log(product);
 
   return (
     <Card

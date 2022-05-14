@@ -20,7 +20,7 @@ const HomePage = () => {
         setCategories(data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
       });
   };
   useEffect(getCategory, []);

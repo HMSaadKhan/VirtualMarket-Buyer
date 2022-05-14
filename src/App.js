@@ -30,6 +30,8 @@ import Orders from "./Components/OrderList/Orders";
 import ProductsByCategory from "./Components/HomePage/ProductsByCategory";
 import ProductsBySearch from "./Components/HomePage/ProductsBySearch";
 import Warranty from "./Components/Warranty/Warranty";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./Styles/myStyleSheet";
 function App() {
   const [refreshCart, setRefreshCart] = React.useState();
   const getStateChanged = (data) => {
@@ -37,6 +39,7 @@ function App() {
     setRefreshCart(data);
   };
   return (
+    <ThemeProvider theme={theme}>
     <Router>
       <ToastContainer />
 
@@ -75,6 +78,7 @@ function App() {
         {/* <Footer /> */}
       </Box>
     </Router>
+    </ThemeProvider>
   );
 }
 

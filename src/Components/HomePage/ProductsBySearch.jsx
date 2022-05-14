@@ -6,7 +6,6 @@ import productService from "../../Services/ProductServices";
 import ProductComponent from "../Product/ProductComponent";
 
 const ProductsBySearch = (props) => {
-  console.log(props);
   const key = props.match.params.id;
   const [products, setProducts] = useState([]);
 

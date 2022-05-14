@@ -26,7 +26,11 @@ import CommentsDisplay from "../PopUps/CommentsDisplay";
 import reviewService from "../../Services/ReviewService";
 import favoriteService from "../../Services/FavoritesService";
 import SellerMismatch from "../PopUps/SellerMismatch";
-const useStyles = makeStyles((theme) => ({
+import ScheduleIcon from "@mui/icons-material/Schedule";
+import DateTimePicker from "react-datetime-picker";
+import ScheduleOrder from "../PopUps/ScheduleOrder";
+
+const useStyles = makeStyles({
   root: {
     display: "flex",
     justifyContent: "center",
@@ -57,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#ba6a62",
     marginBottom: 5,
   },
-}));
+});
 
 export default function ProductDetail(props) {
   const classes = useStyles();
@@ -70,9 +74,12 @@ export default function ProductDetail(props) {
   const [reviews, setreviews] = useState([]);
   const [favoriteChecked, setFavoriteChecked] = React.useState(false);
   const [bool, setbool] = useState(false);
+  const [schedulebool, setschedulebool] = useState(false);
   const [overallRating, setoverallRating] = useState();
   const [totalRating, settotalRating] = useState("");
   const [type, settype] = useState();
+  const [value, onChange] = useState(new Date());
+
   const StyledButton = styled(Button)({
     color: "#ffff",
     backgroundColor: "#ba6a62",
@@ -81,6 +88,11 @@ export default function ProductDetail(props) {
       backgroundColor: "#C78781",
       color: "#fafafa",
     },
+  });
+  const StyledBox = styled(Box)({
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
   });
 
   const favoriteHandleChange = (event) => {
@@ -145,7 +157,7 @@ export default function ProductDetail(props) {
         toast.error(error.response.data, {
           position: toast.POSITION.BOTTOM_LEFT,
         });
-        if (error.response.status === 401) {
+        if (error.response.data === "Seller Mismatch") {
           setbool(true);
           console.log(error.response.data);
         }
@@ -203,6 +215,7 @@ export default function ProductDetail(props) {
         setbool={setbool}
         sellerMismatch={sellerMismatch}
       />
+      <ScheduleOrder bool={schedulebool} setbool={setschedulebool} />
       {productDetails ? (
         <Box>
           <Box className={classes.root}>
@@ -241,18 +254,13 @@ export default function ProductDetail(props) {
             <Box m={4} sx={{ width: "100%" }}>
               <Card>
                 <CardContent>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
+                  <StyledBox>
                     <Box>
-                      <Typography ml={1} className={classes.name}>
+                      <Typography className={classes.name}>
                         {productDetails.name}
                       </Typography>
-                      <Box m={1} sx={{ display: "flex", alignItem: "center" }}>
-                        <Typography mt={0.5}>
+                      <Box sx={{ display: "flex", alignItem: "center" }}>
+                        <Typography>
                           <Rating
                             value={overallRating}
                             size="small"
@@ -261,7 +269,7 @@ export default function ProductDetail(props) {
                         </Typography>
                         <Typography>({totalRating})</Typography>
                       </Box>
-                      <Box m={1} sx={{ display: "flex " }}>
+                      <Box sx={{ display: "flex " }}>
                         <Typography className={classes.headingText}>
                           Brand
                         </Typography>
@@ -271,22 +279,37 @@ export default function ProductDetail(props) {
                       </Box>
                     </Box>
                     <Box>
-                      <Typography className={classes.name}>
-                        <Checkbox
-                          sx={{
-                            color: "#ba6a62",
-                            "&.Mui-checked": {
+                      <Box>
+                        <Typography className={classes.name}>
+                          <Checkbox
+                            sx={{
                               color: "#ba6a62",
-                            },
-                          }}
-                          checked={favoriteChecked}
-                          onChange={favoriteHandleChange}
-                          icon={<FavoriteBorder />}
-                          checkedIcon={<Favorite />}
+                              "&.Mui-checked": {
+                                color: "#ba6a62",
+                              },
+                            }}
+                            checked={favoriteChecked}
+                            onChange={favoriteHandleChange}
+                            icon={<FavoriteBorder />}
+                            checkedIcon={<Favorite />}
+                          />
+                        </Typography>
+                      </Box>
+                      <Box>
+                        <DateTimePicker
+                          format="dd-MM-yyyy HH"
+                          onChange={onChange}
+                          value={value}
                         />
-                      </Typography>
+                        {console.log(value)}
+                        <ScheduleIcon
+                          onClick={(e) => {
+                            setschedulebool(true);
+                          }}
+                        />
+                      </Box>
                     </Box>
-                  </Box>
+                  </StyledBox>
                   <Divider />
                   <Box>
                     <Typography

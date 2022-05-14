@@ -7,19 +7,53 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import TextField from "@mui/material/TextField";
 import { makeStyles } from "@material-ui/styles";
-import reviewService from "../../Services/ReviewService";
+import warrantyService from "../../Services/WarrantyService";
 import { toast } from "react-toastify";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { styled } from "@mui/material/styles";
 
-const useStyles = makeStyles((theme) => ({
+const StyledButton = styled(Button)({
+  margin: "10px",
+  color: "#ffff",
+  backgroundColor: "#ba6a62",
+  fontWeight: "bold",
+  "&:hover": {
+    backgroundColor: "#C78781",
+    color: "#fafafa",
+  },
+});
+const DisabledButton = styled(Button)({
+  margin: "10px",
+  color: "#ffff",
+  backgroundColor: "#856562",
+  fontWeight: "bold",
+  "&:hover": {
+    backgroundColor: "#C78781",
+    color: "#fafafa",
+  },
+  "&:disabled": {
+    backgroundColor: "#d4cecd",
+    color: "#fafafa",
+  },
+});
+const useStyles = makeStyles({
   root: {
     width: 500,
   },
-}));
+});
 
-export default function ClaimWriting() {
+export default function ClaimWriting({ id, status }) {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
+  const [disable, setDisable] = React.useState(false);
+
+  const checkDisable = () => {
+    if (status === "EXPIRED" || status === "REQUESTED") {
+      setDisable(true);
+    }
+  };
+  React.useEffect(checkDisable, []);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -28,16 +62,16 @@ export default function ClaimWriting() {
   const handleClose = () => {
     setOpen(false);
   };
-  const [text, setText] = React.useState("");
+  const [comment, setText] = React.useState("");
 
   const handleChange = (event) => {
     setText(event.target.value);
   };
   const Review = () => {
-    reviewService
-      .ReviewPost()
+    warrantyService
+      .claimWarranty(id, { comment })
       .then((data) => {
-        toast.success(data.statusText, {
+        toast.success(data.data, {
           position: toast.POSITION.BOTTOM_LEFT,
         });
         handleClose();
@@ -51,21 +85,14 @@ export default function ClaimWriting() {
 
   return (
     <div>
-      <Button
-        sx={{
-          color: "#fff",
-          backgroundColor: "#ba6a62",
-          marginLeft: "10px",
-          fontWeight: "bold",
-          "&:hover": {
-            backgroundColor: "#ba6a64",
-            color: "#ffff",
-          },
-        }}
-        onClick={handleClickOpen}
-      >
-        Claim
-      </Button>
+      {disable ? (
+        <DisabledButton disabled={disable} onClick={handleClickOpen}>
+          Claim
+        </DisabledButton>
+      ) : (
+        <StyledButton onClick={handleClickOpen}>Claim</StyledButton>
+      )}
+
       <Dialog
         open={open}
         onClose={handleClose}
@@ -83,21 +110,14 @@ export default function ClaimWriting() {
             Tell use what happened{" "}
           </DialogTitle>
           <Box>
-            <Button
+            <CancelIcon
               sx={{
-                color: "#fff",
-                backgroundColor: "#ba6a62",
-                marginLeft: "10px",
-                fontWeight: "bold",
-                "&:hover": {
-                  backgroundColor: "#ba6a64",
-                  color: "#ffff",
-                },
+                color: "#ba6a62",
               }}
               onClick={handleClose}
             >
               Close
-            </Button>
+            </CancelIcon>
           </Box>
         </Box>
 
@@ -111,27 +131,14 @@ export default function ClaimWriting() {
                     multiline
                     fullWidth
                     maxRows={5}
-                    value={text}
+                    value={comment}
                     onChange={handleChange}
                   />
                 </Box>
                 <Box m={2}>
-                  <Button
-                    onClick={Review}
-                    variant="contained"
-                    sx={{
-                      color: "#fff",
-                      backgroundColor: "#ba6a62",
-                      marginLeft: "10px",
-                      fontWeight: "bold",
-                      "&:hover": {
-                        backgroundColor: "#ba6a64",
-                        color: "#ffff",
-                      },
-                    }}
-                  >
+                  <StyledButton onClick={Review} variant="contained">
                     Submit
-                  </Button>
+                  </StyledButton>
                 </Box>
               </Box>
             </Card>

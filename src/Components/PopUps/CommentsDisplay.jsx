@@ -5,14 +5,14 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import { makeStyles } from "@material-ui/styles";
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   root: {
     display: "flex",
     justifyContent: "center",
     margin: "20px",
   },
   container: { width: "40%" },
-}));
+});
 
 export default function CommentsDisplay({ review }) {
   const classes = useStyles();

@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import { makeStyles } from "@material-ui/styles";
 import { styled } from "@mui/material/styles";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const StyledButton = styled(Button)({
   margin: "10px",
@@ -46,13 +47,16 @@ export default function SellerMismatch({ bool, setbool, sellerMismatch }) {
         >
           <DialogTitle id="responsive-dialog-title"></DialogTitle>
           <Box>
-            <StyledButton
+            <CancelIcon
+              sx={{
+                color: "#ba6a62",
+              }}
               onClick={(e) => {
                 setbool(false);
               }}
             >
               Close
-            </StyledButton>
+            </CancelIcon>
           </Box>
         </Box>
 

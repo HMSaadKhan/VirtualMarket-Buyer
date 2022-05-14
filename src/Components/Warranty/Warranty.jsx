@@ -41,6 +41,7 @@ const Warranty = (props) => {
           Warranty
         </Typography>
       </Box>
+
       <Box sx={{ display: "flex ", justifyContent: "center" }}>
         <Box className={classes.root}>
           {console.log(warranties)}

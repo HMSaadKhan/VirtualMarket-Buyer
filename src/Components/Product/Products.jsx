@@ -10,17 +10,6 @@ const Products = (props) => {
 
   const [products, setProducts] = useState([]);
 
-  // const getProducts = () => {
-  //   productService
-  //     .getProducts()
-  //     .then((data) => {
-  //       setProducts(data);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };
-  // useEffect(getProducts, []);
   const getProductsbyCategory = async (_id) => {
     await productService
       .getFiveByCategory(props._id)

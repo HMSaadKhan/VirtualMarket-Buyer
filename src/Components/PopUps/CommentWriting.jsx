@@ -13,6 +13,18 @@ import { makeStyles } from "@material-ui/styles";
 import reviewService from "../../Services/ReviewService";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { toast } from "react-toastify";
+import { styled } from "@mui/material/styles";
+
+const StyledButton = styled(Button)({
+  margin: "10px",
+  color: "#ffff",
+  backgroundColor: "#ba6a62",
+  fontWeight: "bold",
+  "&:hover": {
+    backgroundColor: "#C78781",
+    color: "#fafafa",
+  },
+});
 
 const labels = {
   0.5: "Useless",
@@ -29,16 +41,6 @@ const labels = {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: 500,
-  },
-  button: {
-    color: "#ba6a62",
-    backgroundColor: "#fff",
-    marginLeft: "10px",
-    fontWeight: "bold",
-    "&:hover": {
-      backgroundColor: "#ba6a64",
-      color: "#ffff",
-    },
   },
 }));
 
@@ -82,21 +84,7 @@ export default function CommentWriting({ orderId, itemId }) {
 
   return (
     <div>
-      <Button
-        sx={{
-          color: "#fff",
-          backgroundColor: "#ba6a62",
-          marginLeft: "10px",
-          fontWeight: "bold",
-          "&:hover": {
-            backgroundColor: "#ba6a64",
-            color: "#ffff",
-          },
-        }}
-        onClick={handleClickOpen}
-      >
-        review
-      </Button>
+      <StyledButton onClick={handleClickOpen}>review</StyledButton>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -117,14 +105,7 @@ export default function CommentWriting({ orderId, itemId }) {
           <Box>
             <CancelIcon
               sx={{
-                color: "#fff",
-                backgroundColor: "#ba6a62",
-                marginLeft: "10px",
-                fontWeight: "bold",
-                "&:hover": {
-                  backgroundColor: "#ba6a64",
-                  color: "#ffff",
-                },
+                color: "#ba6a62",
               }}
               onClick={handleClose}
             >
@@ -180,22 +161,9 @@ export default function CommentWriting({ orderId, itemId }) {
                   />
                 </Box>
                 <Box m={2}>
-                  <Button
-                    onClick={Review}
-                    variant="contained"
-                    sx={{
-                      color: "#fff",
-                      backgroundColor: "#ba6a62",
-                      marginLeft: "10px",
-                      fontWeight: "bold",
-                      "&:hover": {
-                        backgroundColor: "#ba6a64",
-                        color: "#ffff",
-                      },
-                    }}
-                  >
+                  <StyledButton onClick={Review} variant="contained">
                     Submit
-                  </Button>
+                  </StyledButton>
                 </Box>
               </Box>
             </Card>
