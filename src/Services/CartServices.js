@@ -116,10 +116,22 @@ class CartService extends GenericService {
           reject(err);
         });
     });
+  OnlinePayment = (data) =>
+    new Promise((resolve, reject) => {
+      console.log(data);
+      axios
+        .post("orders/onlinePaymentCheckout", data)
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   ProceedToCheckOut = () =>
     new Promise((resolve, reject) => {
       axios
-        .get("carts/proceedToCheckOut/")
+        .get("carts/proceedToCheckout/")
         .then((data) => {
           resolve(data);
         })

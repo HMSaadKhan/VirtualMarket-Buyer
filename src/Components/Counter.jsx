@@ -4,13 +4,16 @@ import { Box, IconButton, TextField } from "@mui/material";
 import useState from "react-usestateref";
 
 export default function Counter(props) {
-  const [quantity, SetQuantity] = useState(0);
+  const { quantity, value } = props;
+  const [qty, SetQty] = useState(quantity);
 
   const plusButton = () => {
-    SetQuantity(quantity + 1);
+    SetQty(qty + 1);
+    value(qty + 1);
   };
   const minusButton = () => {
-    SetQuantity(quantity - 1);
+    value(qty - 1);
+    SetQty(qty - 1);
   };
 
   return (
@@ -20,7 +23,7 @@ export default function Counter(props) {
           <Remove />
         </IconButton>
         <Box sx={{ width: "20%" }}>
-          <TextField value={quantity} />
+          <TextField value={qty} />
         </Box>
         <IconButton onClick={plusButton}>
           <Add />

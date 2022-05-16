@@ -20,7 +20,6 @@ const Warranty = (props) => {
   const [warranties, setwarranties] = useState();
   const getWarranties = () => {
     warrantyService.getWarranty().then((warranty) => {
-      console.log(warranty.data);
       setwarranties(warranty.data);
     });
   };
@@ -44,7 +43,6 @@ const Warranty = (props) => {
 
       <Box sx={{ display: "flex ", justifyContent: "center" }}>
         <Box className={classes.root}>
-          {console.log(warranties)}
           {warranties ? (
             <Box>
               {warranties.map((warranty, index) => (

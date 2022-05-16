@@ -8,6 +8,7 @@ import buyerService from "../../Services/BuyerService";
 import axios from "axios";
 import { IconButton } from "@material-ui/core";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ScheduledOrder from "./ScheduledOrders";
 
 const AccountIcon = (props) => {
   const [fname, setfname] = useState("");
@@ -51,6 +52,15 @@ const AccountIcon = (props) => {
 
   const renderMenu = (
     <Menu
+      elevation={0}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "right",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
       id="basic-menu"
       anchorEl={anchorEl}
       keepMounted
@@ -76,6 +86,9 @@ const AccountIcon = (props) => {
           </MenuItem>
           <MenuItem value="/warranty" onClick={handleChange}>
             Warranty
+          </MenuItem>
+          <MenuItem>
+            <ScheduledOrder />
           </MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </div>

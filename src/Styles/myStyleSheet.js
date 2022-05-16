@@ -41,6 +41,11 @@ const theme = createTheme({
         size: "small",
       },
     },
+    MuiMenuItem: {
+      defaultProps: {
+        divider: "true",
+      },
+    },
   },
 });
 export default theme;

@@ -16,7 +16,6 @@ const useStyles = makeStyles({
 
 const WarrantyComponent = ({ warranty }) => {
   const classes = useStyles();
-  console.log(warranty);
 
   return (
     <Box>

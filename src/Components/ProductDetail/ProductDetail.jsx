@@ -215,9 +215,20 @@ export default function ProductDetail(props) {
         setbool={setbool}
         sellerMismatch={sellerMismatch}
       />
-      <ScheduleOrder bool={schedulebool} setbool={setschedulebool} />
+      {/* <ScheduleOrder
+        product={product.id}
+        bool={schedulebool}
+        setbool={setschedulebool}
+        minOrder={productDetails.minOrder}
+      /> */}
       {productDetails ? (
         <Box>
+          <ScheduleOrder
+            product={product.id}
+            bool={schedulebool}
+            setbool={setschedulebool}
+            minOrder={productDetails.minOrder}
+          />
           <Box className={classes.root}>
             <Box m={4} sx={{ width: "60%" }}>
               <Card>
@@ -296,11 +307,6 @@ export default function ProductDetail(props) {
                         </Typography>
                       </Box>
                       <Box>
-                        <DateTimePicker
-                          format="dd-MM-yyyy HH"
-                          onChange={onChange}
-                          value={value}
-                        />
                         {console.log(value)}
                         <ScheduleIcon
                           onClick={(e) => {

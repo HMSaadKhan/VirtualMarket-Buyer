@@ -18,6 +18,7 @@ import DateTimePicker from "react-datetime-picker";
 import Radio from "@mui/material/Radio";
 import FormControl from "@mui/material/FormControl";
 import RadioGroup from "@mui/material/RadioGroup";
+import scheduleService from "../../Services/ScheduleService";
 const StyledButton = styled(Button)({
   margin: "10px",
   color: "#ffff",
@@ -35,12 +36,16 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ScheduleOrder({ bool, setbool }) {
+export default function ScheduleOrder(props) {
+  const { minOrder, bool, setbool, product } = props;
   const classes = useStyles();
   const [datentime, setdatentime] = React.useState(new Date());
   const [checked, setChecked] = React.useState(true);
   const [radio, setRadio] = React.useState(true);
   const [preset, setpreset] = React.useState("");
+  const [quantity, setquantity, quantityref] = React.useState(props.minOrder);
+  const [customRepetition, setcustomRepetition] = React.useState(0);
+
   const Preset = [
     "WEEKLY",
     "FORTNIGHTLY",
@@ -61,6 +66,40 @@ export default function ScheduleOrder({ bool, setbool }) {
   };
   const selectChange = (e) => {
     setpreset(e.target.value);
+  };
+
+  const scheduleOrder = () => {
+    console.log(
+      product,
+      quantity,
+      datentime,
+      checked,
+      radio,
+      preset,
+      customRepetition
+    );
+    scheduleService
+      .addscheduledOrder({
+        product,
+        quantity,
+        scheduledTime: datentime,
+        repeat: checked,
+        repetitionType: radio,
+        presetRepetition: preset,
+        customRepetition,
+      })
+      .then((data) => {
+        toast.success(data.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+        setbool(false);
+      })
+      .catch((error) => {
+        console.log(error.response);
+        toast.error(error.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+      });
   };
 
   return (
@@ -93,7 +132,7 @@ export default function ScheduleOrder({ bool, setbool }) {
           <div className={classes.root}>
             <Box>
               <Typography>Quanity</Typography>
-              <Counter />
+              <Counter quantity={quantity} value={setquantity} />
               <Typography>Date & time</Typography>
               <DateTimePicker
                 format="dd-MM-yyyy HH"
@@ -130,9 +169,9 @@ export default function ScheduleOrder({ bool, setbool }) {
                     <FormControlLabel
                       control={
                         <Radio
-                          checked={radio === "DropDown"}
+                          checked={radio === "PRESET"}
                           onChange={handleRadio}
-                          value="DropDown"
+                          value="PRESET"
                           name="radio-buttons"
                         />
                       }
@@ -148,7 +187,7 @@ export default function ScheduleOrder({ bool, setbool }) {
                         </Typography>
                       }
                     />
-                    {radio === "DropDown" ? (
+                    {radio === "PRESET" ? (
                       <Select
                         variant="standard"
                         value={preset}
@@ -157,7 +196,7 @@ export default function ScheduleOrder({ bool, setbool }) {
                         }}
                       >
                         {Preset.map((item) => (
-                          <MenuItem key={item} value={item._id}>
+                          <MenuItem key={item._id} value={item}>
                             {item}
                           </MenuItem>
                         ))}
@@ -170,9 +209,9 @@ export default function ScheduleOrder({ bool, setbool }) {
                     <FormControlLabel
                       control={
                         <Radio
-                          checked={radio === "Custom"}
+                          checked={radio === "CUSTOM"}
                           onChange={handleRadio}
-                          value="Custom"
+                          value="CUSTOM"
                           name="radio-buttons"
                         />
                       }
@@ -188,7 +227,14 @@ export default function ScheduleOrder({ bool, setbool }) {
                         </Typography>
                       }
                     />
-                    {radio === "Custom" ? <Counter /> : <></>}
+                    {radio === "CUSTOM" ? (
+                      <Counter
+                        quantity={customRepetition}
+                        value={setcustomRepetition}
+                      />
+                    ) : (
+                      <></>
+                    )}
                   </Box>
                 </>
               ) : (
@@ -196,7 +242,7 @@ export default function ScheduleOrder({ bool, setbool }) {
               )}
             </Box>
             <Box sx={{ display: "flex", justifyContent: "right" }}>
-              <StyledButton onClick={handleClose}>keep</StyledButton>
+              <StyledButton onClick={scheduleOrder}>schedule</StyledButton>
             </Box>
           </div>
         </DialogContent>

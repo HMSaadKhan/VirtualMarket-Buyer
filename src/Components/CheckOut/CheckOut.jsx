@@ -15,6 +15,13 @@ import CartItems from "../Cart/CartItems";
 import { useHistory } from "react-router-dom";
 import cityService from "../../Services/CityService";
 import Auth from "../AuthWrapper/Auth";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  CardElement,
+  Elements,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 const useStyles = makeStyles((theme) => ({
   textField: {
     display: "flex",
@@ -123,6 +130,9 @@ export default function CheckOut(props) {
       });
   };
 
+  const stripePromise = loadStripe(
+    "pk_test_51KgTkABawPiCT74LKv8JcHCRedbnbeBQb2kmzemxbOEPLeYXn59W9vFsq7bT7d3fvgtYqAWYOdF7ZetxUcHutVAP00a87p6k3l"
+  );
   return (
     <Auth>
       <Box className={classes.root}>
@@ -141,7 +151,18 @@ export default function CheckOut(props) {
           </Card>
           <br />
 
-          {onlinePaymentOption ? <CardDetails /> : <></>}
+          {onlinePaymentOption ? (
+            <Elements stripe={stripePromise}>
+              <CardDetails
+                name={name}
+                address={address}
+                city={city}
+                phone={phone}
+              />
+            </Elements>
+          ) : (
+            <></>
+          )}
         </Box>
         {cartValues ? (
           <CheckOutSideBar
