@@ -9,7 +9,7 @@ import CardContent from "@mui/material/CardContent";
 import Rating from "@mui/material/Rating";
 import StarIcon from "@mui/icons-material/Star";
 import TextField from "@mui/material/TextField";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@mui/styles";
 import reviewService from "../../Services/ReviewService";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { toast } from "react-toastify";

@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import useState from "react-usestateref";
 import { Badge } from "@mui/material";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@mui/styles";
 import AccountIcon from "./AccountBar";
 import {
   AppBar,

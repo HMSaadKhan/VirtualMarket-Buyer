@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import TextField from "@mui/material/TextField";
 import { Typography, MenuItem, Select } from "@mui/material";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@mui/styles";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { toast } from "react-toastify";

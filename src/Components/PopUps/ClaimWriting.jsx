@@ -6,7 +6,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import TextField from "@mui/material/TextField";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@mui/styles";
 import warrantyService from "../../Services/WarrantyService";
 import { toast } from "react-toastify";
 import CancelIcon from "@mui/icons-material/Cancel";

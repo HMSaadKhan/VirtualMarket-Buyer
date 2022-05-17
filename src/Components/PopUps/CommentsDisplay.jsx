@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles({
   root: {
     display: "flex",

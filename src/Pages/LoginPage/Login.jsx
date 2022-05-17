@@ -91,7 +91,7 @@ const Login = (props) => {
                           setTimeout(direct, 1000);
                         })
                         .catch((err) => {
-                          toast.error(err.response.data, {
+                          toast.error(err.response, {
                             position: toast.POSITION.BOTTOM_LEFT,
                           });
                         });

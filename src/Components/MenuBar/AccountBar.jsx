@@ -6,7 +6,7 @@ import { MenuItem, Avatar, Typography } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import buyerService from "../../Services/BuyerService";
 import axios from "axios";
-import { IconButton } from "@material-ui/core";
+import { IconButton } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ScheduledOrder from "./ScheduledOrders";
 
