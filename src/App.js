@@ -9,27 +9,27 @@ import { Box } from "@mui/material";
 import MenuBar from "./Components/MenuBar/MenuBar";
 import Footer from "./Components/Footer/Footer";
 
-import Login from "./Components/LoginPage/Login";
-import SignUp from "./Components/SignUpPage/SignUp";
-import ForgotPassword from "./Components/SignUpPage/ForgotPassword";
-import NewPassword from "./Components/SignUpPage/NewPassword";
-import ChangePassword from "./Components/SignUpPage/ChangePassword";
-import HomePage from "./Components/HomePage/HomePage";
-import Cart from "./Components/Cart/Cart";
-import Favorite from "./Components/Favorites/Fvaorite";
+import Login from "./Pages/LoginPage/Login";
+import SignUp from "./Pages/SignUpPage/SignUp";
+import ForgotPassword from "./Pages/SignUpPage/ForgotPassword";
+import NewPassword from "./Pages/SignUpPage/NewPassword";
+import ChangePassword from "./Pages/SignUpPage/ChangePassword";
+import HomePage from "./Pages/HomePage/HomePage";
+import Cart from "./Pages/Cart/Cart";
+import Favorite from "./Pages/Favorites/Fvaorite";
 
-import BuyerAccount from "./Components/BuyerAccount/BuyerAccount";
-import ProductDetail from "./Components/ProductDetail/ProductDetail";
-import NotFound from "./Components/NotFound/NotFound";
+import BuyerAccount from "./Pages/BuyerAccount/BuyerAccount";
+import ProductDetail from "./Pages/ProductDetail/ProductDetail";
+import NotFound from "./Pages/NotFound/NotFound";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Categories from "./Components/Categories/Categories";
+import Categories from "./Pages/Categories/Categories";
 
-import CheckOut from "./Components/CheckOut/CheckOut";
-import Orders from "./Components/OrderList/Orders";
-import ProductsByCategory from "./Components/HomePage/ProductsByCategory";
-import ProductsBySearch from "./Components/HomePage/ProductsBySearch";
-import Warranty from "./Components/Warranty/Warranty";
+import CheckOut from "./Pages/CheckOut/CheckOut";
+import Orders from "./Pages/OrderList/Orders";
+import ProductsByCategory from "./Pages/HomePage/ProductsByCategory";
+import ProductsBySearch from "./Pages/HomePage/ProductsBySearch";
+import Warranty from "./Pages/Warranty/Warranty";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./Styles/myStyleSheet";
 function App() {
@@ -40,44 +40,44 @@ function App() {
   };
   return (
     <ThemeProvider theme={theme}>
-    <Router>
-      <ToastContainer />
+      <Router>
+        <ToastContainer />
 
-      <MenuBar refreshCart={refreshCart} />
-      <Categories />
-      <Box sx={{ backgroundColor: "#fafafa" }}>
-        <Switch>
-          <Route path="/Login" exact component={Login} />
-          <Route path="/Cart">
-            <Cart stateChanged={getStateChanged} />
-          </Route>
-          <Route path="/favorite" exact component={Favorite} />
-          <Route path="/SignUp" exact component={SignUp} />
-          <Route path="/AccountSettings" component={BuyerAccount} />
-          <Route path="/Orders" component={Orders} />
-          <Route path="/ProductDetail/:id/">
-            <ProductDetail stateChanged={getStateChanged} />
-          </Route>
-          <Route path="/forgotpassword" component={ForgotPassword} />
-          <Route path="/resetPassword/:id/" exact component={NewPassword} />
-          <Route path="/changepassword/" exact component={ChangePassword} />
-          <Route path="/warranty/" component={Warranty} />
-          <Route path="/check-out/">
-            <CheckOut stateChanged={getStateChanged} />
-          </Route>
+        <MenuBar refreshCart={refreshCart} />
+        <Categories />
+        <Box sx={{ backgroundColor: "#fafafa" }}>
+          <Switch>
+            <Route path="/Login" exact component={Login} />
+            <Route path="/Cart">
+              <Cart stateChanged={getStateChanged} />
+            </Route>
+            <Route path="/favorite" exact component={Favorite} />
+            <Route path="/SignUp" exact component={SignUp} />
+            <Route path="/AccountSettings" component={BuyerAccount} />
+            <Route path="/Orders" component={Orders} />
+            <Route path="/ProductDetail/:id/">
+              <ProductDetail stateChanged={getStateChanged} />
+            </Route>
+            <Route path="/forgotpassword" component={ForgotPassword} />
+            <Route path="/resetPassword/:id/" exact component={NewPassword} />
+            <Route path="/changepassword/" exact component={ChangePassword} />
+            <Route path="/warranty/" component={Warranty} />
+            <Route path="/check-out/">
+              <CheckOut stateChanged={getStateChanged} />
+            </Route>
 
-          <Route path="/not-found" component={NotFound} />
+            <Route path="/not-found" component={NotFound} />
 
-          <Route path="/:name/:id" exact component={ProductsByCategory} />
-          <Route path="/search/:id" exact component={ProductsBySearch} />
+            <Route path="/:name/:id" exact component={ProductsByCategory} />
+            <Route path="/search/:id" exact component={ProductsBySearch} />
 
-          <Route path="/" exact component={HomePage} />
-          <Redirect to="/not-found" />
-        </Switch>
+            <Route path="/" exact component={HomePage} />
+            <Redirect to="/not-found" />
+          </Switch>
 
-        {/* <Footer /> */}
-      </Box>
-    </Router>
+          {/* <Footer /> */}
+        </Box>
+      </Router>
     </ThemeProvider>
   );
 }
