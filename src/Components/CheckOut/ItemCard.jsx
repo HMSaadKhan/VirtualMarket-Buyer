@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ItemCard = ({ item }) => {
   const classes = useStyles();
-  console.log(item);
+  
   return (
     <div>
       <Box className={classes.root}>

@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CheckOutSideBar(props) {
   const classes = useStyles();
-  console.log(props.city);
+
   const {
     cartValues,
     deliveryCharge,
@@ -76,20 +76,20 @@ export default function CheckOutSideBar(props) {
               <Typography m={1} sx={{ display: "flex " }}>
                 Subtotal
                 <Box ml={8}>
-                  <Typography>{cartValues.subTotal}</Typography>
+                  <Typography>PKR.{cartValues.subTotal}</Typography>
                 </Box>
               </Typography>
               <Typography m={1} sx={{ display: "flex " }}>
                 Shipping{" "}
                 <Box ml={8}>
-                  <Typography>{delivery_charge}</Typography>
+                  <Typography>PKR.{delivery_charge}</Typography>
                 </Box>
               </Typography>
               <Divider />
               <Typography m={1} sx={{ display: "flex " }}>
                 total{" "}
                 <Box ml={12}>
-                  <Typography>{cartValues.total}</Typography>
+                  <Typography>PKR.{cartValues.total}</Typography>
                 </Box>
               </Typography>
               <Divider />

@@ -14,6 +14,10 @@ import {
   Elements,
   useStripe,
   useElements,
+  PaymentElement,
+  CardNumberElement,
+  CardExpiryElement,
+  CardCvcElement,
 } from "@stripe/react-stripe-js";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,15 +37,23 @@ export default function CardDetails() {
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
-  if (elements == null) {
-    return;
-  }
+  const [Id, setId] = React.useState();
 
-  const { error, paymentMethod } = await stripe.createPaymentMethod({
-    type: "card",
-    card: elements.getElement(CardElement),
-  });
-};
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (elements == null) {
+      return;
+    }
+
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: elements.getElement(CardElement),
+    });
+
+    const { id } = paymentMethod;
+    setId(id);
+  };
   return (
     <div>
       <FormControlLabel
@@ -84,7 +96,7 @@ export default function CardDetails() {
                   }}
                 >
                   <TextField label="Name" size="small" />
-                  <TextField label="CVC" size="small" />
+                  <CardCvcElement />
                 </Box>
                 <Box
                   sx={{
@@ -96,8 +108,12 @@ export default function CardDetails() {
                     m: 1,
                   }}
                 >
-                  <TextField label="Card Number" size="small" />
-                  <TextField label="Expiry Date" size="small" />
+                  <Box>
+                    <CardNumberElement />
+                  </Box>
+                  <Box>
+                    <CardExpiryElement />
+                  </Box>
                 </Box>
               </CardContent>
             </Card>

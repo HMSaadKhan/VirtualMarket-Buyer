@@ -39,6 +39,7 @@ export default function CheckOut(props) {
   const history = useHistory();
 
   const classes = useStyles();
+
   const [cartItem, setCartItem] = useState([]);
   const [cartValues, setCartValues] = useState([]);
   const [deliveryCharge, setdeliveryCharge] = useState();
@@ -48,7 +49,8 @@ export default function CheckOut(props) {
   const [phone, setphone] = useState("");
   const [cities, setcities] = useState([]);
   const [onlinePaymentOption, setonlinePaymentOption] = useState();
-
+  const [onlinePaymentProceed, setOnlinePaymentProceed] = useState();
+  const [Id, setId] = React.useState();
   const getCities = () => {
     cityService
       .GetCities()
@@ -69,9 +71,7 @@ export default function CheckOut(props) {
     await cartService
       .getCart()
       .then((data) => {
-        console.log(data);
         setCartItem(data.items);
-        console.log("get cart items");
         setCartValues(data);
         setdeliveryCharge(data.seller.deliveryCharge);
       })
@@ -84,8 +84,6 @@ export default function CheckOut(props) {
     await cartService
       .buyerDeliveryDetails()
       .then((data) => {
-        console.log(data.data);
-        console.log("get Delivery Details");
         setname(data.data.name);
         setaddress(data.data.address);
         setCity(data.data.city._id);
@@ -118,16 +116,37 @@ export default function CheckOut(props) {
       });
   };
   useEffect(PaymentMethods, []);
+
   const paymentProceed = async () => {
-    await cartService
-      .CashOnDelivery({ name, address, phone, city })
-      .then((data) => {
-        props.stateChanged(data);
-        history.push("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (!onlinePaymentProceed) {
+      console.log(onlinePaymentProceed);
+      await cartService
+        .CashOnDelivery({ name, address, phone, city })
+        .then((data) => {
+          props.stateChanged(data);
+          history.push("/");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      await cartService
+        .OnlinePayment({ id: Id, name, address, phone, city })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+  const onlinePaymentCheck = (data) => {
+    console.log(data);
+    setOnlinePaymentProceed(data);
+  };
+  const onlinePaymentId = (data) => {
+    console.log(data);
+    setId(data);
   };
 
   const stripePromise = loadStripe(
@@ -155,9 +174,11 @@ export default function CheckOut(props) {
             <Elements stripe={stripePromise}>
               <CardDetails
                 name={name}
+                phone={phone}
                 address={address}
                 city={city}
-                phone={phone}
+                onlinePaymentCheck={onlinePaymentCheck}
+                onlinePaymentId={onlinePaymentId}
               />
             </Elements>
           ) : (
