@@ -2,36 +2,18 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Rating from "@mui/material/Rating";
-import StarIcon from "@mui/icons-material/Star";
-import Button from "@mui/material/Button";
+
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import RadioGroup from "@mui/material/RadioGroup";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import Radio from "@mui/material/Radio";
-import { makeStyles } from "@mui/styles";
+
 import Select from "@mui/material/Select";
 import { MenuItem } from "@mui/material";
-
-const useStyles = makeStyles({
-  textField: {
-    display: "flex",
-  },
-  root: {
-    display: "flex",
-    justifyContent: "space-around",
-  },
-
-  cardDetails: {},
-  innerContainer: { display: "flex", flexDirection: "column", width: 800 },
-});
+import { HeadingText } from "../../Styles/MyTypographies";
 
 export default function CheckOutSideBar(props) {
-  const classes = useStyles();
-
   const {
     cartValues,
     deliveryCharge,
@@ -45,25 +27,16 @@ export default function CheckOutSideBar(props) {
     selectChange,
     cities,
     city,
-    paymentProceed,
   } = props;
   const delivery_charge = deliveryCharge;
-  const handleRadio = (e) => {
-    handleCOD(e.target.value);
-  };
 
   return (
     <Box>
       {cartValues ? (
         <Box m={5} sx={{ width: 250 }}>
-          <Card sx={{ backgroundColor: "white" }}>
+          <Card sx={{ backgroundColor: "white", maxWidth: 300 }}>
             <CardContent>
-              <Typography
-                m={1}
-                sx={{ fontSize: 18, fontWeight: "bold", color: "#ba6a62" }}
-              >
-                Cart Total
-              </Typography>
+              <HeadingText>Cart Total</HeadingText>
               <Typography m={1} sx={{ display: "flex " }}>
                 Subtotal
                 <Box ml={8}>
@@ -84,12 +57,7 @@ export default function CheckOutSideBar(props) {
                 </Box>
               </Typography>
               <Divider />
-              <Typography
-                m={1}
-                sx={{ fontSize: 18, fontWeight: "bold", color: "#ba6a62" }}
-              >
-                Shipping Details
-              </Typography>
+              <HeadingText>Shipping Details</HeadingText>
               <Box
                 sx={{
                   "& .MuiTextField-root": { m: 1, width: "25ch" },
@@ -99,7 +67,6 @@ export default function CheckOutSideBar(props) {
                 <TextField
                   value={name}
                   label="Name"
-                  size="small"
                   InputLabelProps={{ shrink: name ? true : false }}
                   onChange={(e) => {
                     handleName(e.target.value);
@@ -144,40 +111,6 @@ export default function CheckOutSideBar(props) {
                   </FormControl>
                 </Box>
               </Box>
-              <Divider />
-              {/* <Box>
-                <Typography
-                  m={1}
-                  sx={{ fontSize: 18, fontWeight: "bold", color: "#ba6a62" }}
-                >
-                  Payment Method
-                </Typography>
-                <FormControl>
-                  <RadioGroup
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    defaultValue="COD"
-                    name="radio-buttons-group"
-                  >
-                    <FormControlLabel
-                      value="true"
-                      control={<Radio />}
-                      label="COD"
-                      onChange={(e) => {
-                        handleRadio(e);
-                      }}
-                    />
-                    <FormControlLabel
-                      value="false"
-                      control={<Radio />}
-                      label="Credit Card"
-                      onChange={(e) => {
-                        handleRadio(e);
-                      }}
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </Box> */}
-              <Divider />
             </CardContent>
           </Card>
         </Box>

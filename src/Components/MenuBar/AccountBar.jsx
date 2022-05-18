@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import styled from "styled-components";
-import { AccountCircle, Call, WindowSharp } from "@mui/icons-material";
 import { MenuItem, Avatar, Typography } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import buyerService from "../../Services/BuyerService";
-import axios from "axios";
-import { IconButton } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ScheduledOrder from "./ScheduledOrders";
 

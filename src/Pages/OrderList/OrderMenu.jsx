@@ -6,18 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
 import { useHistory } from "react-router-dom";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import orderService from "../../Services/OrderService";
-import OrderComponent from "./OrderComponent";
 
-const steps = [
-  "Received Date",
-  "Packaging Date",
-  "Shipping Date",
-  "completion Date",
-];
 const useStyles = makeStyles((theme) => ({
   button: {
     color: "#ba6a62",

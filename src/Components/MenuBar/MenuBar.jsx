@@ -1,21 +1,13 @@
 import React, { useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
-import styled from "styled-components";
+import { useHistory } from "react-router-dom";
+
 import useState from "react-usestateref";
 import { Badge } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import AccountIcon from "./AccountBar";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  TextField,
-  Button,
-  Box,
-} from "@mui/material";
-import { Search, Chat, ShoppingCart } from "@mui/icons-material";
+import { AppBar, Toolbar, Typography, TextField } from "@mui/material";
+import { Search } from "@mui/icons-material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-
 import Favorite from "@mui/icons-material/Favorite";
 import cartService from "../../Services/CartServices";
 

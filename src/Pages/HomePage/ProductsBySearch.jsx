@@ -1,12 +1,15 @@
-import React, { useEffect, useState, useParams } from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
+
 import { Grid, Typography } from "@mui/material";
 import productService from "../../Services/ProductServices";
 
 import ProductComponent from "../../Pages/Product/ProductComponent";
+import { NameBar } from "../../Styles/NameBar";
 
 const ProductsBySearch = (props) => {
+  console.log(props);
   const key = props.match.params.id;
+  console.log(props.match.params.id);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -18,6 +21,7 @@ const ProductsBySearch = (props) => {
 
   return (
     <div>
+      <NameBar name={key} />
       {products.length > 0 ? (
         <>
           <Grid container justifyContent="center" spacing={2}>

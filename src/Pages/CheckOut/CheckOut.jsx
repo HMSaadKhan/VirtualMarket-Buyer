@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 import { makeStyles } from "@mui/styles";
 import CheckOutSideBar from "./CheckOutSideBar";
 import ItemCard from "./ItemCard";
@@ -16,12 +13,8 @@ import { useHistory } from "react-router-dom";
 import cityService from "../../Services/CityService";
 import Auth from "../../AuthWrapper/Auth";
 import { loadStripe } from "@stripe/stripe-js";
-import {
-  CardElement,
-  Elements,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import { HeadingText } from "../../Styles/MyTypographies";
 
 const useStyles = makeStyles({
   textField: {
@@ -111,14 +104,9 @@ export default function CheckOut(props) {
     setphone(data);
   };
   const PaymentMethods = () => {
-    cartService
-      .SellerPaymentMethod()
-      .then((data) => {
-        setonlinePaymentOption(data.data.onlinePaymentOption);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    cartService.SellerPaymentMethod().then((data) => {
+      setonlinePaymentOption(data.data.onlinePaymentOption);
+    });
   };
   useEffect(PaymentMethods, []);
 
@@ -131,11 +119,7 @@ export default function CheckOut(props) {
         <>
           <Box className={classes.root}>
             <Box m={2}>
-              <Typography
-                sx={{ fontSize: 18, fontWeight: "bold", color: "#ba6a62" }}
-              >
-                Make Your CheckOut Here
-              </Typography>
+              <HeadingText>Make Your CheckOut Here</HeadingText>
               <Card sx={{ width: 600 }}>
                 <CardContent>
                   {cartItem.map((item) => (

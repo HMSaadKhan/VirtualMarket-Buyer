@@ -30,7 +30,7 @@ const Login = (props) => {
             paddingBottom: "5%",
           }}
         >
-          <Card sx={{ width: "20%", padding: "20px" }}>
+          <Card sx={{ maxWidth: 300, padding: "20px" }}>
             <CardContent>
               <Typography
                 sx={{
@@ -91,7 +91,7 @@ const Login = (props) => {
                           setTimeout(direct, 1000);
                         })
                         .catch((err) => {
-                          toast.error(err.response, {
+                          toast.error(err.response.data, {
                             position: toast.POSITION.BOTTOM_LEFT,
                           });
                         });

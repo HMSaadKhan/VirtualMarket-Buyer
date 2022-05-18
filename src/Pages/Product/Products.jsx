@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+
 import { Typography, Grid, Box } from "@mui/material";
 import productService from "../../Services/ProductServices";
-
+import { NameBar } from "../../Styles/NameBar";
 import ProductComponent from "./ProductComponent";
 
 const Products = (props) => {
@@ -26,19 +26,7 @@ const Products = (props) => {
     <div>
       {products.length > 0 ? (
         <>
-          <Box sx={{ backgroundColor: "#ba6a62", color: "white" }}>
-            <Typography
-              sx={{
-                marginLeft: "20%",
-                marginTop: "10px",
-                marginBottom: "10px",
-                fontSize: "30px",
-                fontWeight: "bold",
-              }}
-            >
-              {name}
-            </Typography>
-          </Box>
+          <NameBar name={name} />
           <Grid container justifyContent="center" spacing={2}>
             {products.map((product, index) => (
               <ProductComponent key={index} product={product} />

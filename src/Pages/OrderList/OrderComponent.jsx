@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
 import Stepper from "@mui/material/Stepper";
@@ -51,9 +50,9 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
 
   return (
     <Box m={3}>
-      <Card sx={{ width: "100%", height: "80%" }}>
+      <Card sx={{ height: "80%" }}>
         <CardContent>
-          <Card sx={{ margin: "10px" }}>
+          <Card sx={{ margin: "10px", maxWidth: 900 }}>
             <CardContent>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <Typography
@@ -77,7 +76,7 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
               </Box>
             </CardContent>
           </Card>
-          <Card sx={{ margin: "10px" }}>
+          <Card sx={{ maxWidth: 900, margin: "10px" }}>
             <CardContent>
               <Box
                 sx={{
@@ -118,7 +117,7 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
             </CardContent>
           </Card>
           <Box sx={{ margin: "10px", display: "flex" }}>
-            <Card sx={{ width: "40%", marginLeft: "10px" }}>
+            <Card sx={{ maxWidth: 900, marginLeft: "10px" }}>
               <CardContent>
                 <Typography className={classes.heading}>
                   Shipping Details
@@ -161,7 +160,7 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
                 </Typography>
               </CardContent>
             </Card>
-            <Card sx={{ width: "40%", marginLeft: "90px" }}>
+            <Card sx={{ maxWidth: 900, marginLeft: "90px" }}>
               <CardContent>
                 <Typography
                   className={classes.heading}

@@ -1,8 +1,6 @@
-import React, { useEffect, useState, useParams } from "react";
-import styled from "styled-components";
-import { Grid, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Grid, Typography, Box } from "@mui/material";
 import productService from "../../Services/ProductServices";
-
 import ProductComponent from "../../Pages/Product/ProductComponent";
 
 const ProductsByCategory = (props) => {
@@ -26,9 +24,9 @@ const ProductsByCategory = (props) => {
           </Grid>
         </>
       ) : (
-        <>
+        <Box>
           <Typography>No Item</Typography>
-        </>
+        </Box>
       )}
     </div>
   );

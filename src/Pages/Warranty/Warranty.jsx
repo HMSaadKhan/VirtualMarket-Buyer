@@ -5,7 +5,7 @@ import WarrantyComponent from "./WarrantyComponent";
 import { makeStyles } from "@mui/styles";
 import Auth from "../../AuthWrapper/Auth";
 import warrantyService from "../../Services/WarrantyService";
-import moment from "moment";
+import { NameBar } from "../../Styles/NameBar";
 
 const useStyles = makeStyles({
   root: {
@@ -25,19 +25,7 @@ const Warranty = (props) => {
   const classes = useStyles();
   return (
     <Auth>
-      <Box sx={{ backgroundColor: "#ba6a62", color: "white" }}>
-        <Typography
-          sx={{
-            marginLeft: "20%",
-            marginTop: "10px",
-            marginBottom: "10px",
-            fontSize: "30px",
-            fontWeight: "bold",
-          }}
-        >
-          Warranty
-        </Typography>
-      </Box>
+      <NameBar name={"Warranty"} />
 
       <Box sx={{ display: "flex ", justifyContent: "center" }}>
         <Box className={classes.root}>

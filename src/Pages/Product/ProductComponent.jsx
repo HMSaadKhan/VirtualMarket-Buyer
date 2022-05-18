@@ -3,14 +3,11 @@ import { makeStyles } from "@mui/styles";
 import {
   Card,
   CardActionArea,
-  CardActions,
   CardContent,
   CardMedia,
-  Button,
   Typography,
 } from "@mui/material";
 
-import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import Box from "@mui/material/Box";
 

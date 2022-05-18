@@ -11,3 +11,14 @@ export const StyledButton = styled(Button)({
     color: "#fafafa",
   },
 });
+export const WhiteButton = styled(Button)({
+  color: "#ba6a62",
+  backgroundColor: "#fff",
+  marginLeft: "10px",
+  marginTop: "10px",
+  fontWeight: "bold",
+  "&:hover": {
+    backgroundColor: "#ba6a64",
+    color: "#ffff",
+  },
+});

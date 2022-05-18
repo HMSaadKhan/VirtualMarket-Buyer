@@ -68,7 +68,7 @@ function App() {
 
             <Route path="/not-found" component={NotFound} />
 
-            <Route path="/:name/:id" exact component={ProductsByCategory} />
+            <Route path="/:id" exact component={ProductsByCategory} />
             <Route path="/search/:id" exact component={ProductsBySearch} />
 
             <Route path="/" exact component={HomePage} />

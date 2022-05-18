@@ -27,14 +27,9 @@ import reviewService from "../../Services/ReviewService";
 import favoriteService from "../../Services/FavoritesService";
 import SellerMismatch from "../../Components/PopUps/SellerMismatch";
 import ScheduleIcon from "@mui/icons-material/Schedule";
-import DateTimePicker from "react-datetime-picker";
 import ScheduleOrder from "../../Components/PopUps/ScheduleOrder";
 
 const useStyles = makeStyles({
-  root: {
-    display: "flex",
-    justifyContent: "center",
-  },
   name: {
     fontSize: "15px",
   },
@@ -92,7 +87,6 @@ export default function ProductDetail(props) {
   const StyledBox = styled(Box)({
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center",
   });
 
   const favoriteHandleChange = (event) => {
@@ -215,23 +209,18 @@ export default function ProductDetail(props) {
         setbool={setbool}
         sellerMismatch={sellerMismatch}
       />
-      {/* <ScheduleOrder
-        product={product.id}
-        bool={schedulebool}
-        setbool={setschedulebool}
-        minOrder={productDetails.minOrder}
-      /> */}
+
       {productDetails ? (
-        <Box>
+        <Box sx={{ maxWidth: "100%" }}>
           <ScheduleOrder
             product={product.id}
             bool={schedulebool}
             setbool={setschedulebool}
             minOrder={productDetails.minOrder}
           />
-          <Box className={classes.root}>
-            <Box m={4} sx={{ width: "60%" }}>
-              <Card>
+          <StyledBox>
+            <Box m={4}>
+              <Card sx={{ maxWidth: 400 }}>
                 <CardContent>
                   <Box ml={2}>
                     <img
@@ -244,7 +233,7 @@ export default function ProductDetail(props) {
                 </CardContent>
               </Card>
               <Box m={1}>
-                <Card>
+                <Card sx={{ maxWidth: 400 }}>
                   <CardContent>
                     {productDetails.images.map((images, index) => (
                       <img
@@ -263,7 +252,7 @@ export default function ProductDetail(props) {
               </Box>
             </Box>
             <Box m={4} sx={{ width: "100%" }}>
-              <Card>
+              <Card sx={{ maxWidth: 800 }}>
                 <CardContent>
                   <StyledBox>
                     <Box>
@@ -394,7 +383,7 @@ export default function ProductDetail(props) {
             <Box m={4} sx={{ width: "40%" }}>
               <Box>
                 <Box mb={1}>
-                  <Card>
+                  <Card sx={{ maxWidth: 300 }}>
                     <CardContent>
                       <Typography className={classes.cardHeadingText}>
                         Shop Name
@@ -406,7 +395,7 @@ export default function ProductDetail(props) {
                   </Card>
                 </Box>
                 <Box mb={1}>
-                  <Card>
+                  <Card sx={{ maxWidth: 300 }}>
                     <CardContent>
                       <Typography className={classes.cardHeadingText}>
                         Shop Address
@@ -418,7 +407,7 @@ export default function ProductDetail(props) {
                   </Card>
                 </Box>
                 <Box mb={1}>
-                  <Card>
+                  <Card sx={{ maxWidth: 300 }}>
                     <CardContent>
                       <Typography className={classes.headingText}>
                         Warranty Period
@@ -437,7 +426,7 @@ export default function ProductDetail(props) {
                   </Card>
                 </Box>
                 <Box mb={1}>
-                  <Card>
+                  <Card sx={{ maxWidth: 300 }}>
                     <CardContent>
                       <Typography className={classes.cardHeadingText}>
                         Phone No
@@ -456,7 +445,7 @@ export default function ProductDetail(props) {
                 </Box>
               </Box>
             </Box>
-          </Box>
+          </StyledBox>
           <Box>
             <Box sx={{ backgroundColor: "#ba6a62", color: "white" }}>
               <Typography

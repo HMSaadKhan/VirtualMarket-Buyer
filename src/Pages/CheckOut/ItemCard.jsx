@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Box, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { makeStyles } from "@mui/styles";

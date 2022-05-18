@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Categories from "../Categories/Categories";
 import Products from "../../Pages/Product/Products";
-import styled from "styled-components";
 import { makeStyles } from "@mui/styles";
 import categoryService from "../../Services/CategoryService";
 

@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
 import orderService from "../../Services/OrderService";
 import OrderComponent from "./OrderComponent";
-import OrderMenu from "./OrderMenu";
+
 import Auth from "../../AuthWrapper/Auth";
+import { NameBar } from "../../Styles/NameBar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,6 +39,8 @@ export default function Orders(props) {
 
   return (
     <Auth>
+      <NameBar name={"Orders"} />
+
       <Box className={classes.root}>
         <Box sx={{ width: "50%" }}>
           <Box>
@@ -58,7 +55,7 @@ export default function Orders(props) {
                 <Typography
                   ml={30}
                   mt={25}
-                  sx={{ fontSize: "20px", fontWeight: "bold", color: "red" }}
+                  sx={{ fontSize: "20px", fontWeight: "bold" }}
                 >
                   No Orders Yet
                 </Typography>

@@ -3,7 +3,7 @@ import { Box, Button, Typography } from "@mui/material";
 import categoryService from "../../Services/CategoryService";
 import { makeStyles } from "@mui/styles";
 import { useHistory } from "react-router-dom";
-
+import { WhiteButton } from "../../Styles/StyledButton";
 export default function Categories() {
   const history = useHistory();
   const [categories, setCategories] = useState([]);
@@ -44,25 +44,14 @@ export default function Categories() {
       <Box className="categories">
         {categories.map((item, index) => {
           return (
-            <Button
+            <WhiteButton
               key={index}
-              sx={{
-                color: "#ba6a62",
-                backgroundColor: "#fff",
-                marginLeft: "10px",
-                marginTop: "10px",
-                fontWeight: "bold",
-                "&:hover": {
-                  backgroundColor: "#ba6a64",
-                  color: "#ffff",
-                },
-              }}
               onClick={(e) => {
-                history.push("/" + item.name + "/" + item._id);
+                history.push("/" + item._id);
               }}
             >
               {item.name}
-            </Button>
+            </WhiteButton>
           );
         })}
       </Box>
