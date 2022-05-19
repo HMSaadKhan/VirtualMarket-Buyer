@@ -10,6 +10,7 @@ import {
   Button,
   TextField,
   Divider,
+  Tooltip,
 } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import { makeStyles } from "@mui/styles";
@@ -28,6 +29,9 @@ import favoriteService from "../../Services/FavoritesService";
 import SellerMismatch from "../../Components/PopUps/SellerMismatch";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import ScheduleOrder from "../../Components/PopUps/ScheduleOrder";
+import { StyledButton } from "../../Styles/StyledButton";
+import { NameBar } from "../../Styles/NameBar";
+import LoadingScreen from "../../Components/LoadingScreen";
 
 const useStyles = makeStyles({
   name: {
@@ -42,6 +46,10 @@ const useStyles = makeStyles({
     width: "60px",
     height: "60px",
     marginRight: "10px",
+    objectFit: "cover",
+    //backgroundSize: "cover",
+  },
+  image: {
     //objectFit: "cover",
     backgroundSize: "cover",
   },
@@ -63,6 +71,7 @@ export default function ProductDetail(props) {
   const product = useParams();
   const [productDetails, SetProductDetails] = useState("");
   const [quantity, SetQuantity] = useState();
+  const [stock, SetStock] = useState();
   const [minusButtonCheck, setMinusButton] = useState(true);
   const [plusButtonCheck, setPlusButton] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
@@ -73,17 +82,11 @@ export default function ProductDetail(props) {
   const [overallRating, setoverallRating] = useState();
   const [totalRating, settotalRating] = useState("");
   const [type, settype] = useState();
+  const [disable, setDisable] = useState(true);
+  const [AocBool, setAoCBool] = useState(false);
+  const [loading, setloading] = useState(false);
   const [value, onChange] = useState(new Date());
 
-  const StyledButton = styled(Button)({
-    color: "#ffff",
-    backgroundColor: "#ba6a62",
-    fontWeight: "bold",
-    "&:hover": {
-      backgroundColor: "#C78781",
-      color: "#fafafa",
-    },
-  });
   const StyledBox = styled(Box)({
     display: "flex",
     justifyContent: "space-between",
@@ -92,29 +95,28 @@ export default function ProductDetail(props) {
   const favoriteHandleChange = (event) => {
     setFavoriteChecked(event.target.checked);
     if (event.target.checked === true) {
+      setloading(true);
       favoriteService
         .AddtoFavorite({ product: product.id })
         .then((data) => {
-          toast.success(data.data, {
-            position: toast.POSITION.BOTTOM_LEFT,
-          });
+          setloading(false);
         })
         .catch((error) => {
+          setloading(false);
           toast.error(error.response.data, {
             position: toast.POSITION.BOTTOM_LEFT,
           });
         });
     }
     if (event.target.checked === false) {
+      setloading(true);
       favoriteService
         .DeletefromFavorite(product.id)
         .then((data) => {
-          console.log(data);
-          toast.success(data.data, {
-            position: toast.POSITION.BOTTOM_LEFT,
-          });
+          setloading(false);
         })
         .catch((error) => {
+          setloading(false);
           toast.error(error.response.data, {
             position: toast.POSITION.BOTTOM_LEFT,
           });
@@ -122,21 +124,19 @@ export default function ProductDetail(props) {
     }
   };
   const getDetails = () => {
-    productService
-      .getProductDetails(product.id)
-      .then((data) => {
-        SetProductDetails(data);
-        SetQuantity(data.minOrder);
-        setFavoriteChecked(data.favourite);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setloading(true);
+    productService.getProductDetails(product.id).then((data) => {
+      setloading(false);
+      SetProductDetails(data);
+      SetStock(data.stock);
+      SetQuantity(data.minOrder);
+      setFavoriteChecked(data.favourite);
+    });
   };
   useEffect(getDetails, []);
 
   const addToCart = (Type) => {
-    console.log(Type);
+    setloading(true);
     cartService
       .addToCart({ product: product.id, quantity, type: Type })
       .then((data) => {
@@ -144,16 +144,18 @@ export default function ProductDetail(props) {
         toast.success(data.data, {
           position: toast.POSITION.BOTTOM_LEFT,
         });
+        setloading(false);
         setbool(false);
       })
       .catch((error) => {
-        console.log(error.response);
-        toast.error(error.response.data, {
-          position: toast.POSITION.BOTTOM_LEFT,
-        });
+        setloading(false);
         if (error.response.data === "Seller Mismatch") {
           setbool(true);
           console.log(error.response.data);
+        } else {
+          toast.error(error.response.data, {
+            position: toast.POSITION.BOTTOM_LEFT,
+          });
         }
       });
   };
@@ -201,9 +203,16 @@ export default function ProductDetail(props) {
         console.log(err);
       });
   };
+  const stockCheck = () => {
+    if (stock > quantity) {
+      setAoCBool(false);
+    } else setAoCBool(true);
+  };
+  useEffect(stockCheck, [productDetails]);
 
   return (
     <>
+      <LoadingScreen bool={loading} />
       <SellerMismatch
         bool={bool}
         setbool={setbool}
@@ -224,7 +233,8 @@ export default function ProductDetail(props) {
                 <CardContent>
                   <Box ml={2}>
                     <img
-                      width="300"
+                      className={classes.image}
+                      width="350"
                       height="300"
                       src={productDetails.images[imageIndex].link}
                       alt="main Image"
@@ -265,6 +275,7 @@ export default function ProductDetail(props) {
                             value={overallRating}
                             size="small"
                             precision={0.25}
+                            readOnly
                           />
                         </Typography>
                         <Typography>({totalRating})</Typography>
@@ -282,12 +293,6 @@ export default function ProductDetail(props) {
                       <Box>
                         <Typography className={classes.name}>
                           <Checkbox
-                            sx={{
-                              color: "#ba6a62",
-                              "&.Mui-checked": {
-                                color: "#ba6a62",
-                              },
-                            }}
                             checked={favoriteChecked}
                             onChange={favoriteHandleChange}
                             icon={<FavoriteBorder />}
@@ -295,13 +300,18 @@ export default function ProductDetail(props) {
                           />
                         </Typography>
                       </Box>
-                      <Box>
+                      <Box ml={1.5}>
                         {console.log(value)}
-                        <ScheduleIcon
-                          onClick={(e) => {
-                            setschedulebool(true);
-                          }}
-                        />
+                        <Tooltip title="schdule Order">
+                          <ScheduleIcon
+                            sx={{
+                              color: "#ba6a62",
+                            }}
+                            onClick={(e) => {
+                              setschedulebool(true);
+                            }}
+                          />
+                        </Tooltip>
                       </Box>
                     </Box>
                   </StyledBox>
@@ -343,37 +353,33 @@ export default function ProductDetail(props) {
                         Add to cart
                       </StyledButton>
                     </Box>
+
+                    {productDetails.sampleOrder ? (
+                      <Box m={1}>
+                        <StyledButton
+                          onClick={(e) => {
+                            settype("SAMPLE");
+                            addToCart("SAMPLE");
+                          }}
+                        >
+                          Sample Order
+                        </StyledButton>
+                      </Box>
+                    ) : (
+                      <></>
+                    )}
                     <Box m={1}>
-                      <StyledButton>Bargain</StyledButton>
+                      <StyledButton disabled={disable}>Bargain</StyledButton>
                     </Box>
                     <Box m={1}>
-                      <StyledButton>Custom Order</StyledButton>
-                    </Box>
-                    <Box m={1}>
-                      <StyledButton
-                        onClick={(e) => {
-                          settype("SAMPLE");
-                          addToCart("SAMPLE");
-                        }}
-                      >
-                        Sample Order
+                      <StyledButton disabled={disable}>
+                        Custom Order
                       </StyledButton>
                     </Box>
                   </Box>
                   <Box className={classes.description}>
                     <Typography mt={2} mb={2}>
                       {productDetails.description}
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book. It has survived not only five
-                      centuries, but also the leap into electronic typesetting,
-                      remaining essentially unchanged. It was popularised in the
-                      1960s with the release of Letraset sheets containing Lorem
-                      Ipsum passages, and more recently with desktop publishing
-                      software like Aldus PageMaker including versions of Lorem
-                      Ipsum.
                     </Typography>
                   </Box>
                 </CardContent>
@@ -420,7 +426,7 @@ export default function ProductDetail(props) {
                         Available Stock
                       </Typography>
                       <Typography className={classes.subText}>
-                        {productDetails.stock} Pieces
+                        {stock > quantity ? <>In Stock</> : <>Out of Stock</>}
                       </Typography>
                     </CardContent>
                   </Card>
@@ -447,25 +453,15 @@ export default function ProductDetail(props) {
             </Box>
           </StyledBox>
           <Box>
-            <Box sx={{ backgroundColor: "#ba6a62", color: "white" }}>
-              <Typography
-                sx={{
-                  marginLeft: "20%",
-                  marginTop: "10px",
-                  marginBottom: "10px",
-                  fontSize: "30px",
-                  fontWeight: "bold",
-                }}
-              >
-                Comments
-              </Typography>
-            </Box>
-            <Box sx={{ marginLeft: "7%" }}>
+            <Box>
               {reviews ? (
                 <>
-                  {reviews.map((review) => (
-                    <CommentsDisplay review={review} key={review._id} />
-                  ))}
+                  <NameBar name={"Reviews"} />
+                  <Box sx={{ marginLeft: "7%" }}>
+                    {reviews.map((review) => (
+                      <CommentsDisplay review={review} key={review._id} />
+                    ))}
+                  </Box>
                 </>
               ) : (
                 <></>

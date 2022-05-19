@@ -91,13 +91,17 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
                   </Typography>
                 </Box>
                 <Box sx={{ width: "25%" }}>
-                  <Typography className={classes.heading}>Quantity</Typography>
+                  <Typography align="center" className={classes.heading}>
+                    Quantity
+                  </Typography>
                 </Box>
                 <Box sx={{ width: "25%" }}>
-                  <Typography className={classes.heading}>Price</Typography>
+                  <Typography align="center" className={classes.heading}>
+                    Price
+                  </Typography>
                 </Box>
                 {order.status === "DELIVERED" ? (
-                  <Box sx={{ width: "25%", backgroundColor: "red" }}></Box>
+                  <Box sx={{ width: "25%" }}> </Box>
                 ) : (
                   <></>
                 )}
@@ -116,8 +120,8 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
               ))}
             </CardContent>
           </Card>
-          <Box sx={{ margin: "10px", display: "flex" }}>
-            <Card sx={{ maxWidth: 900, marginLeft: "10px" }}>
+          <Box sx={{ display: "flex" }}>
+            <Card sx={{ maxWidth: 500 }}>
               <CardContent>
                 <Typography className={classes.heading}>
                   Shipping Details
@@ -160,7 +164,7 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
                 </Typography>
               </CardContent>
             </Card>
-            <Card sx={{ maxWidth: 900, marginLeft: "90px" }}>
+            <Card sx={{ maxWidth: 1000, marginLeft: "90px" }}>
               <CardContent>
                 <Typography
                   className={classes.heading}
@@ -168,7 +172,7 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
                 >
                   Sub Total
                   <Typography className={classes.text} ml={8}>
-                    {order.subTotal}
+                    PKR. {order.subTotal}
                   </Typography>
                 </Typography>
                 <Typography
@@ -177,17 +181,21 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
                 >
                   Delivery Charge{" "}
                   <Typography ml={2} className={classes.text}>
-                    {order.deliveryCharge}
+                    PKR. {order.deliveryCharge}
                   </Typography>
                 </Typography>
                 <Divider />
                 <Typography
-                  sx={{ display: "flex" }}
+                  sx={{ display: "flex", fontWeight: "bold" }}
                   className={classes.heading}
                 >
                   Total
-                  <Typography ml={12} className={classes.text}>
-                    {order.total}
+                  <Typography
+                    sx={{ fontWeight: "bold" }}
+                    ml={12}
+                    className={classes.text}
+                  >
+                    PKR. {order.total}
                   </Typography>
                 </Typography>
               </CardContent>
@@ -206,7 +214,7 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
                   <StepLabel>
                     {label.name}
                     <br />
-                    {moment(label.date).format("MMMM Do YYYY")}
+                    {moment(new Date(label.date)).format("MMMM Do YYYY")}
                   </StepLabel>
                 </Step>
               ))}

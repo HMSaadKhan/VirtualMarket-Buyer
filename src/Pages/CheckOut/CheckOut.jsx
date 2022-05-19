@@ -15,6 +15,9 @@ import Auth from "../../AuthWrapper/Auth";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { HeadingText } from "../../Styles/MyTypographies";
+import { StyledButton } from "../../Styles/StyledButton";
+import { toast } from "react-toastify";
+import LoadingScreen from "../../Components/LoadingScreen";
 
 const useStyles = makeStyles({
   textField: {
@@ -43,6 +46,7 @@ export default function CheckOut(props) {
   const [city, setCity] = useState("");
   const [phone, setphone] = useState("");
   const [cities, setcities] = useState([]);
+  const [bool, setbool] = useState(false);
   const [onlinePaymentOption, setonlinePaymentOption] = useState();
   const [onlinePaymentProceed, setOnlinePaymentProceed] = useState();
   const [Id, setId] = React.useState();
@@ -92,6 +96,26 @@ export default function CheckOut(props) {
       });
   };
   useEffect(getDeliveryDetails, [CartItems]);
+  const paymentProceed = async () => {
+    console.log("COD run");
+    setbool(true);
+    await cartService
+      .CashOnDelivery({ name, address, phone, city })
+      .then((data) => {
+        setTimeout(() => {
+          getCartItems();
+          stateChanged(data);
+          setbool(false);
+          history.push("/");
+        }, 1000);
+      })
+      .catch((err) => {
+        toast.error(err.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+        setbool(false);
+      });
+  };
 
   const handleName = (data) => {
     setname(data);
@@ -115,6 +139,7 @@ export default function CheckOut(props) {
   );
   return (
     <Auth>
+      <LoadingScreen bool={bool} />
       {cartItem ? (
         <>
           <Box className={classes.root}>
@@ -141,7 +166,9 @@ export default function CheckOut(props) {
                   />
                 </Elements>
               ) : (
-                <></>
+                <>
+                  <StyledButton onClick={paymentProceed}>Proceed</StyledButton>
+                </>
               )}
             </Box>
             {cartValues ? (

@@ -44,7 +44,7 @@ const useStyles = makeStyles({
 
 export default function ClaimWriting({ id, status }) {
   const classes = useStyles();
-
+  console.log(status, id);
   const [open, setOpen] = React.useState(false);
   const [disable, setDisable] = React.useState(false);
 

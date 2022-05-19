@@ -29,6 +29,14 @@ const theme = createTheme({
     primary: {
       main: Colors.buyerSite,
     },
+    // action: {
+    //   disabledBackground: "set color of background here",
+    //   disabled: "set color of text here",
+    // },
+    action: {
+      disabledBackground: "#d4cecd",
+      disabled: "#856562",
+    },
   },
   components: {
     MuiButton: {

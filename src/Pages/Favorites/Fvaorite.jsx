@@ -3,33 +3,28 @@ import { Grid, Typography, Box } from "@mui/material";
 import favoriteService from "../../Services/FavoritesService";
 import ProductComponent from "../../Pages/Product/ProductComponent";
 import Auth from "../../AuthWrapper/Auth";
-
+import { NameBar } from "../../Styles/NameBar";
 const ProductsByCategory = (props) => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState("");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    favoriteService.GetFavorites().then((data) => {
-      setProducts(data.data);
-    });
+    favoriteService
+      .GetFavorites()
+      .then((data) => {
+        console.log(data);
+        setProducts(data.data);
+      })
+      .catch((error) => {
+        setMessage(error.response.data);
+      });
   }, []);
 
   return (
     <Auth>
       <Box>
-        <Box sx={{ backgroundColor: "#ba6a62", color: "white" }}>
-          <Typography
-            sx={{
-              marginLeft: "20%",
-              marginTop: "10px",
-              marginBottom: "10px",
-              fontSize: "30px",
-              fontWeight: "bold",
-            }}
-          >
-            Favorites
-          </Typography>
-        </Box>
-        {products.length > 0 ? (
+        <NameBar name={"Favourties"} />
+        {products ? (
           <>
             <Grid container justifyContent="center" spacing={2}>
               {products.map((product, index) => (
@@ -38,9 +33,7 @@ const ProductsByCategory = (props) => {
             </Grid>
           </>
         ) : (
-          <>
-            <Typography>No Item</Typography>
-          </>
+          <>{message ? <Typography>{message}</Typography> : <></>}</>
         )}
       </Box>
     </Auth>

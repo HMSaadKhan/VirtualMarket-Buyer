@@ -89,7 +89,6 @@ const CardDetails = ({
 
   return (
     <>
-      {console.log(bool)}
       <LoadingScreen bool={bool} />
       <FormControlLabel
         control={<Checkbox checked={checked} onChange={handleChange} />}

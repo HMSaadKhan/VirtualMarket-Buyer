@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import { makeStyles } from "@mui/styles";
 import { styled } from "@mui/material/styles";
 import CancelIcon from "@mui/icons-material/Cancel";
-
+import { NameBar } from "../../Styles/NameBar";
 const StyledButton = styled(Button)({
   margin: "10px",
   color: "#ffff",
@@ -36,40 +36,21 @@ export default function SellerMismatch({ bool, setbool, sellerMismatch }) {
   return (
     <div>
       <Dialog open={bool} onClose={handleClose}>
-        <Box
-          sx={{
-            height: "40px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <DialogTitle id="responsive-dialog-title"></DialogTitle>
-          <Box>
-            <CancelIcon
-              sx={{
-                color: "#ba6a62",
-              }}
-              onClick={(e) => {
-                setbool(false);
-              }}
-            >
-              Close
-            </CancelIcon>
-          </Box>
-        </Box>
+        <NameBar name={"Oops !"} />
 
         <DialogContent>
           <div className={classes.root}>
             <Box>
               <Typography>
-                You Have Already A Seller's product in your cart. DO you want to
-                remove that product or Continue to have it.
+                You have items from another Seller in your cart. Continuing will
+                remove the existing Products from your Cart.
+                <br /> DO you wish to continue?
               </Typography>
             </Box>
             <Box sx={{ display: "flex", justifyContent: "right" }}>
-              <StyledButton onClick={handleClose}>keep</StyledButton>
-              <StyledButton onClick={sellerMismatch}>remove</StyledButton>
+              <StyledButton onClick={handleClose}>Cancel</StyledButton>
+
+              <StyledButton onClick={sellerMismatch}>Continue</StyledButton>
             </Box>
           </div>
         </DialogContent>

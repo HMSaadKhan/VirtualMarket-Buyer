@@ -6,6 +6,7 @@ import ProductComponent from "../../Pages/Product/ProductComponent";
 const ProductsByCategory = (props) => {
   const id = props.match.params.id;
   const [products, setProducts] = useState([]);
+  
 
   useEffect(() => {
     productService.getByCategory(id).then((data) => {

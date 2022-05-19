@@ -16,7 +16,8 @@ const useStyles = makeStyles({
 
 const WarrantyComponent = ({ warranty }) => {
   const classes = useStyles();
-
+  console.log(new Date(warranty.expiry));
+  console.log(warranty.expiry);
   return (
     <Box>
       <Box sx={{ width: 1000, marginTop: "5%", marginBottom: "5%" }}>
@@ -35,13 +36,13 @@ const WarrantyComponent = ({ warranty }) => {
               <Box sx={{ width: "100%" }}>
                 <Typography>
                   {" "}
-                  {moment(warranty.createdAt).format("MMMM Do YYYY")}
+                  {moment(new Date(warranty.createdAt)).format("MMMM Do YYYY")}
                 </Typography>
               </Box>
               <Box sx={{ width: "100%", color: "red" }}>
                 <Typography>
                   {" "}
-                  {moment(warranty.expiry).format("MMMM Do YYYY")}
+                  {moment(new Date(warranty.expiry)).format("MMMM Do YYYY")}
                 </Typography>
               </Box>
               <Box sx={{ width: "100%", fontWeight: "bold" }}>

@@ -1,6 +1,6 @@
 import { Menu, Box, IconButton, Typography, Divider } from "@mui/material";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import scheduleService from "../../Services/ScheduleService";
@@ -91,127 +91,142 @@ const ScheduledOrder = () => {
           <>
             {scheduleOrders.map((items) => {
               return (
-                <Box key={items._id}>
-                  <Box
-                    m={2}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-around",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Box>
-                      <img
-                        height="100"
-                        width="100"
-                        src={items.Product.images[0].link}
-                        alt=""
-                      />
-                    </Box>
-                    <Box>
-                      <Box>
-                        <Box sx={{ width: "100%" }}>
-                          <Typography
-                            sx={{ color: "#ba6a62", fontWeight: "bold" }}
-                            noWrap={txtWrap}
-                          >
-                            {items.Product.name}
-                          </Typography>
-                        </Box>
-                        <Box sx={{ width: "100%" }}>
-                          <FlexBox>
-                            <Typography
-                              sx={{ color: "#ba6a62", fontWeight: "bold" }}
-                            >
-                              Qty:{" "}
-                            </Typography>
-                            <Typography>{items.quantity}</Typography>
-                          </FlexBox>
-                        </Box>
-                        <Box>
-                          <FlexBox>
-                            <Typography
-                              sx={{ color: "#ba6a62", fontWeight: "bold" }}
-                            >
-                              Schedule At:
-                            </Typography>
+                <>
+                  {console.log(items)}
+                  {items ? (
+                    <>
+                      <Box key={items._id}>
+                        <Box
+                          m={2}
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-around",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Box>
+                            <img
+                              height="100"
+                              width="100"
+                              src={items.Product.images[0].link}
+                              alt=""
+                            />
+                          </Box>
+                          <Box>
+                            <Box>
+                              <Box sx={{ width: "100%" }}>
+                                <Typography
+                                  sx={{ color: "#ba6a62", fontWeight: "bold" }}
+                                  noWrap={txtWrap}
+                                >
+                                  {items.Product.name}
+                                </Typography>
+                              </Box>
+                              <Box sx={{ width: "100%" }}>
+                                <FlexBox>
+                                  <Typography
+                                    sx={{
+                                      color: "#ba6a62",
+                                      fontWeight: "bold",
+                                    }}
+                                  >
+                                    Qty:{" "}
+                                  </Typography>
+                                  <Typography>{items.quantity}</Typography>
+                                </FlexBox>
+                              </Box>
+                              <Box>
+                                <FlexBox>
+                                  <Typography
+                                    sx={{
+                                      color: "#ba6a62",
+                                      fontWeight: "bold",
+                                    }}
+                                  >
+                                    Schedule At:
+                                  </Typography>
 
-                            <Box ml={1}>
-                              {moment(items.scheduledTime).format(
-                                "MMMM Do YYYY, h:mm:ss a"
-                              )}
+                                  <Box ml={1}>
+                                    {moment(items.scheduledTime).format(
+                                      "MMMM Do YYYY, h:mm:ss a"
+                                    )}
+                                  </Box>
+                                </FlexBox>
+                              </Box>
+
+                              <Box>
+                                {items.repetitionType === "CUSTOM" ? (
+                                  <>
+                                    <Box>
+                                      <FlexBox>
+                                        <Typography
+                                          sx={{
+                                            color: "#ba6a62",
+                                            fontWeight: "bold",
+                                          }}
+                                        >
+                                          Repetition Type:
+                                        </Typography>
+
+                                        <Typography ml={1}>
+                                          {items.customRepetition} Days
+                                        </Typography>
+                                      </FlexBox>
+                                    </Box>
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
+                                {items.repetitionType === "PRESET" ? (
+                                  <>
+                                    <Box>
+                                      <FlexBox>
+                                        <Typography
+                                          sx={{
+                                            color: "#ba6a62",
+                                            fontWeight: "bold",
+                                          }}
+                                        >
+                                          Repetition:
+                                        </Typography>
+
+                                        <Typography ml={1}>
+                                          {items.presetRepetition}
+                                        </Typography>
+                                      </FlexBox>
+                                    </Box>
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
+                              </Box>
                             </Box>
-                          </FlexBox>
+                          </Box>
+                          <Box>
+                            <IconButton
+                              onClick={(e) => {
+                                editSchedule(items._id);
+                              }}
+                            >
+                              <EditIcon />
+                            </IconButton>
+
+                            <IconButton
+                              onClick={(e) => {
+                                deleteSchedule(items._id);
+                              }}
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </Box>
                         </Box>
-
-                        <Box>
-                          {items.repetitionType === "CUSTOM" ? (
-                            <>
-                              <Box>
-                                <FlexBox>
-                                  <Typography
-                                    sx={{
-                                      color: "#ba6a62",
-                                      fontWeight: "bold",
-                                    }}
-                                  >
-                                    Repetition Type:
-                                  </Typography>
-
-                                  <Typography ml={1}>
-                                    {items.customRepetition} Days
-                                  </Typography>
-                                </FlexBox>
-                              </Box>
-                            </>
-                          ) : (
-                            <></>
-                          )}
-                          {items.repetitionType === "PRESET" ? (
-                            <>
-                              <Box>
-                                <FlexBox>
-                                  <Typography
-                                    sx={{
-                                      color: "#ba6a62",
-                                      fontWeight: "bold",
-                                    }}
-                                  >
-                                    Repetition:
-                                  </Typography>
-
-                                  <Typography ml={1}>
-                                    {items.presetRepetition}
-                                  </Typography>
-                                </FlexBox>
-                              </Box>
-                            </>
-                          ) : (
-                            <></>
-                          )}
-                        </Box>
+                        <Divider />
                       </Box>
-                    </Box>
-                    <Box>
-                      <IconButton
-                        onClick={(e) => {
-                          editSchedule(items._id);
-                        }}
-                      >
-                        <EditIcon />
-                      </IconButton>
-
-                      <IconButton
-                        onClick={(e) => {
-                          deleteSchedule(items._id);
-                        }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Box>
-                  </Box>
-                  <Divider />
-                </Box>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </>
               );
             })}
           </>

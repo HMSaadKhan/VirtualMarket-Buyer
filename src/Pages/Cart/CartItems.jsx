@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import cartService from "../../Services/CartServices";
 import { makeStyles } from "@mui/styles";
-
+import LoadingScreen from "../../Components/LoadingScreen";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -33,7 +33,8 @@ const CartItems = (props) => {
   const { getCartItems, getProductId, item } = props;
   const qty = item.quantity;
   const _id = props.item._id;
-  const [samplePrice, setsamplePrice] = useState(0);
+  const [loading, setloading] = useState(false);
+
   const [check, setcheck] = useState(false);
   const checkDisable = () => {
     if (item.type === "SAMPLE") {
@@ -44,33 +45,37 @@ const CartItems = (props) => {
   };
   useEffect(checkDisable, []);
   const plusButton = async () => {
+    setloading(true);
+
     await cartService
       .incQty(_id)
       .then((e) => {
         console.log(e);
         getCartItems();
+        setloading(false);
       })
       .catch((error) => {
         console.log(error);
+        setloading(false);
       });
   };
   const minusButton = async () => {
+    setloading(true);
     await cartService
       .decQty(_id)
       .then((e) => {
-        console.log(e);
         getCartItems();
+        setloading(false);
       })
       .catch((error) => {
         console.log(error);
+        setloading(false);
       });
   };
   const deleteButton = async () => {
     await cartService
       .deleteItem(_id)
       .then((e) => {
-        console.log(e);
-
         getProductId(_id);
         getCartItems();
       })
@@ -80,6 +85,7 @@ const CartItems = (props) => {
   };
   return (
     <div>
+      <LoadingScreen bool={loading} />
       <Card sx={{ width: 800, margin: "10px" }}>
         <Box className={classes.root}>
           <Box sx={{ width: "20%" }}>

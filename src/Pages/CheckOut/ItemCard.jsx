@@ -27,7 +27,7 @@ const ItemCard = ({ item }) => {
         <Box sx={{ width: "20%" }}>
           <img className={classes.image} src={item.product.images[0].link} />
         </Box>
-        <Box>
+        <Box sx={{ width: "25%" }}>
           <Typography>{item.product.name}</Typography>
           {item.type == "DEFAULT" ? (
             <></>

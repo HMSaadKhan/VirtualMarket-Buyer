@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Card, CardContent, Box, Typography } from "@mui/material";
+import { Card, CardContent, Box, Typography, Divider } from "@mui/material";
 import CartItems from "./CartItems";
 import cartService from "../../Services/CartServices";
 import useState from "react-usestateref";
@@ -130,21 +130,22 @@ const Cart = (props) => {
                     </Typography>
 
                     <Typography sx={{ display: "flex " }}>
-                      Subtotal
+                      Sub Total
                       <Box ml={8.5}>
-                        <Typography>{subtotalRef.current}</Typography>
+                        <Typography>PKR.{subtotalRef.current}</Typography>
                       </Box>
                     </Typography>
                     <Typography sx={{ display: "flex " }}>
-                      Shipping{" "}
-                      <Box ml={8}>
-                        <Typography>{deliveryCharge}</Typography>
+                      Shipping
+                      <Box ml={9}>
+                        <Typography>PKR.{deliveryCharge}</Typography>
                       </Box>
                     </Typography>
-                    <Typography sx={{ display: "flex " }}>
-                      total{" "}
+                    <Divider />
+                    <Typography sx={{ display: "flex ", fontWeight: "bold" }}>
+                      Total{" "}
                       <Box ml={12}>
-                        <Typography>{total}</Typography>
+                        <Typography>PKR.{total}</Typography>
                       </Box>
                     </Typography>
                   </CardContent>

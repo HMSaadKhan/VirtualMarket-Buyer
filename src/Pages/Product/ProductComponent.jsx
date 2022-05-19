@@ -16,7 +16,8 @@ const useStyles = makeStyles({
   media: {
     width: "180px",
     height: "200px",
-    objectFit: "contain",
+    //objectFit: "cover",
+    backgroundSize: "contain",
   },
 });
 
@@ -24,7 +25,6 @@ const ProductComponent = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const { product } = props;
-  console.log(product);
 
   return (
     <Card

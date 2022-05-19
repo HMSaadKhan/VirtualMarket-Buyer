@@ -18,6 +18,7 @@ const Warranty = (props) => {
   const [warranties, setwarranties] = useState();
   const getWarranties = () => {
     warrantyService.getWarranty().then((warranty) => {
+      console.log(warranty.data);
       setwarranties(warranty.data);
     });
   };

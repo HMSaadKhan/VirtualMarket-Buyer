@@ -46,7 +46,7 @@ export default function ScheduleOrderEdit(props) {
   );
   const [quantity, setquantity] = React.useState(schedule.quantity);
   const [customRepetition, setcustomRepetition] = React.useState(
-    schedule.customRepetition | 0
+    schedule.customRepetition ? schedule.customRepetition : 0
   );
 
   const handleChange = (event) => {
@@ -166,7 +166,7 @@ export default function ScheduleOrderEdit(props) {
                         />
                         {repetitionType === "CUSTOM" ? (
                           <Counter
-                            quantity={schedule.customRepetition}
+                            quantity={customRepetition}
                             value={setcustomRepetition}
                           />
                         ) : (

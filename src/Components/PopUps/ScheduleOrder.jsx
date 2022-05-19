@@ -26,8 +26,8 @@ export default function ScheduleOrder(props) {
   const { minOrder, bool, setbool, product } = props;
   const classes = useStyles();
   const [datentime, setdatentime] = React.useState(new Date());
-  const [checked, setChecked] = React.useState(true);
-  const [radio, setRadio] = React.useState(true);
+  const [checked, setChecked] = React.useState(false);
+  const [radio, setRadio] = React.useState("PRESET");
   const [preset, setpreset] = React.useState("");
   const [quantity, setquantity, quantityref] = React.useState(props.minOrder);
   const [customRepetition, setcustomRepetition] = React.useState(0);
@@ -55,6 +55,7 @@ export default function ScheduleOrder(props) {
   };
 
   const scheduleOrder = () => {
+    console.log(datentime);
     scheduleService
       .addscheduledOrder({
         product,
@@ -91,7 +92,7 @@ export default function ScheduleOrder(props) {
               <Counter quantity={quantity} value={setquantity} />
               <HeadingText>Date & Time</HeadingText>
               <DateTimePicker
-                format="dd-MM-yyyy HH"
+                format="dd-MM-yyyy HH:00 "
                 onChange={setdatentime}
                 value={datentime}
               />

@@ -32,12 +32,12 @@ export default function OrderItems({ items, orderStatus, orderId }) {
           <Typography>{items.productName}</Typography>
         </Box>
         <Box sx={{ width: "25%" }}>
-          <Typography>{items.quantity}</Typography>
+          <Typography align="center">{items.quantity}</Typography>
         </Box>
         <Box sx={{ width: "25%" }}>
-          <Typography>{items.totalPrice}</Typography>
+          <Typography align="center">PKR. {items.totalPrice}</Typography>
         </Box>
-        {orderStatus === "DELIVERED" && items.reviewed === false ? (
+        {orderStatus === "DELIVERED" ? (
           <Box sx={{ width: "25%" }}>
             <CommentWriting orderId={orderId} itemId={items._id} />
           </Box>
