@@ -4,26 +4,33 @@ import { Typography, Grid, Box } from "@mui/material";
 import productService from "../../Services/ProductServices";
 import { NameBar } from "../../Styles/NameBar";
 import ProductComponent from "./ProductComponent";
+import LoadingScreen from "../../Components/LoadingScreen";
 
 const Products = (props) => {
   const { _id, name } = props;
 
   const [products, setProducts] = useState([]);
+  const [loading, setloading] = useState(false);
 
-  const getProductsbyCategory = async (_id) => {
-    await productService
+  const getProductsbyCategory = (_id) => {
+    setloading(true);
+    productService
       .getFiveByCategory(props._id)
       .then((data) => {
         setProducts(data);
+        setloading(false);
       })
       .catch((e) => {
         console.log(e);
+        setloading(false);
       });
   };
   useEffect(getProductsbyCategory, []);
 
   return (
     <div>
+      <LoadingScreen bool={loading} />
+
       {products.length > 0 ? (
         <>
           <NameBar name={name} />

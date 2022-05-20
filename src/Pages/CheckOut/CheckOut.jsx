@@ -8,10 +8,10 @@ import CheckOutSideBar from "./CheckOutSideBar";
 import ItemCard from "./ItemCard";
 import CardDetails from "./CardDetails";
 import cartService from "../../Services/CartServices";
-import CartItems from "../Cart/CartItems";
+//import CartItems from "../Cart/CartItems";
 import { useHistory } from "react-router-dom";
 import cityService from "../../Services/CityService";
-import Auth from "../../AuthWrapper/Auth";
+import Auth from "../../AuthWrapper/IsLoginFalse";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { HeadingText } from "../../Styles/MyTypographies";
@@ -48,8 +48,6 @@ export default function CheckOut(props) {
   const [cities, setcities] = useState([]);
   const [bool, setbool] = useState(false);
   const [onlinePaymentOption, setonlinePaymentOption] = useState();
-  const [onlinePaymentProceed, setOnlinePaymentProceed] = useState();
-  const [Id, setId] = React.useState();
   const getCities = () => {
     cityService
       .GetCities()
@@ -66,8 +64,8 @@ export default function CheckOut(props) {
     setCity(e.target.value);
   };
 
-  const getCartItems = async () => {
-    await cartService
+  const getCartItems = () => {
+    cartService
       .getCart()
       .then((data) => {
         setCartItem(data.items);
@@ -81,9 +79,11 @@ export default function CheckOut(props) {
         console.log(err.response.data);
       });
   };
+
   useEffect(getCartItems, []);
-  const getDeliveryDetails = async () => {
-    await cartService
+
+  const getDeliveryDetails = () => {
+    cartService
       .buyerDeliveryDetails()
       .then((data) => {
         setname(data.data.name);
@@ -95,9 +95,9 @@ export default function CheckOut(props) {
         console.log(err);
       });
   };
-  useEffect(getDeliveryDetails, [CartItems]);
+  useEffect(getDeliveryDetails, []);
+
   const paymentProceed = async () => {
-    console.log("COD run");
     setbool(true);
     await cartService
       .CashOnDelivery({ name, address, phone, city })

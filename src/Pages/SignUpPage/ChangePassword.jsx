@@ -30,11 +30,11 @@ const ChangenewPassword = (props) => {
           <Card sx={{ width: "20%", padding: "20px" }}>
             <CardContent>
               <Typography
+                align="center"
                 sx={{
                   fontWeight: "bold",
                   color: "#ba6a62",
                   fontSize: "18px",
-                  marginLeft: "20%",
                 }}
               >
                 UPDATE PASSWORD

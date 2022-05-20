@@ -1,22 +1,17 @@
 import React from "react";
-import {
-  TextField,
-  Button,
-  Card,
-  Box,
-  Typography,
-  CardContent,
-} from "@mui/material";
+import { TextField, Card, Box, CardContent } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import buyerService from "../../Services/BuyerService";
-import LoginAuth from "../../AuthWrapper/LoginAuth";
+import IsLoginTrue from "../../AuthWrapper/IsLoginTrue";
+import { CardHeadings } from "../../Styles/MyTypographies";
+import { StyledButton } from "../../Styles/StyledButton";
 
 const ForgotPassword = (props) => {
-  const [email, setEmail] = React.useState("hello@123.com");
+  const [email, setEmail] = React.useState("");
   const history = useHistory();
   return (
-    <LoginAuth>
+    <IsLoginTrue>
       <Box>
         <Box
           // sx={{ paddingLeft: "40%", paddingTop: "5%", paddingBottom: "5%" }}
@@ -29,16 +24,7 @@ const ForgotPassword = (props) => {
         >
           <Card sx={{ width: "20%", padding: "20px" }}>
             <CardContent>
-              <Typography
-                sx={{
-                  fontWeight: "bold",
-                  color: "#ba6a62",
-                  fontSize: "18px",
-                  marginLeft: "20%",
-                }}
-              >
-                FORGOT PASSWORD
-              </Typography>
+              <CardHeadings>FORGOT PASSWORD</CardHeadings>
               <Box sx={{}}>
                 <>
                   <TextField
@@ -53,16 +39,8 @@ const ForgotPassword = (props) => {
                 </>
 
                 <Box mt={2}>
-                  <Button
-                    sx={{
-                      color: "#ffff",
-                      backgroundColor: "#ba6a62",
-                      fontWeight: "bold",
-                      "&:hover": {
-                        backgroundColor: "#ba6a67",
-                        color: "#fafafa",
-                      },
-                    }}
+                  <StyledButton
+                    sx={{ margin: "0px", width: "100%" }}
                     onClick={async (e) => {
                       await buyerService
                         .forgotPassword(email)
@@ -81,14 +59,14 @@ const ForgotPassword = (props) => {
                     }}
                   >
                     Send OTP
-                  </Button>
+                  </StyledButton>
                 </Box>
               </Box>
             </CardContent>
           </Card>
         </Box>
       </Box>
-    </LoginAuth>
+    </IsLoginTrue>
   );
 };
 

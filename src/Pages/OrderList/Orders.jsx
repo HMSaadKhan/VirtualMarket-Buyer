@@ -5,8 +5,9 @@ import { makeStyles } from "@mui/styles";
 import orderService from "../../Services/OrderService";
 import OrderComponent from "./OrderComponent";
 
-import Auth from "../../AuthWrapper/Auth";
+import Auth from "../../AuthWrapper/IsLoginFalse";
 import { NameBar } from "../../Styles/NameBar";
+import LoadingScreen from "../../Components/LoadingScreen";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,31 +19,35 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Orders(props) {
   console.log(props);
-  const status = props.match.params.status;
   const classes = useStyles();
 
   const [orderDetails, setorderDetails] = useState([]);
-  const [orderItems, setorderItems] = useState();
+  const [loading, setloading] = useState(false);
+  const [error, seterror] = useState("");
 
   const Orders = () => {
+    setloading(true);
     orderService
       .GetOrders()
       .then((data) => {
-        console.log(data);
+        setloading(false);
         setorderDetails(data);
       })
-      .catch((data) => {
-        console.log(data);
+      .catch((error) => {
+        setloading(false);
+        console.log(error);
+        seterror(error.response.data);
       });
   };
   React.useEffect(Orders, []);
 
   return (
     <Auth>
+      <LoadingScreen bool={loading} />
       <NameBar name={"Orders"} />
 
       <Box className={classes.root}>
-        <Box sx={{ width: "50%" }}>
+        <Box>
           <Box>
             {orderDetails.length > 0 ? (
               <>
@@ -52,13 +57,16 @@ export default function Orders(props) {
               </>
             ) : (
               <>
+                {error}
                 <Typography
-                  ml={30}
-                  mt={25}
-                  sx={{ fontSize: "20px", fontWeight: "bold" }}
-                >
-                  No Orders Yet
-                </Typography>
+                  sx={{
+                    display: "flex",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                ></Typography>
               </>
             )}
           </Box>

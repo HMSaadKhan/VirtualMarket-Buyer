@@ -1,7 +1,7 @@
 import React from "react";
 import buyerService from "../Services/BuyerService";
 import { withRouter } from "react-router";
-const Auth = (props) => {
+const IsLoginFalse = (props) => {
   React.useEffect(() => {
     if (!buyerService.isLoggedIn()) {
       props.history.push("/login");
@@ -10,4 +10,4 @@ const Auth = (props) => {
   return <>{props.children}</>;
 };
 
-export default withRouter(Auth);
+export default withRouter(IsLoginFalse);

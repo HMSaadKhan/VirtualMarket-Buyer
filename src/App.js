@@ -32,6 +32,7 @@ import ProductsBySearch from "./Pages/HomePage/ProductsBySearch";
 import Warranty from "./Pages/Warranty/Warranty";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./Styles/myStyleSheet";
+import CategoriesState from "./Contexts/Categories/CategoriesState";
 function App() {
   const [refreshCart, setRefreshCart] = React.useState();
   const getStateChanged = (data) => {
@@ -39,46 +40,49 @@ function App() {
     setRefreshCart(data);
   };
   return (
-    <ThemeProvider theme={theme}>
-      <Router>
-        <ToastContainer />
+    <CategoriesState>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <ToastContainer />
 
-        <MenuBar refreshCart={refreshCart} />
-        <Categories />
-        <Box sx={{ backgroundColor: "#fafafa" }}>
-          <Switch>
-            <Route path="/Login" exact component={Login} />
-            <Route path="/Cart">
-              <Cart stateChanged={getStateChanged} />
-            </Route>
-            <Route path="/favorite" exact component={Favorite} />
-            <Route path="/SignUp" exact component={SignUp} />
-            <Route path="/AccountSettings" component={BuyerAccount} />
-            <Route path="/Orders" component={Orders} />
-            <Route path="/ProductDetail/:id/">
-              <ProductDetail stateChanged={getStateChanged} />
-            </Route>
-            <Route path="/forgotpassword" component={ForgotPassword} />
-            <Route path="/resetPassword/:id/" exact component={NewPassword} />
-            <Route path="/changepassword/" exact component={ChangePassword} />
-            <Route path="/warranty/" component={Warranty} />
-            <Route path="/check-out/">
-              <CheckOut stateChanged={getStateChanged} />
-            </Route>
+          <MenuBar refreshCart={refreshCart} />
+          <Categories />
+          {/* <Box sx={{ backgroundColor: "#fafafa" }}> */}
+          <Box sx={{ backgroundColor: "#ffff" }}>
+            <Switch>
+              <Route path="/Login" exact component={Login} />
+              <Route path="/Cart">
+                <Cart stateChanged={getStateChanged} />
+              </Route>
+              <Route path="/favorite" exact component={Favorite} />
+              <Route path="/SignUp" exact component={SignUp} />
+              <Route path="/AccountSettings" component={BuyerAccount} />
+              <Route path="/Orders" component={Orders} />
+              <Route path="/ProductDetail/:id/">
+                <ProductDetail stateChanged={getStateChanged} />
+              </Route>
+              <Route path="/forgotpassword" component={ForgotPassword} />
+              <Route path="/resetPassword/:id/" exact component={NewPassword} />
+              <Route path="/changepassword/" exact component={ChangePassword} />
+              <Route path="/warranty/" component={Warranty} />
+              <Route path="/check-out/">
+                <CheckOut stateChanged={getStateChanged} />
+              </Route>
 
-            <Route path="/not-found" component={NotFound} />
+              <Route path="/not-found" component={NotFound} />
 
-            <Route path="/:id" exact component={ProductsByCategory} />
-            <Route path="/search/:id" exact component={ProductsBySearch} />
+              <Route path="/:id" exact component={ProductsByCategory} />
+              <Route path="/search/:id" exact component={ProductsBySearch} />
 
-            <Route path="/" exact component={HomePage} />
-            <Redirect to="/not-found" />
-          </Switch>
+              <Route path="/" exact component={HomePage} />
+              <Redirect to="/not-found" />
+            </Switch>
 
-          {/* <Footer /> */}
-        </Box>
-      </Router>
-    </ThemeProvider>
+            {/* <Footer /> */}
+          </Box>
+        </Router>
+      </ThemeProvider>
+    </CategoriesState>
   );
 }
 

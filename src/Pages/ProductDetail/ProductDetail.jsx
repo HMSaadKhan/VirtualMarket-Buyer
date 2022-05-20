@@ -7,7 +7,6 @@ import {
   Typography,
   CardContent,
   IconButton,
-  Button,
   TextField,
   Divider,
   Tooltip,
@@ -208,7 +207,7 @@ export default function ProductDetail(props) {
       setAoCBool(false);
     } else setAoCBool(true);
   };
-  useEffect(stockCheck, [productDetails]);
+  useEffect(stockCheck, []);
 
   return (
     <>
@@ -426,7 +425,17 @@ export default function ProductDetail(props) {
                         Available Stock
                       </Typography>
                       <Typography className={classes.subText}>
-                        {stock > quantity ? <>In Stock</> : <>Out of Stock</>}
+                        {stock > productDetails.minOrder ? (
+                          <Typography
+                            sx={{ fontWeight: "bold", color: "green" }}
+                          >
+                            In Stock
+                          </Typography>
+                        ) : (
+                          <Typography sx={{ fontWeight: "bold", color: "red" }}>
+                            Out of Stock
+                          </Typography>
+                        )}
                       </Typography>
                     </CardContent>
                   </Card>

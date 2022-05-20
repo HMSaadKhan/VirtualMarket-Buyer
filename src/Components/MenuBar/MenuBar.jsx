@@ -83,6 +83,12 @@ const MenuBar = (props) => {
             label="Search field"
             type="search"
             variant="standard"
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                history.push("/search/" + search);
+                // write your functionality here
+              }
+            }}
             onChange={(e) => {
               setSearch(e.target.value);
             }}

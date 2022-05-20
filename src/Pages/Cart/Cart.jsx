@@ -5,7 +5,7 @@ import cartService from "../../Services/CartServices";
 import useState from "react-usestateref";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import Auth from "../../AuthWrapper/Auth";
+import Auth from "../../AuthWrapper/IsLoginFalse";
 import { StyledButton } from "../../Styles/StyledButton";
 
 const Cart = (props) => {

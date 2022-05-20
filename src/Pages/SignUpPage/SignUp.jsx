@@ -1,142 +1,133 @@
 import React from "react";
-import { styled } from "@mui/material/styles";
-
 import {
-  Card,
-  CardContent,
   TextField,
-  Button,
+  Card,
   Box,
   Typography,
+  CardContent,
+  Divider,
 } from "@mui/material";
-import userService from "../../Services/BuyerService";
-import { toast } from "react-toastify";
-
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import LoginAuth from "../../AuthWrapper/IsLoginTrue";
+import buyerService from "../../Services/BuyerService";
+import { FlexBox } from "../../Styles/StyledBox";
+import { StyledButton } from "../../Styles/StyledButton";
 
-const BuyerAccount = (props) => {
+const Login = (props) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setCPassword] = React.useState("");
   const [fName, setfName] = React.useState("");
   const [lName, setlName] = React.useState("");
- 
-  const StyledButton = styled(Button)({
-    width: "100%",
-    color: "#ffff",
-    backgroundColor: "#ba6a62",
-    fontWeight: "bold",
-    "&:hover": {
-      backgroundColor: "#C78781",
-      color: "#fafafa",
-    },
-  });
-  const StyledBox = styled(Box)({
-    margin: "10px",
-  });
-  const Container = styled(Box)({
-    display: "flex",
-    justifyContent: "center",
-    paddingTop: "5%",
-    paddingBottom: "5%",
-  });
-
-  const Wrapper = styled(Box)({
-    display: "flex",
-    justifyContent: "center",
-  });
 
   return (
-    <>
-      <Container>
-        <Box m={1}>
-          <Card sx={{ maxWidth: "100%", minWidth: "40%" }}>
+    <LoginAuth>
+      <Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            paddingTop: "5%",
+            paddingBottom: "5%",
+          }}
+        >
+          <Card sx={{ maxWidth: 400, padding: "20px" }}>
             <CardContent>
-              <Wrapper>
-                <Typography
-                  sx={{
-                    color: "#ba6a62",
-                    fontSize: "20px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  SignUp
-                </Typography>
-              </Wrapper>
-
-              <StyledBox sx={{ display: "flex" }}>
-                <StyledBox>
+              <Typography
+                align="center"
+                sx={{
+                  fontWeight: "bold",
+                  color: "#ba6a62",
+                  fontSize: "30px",
+                }}
+              >
+                Virtual Market
+              </Typography>
+              <Divider />
+              <Typography
+                align="center"
+                sx={{
+                  fontWeight: "bold",
+                  color: "#ba6a62",
+                  fontSize: "25px",
+                }}
+              >
+                SIGN UP
+              </Typography>
+              <FlexBox>
+                <FlexBox m={1}>
                   <TextField
-                    variant="standard"
+                    fullWidth
+                    id="filled-required"
                     label="First Name"
-                    placeholder="First Name"
-                    size="small"
-                    value={fName}
+                    variant="standard"
+                    defaultValue={fName}
                     onChange={(e) => {
                       setfName(e.target.value);
                     }}
                   />
-                </StyledBox>
-                <StyledBox>
+                </FlexBox>
+                <FlexBox m={1}>
                   <TextField
-                    variant="standard"
+                    fullWidth
+                    id="filled-required"
                     label="Last Name"
-                    placeholder="Last Name"
-                    size="small"
-                    value={lName}
+                    variant="standard"
+                    defaultValue={lName}
                     onChange={(e) => {
                       setlName(e.target.value);
                     }}
                   />
-                </StyledBox>
-              </StyledBox>
-              <StyledBox sx={{ display: "flex " }}>
-                <StyledBox sx={{ width: "100%" }}>
+                </FlexBox>
+              </FlexBox>
+
+              <FlexBox m={1}>
+                <TextField
+                  fullWidth
+                  id="filled-required"
+                  label="Email"
+                  variant="standard"
+                  defaultValue={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
+              </FlexBox>
+              <FlexBox>
+                <FlexBox m={1}>
                   <TextField
-                    variant="standard"
-                    size="small"
-                    label="Email"
                     fullWidth
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
-                  />
-                </StyledBox>
-              </StyledBox>
-              <StyledBox sx={{ display: "flex ", alignItems: "center" }}>
-                <StyledBox>
-                  <TextField
-                    variant="standard"
                     label="Password"
-                    placeholder="Password"
-                    size="small"
-                    value={password}
+                    variant="standard"
+                    type="password"
+                    defaultValue={password}
                     onChange={(e) => {
                       setPassword(e.target.value);
                     }}
                   />
-                </StyledBox>
-                <StyledBox>
+                </FlexBox>
+                <FlexBox>
                   <TextField
-                    variant="standard"
+                    fullWidth
+                    type="password"
                     label="Confirm Password"
-                    placeholder="Confirm Password"
-                    value={confirmPassword}
-                    size="small"
+                    variant="standard"
+                    defaultValue={confirmPassword}
                     onChange={(e) => {
                       setCPassword(e.target.value);
                     }}
                   />
-                </StyledBox>
-              </StyledBox>
-              <StyledBox>
-                <StyledBox sx={{ width: "95%" }}>
+                </FlexBox>
+              </FlexBox>
+
+              <Box>
+                <Box m={1}>
                   <StyledButton
+                    sx={{ width: "100%", margin: 0 }}
                     variant="contained"
                     onClick={(e) => {
-                      userService
+                      buyerService
                         .register({
                           fName,
                           lName,
@@ -158,21 +149,21 @@ const BuyerAccount = (props) => {
                         });
                     }}
                   >
-                    Sign Up
+                    signup
                   </StyledButton>
-                </StyledBox>
-                <StyledBox>
+                </Box>
+                <Box m={1}>
                   <Typography>
                     Already Have an account? <Link to="/Login">Login</Link>
                   </Typography>
-                </StyledBox>
-              </StyledBox>
+                </Box>
+              </Box>
             </CardContent>
           </Card>
         </Box>
-      </Container>
-    </>
+      </Box>
+    </LoginAuth>
   );
 };
 
-export default BuyerAccount;
+export default Login;

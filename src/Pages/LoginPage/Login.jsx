@@ -1,17 +1,17 @@
 import React from "react";
 import {
   TextField,
-  Button,
   Card,
   Box,
   Typography,
   CardContent,
+  Divider,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import LoginAuth from "../../AuthWrapper/LoginAuth";
+import LoginAuth from "../../AuthWrapper/IsLoginTrue";
 import buyerService from "../../Services/BuyerService";
-
+import { StyledButton } from "../../Styles/StyledButton";
 const Login = (props) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -33,11 +33,22 @@ const Login = (props) => {
           <Card sx={{ maxWidth: 300, padding: "20px" }}>
             <CardContent>
               <Typography
+                align="center"
                 sx={{
                   fontWeight: "bold",
                   color: "#ba6a62",
                   fontSize: "30px",
-                  marginLeft: "25%",
+                }}
+              >
+                Virtual Market
+              </Typography>
+              <Divider />
+              <Typography
+                align="center"
+                sx={{
+                  fontWeight: "bold",
+                  color: "#ba6a62",
+                  fontSize: "25px",
                 }}
               >
                 SIGN IN
@@ -70,24 +81,13 @@ const Login = (props) => {
                   />
                 </>
                 <Box mt={2}>
-                  <Button
-                    sx={{
-                      color: "#ffff",
-                      backgroundColor: "#ba6a62",
-                      fontWeight: "bold",
-                      "&:hover": {
-                        backgroundColor: "#ba6a67",
-                        color: "#fafafa",
-                      },
-                    }}
+                  <StyledButton
+                    sx={{ width: "100%", margin: "0" }}
                     variant="contained"
                     onClick={async (e) => {
                       await buyerService
                         .login(email, password)
                         .then((data) => {
-                          toast.success("Login Successfull", {
-                            position: toast.POSITION.BOTTOM_LEFT,
-                          });
                           setTimeout(direct, 1000);
                         })
                         .catch((err) => {
@@ -98,7 +98,7 @@ const Login = (props) => {
                     }}
                   >
                     LOGIN
-                  </Button>
+                  </StyledButton>
                 </Box>
                 <Box mt={1}>
                   <Typography>

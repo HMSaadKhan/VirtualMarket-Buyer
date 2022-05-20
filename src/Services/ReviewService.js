@@ -1,6 +1,6 @@
 import GenericService from "./GenericService";
 
-import axios from "axios";
+//import axios from "axios";
 
 class ReviewService extends GenericService {
   constructor() {

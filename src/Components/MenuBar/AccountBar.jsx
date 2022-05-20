@@ -42,8 +42,7 @@ const AccountIcon = (props) => {
   const handleLogout = () => {
     handleMenuClose();
     buyerService.logout();
-    window.location.reload();
-    history.push("/");
+    window.location.href = "/";
   };
 
   const renderMenu = (

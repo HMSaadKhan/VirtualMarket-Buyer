@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { Box, Button, Typography } from "@mui/material";
-import categoryService from "../../Services/CategoryService";
-import { makeStyles } from "@mui/styles";
+import React, { useContext } from "react";
+import { Box, Typography } from "@mui/material";
+//import categoryService from "../../Services/CategoryService";
 import { useHistory } from "react-router-dom";
 import { WhiteButton } from "../../Styles/StyledButton";
+import { CategoriesContext } from "../../Contexts/Categories/CategoriesState";
 export default function Categories() {
   const history = useHistory();
-  const [categories, setCategories] = useState([]);
+  //const [categories, setCategories] = useState([]);
+  const categories = useContext(CategoriesContext);
 
-  const getCategory = () => {
-    categoryService
-      .GetCategories()
-      .then((data) => {
-        setCategories(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  useEffect(getCategory, []);
+  // const getCategory = () => {
+  //   categoryService
+  //     .GetCategories()
+  //     .then((data) => {
+  //       setCategories(data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+  // useEffect(getCategory, []);
   return (
     <Box
       sx={{

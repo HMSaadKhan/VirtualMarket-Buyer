@@ -22,7 +22,7 @@ const CardDetails = ({
 }) => {
   const [checked, setChecked] = useState(true);
   const [bool, setbool] = useState(false);
-  const [Id, setId] = useState(false);
+  const [Id, setId] = useState();
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
@@ -42,49 +42,48 @@ const CardDetails = ({
     const { id } = paymentMethod;
     setbool(true);
     console.log(id);
-    setId(id);
-    paymentProceed();
+    OnlinePayment(id);
   };
   const paymentProceed = async () => {
-    if (!checked) {
-      console.log("COD run");
-      setbool(true);
-      await cartService
-        .CashOnDelivery({ name, address, phone, city })
-        .then((data) => {
-          setTimeout(() => {
-            getCartItems();
-            stateChanged(data);
-            setbool(false);
-            history.push("/");
-          }, 1000);
-        })
-        .catch((err) => {
-          toast.error(err.response.data, {
-            position: toast.POSITION.BOTTOM_LEFT,
-          });
+    console.log("COD run");
+    setbool(true);
+    await cartService
+      .CashOnDelivery({ name, address, phone, city })
+      .then((data) => {
+        setTimeout(() => {
+          getCartItems();
+          stateChanged(data);
           setbool(false);
+          history.push("/");
+        }, 1000);
+      })
+      .catch((err) => {
+        toast.error(err.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
         });
-    } else {
-      console.log("OP run");
+        setbool(false);
+      });
+  };
+  const OnlinePayment = async (id) => {
+    console.log("OP run");
 
-      await cartService
-        .OnlinePayment({ id: Id, name, address, phone, city })
-        .then((data) => {
-          setTimeout(() => {
-            getCartItems();
-            stateChanged(data);
-            setbool(false);
-            history.push("/");
-          }, 1000);
-        })
-        .catch((err) => {
-          toast.error(err.response.data, {
-            position: toast.POSITION.BOTTOM_LEFT,
-          });
+    console.log(Id, name, address, phone, city);
+    await cartService
+      .OnlinePayment({ id, name, address, phone, city })
+      .then((data) => {
+        setTimeout(() => {
+          getCartItems();
+          stateChanged(data);
           setbool(false);
+          history.push("/");
+        }, 1000);
+      })
+      .catch((err) => {
+        toast.error(err.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
         });
-    }
+        setbool(false);
+      });
   };
 
   return (

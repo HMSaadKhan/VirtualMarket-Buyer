@@ -231,7 +231,12 @@ const ScheduledOrder = () => {
             })}
           </>
         ) : (
-          <Typography>No Orders Scheduled</Typography>
+          <Typography
+            align="center"
+            sx={{ color: "#ba6a62", fontWeight: "bold" }}
+          >
+            No Orders Scheduled
+          </Typography>
         )}
       </div>
     </Menu>

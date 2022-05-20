@@ -1,15 +1,11 @@
 import React from "react";
-import {
-  TextField,
-  Button,
-  Card,
-  Box,
-  Typography,
-  CardContent,
-} from "@mui/material";
+import { TextField, Card, Box, CardContent } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import buyerService from "../../Services/BuyerService";
+import { CardHeadings } from "../../Styles/MyTypographies";
+import { StyledButton } from "../../Styles/StyledButton";
+import IsLoginTrue from "../../AuthWrapper/IsLoginTrue";
 
 const ChangenewPassword = (props) => {
   const [otp, setOtp] = React.useState();
@@ -17,7 +13,7 @@ const ChangenewPassword = (props) => {
   const history = useHistory();
   const _id = props.match.params.id;
   return (
-    <>
+    <IsLoginTrue>
       <Box>
         <Box
           // sx={{ paddingLeft: "40%", paddingTop: "5%", paddingBottom: "5%" }}
@@ -30,17 +26,8 @@ const ChangenewPassword = (props) => {
         >
           <Card sx={{ width: "20%", padding: "20px" }}>
             <CardContent>
-              <Typography
-                sx={{
-                  fontWeight: "bold",
-                  color: "#ba6a62",
-                  fontSize: "18px",
-                  marginLeft: "20%",
-                }}
-              >
-                NEW PASSWORD
-              </Typography>
-              <Box sx={{}}>
+              <CardHeadings align="center">NEW PASSWORD</CardHeadings>
+              <Box>
                 <>
                   <TextField
                     label="OTP"
@@ -66,16 +53,8 @@ const ChangenewPassword = (props) => {
                 </>
 
                 <Box mt={2}>
-                  <Button
-                    sx={{
-                      color: "#ffff",
-                      backgroundColor: "#ba6a62",
-                      fontWeight: "bold",
-                      "&:hover": {
-                        backgroundColor: "#ba6a67",
-                        color: "#fafafa",
-                      },
-                    }}
+                  <StyledButton
+                    sx={{ margin: "0px", width: "100%" }}
                     onClick={async (e) => {
                       await buyerService
                         .resetPassword(_id, { otp, password }) //if gives error then check otp datatype
@@ -93,14 +72,14 @@ const ChangenewPassword = (props) => {
                     }}
                   >
                     Update Password
-                  </Button>
+                  </StyledButton>
                 </Box>
               </Box>
             </CardContent>
           </Card>
         </Box>
       </Box>
-    </>
+    </IsLoginTrue>
   );
 };
 

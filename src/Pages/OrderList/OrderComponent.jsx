@@ -10,21 +10,12 @@ import StepLabel from "@mui/material/StepLabel";
 import OrderItems from "./OrderItems";
 import Divider from "@mui/material/Divider";
 import moment from "moment";
+import { OrderComponentHeading } from "../../Styles/MyTypographies";
+import { FlexBox, SpaceBetween } from "../../Styles/StyledBox";
 
 const useStyles = makeStyles((theme) => ({
-  heading: {
-    color: "#ba6a62",
-  },
   text: {
     color: "black",
-  },
-  button: {
-    color: "#fff",
-    backgroundColor: "#ba6a62",
-    "&:hover": {
-      backgroundColor: "#b22222",
-      color: "#ffff",
-    },
   },
 }));
 
@@ -50,165 +41,82 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
 
   return (
     <Box m={3}>
-      <Card sx={{ height: "80%" }}>
+      <Card sx={{ maxWidth: 1000, height: "80%", backgroundColor: "#fafafa" }}>
         <CardContent>
           <Card sx={{ margin: "10px", maxWidth: 900 }}>
             <CardContent>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Typography
-                  className={classes.heading}
-                  sx={{ display: "flex" }}
-                >
-                  Order#{" "}
-                  <Typography ml={2} className={classes.text}>
-                    {order._id}
-                  </Typography>
-                </Typography>
-                <Typography
-                  className={classes.heading}
-                  sx={{ display: "flex" }}
-                >
-                  Order Type{" "}
-                  <Typography className={classes.text} ml={2}>
-                    {order.type}
-                  </Typography>
-                </Typography>
-              </Box>
-            </CardContent>
-          </Card>
-          <Card sx={{ maxWidth: 900, margin: "10px" }}>
-            <CardContent>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Box sx={{ width: "50%" }}>
-                  <Typography className={classes.heading}>
-                    Product Name
-                  </Typography>
-                </Box>
-                <Box sx={{ width: "25%" }}>
-                  <Typography align="center" className={classes.heading}>
-                    Quantity
-                  </Typography>
-                </Box>
-                <Box sx={{ width: "25%" }}>
-                  <Typography align="center" className={classes.heading}>
-                    Price
-                  </Typography>
-                </Box>
-                {order.status === "DELIVERED" ? (
-                  <Box sx={{ width: "25%" }}> </Box>
-                ) : (
-                  <></>
-                )}
+                <FlexBox>
+                  <OrderComponentHeading>Order# </OrderComponentHeading>
+                  <Typography>{order._id}</Typography>
+                </FlexBox>
+                <FlexBox>
+                  <OrderComponentHeading>Order Type: </OrderComponentHeading>
+                  <Typography> {order.type}</Typography>
+                </FlexBox>
               </Box>
             </CardContent>
           </Card>
           <Card sx={{ margin: "10px" }}>
             <CardContent>
-              {order.items.map((items, index) => (
+              {order.items.map((items) => (
                 <OrderItems
                   orderId={order._id}
                   orderStatus={order.status}
                   items={items}
-                  key={index}
+                  key={items._id}
                 />
               ))}
             </CardContent>
           </Card>
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Card sx={{ maxWidth: 500 }}>
               <CardContent>
-                <Typography className={classes.heading}>
-                  Shipping Details
-                </Typography>
-                <Typography
-                  className={classes.heading}
-                  sx={{ display: "flex" }}
-                >
-                  Name{" "}
-                  <Typography ml={4} className={classes.text}>
-                    {order.buyerName}
-                  </Typography>
-                </Typography>
-                <Typography
-                  className={classes.heading}
-                  sx={{ display: "flex" }}
-                >
-                  Address{" "}
-                  <Typography className={classes.text} ml={2}>
-                    {order.deliveryAddress}
-                  </Typography>
-                </Typography>
-                <Typography
-                  className={classes.heading}
-                  sx={{ display: "flex" }}
-                >
-                  City{" "}
-                  <Typography ml={6} className={classes.text}>
-                    {order.deliveryCity.name}
-                  </Typography>
-                </Typography>
-                <Typography
-                  className={classes.heading}
-                  sx={{ display: "flex" }}
-                >
-                  Phone{" "}
-                  <Typography ml={4} className={classes.text}>
-                    {order.buyerContact}
-                  </Typography>
-                </Typography>
+                <OrderComponentHeading>Shipping Details</OrderComponentHeading>
+                <SpaceBetween>
+                  <OrderComponentHeading>Name</OrderComponentHeading>
+                  <Typography>{order.buyerName}</Typography>
+                </SpaceBetween>
+                <SpaceBetween sx={{ alignItems: "start" }}>
+                  <OrderComponentHeading>Address</OrderComponentHeading>
+                  <Box sx={{ width: "60%" }}>
+                    <Typography>{order.deliveryAddress}</Typography>
+                  </Box>
+                </SpaceBetween>
+                <SpaceBetween>
+                  <OrderComponentHeading>City</OrderComponentHeading>
+                  <Typography>{order.deliveryCity.name}</Typography>
+                </SpaceBetween>
+                <SpaceBetween>
+                  <OrderComponentHeading>Phone</OrderComponentHeading>
+                  <Typography>{order.buyerContact}</Typography>
+                </SpaceBetween>
               </CardContent>
             </Card>
-            <Card sx={{ maxWidth: 1000, marginLeft: "90px" }}>
+            <Card sx={{ maxWidth: 600, marginLeft: "90px" }}>
               <CardContent>
-                <Typography
-                  className={classes.heading}
-                  sx={{ display: "flex" }}
-                >
-                  Sub Total
-                  <Typography className={classes.text} ml={8}>
-                    PKR. {order.subTotal}
-                  </Typography>
-                </Typography>
-                <Typography
-                  sx={{ display: "flex" }}
-                  className={classes.heading}
-                >
-                  Delivery Charge{" "}
-                  <Typography ml={2} className={classes.text}>
-                    PKR. {order.deliveryCharge}
-                  </Typography>
-                </Typography>
+                <SpaceBetween>
+                  <OrderComponentHeading>Sub Total</OrderComponentHeading>
+                  <Typography>PKR. {order.subTotal}</Typography>
+                </SpaceBetween>
+                <SpaceBetween sx={{ alignItems: "start" }}>
+                  <Box sx={{ width: "25%" }}>
+                    <OrderComponentHeading>
+                      Delivery Charge
+                    </OrderComponentHeading>
+                  </Box>
+                  <Typography>PKR. {order.deliveryCharge}</Typography>
+                </SpaceBetween>
                 <Divider />
-                <Typography
-                  sx={{ display: "flex", fontWeight: "bold" }}
-                  className={classes.heading}
-                >
-                  Total
-                  <Typography
-                    sx={{ fontWeight: "bold" }}
-                    ml={12}
-                    className={classes.text}
-                  >
-                    PKR. {order.total}
-                  </Typography>
-                </Typography>
+                <SpaceBetween>
+                  <OrderComponentHeading>Total</OrderComponentHeading>
+                  <Typography>PKR. {order.total}</Typography>
+                </SpaceBetween>
               </CardContent>
             </Card>
           </Box>
           <Box sx={{ width: "100%", margin: "20px" }}>
-            <Stepper
-              sx={{
-                "& .MuiStepIcon-active": { color: "red" },
-              }}
-              activeStep={index}
-              alternativeLabel
-            >
+            <Stepper activeStep={index} alternativeLabel>
               {order.events.map((label) => (
                 <Step key={label}>
                   <StepLabel>

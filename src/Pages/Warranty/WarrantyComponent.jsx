@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Typography, Box, CardContent, Container } from "@mui/material";
+import { Card, Typography, Box, CardContent } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import ClaimWriting from "../../Components/PopUps/ClaimWriting";
 
@@ -28,7 +28,7 @@ const WarrantyComponent = ({ warranty }) => {
                 <Typography>{warranty.productName}</Typography>
               </Box>
               <Box sx={{ width: "100%" }}>
-                <Typography sx={{ color: "#ba6a62" }}>
+                <Typography align="center" sx={{ color: "#ba6a62" }}>
                   {warranty.quantity}
                 </Typography>
               </Box>

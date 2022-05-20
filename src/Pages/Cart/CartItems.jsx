@@ -11,6 +11,7 @@ import {
 import cartService from "../../Services/CartServices";
 import { makeStyles } from "@mui/styles";
 import LoadingScreen from "../../Components/LoadingScreen";
+import { toast } from "react-toastify";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -55,8 +56,10 @@ const CartItems = (props) => {
         setloading(false);
       })
       .catch((error) => {
-        console.log(error);
         setloading(false);
+        toast.error(error.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
       });
   };
   const minusButton = async () => {
@@ -68,19 +71,26 @@ const CartItems = (props) => {
         setloading(false);
       })
       .catch((error) => {
-        console.log(error);
         setloading(false);
+        toast.error(error.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
       });
   };
   const deleteButton = async () => {
+    setloading(true);
     await cartService
       .deleteItem(_id)
       .then((e) => {
         getProductId(_id);
         getCartItems();
+        setloading(false);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        setloading(false);
+        toast.error(err.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
       });
   };
   return (

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import WarrantyComponent from "./WarrantyComponent";
 import { makeStyles } from "@mui/styles";
-import Auth from "../../AuthWrapper/Auth";
+import Auth from "../../AuthWrapper/IsLoginFalse";
 import warrantyService from "../../Services/WarrantyService";
 import { NameBar } from "../../Styles/NameBar";
 

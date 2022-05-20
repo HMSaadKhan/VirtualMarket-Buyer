@@ -14,9 +14,8 @@ import {
   FormControl,
   MenuItem,
 } from "@mui/material";
-import { CardHeadings, HeadingText } from "../../Styles/MyTypographies";
+import { HeadingText } from "../../Styles/MyTypographies";
 import { StyledButton } from "../../Styles/StyledButton";
-import { MarginBox } from "../../Styles/StyledBox";
 const BuyerAccount = (props) => {
   const [fName, setfName] = useState("");
   const [lName, setlName] = useState("");
@@ -46,13 +45,30 @@ const BuyerAccount = (props) => {
       });
   };
 
-  useEffect(getData, [verified]);
+  useEffect(getData, []);
+
+  const StyledBox = styled(Box)({
+    margin: "10px",
+  });
+  const Container = styled(Box)({
+   
+  });
+
+  const Wrapper = styled(Box)({
+    display: "flex",
+    justifyContent: "center",
+  });
 
   const getCities = () => {
-    cityService.GetCities().then((data) => {
-      console.log(data);
-      setcities(data);
-    });
+    cityService
+      .GetCities()
+      .then((data) => {
+        console.log(data);
+        setcities(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   React.useEffect(getCities, []);
   const selectChange = (e) => {
@@ -60,59 +76,52 @@ const BuyerAccount = (props) => {
   };
   return (
     <Auth>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          paddingTop: "5%",
-          paddingBottom: "5%",
-        }}
-      >
+      <Container>
         <Box m={1}>
-          <Card sx={{ maxWidth: 500 }}>
+          <Card sx={{ maxWidth: "100%", minWidth: "40%" }}>
             <CardContent>
-              <CardHeadings align="center">Account Details</CardHeadings>
+              <Wrapper>
+                <HeadingText sx={{ fontSize: "25px" }}>
+                  Account Details
+                </HeadingText>
+              </Wrapper>
               {!verified ? (
                 <div>
-                  <MarginBox>
+                  <StyledBox>
                     <StyledButton
                       onClick={() => {
                         setCheck(true);
                         buyerService
                           .verificationOTP()
                           .then((res) => {
-                            toast.success(res.data, {
-                              position: toast.POSITION.BOTTOM_LEFT,
-                            });
+                            console.log(res);
                             setCheck(true);
                           })
                           .catch((err) => {
-                            toast.error(err.response.data, {
-                              position: toast.POSITION.BOTTOM_LEFT,
-                            });
+                            console.log(err);
                           });
                       }}
                     >
                       Verify Account
                     </StyledButton>
-                  </MarginBox>
+                  </StyledBox>
                 </div>
               ) : (
                 <div></div>
               )}
               {check ? (
-                <MarginBox>
-                  <MarginBox>
+                <StyledBox>
+                  <>
                     <TextField
-                      label="Verification Code"
+                      placeholder="Verification Code"
                       value={otp}
                       onChange={(e) => {
                         setOtp(e.target.value);
                       }}
                     />
-                  </MarginBox>
+                  </>
 
-                  <MarginBox>
+                  <StyledBox>
                     <StyledButton
                       color="success"
                       variant="contained"
@@ -120,29 +129,25 @@ const BuyerAccount = (props) => {
                         buyerService
                           .VerifyOtp({ otp })
                           .then((res) => {
-                            toast.success(res.data, {
-                              position: toast.POSITION.BOTTOM_LEFT,
-                            });
+                            console.log(res);
                             setCheck(false);
-                            //window.location.reload();
+                            window.location.reload();
                           })
                           .catch((err) => {
-                            toast.error(err.response.data, {
-                              position: toast.POSITION.BOTTOM_LEFT,
-                            });
+                            console.log(err);
                           });
                       }}
                     >
                       Verify
                     </StyledButton>
-                  </MarginBox>
-                </MarginBox>
+                  </StyledBox>
+                </StyledBox>
               ) : (
                 <div></div>
               )}
 
-              <MarginBox sx={{ display: "flex" }}>
-                <MarginBox>
+              <StyledBox sx={{ display: "flex" }}>
+                <StyledBox>
                   <TextField
                     variant="standard"
                     label="First Name"
@@ -153,8 +158,8 @@ const BuyerAccount = (props) => {
                       setfName(e.target.value);
                     }}
                   />
-                </MarginBox>
-                <MarginBox>
+                </StyledBox>
+                <StyledBox>
                   <TextField
                     variant="standard"
                     label="Last Name"
@@ -165,11 +170,11 @@ const BuyerAccount = (props) => {
                       setlName(e.target.value);
                     }}
                   />
-                </MarginBox>
-              </MarginBox>
-              <MarginBox sx={{ display: "flex " }}>
+                </StyledBox>
+              </StyledBox>
+              <StyledBox sx={{ display: "flex " }}>
                 {console.log(email)}
-                <MarginBox>
+                <StyledBox>
                   <TextField
                     variant="standard"
                     disabled
@@ -180,8 +185,8 @@ const BuyerAccount = (props) => {
                       setEmail(e.target.value);
                     }}
                   />
-                </MarginBox>
-                <MarginBox>
+                </StyledBox>
+                <StyledBox>
                   <TextField
                     variant="standard"
                     label="Phone Number"
@@ -192,10 +197,10 @@ const BuyerAccount = (props) => {
                       setphone(e.target.value);
                     }}
                   />
-                </MarginBox>
-              </MarginBox>
-              <MarginBox sx={{ display: "flex ", alignItems: "center" }}>
-                <MarginBox>
+                </StyledBox>
+              </StyledBox>
+              <StyledBox sx={{ display: "flex ", alignItems: "center" }}>
+                <StyledBox>
                   <FormControl sx={{ width: 200 }}>
                     <InputLabel variant="standard">City</InputLabel>
 
@@ -213,8 +218,8 @@ const BuyerAccount = (props) => {
                       ))}
                     </Select>
                   </FormControl>
-                </MarginBox>
-                <MarginBox>
+                </StyledBox>
+                <StyledBox>
                   <TextField
                     variant="standard"
                     label="Address"
@@ -224,10 +229,10 @@ const BuyerAccount = (props) => {
                       setAddress(e.target.value);
                     }}
                   />
-                </MarginBox>
-              </MarginBox>
-              <MarginBox sx={{ display: "flex" }}>
-                <MarginBox>
+                </StyledBox>
+              </StyledBox>
+              <StyledBox sx={{ display: "flex" }}>
+                <StyledBox>
                   <StyledButton
                     variant="contained"
                     onClick={(e) => {
@@ -250,8 +255,8 @@ const BuyerAccount = (props) => {
                   >
                     Save
                   </StyledButton>
-                </MarginBox>
-                <MarginBox>
+                </StyledBox>
+                <StyledBox>
                   <StyledButton
                     variant="contained"
                     onClick={(e) => {
@@ -260,12 +265,12 @@ const BuyerAccount = (props) => {
                   >
                     Change Password
                   </StyledButton>
-                </MarginBox>
-              </MarginBox>
+                </StyledBox>
+              </StyledBox>
             </CardContent>
           </Card>
         </Box>
-      </Box>
+      </Container>
     </Auth>
   );
 };

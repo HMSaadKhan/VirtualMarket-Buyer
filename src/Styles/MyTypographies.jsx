@@ -13,3 +13,19 @@ export const Labels = styled(Typography)({
   fontWeight: "bold",
   color: "#ba6a62",
 });
+export const OrderComponentHeading = styled(Typography)({
+  fontSize: 18,
+  fontWeight: "bold",
+  color: "#ba6a62",
+  align: "center",
+});
+
+export const CardHeadings = styled(Typography)({
+  fontSize: "25px",
+  fontWeight: "bold",
+  color: "#ba6a62",
+  align: "center",
+});
+export const CenteredText = styled(Typography)({
+  align: "center",
+});

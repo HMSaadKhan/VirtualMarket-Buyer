@@ -5,22 +5,28 @@ import productService from "../../Services/ProductServices";
 
 import ProductComponent from "../../Pages/Product/ProductComponent";
 import { NameBar } from "../../Styles/NameBar";
+import LoadingScreen from "../../Components/LoadingScreen";
 
 const ProductsBySearch = (props) => {
   console.log(props);
+
   const key = props.match.params.id;
-  console.log(props.match.params.id);
   const [products, setProducts] = useState([]);
+  const [loading, setloading] = useState(false);
 
   useEffect(() => {
+    setloading(true);
+
     productService.getBySearch(key).then((data) => {
       setProducts(data);
-      console.log(data);
+      setloading(false);
     });
   }, [key]);
 
   return (
     <div>
+      <LoadingScreen bool={loading} />
+
       <NameBar name={key} />
       {products.length > 0 ? (
         <>
@@ -32,7 +38,7 @@ const ProductsBySearch = (props) => {
         </>
       ) : (
         <>
-          <Typography>No Item</Typography>
+          <Typography></Typography>
         </>
       )}
     </div>

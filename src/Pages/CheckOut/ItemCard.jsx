@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { makeStyles } from "@mui/styles";
+import { HeadingText } from "../../Styles/MyTypographies";
 
 const useStyles = makeStyles({
   root: {
@@ -40,7 +41,7 @@ const ItemCard = ({ item }) => {
         <Typography sx={{ color: "#ba6a62" }}>
           PKR.{item.product.price}
         </Typography>
-
+        <HeadingText>Qty:</HeadingText>
         <Typography>{item.quantity}</Typography>
 
         <Typography sx={{ fontWeight: "bold", color: "#ba6a62" }}>
