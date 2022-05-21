@@ -3,7 +3,7 @@ import { TextField, Card, Box, CardContent } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import buyerService from "../../Services/BuyerService";
-import IsLoginTrue from "../../AuthWrapper/IsLoginTrue";
+import IsLoginTrue from "../../AuthWrapper/isLoginTrue";
 import { CardHeadings } from "../../Styles/MyTypographies";
 import { StyledButton } from "../../Styles/StyledButton";
 

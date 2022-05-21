@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import buyerService from "../../Services/BuyerService";
 import { CardHeadings } from "../../Styles/MyTypographies";
 import { StyledButton } from "../../Styles/StyledButton";
-import IsLoginTrue from "../../AuthWrapper/IsLoginTrue";
+import IsLoginTrue from "../../AuthWrapper/isLoginTrue";
 
 const ChangenewPassword = (props) => {
   const [otp, setOtp] = React.useState();

@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import LoginAuth from "../../AuthWrapper/IsLoginTrue";
+import LoginAuth from "../../AuthWrapper/isLoginTrue";
 import buyerService from "../../Services/BuyerService";
 import { FlexBox } from "../../Styles/StyledBox";
 import { StyledButton } from "../../Styles/StyledButton";

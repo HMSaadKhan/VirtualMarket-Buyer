@@ -58,9 +58,6 @@ function App() {
               <Route path="/SignUp" exact component={SignUp} />
               <Route path="/AccountSettings" component={BuyerAccount} />
               <Route path="/Orders" component={Orders} />
-              <Route path="/ProductDetail/:id/">
-                <ProductDetail stateChanged={getStateChanged} />
-              </Route>
               <Route path="/forgotpassword" component={ForgotPassword} />
               <Route path="/resetPassword/:id/" exact component={NewPassword} />
               <Route path="/changepassword/" exact component={ChangePassword} />
@@ -73,8 +70,11 @@ function App() {
 
               <Route path="/:id" exact component={ProductsByCategory} />
               <Route path="/search/:id" exact component={ProductsBySearch} />
-
+              <Route path="/ProductDetail/:id/">
+                <ProductDetail stateChanged={getStateChanged} />
+              </Route>
               <Route path="/" exact component={HomePage} />
+
               <Redirect to="/not-found" />
             </Switch>
 
