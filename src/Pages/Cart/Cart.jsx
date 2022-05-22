@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import Auth from "../../AuthWrapper/IsLoginFalse";
 import { StyledButton } from "../../Styles/StyledButton";
+import LoadingScreen from "../../Components/LoadingScreen";
 
 const Cart = (props) => {
   //const classes = useStyles();
@@ -18,9 +19,10 @@ const Cart = (props) => {
   const [subtotal, setsubtotal, subtotalRef] = useState();
   const [deliveryCharge, setdeliveryCharge] = useState();
   const [total, settotal] = useState();
-
-  const getCartItems = async () => {
-    await cartService
+  const [loading, setloading] = useState(false);
+  const getCartItems = () => {
+    setloading(true);
+    cartService
       .getCart()
       .then((data) => {
         console.log(data);
@@ -29,15 +31,18 @@ const Cart = (props) => {
             position: toast.POSITION.BOTTOM_LEFT,
           });
         }
+
+        setloading(false);
         setCartItem(data.items);
-        console.log("get cart items");
-        console.log(data);
+
         settotal(data.total);
         setdeliveryCharge(data.seller.deliveryCharge);
         setsubtotal(data.subTotal);
       })
       .catch((err) => {
         console.log(err.response);
+
+        setloading(false);
 
         if (err.response.data === "No Items in Cart") {
           setCartItem(null);
@@ -50,8 +55,9 @@ const Cart = (props) => {
   useEffect(getCartItems, []);
 
   const clearCart = () => {
+    setloading(true);
     cartService.clearCart().then((data) => {
-      console.log(data);
+      setloading(false);
       toast.success(data.data, {
         position: toast.POSITION.BOTTOM_LEFT,
       });
@@ -70,12 +76,15 @@ const Cart = (props) => {
   };
 
   const ProceedtoCheckOut = async () => {
+    setloading(true);
     await cartService
       .ProceedToCheckOut()
       .then((data) => {
+        setloading(false);
         history.push("/check-out");
       })
       .catch((err) => {
+        setloading(false);
         toast.error(err.response.data, {
           position: toast.POSITION.BOTTOM_LEFT,
         });
@@ -84,7 +93,7 @@ const Cart = (props) => {
 
   return (
     <Auth>
-      {console.log(cartItem)}
+      <LoadingScreen bool={loading} />
 
       <Box
         sx={{
