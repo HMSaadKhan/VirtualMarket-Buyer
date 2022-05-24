@@ -14,12 +14,35 @@ import buyerService from "../../Services/BuyerService";
 import { FlexBox } from "../../Styles/StyledBox";
 import { StyledButton } from "../../Styles/StyledButton";
 
-const Login = (props) => {
+const Signup = (props) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setCPassword] = React.useState("");
   const [fName, setfName] = React.useState("");
   const [lName, setlName] = React.useState("");
+
+  const SignupFunction = () => {
+    buyerService
+      .register({
+        fName,
+        lName,
+        email,
+        password,
+        confirmPassword,
+      })
+      .then((res) => {
+        toast.success("Signup Successfull", {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+        props.history.push("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+      });
+  };
 
   return (
     <LoginAuth>
@@ -126,27 +149,12 @@ const Login = (props) => {
                   <StyledButton
                     sx={{ width: "100%", margin: 0 }}
                     variant="contained"
-                    onClick={(e) => {
-                      buyerService
-                        .register({
-                          fName,
-                          lName,
-                          email,
-                          password,
-                          confirmPassword,
-                        })
-                        .then((res) => {
-                          toast.success("Signup Successfull", {
-                            position: toast.POSITION.BOTTOM_LEFT,
-                          });
-                          props.history.push("/login");
-                        })
-                        .catch((err) => {
-                          console.log(err);
-                          toast.error(err.response.data, {
-                            position: toast.POSITION.BOTTOM_LEFT,
-                          });
-                        });
+                    onClick={SignupFunction}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        SignupFunction();
+                        // write your functionality here
+                      }
                     }}
                   >
                     signup
@@ -166,4 +174,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default Signup;

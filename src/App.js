@@ -68,9 +68,16 @@ function App() {
 
               <Route path="/not-found" component={NotFound} />
 
-              <Route path="/:id" exact component={ProductsByCategory} />
+              <Route
+                path="/category/:id"
+                exact
+                component={ProductsByCategory}
+              />
               <Route path="/search/:id" exact component={ProductsBySearch} />
-              <Route path="/ProductDetail/:id/">
+              <Route
+                //path=
+                path={["/:anything/:name/:id/", "/:name/:id/"]}
+              >
                 <ProductDetail stateChanged={getStateChanged} />
               </Route>
               <Route path="/" exact component={HomePage} />

@@ -33,7 +33,7 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
     if (order.status === "SHIPPING") {
       setindex(3);
     }
-    if (order.status === "DELIVERED") {
+    if (order.status === "DELIVERED" || order.status === "RETURNED") {
       setindex(4);
     }
   };
@@ -79,8 +79,10 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
                 </SpaceBetween>
                 <SpaceBetween sx={{ alignItems: "start" }}>
                   <OrderComponentHeading>Address</OrderComponentHeading>
-                  <Box sx={{ width: "60%" }}>
-                    <Typography>{order.deliveryAddress}</Typography>
+                  <Box sx={{ width: "50%" }}>
+                    <Typography align="right" className={classes.text}>
+                      {order.deliveryAddress}
+                    </Typography>
                   </Box>
                 </SpaceBetween>
                 <SpaceBetween>
@@ -119,7 +121,7 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
             <Stepper activeStep={index} alternativeLabel>
               {order.events.map((label) => (
                 <Step key={label}>
-                  <StepLabel>
+                  <StepLabel >
                     {label.name}
                     <br />
                     {moment(new Date(label.date)).format("MMMM Do YYYY")}

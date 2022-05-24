@@ -17,22 +17,26 @@ import {
 import { CardHeadings, HeadingText } from "../../Styles/MyTypographies";
 import { StyledButton } from "../../Styles/StyledButton";
 import { MarginBox } from "../../Styles/StyledBox";
+import LoadingScreen from "../../Components/LoadingScreen";
 const BuyerAccount = (props) => {
   const [fName, setfName] = useState("");
   const [lName, setlName] = useState("");
   const [email, setEmail] = useState("");
-  const [city, setCity] = useState();
+  const [city, setCity] = useState("");
   const [phone, setphone] = useState("");
   const [address, setAddress] = useState("");
-  const [verified, setVerified] = useState();
+  const [verified, setVerified] = useState(true);
   const [otp, setOtp] = useState("");
   const [check, setCheck] = useState(false);
   const [cities, setcities] = useState([]);
+  const [loading, setloading] = useState(false);
+
   const getData = () => {
+    setloading(true);
     buyerService
       .getUserDetails()
       .then((data) => {
-        console.log(data);
+        setloading(false);
         setfName(data.fName);
         setlName(data.lName);
         setCity(data.city ? data.city._id : "");
@@ -42,6 +46,7 @@ const BuyerAccount = (props) => {
         setVerified(data.emailVerified);
       })
       .catch((err) => {
+        setloading(false);
         console.log(err);
       });
   };
@@ -50,7 +55,6 @@ const BuyerAccount = (props) => {
 
   const getCities = () => {
     cityService.GetCities().then((data) => {
-      console.log(data);
       setcities(data);
     });
   };
@@ -60,6 +64,7 @@ const BuyerAccount = (props) => {
   };
   return (
     <Auth>
+      <LoadingScreen bool={loading} />
       <Box
         sx={{
           display: "flex",
@@ -71,7 +76,7 @@ const BuyerAccount = (props) => {
         <Box m={1}>
           <Card sx={{ maxWidth: 500 }}>
             <CardContent>
-              <CardHeadings align="center">Account Details</CardHeadings>
+              <CardHeadings align="center">User Profile</CardHeadings>
               {!verified ? (
                 <div>
                   <MarginBox>
@@ -124,7 +129,7 @@ const BuyerAccount = (props) => {
                               position: toast.POSITION.BOTTOM_LEFT,
                             });
                             setCheck(false);
-                            //window.location.reload();
+                            getData();
                           })
                           .catch((err) => {
                             toast.error(err.response.data, {
@@ -168,7 +173,6 @@ const BuyerAccount = (props) => {
                 </MarginBox>
               </MarginBox>
               <MarginBox sx={{ display: "flex " }}>
-                {console.log(email)}
                 <MarginBox>
                   <TextField
                     variant="standard"

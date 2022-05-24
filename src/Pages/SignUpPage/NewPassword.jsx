@@ -6,14 +6,17 @@ import buyerService from "../../Services/BuyerService";
 import { CardHeadings } from "../../Styles/MyTypographies";
 import { StyledButton } from "../../Styles/StyledButton";
 import IsLoginTrue from "../../AuthWrapper/isLoginTrue";
+import LoadingScreen from "../../Components/LoadingScreen";
 
 const ChangenewPassword = (props) => {
   const [otp, setOtp] = React.useState();
   const [password, setPassword] = React.useState("");
+  const [loading, setloading] = React.useState(false);
   const history = useHistory();
   const _id = props.match.params.id;
   return (
     <IsLoginTrue>
+      <LoadingScreen bool={loading} />
       <Box>
         <Box
           // sx={{ paddingLeft: "40%", paddingTop: "5%", paddingBottom: "5%" }}
@@ -24,7 +27,7 @@ const ChangenewPassword = (props) => {
             paddingBottom: "5%",
           }}
         >
-          <Card sx={{ width: "20%", padding: "20px" }}>
+          <Card sx={{ minWidth: 300, maxWidth: 300, padding: "20px" }}>
             <CardContent>
               <CardHeadings align="center">NEW PASSWORD</CardHeadings>
               <Box>
@@ -56,15 +59,18 @@ const ChangenewPassword = (props) => {
                   <StyledButton
                     sx={{ margin: "0px", width: "100%" }}
                     onClick={async (e) => {
+                      setloading(true);
                       await buyerService
                         .resetPassword(_id, { otp, password }) //if gives error then check otp datatype
                         .then((data) => {
+                          setloading(false);
                           toast.success(data.data, {
                             position: toast.POSITION.BOTTOM_LEFT,
                           });
                           history.push("/Login");
                         })
                         .catch((err) => {
+                          setloading(false);
                           toast.error(err.response.data, {
                             position: toast.POSITION.BOTTOM_LEFT,
                           });

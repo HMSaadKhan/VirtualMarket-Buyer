@@ -1,15 +1,11 @@
 import styled from "styled-components";
+import { MidPager } from "../../Styles/MidPager";
 
 const Container = styled.div``;
-const Text = styled.div`
-  font-size: 30px;
-  text-align: center;
-`;
-
 const NotFound = () => {
   return (
     <Container>
-      <Text>Page Not Found</Text>
+      <MidPager name={"Page Not Found"} />
     </Container>
   );
 };

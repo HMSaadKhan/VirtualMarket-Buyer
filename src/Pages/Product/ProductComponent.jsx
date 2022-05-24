@@ -31,7 +31,7 @@ const ProductComponent = (props) => {
       className={classes.root}
       sx={{ minWidth: 200 }}
       onClick={() => {
-        history.push("productDetail/" + product._id);
+        history.push(product.name + "/" + product._id);
       }}
     >
       <CardActionArea>
@@ -53,7 +53,7 @@ const ProductComponent = (props) => {
             </Box>
 
             <Typography sx={{ fontSize: "14px" }}>
-              MoQ:{product.minOrder}
+              Min. Order Quantity: {product.minOrder}
             </Typography>
           </Box>
         </CardContent>

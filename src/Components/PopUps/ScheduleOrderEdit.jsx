@@ -22,6 +22,7 @@ const useStyles = makeStyles({
 });
 
 export default function ScheduleOrderEdit(props) {
+  console.log(props);
   const { bool, setbool, _id, schedule } = props;
 
   const classes = useStyles();
@@ -104,7 +105,11 @@ export default function ScheduleOrderEdit(props) {
             {schedule ? (
               <Box>
                 <HeadingText>Quanity</HeadingText>
-                <Counter quantity={quantity} value={setquantity} />
+                <Counter
+                  quantity={quantity}
+                  value={setquantity}
+                  minValue={schedule.Product.minOrder}
+                />
                 <HeadingText>Date & time</HeadingText>
                 <DateTimePicker
                   format="dd-MM-yyyy HH"
@@ -168,6 +173,7 @@ export default function ScheduleOrderEdit(props) {
                           <Counter
                             quantity={customRepetition}
                             value={setcustomRepetition}
+                            minValue={1}
                           />
                         ) : (
                           <></>

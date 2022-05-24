@@ -74,7 +74,7 @@ const AccountIcon = (props) => {
       ) : (
         <div>
           <MenuItem value="/AccountSettings" onClick={handleChange}>
-            Account
+            Profile
           </MenuItem>
           <MenuItem value="/orders" onClick={handleChange}>
             Orders

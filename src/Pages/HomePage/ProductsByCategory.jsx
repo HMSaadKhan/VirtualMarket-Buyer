@@ -5,6 +5,7 @@ import ProductComponent from "../../Pages/Product/ProductComponent";
 import { NameBar } from "../../Styles/NameBar";
 import { CategoriesContext } from "../../Contexts/Categories/CategoriesState";
 import LoadingScreen from "../../Components/LoadingScreen";
+import { MidPager } from "../../Styles/MidPager";
 
 const ProductsByCategory = (props) => {
   const id = props.match.params.id;
@@ -43,9 +44,9 @@ const ProductsByCategory = (props) => {
           </Grid>
         </>
       ) : (
-        <Box>
-          <Typography></Typography>
-        </Box>
+        <>
+          <MidPager name={"No Product Found"} />
+        </>
       )}
     </div>
   );

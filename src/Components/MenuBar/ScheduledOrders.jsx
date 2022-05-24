@@ -92,10 +92,9 @@ const ScheduledOrder = () => {
             {scheduleOrders.map((items) => {
               return (
                 <>
-                  {console.log(items)}
                   {items ? (
-                    <>
-                      <Box key={items._id}>
+                    <Box key={items._id}>
+                      <Box>
                         <Box
                           m={2}
                           sx={{
@@ -222,7 +221,7 @@ const ScheduledOrder = () => {
                         </Box>
                         <Divider />
                       </Box>
-                    </>
+                    </Box>
                   ) : (
                     <></>
                   )}

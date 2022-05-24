@@ -6,6 +6,8 @@ import productService from "../../Services/ProductServices";
 import ProductComponent from "../../Pages/Product/ProductComponent";
 import { NameBar } from "../../Styles/NameBar";
 import LoadingScreen from "../../Components/LoadingScreen";
+import { Containers } from "../../Styles/StyledBox";
+import { MidPager } from "../../Styles/MidPager";
 
 const ProductsBySearch = (props) => {
   console.log(props);
@@ -38,7 +40,7 @@ const ProductsBySearch = (props) => {
         </>
       ) : (
         <>
-          <Typography></Typography>
+          <MidPager name={"No Item Founds"} />
         </>
       )}
     </div>

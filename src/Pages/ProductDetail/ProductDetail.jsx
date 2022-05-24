@@ -8,6 +8,7 @@ import {
   CardContent,
   IconButton,
   TextField,
+  Button,
   Divider,
   Tooltip,
 } from "@mui/material";
@@ -21,16 +22,17 @@ import productService from "../../Services/ProductServices";
 import cartService from "../../Services/CartServices";
 import { toast } from "react-toastify";
 import useState from "react-usestateref";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import CommentsDisplay from "../../Components/PopUps/CommentsDisplay";
 import reviewService from "../../Services/ReviewService";
 import favoriteService from "../../Services/FavoritesService";
 import SellerMismatch from "../../Components/PopUps/SellerMismatch";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import ScheduleOrder from "../../Components/PopUps/ScheduleOrder";
-import { StyledButton } from "../../Styles/StyledButton";
+
 import { NameBar } from "../../Styles/NameBar";
 import LoadingScreen from "../../Components/LoadingScreen";
+import buyerService from "../../Services/BuyerService";
 
 const useStyles = makeStyles({
   name: {
@@ -66,6 +68,7 @@ const useStyles = makeStyles({
 });
 
 export default function ProductDetail(props) {
+  const history = useHistory();
   const classes = useStyles();
   const product = useParams();
   const [productDetails, SetProductDetails] = useState("");
@@ -84,7 +87,6 @@ export default function ProductDetail(props) {
   const [disable, setDisable] = useState(true);
   const [AocBool, setAoCBool] = useState(false);
   const [loading, setloading] = useState(false);
-  const [value, onChange] = useState(new Date());
 
   const StyledBox = styled(Box)({
     display: "flex",
@@ -92,13 +94,13 @@ export default function ProductDetail(props) {
   });
 
   const favoriteHandleChange = (event) => {
-    setFavoriteChecked(event.target.checked);
     if (event.target.checked === true) {
       setloading(true);
       favoriteService
         .AddtoFavorite({ product: product.id })
         .then((data) => {
           setloading(false);
+          setFavoriteChecked(true);
         })
         .catch((error) => {
           setloading(false);
@@ -113,6 +115,7 @@ export default function ProductDetail(props) {
         .DeletefromFavorite(product.id)
         .then((data) => {
           setloading(false);
+          setFavoriteChecked(false);
         })
         .catch((error) => {
           setloading(false);
@@ -226,6 +229,7 @@ export default function ProductDetail(props) {
             setbool={setschedulebool}
             minOrder={productDetails.minOrder}
           />
+
           <StyledBox>
             <Box m={4}>
               <Card sx={{ maxWidth: 400 }}>
@@ -288,7 +292,13 @@ export default function ProductDetail(props) {
                         </Typography>
                       </Box>
                     </Box>
-                    <Box>
+                    <Box
+                      sx={{
+                        display: "flex ",
+                        alignItems: "center",
+                        flexDirection: "column",
+                      }}
+                    >
                       <Box>
                         <Typography className={classes.name}>
                           <Checkbox
@@ -299,15 +309,18 @@ export default function ProductDetail(props) {
                           />
                         </Typography>
                       </Box>
-                      <Box ml={1.5}>
-                        {console.log(value)}
+                      <Box>
                         <Tooltip title="schdule Order">
                           <ScheduleIcon
                             sx={{
                               color: "#ba6a62",
                             }}
                             onClick={(e) => {
-                              setschedulebool(true);
+                              if (buyerService.isLoggedIn()) {
+                                setschedulebool(true);
+                              } else {
+                                history.push("/login");
+                              }
                             }}
                           />
                         </Tooltip>
@@ -343,37 +356,41 @@ export default function ProductDetail(props) {
                   </Box>
                   <Box sx={{ display: "flex" }}>
                     <Box m={1}>
-                      <StyledButton
+                      <Button
+                        variant="contained"
                         onClick={(e) => {
                           settype("DEFAULT");
                           addToCart("DEFAULT");
                         }}
                       >
                         Add to cart
-                      </StyledButton>
+                      </Button>
                     </Box>
 
                     {productDetails.sampleOrder ? (
                       <Box m={1}>
-                        <StyledButton
+                        <Button
+                          variant="contained"
                           onClick={(e) => {
                             settype("SAMPLE");
                             addToCart("SAMPLE");
                           }}
                         >
                           Sample Order
-                        </StyledButton>
+                        </Button>
                       </Box>
                     ) : (
                       <></>
                     )}
                     <Box m={1}>
-                      <StyledButton disabled={disable}>Bargain</StyledButton>
+                      <Button variant="contained" disabled={disable}>
+                        Bargain
+                      </Button>
                     </Box>
                     <Box m={1}>
-                      <StyledButton disabled={disable}>
+                      <Button variant="contained" disabled={disable}>
                         Custom Order
-                      </StyledButton>
+                      </Button>
                     </Box>
                   </Box>
                   <Box className={classes.description}>

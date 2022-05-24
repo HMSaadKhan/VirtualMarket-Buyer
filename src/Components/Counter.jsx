@@ -4,7 +4,8 @@ import { Box, IconButton, TextField } from "@mui/material";
 import useState from "react-usestateref";
 
 export default function Counter(props) {
-  const { quantity, value } = props;
+  const { quantity, value, minValue } = props;
+  console.log(props);
   const [qty, SetQty] = useState(quantity);
 
   const plusButton = () => {
@@ -12,8 +13,10 @@ export default function Counter(props) {
     value(qty + 1);
   };
   const minusButton = () => {
-    value(qty - 1);
-    SetQty(qty - 1);
+    if (qty > minValue) {
+      value(qty - 1);
+      SetQty(qty - 1);
+    }
   };
 
   return (

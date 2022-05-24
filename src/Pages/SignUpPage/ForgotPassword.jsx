@@ -6,15 +6,17 @@ import buyerService from "../../Services/BuyerService";
 import IsLoginTrue from "../../AuthWrapper/isLoginTrue";
 import { CardHeadings } from "../../Styles/MyTypographies";
 import { StyledButton } from "../../Styles/StyledButton";
+import LoadingScreen from "../../Components/LoadingScreen";
 
 const ForgotPassword = (props) => {
   const [email, setEmail] = React.useState("");
+  const [loading, setloading] = React.useState(false);
   const history = useHistory();
   return (
     <IsLoginTrue>
+      <LoadingScreen bool={loading} />
       <Box>
         <Box
-          // sx={{ paddingLeft: "40%", paddingTop: "5%", paddingBottom: "5%" }}
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -22,7 +24,7 @@ const ForgotPassword = (props) => {
             paddingBottom: "5%",
           }}
         >
-          <Card sx={{ width: "20%", padding: "20px" }}>
+          <Card sx={{ minWidth: 300, maxWidth: 300, padding: "20px" }}>
             <CardContent>
               <CardHeadings>FORGOT PASSWORD</CardHeadings>
               <Box sx={{}}>
@@ -42,16 +44,19 @@ const ForgotPassword = (props) => {
                   <StyledButton
                     sx={{ margin: "0px", width: "100%" }}
                     onClick={async (e) => {
+                      setloading(true);
                       await buyerService
                         .forgotPassword(email)
                         .then((data) => {
-                          toast.success(data.data, {
+                          setloading(false);
+                          toast.success(data.message, {
                             position: toast.POSITION.BOTTOM_LEFT,
                           });
 
                           history.push("resetPassword/" + data._id);
                         })
                         .catch((err) => {
+                          setloading(false);
                           toast.error(err.response.data, {
                             position: toast.POSITION.BOTTOM_LEFT,
                           });

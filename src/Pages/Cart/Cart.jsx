@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import Auth from "../../AuthWrapper/IsLoginFalse";
 import { StyledButton } from "../../Styles/StyledButton";
 import LoadingScreen from "../../Components/LoadingScreen";
+import { MidPager } from "../../Styles/MidPager";
 
 const Cart = (props) => {
   //const classes = useStyles();
@@ -117,7 +118,9 @@ const Cart = (props) => {
               ))}
             </Box>
           ) : (
-            <Box></Box>
+            <Box>
+              <MidPager name={"No items in Cart"} />
+            </Box>
           )}
         </Box>
         <Box m={2} sx={{ width: "25%" }}>

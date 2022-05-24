@@ -6,7 +6,7 @@ const BG = styled(Box)({
   color: "white",
 });
 const InnerText = styled(Typography)({
-  marginLeft: "20%",
+  marginLeft: "10%",
   marginTop: "10px",
   marginBottom: "10px",
   fontSize: "30px",

@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
 import CheckOutSideBar from "./CheckOutSideBar";
 import ItemCard from "./ItemCard";
 import CardDetails from "./CardDetails";
 import cartService from "../../Services/CartServices";
-//import CartItems from "../Cart/CartItems";
 import { useHistory } from "react-router-dom";
 import cityService from "../../Services/CityService";
 import Auth from "../../AuthWrapper/IsLoginFalse";
@@ -18,6 +16,7 @@ import { HeadingText } from "../../Styles/MyTypographies";
 import { StyledButton } from "../../Styles/StyledButton";
 import { toast } from "react-toastify";
 import LoadingScreen from "../../Components/LoadingScreen";
+import { MidPager } from "../../Styles/MidPager";
 
 const useStyles = makeStyles({
   textField: {
@@ -192,11 +191,7 @@ export default function CheckOut(props) {
         </>
       ) : (
         <>
-          <Typography
-            sx={{ fontSize: 18, fontWeight: "bold", color: "#ba6a62" }}
-          >
-            Add products to cart
-          </Typography>
+          <MidPager name={"Add products to cart"} />
         </>
       )}
     </Auth>

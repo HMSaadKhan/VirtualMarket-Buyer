@@ -48,7 +48,7 @@ export default function Categories() {
             <WhiteButton
               key={index}
               onClick={(e) => {
-                history.push("/" + item._id);
+                history.push("/category/" + item._id);
               }}
             >
               {item.name}

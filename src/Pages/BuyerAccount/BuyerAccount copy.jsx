@@ -82,7 +82,7 @@ const BuyerAccount = (props) => {
             <CardContent>
               <Wrapper>
                 <HeadingText sx={{ fontSize: "25px" }}>
-                  Account Details
+                  User Profile
                 </HeadingText>
               </Wrapper>
               {!verified ? (

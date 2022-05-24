@@ -18,7 +18,8 @@ import { StyledButton } from "../../Styles/StyledButton";
 
 const useStyles = makeStyles({
   root: {
-    width: 400,
+    width: 550,
+    height: 250,
   },
 });
 
@@ -89,13 +90,19 @@ export default function ScheduleOrder(props) {
           <div className={classes.root}>
             <Box>
               <HeadingText>Quantity</HeadingText>
-              <Counter quantity={quantity} value={setquantity} />
-              <HeadingText>Date & Time</HeadingText>
-              <DateTimePicker
-                format="dd-MM-yyyy HH:00 "
-                onChange={setdatentime}
-                value={datentime}
+              <Counter
+                quantity={quantity}
+                value={setquantity}
+                minValue={minOrder}
               />
+              <Box sx={{ width: "100%", height: "100%" }}>
+                <HeadingText>Date & Time</HeadingText>
+                <DateTimePicker
+                  format="dd-MM-yyyy HH:00 "
+                  onChange={setdatentime}
+                  value={datentime}
+                />
+              </Box>
               <Box>
                 <FormControlLabel
                   control={
@@ -147,12 +154,13 @@ export default function ScheduleOrder(props) {
                             name="radio-buttons"
                           />
                         }
-                        label={<Labels>Custom</Labels>}
+                        label={<Labels>Custom Days</Labels>}
                       />
                       {radio === "CUSTOM" ? (
                         <Counter
                           quantity={customRepetition}
                           value={setcustomRepetition}
+                          minValue={0}
                         />
                       ) : (
                         <></>
