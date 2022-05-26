@@ -18,6 +18,7 @@ import { StyledButton } from "../../Styles/StyledButton";
 const useStyles = makeStyles({
   root: {
     width: 400,
+    height: 350,
   },
 });
 
@@ -189,7 +190,14 @@ export default function ScheduleOrderEdit(props) {
               <></>
             )}
 
-            <Box sx={{ display: "flex", justifyContent: "right" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "right",
+                paddingTop: "100px",
+                alignItems: "end",
+              }}
+            >
               <StyledButton onClick={scheduleOrder}>schedule</StyledButton>
               <StyledButton
                 onClick={(e) => {

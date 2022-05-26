@@ -12,8 +12,11 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { MenuItem } from "@mui/material";
 import { HeadingText } from "../../Styles/MyTypographies";
+import LoadingScreen from "../../Components/LoadingScreen";
+import { FlexBox } from "../../Styles/StyledBox";
 
 export default function CheckOutSideBar(props) {
+  const [loading, setloading] = React.useState(false);
   const {
     cartValues,
     deliveryCharge,
@@ -32,30 +35,27 @@ export default function CheckOutSideBar(props) {
 
   return (
     <Box>
+      <LoadingScreen bool={loading} />
       {cartValues ? (
         <Box m={5} sx={{ width: 250 }}>
           <Card sx={{ backgroundColor: "white", maxWidth: 300 }}>
             <CardContent>
               <HeadingText>Cart Total</HeadingText>
-              <Typography m={1} sx={{ display: "flex " }}>
-                Subtotal
-                <Box ml={8}>
-                  <Typography>PKR.{cartValues.subTotal}</Typography>
-                </Box>
-              </Typography>
-              <Typography m={1} sx={{ display: "flex " }}>
-                Shipping{" "}
-                <Box ml={8}>
-                  <Typography>PKR.{delivery_charge}</Typography>
-                </Box>
-              </Typography>
+              <FlexBox sx={{ justifyContent: "space-between" }}>
+                <Typography>Subtotal</Typography>
+                <Typography>PKR.{cartValues.subTotal}</Typography>
+              </FlexBox>
+              <FlexBox sx={{ justifyContent: "space-between" }}>
+                <Typography>Shipping</Typography>
+                <Typography>PKR.{deliveryCharge}</Typography>
+              </FlexBox>
               <Divider />
-              <Typography m={1} sx={{ display: "flex " }}>
-                total{" "}
-                <Box ml={12}>
-                  <Typography>PKR.{cartValues.total}</Typography>
-                </Box>
-              </Typography>
+              <FlexBox sx={{ justifyContent: "space-between" }}>
+                <Typography>Total</Typography>
+                <Typography>PKR.{cartValues.total}</Typography>
+              </FlexBox>
+
+              
               <Divider />
               <HeadingText>Shipping Details</HeadingText>
               <Box
@@ -83,6 +83,7 @@ export default function CheckOutSideBar(props) {
                 />
                 <TextField
                   value={address}
+                  multiline
                   label="Address"
                   size="small"
                   InputLabelProps={{ shrink: address ? true : false }}

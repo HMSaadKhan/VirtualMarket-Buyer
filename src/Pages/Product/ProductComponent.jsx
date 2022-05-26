@@ -14,10 +14,10 @@ import Box from "@mui/material/Box";
 const useStyles = makeStyles({
   root: { width: "200px", margin: 20 },
   media: {
-    width: "180px",
+    width: "100px",
     height: "200px",
-    //objectFit: "cover",
-    backgroundSize: "contain",
+    objectFit: "contain",
+    //backgroundSize: "contain",
   },
 });
 
@@ -35,12 +35,22 @@ const ProductComponent = (props) => {
       }}
     >
       <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          component="img"
-          image={product.images[0].link}
-          title={product.name}
-        />
+        <Box
+          sx={{
+            display: "flex ",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Box>
+            <CardMedia
+              className={classes.media}
+              component="img"
+              image={product.images[0].link}
+              title={product.name}
+            />
+          </Box>
+        </Box>
         <CardContent>
           <Box>
             <Box>

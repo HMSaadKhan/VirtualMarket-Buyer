@@ -29,7 +29,7 @@ const ProductsBySearch = (props) => {
     <div>
       <LoadingScreen bool={loading} />
 
-      <NameBar name={key} />
+      <NameBar name={"Results for " + key} />
       {products.length > 0 ? (
         <>
           <Grid container justifyContent="center" spacing={2}>
@@ -40,7 +40,7 @@ const ProductsBySearch = (props) => {
         </>
       ) : (
         <>
-          <MidPager name={"No Item Founds"} />
+          <MidPager name={"No Items Found"} />
         </>
       )}
     </div>

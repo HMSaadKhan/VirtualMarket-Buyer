@@ -4,6 +4,7 @@ import favoriteService from "../../Services/FavoritesService";
 import ProductComponent from "../../Pages/Product/ProductComponent";
 import Auth from "../../AuthWrapper/IsLoginFalse";
 import { NameBar } from "../../Styles/NameBar";
+import { MidPager } from "../../Styles/MidPager";
 import LoadingScreen from "../../Components/LoadingScreen";
 
 const ProductsByCategory = (props) => {
@@ -42,7 +43,7 @@ const ProductsByCategory = (props) => {
             </Grid>
           </>
         ) : (
-          <>{message ? <Typography>{message}</Typography> : <></>}</>
+          <>{message ? <MidPager name={message} /> : <></>}</>
         )}
       </Box>
     </Auth>

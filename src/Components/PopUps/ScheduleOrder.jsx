@@ -15,11 +15,12 @@ import scheduleService from "../../Services/ScheduleService";
 import { NameBar } from "../../Styles/NameBar";
 import { HeadingText, Labels } from "../../Styles/MyTypographies";
 import { StyledButton } from "../../Styles/StyledButton";
-
+import { CalendarTodayOutlined, Delete } from "@mui/icons-material";
+import CancelIcon from "@mui/icons-material/Cancel";
 const useStyles = makeStyles({
   root: {
-    width: 550,
-    height: 250,
+    width: 500,
+    height: 350,
   },
 });
 
@@ -95,9 +96,12 @@ export default function ScheduleOrder(props) {
                 value={setquantity}
                 minValue={minOrder}
               />
-              <Box sx={{ width: "100%", height: "100%" }}>
+              <Box sx={{}}>
                 <HeadingText>Date & Time</HeadingText>
                 <DateTimePicker
+                  calendarIcon={<CalendarTodayOutlined />}
+                  clearIcon={<CancelIcon />}
+                  minDate={new Date()}
                   format="dd-MM-yyyy HH:00 "
                   onChange={setdatentime}
                   value={datentime}
@@ -172,7 +176,14 @@ export default function ScheduleOrder(props) {
                 )}
               </Box>
             </Box>
-            <Box sx={{ display: "flex", justifyContent: "right" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "right",
+                paddingTop: "100px",
+                alignItems: "end",
+              }}
+            >
               <StyledButton onClick={scheduleOrder}>schedule</StyledButton>
               <StyledButton
                 onClick={(e) => {

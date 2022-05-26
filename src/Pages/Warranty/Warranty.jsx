@@ -6,6 +6,7 @@ import { makeStyles } from "@mui/styles";
 import Auth from "../../AuthWrapper/IsLoginFalse";
 import warrantyService from "../../Services/WarrantyService";
 import { NameBar } from "../../Styles/NameBar";
+import LoadingScreen from "../../Components/LoadingScreen";
 
 const useStyles = makeStyles({
   root: {
@@ -15,10 +16,13 @@ const useStyles = makeStyles({
   },
 });
 const Warranty = (props) => {
+  const [loading, setloading] = useState(false);
   const [warranties, setwarranties] = useState();
   const getWarranties = () => {
+    setloading(true);
     warrantyService.getWarranty().then((warranty) => {
       console.log(warranty.data);
+      setloading(false);
       setwarranties(warranty.data);
     });
   };
@@ -26,6 +30,7 @@ const Warranty = (props) => {
   const classes = useStyles();
   return (
     <Auth>
+      <LoadingScreen bool={loading} />
       <NameBar name={"Warranty"} />
 
       <Box sx={{ display: "flex ", justifyContent: "center" }}>

@@ -47,12 +47,12 @@ const useStyles = makeStyles({
     width: "60px",
     height: "60px",
     marginRight: "10px",
-    objectFit: "cover",
+    objectFit: "contain",
     //backgroundSize: "cover",
   },
   image: {
-    //objectFit: "cover",
-    backgroundSize: "cover",
+    objectFit: "contain",
+    //backgroundSize: "contain",
   },
 
   headingText: { fontSize: "15px", fontWeight: "bold", color: "#ba6a62" },
@@ -232,18 +232,30 @@ export default function ProductDetail(props) {
 
           <StyledBox>
             <Box m={4}>
-              <Card sx={{ maxWidth: 400 }}>
-                <CardContent>
-                  <Box ml={2}>
+              <Card sx={{ minWidth: 400, maxWidth: 400 }}>
+                <Box
+                  sx={{
+                    display: "flex ",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      cursor: "poinnter",
+                      width: "400px",
+                      height: "300px",
+                    }}
+                  >
                     <img
                       className={classes.image}
-                      width="350"
-                      height="300"
+                      width="100%"
+                      height="100%"
                       src={productDetails.images[imageIndex].link}
                       alt="main Image"
                     />
                   </Box>
-                </CardContent>
+                </Box>
               </Card>
               <Box m={1}>
                 <Card sx={{ maxWidth: 400 }}>
@@ -310,7 +322,7 @@ export default function ProductDetail(props) {
                         </Typography>
                       </Box>
                       <Box>
-                        <Tooltip title="schdule Order">
+                        <Tooltip title="schedule Item">
                           <ScheduleIcon
                             sx={{
                               color: "#ba6a62",
@@ -387,11 +399,11 @@ export default function ProductDetail(props) {
                         Bargain
                       </Button>
                     </Box>
-                    <Box m={1}>
+                    {/* <Box m={1}>
                       <Button variant="contained" disabled={disable}>
                         Custom Order
                       </Button>
-                    </Box>
+                    </Box> */}
                   </Box>
                   <Box className={classes.description}>
                     <Typography mt={2} mb={2}>
