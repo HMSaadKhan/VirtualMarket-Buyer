@@ -17,7 +17,7 @@ import { StyledButton } from "../../Styles/StyledButton";
 import { toast } from "react-toastify";
 import LoadingScreen from "../../Components/LoadingScreen";
 import { MidPager } from "../../Styles/MidPager";
-import { useParams } from "react-router-dom";
+
 const useStyles = makeStyles({
   textField: {
     display: "flex",
@@ -34,9 +34,6 @@ const useStyles = makeStyles({
 export default function CheckOut(props) {
   const { stateChanged } = props;
   const history = useHistory();
-
-  const cartId = useParams();
-  console.log(cartId);
 
   const classes = useStyles();
 
@@ -68,18 +65,17 @@ export default function CheckOut(props) {
 
   const getCartItems = () => {
     cartService
-      .getCheckoutCart(cartId.id)
+      .getCart()
       .then((data) => {
-        console.log(data);
         setCartItem(data.items);
         setCartValues(data);
         setdeliveryCharge(data.seller.deliveryCharge);
       })
       .catch((err) => {
-        // setCartItem(null);
-        // setCartValues(null);
-        // setdeliveryCharge(null);
-        // console.log(err.response.data);
+        setCartItem(null);
+        setCartValues(null);
+        setdeliveryCharge(null);
+        console.log(err.response.data);
       });
   };
 

@@ -1,13 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable jsx-a11y/alt-text */
 import { Add, Remove, Delete } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  IconButton,
-  TextField,
-  Typography,
-  Box,
-} from "@mui/material";
+import { Divider, IconButton, TextField, Typography, Box } from "@mui/material";
 import cartService from "../../Services/CartServices";
 import { makeStyles } from "@mui/styles";
 import LoadingScreen from "../../Components/LoadingScreen";
@@ -18,8 +13,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
-    padding: "30px",
-    margin: "auto",
   },
   image: {
     width: "100px",
@@ -29,11 +22,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CartItems = (props) => {
-  console.log(props.item);
   const classes = useStyles();
-  const { getCartItems, getProductId, item } = props;
-  const qty = item.quantity;
-  const _id = props.item._id;
+  const { getCartItems, getProductId, item, cartId } = props;
+  console.log("Cart item" + cartId);
+  const [qty, setqty] = useState(item.quantity);
+  const qtyupdate = () => {
+    setqty(item.quantity);
+  };
+  useEffect(qtyupdate, [item.quantity]);
+
+  const id = props.item._id;
   const [loading, setloading] = useState(false);
 
   const [check, setcheck] = useState(false);
@@ -46,12 +44,12 @@ const CartItems = (props) => {
   };
   useEffect(checkDisable, []);
   const plusButton = async () => {
+    console.log("cart item inside function" + cartId);
     setloading(true);
 
     await cartService
-      .incQty(_id)
+      .incQty(cartId, { id })
       .then((e) => {
-        console.log(e);
         getCartItems();
         setloading(false);
       })
@@ -64,8 +62,9 @@ const CartItems = (props) => {
   };
   const minusButton = async () => {
     setloading(true);
+    console.log("cart item inside function" + cartId);
     await cartService
-      .decQty(_id)
+      .decQty(cartId, { id })
       .then((e) => {
         getCartItems();
         setloading(false);
@@ -80,75 +79,108 @@ const CartItems = (props) => {
   const deleteButton = async () => {
     setloading(true);
     await cartService
-      .deleteItem(_id)
+      .deleteItem(cartId, { id })
       .then((e) => {
-        getProductId(_id);
+        getProductId(id);
         getCartItems();
         setloading(false);
       })
       .catch((err) => {
         setloading(false);
+        getCartItems();
         toast.error(err.response.data, {
           position: toast.POSITION.BOTTOM_LEFT,
         });
       });
   };
+  const QuantityInput = async (quantity) => {
+    setloading(true);
+    await cartService
+      .setQuantity(cartId, { id, quantity })
+      .then((e) => {
+        getCartItems();
+
+        setloading(false);
+      })
+      .catch((err) => {
+        // getCartItems();
+
+        if (err.response.data.qty) {
+          setqty(err.response.data.qty);
+        }
+        setloading(false);
+        console.log(err.response);
+        toast.error(err.response.data.message, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+      });
+  };
+
   return (
     <div>
       <LoadingScreen bool={loading} />
-      <Card sx={{ width: 800, margin: "10px" }}>
-        <Box className={classes.root}>
-          <Box sx={{ width: "20%" }}>
-            <img className={classes.image} src={item.product.images[0].link} />
-          </Box>
-          <Box sx={{ width: "25%" }}>
-            <Typography>{item.product.name}</Typography>
-            {item.type == "DEFAULT" ? (
-              <></>
-            ) : (
-              <Typography sx={{ mt: 1.5 }} color="text.secondary">
-                {item.type}
-              </Typography>
-            )}
-          </Box>
-          <Box sx={{ width: "20%" }}>
-            <Typography sx={{ color: "#ba6a62" }}>
-              PKR.{item.product.price}
+
+      <Box className={classes.root}>
+        <Box sx={{ width: "20%" }}>
+          <img className={classes.image} src={item.product.images[0].link} />
+        </Box>
+        <Box sx={{ width: "25%" }}>
+          <Typography>{item.product.name}</Typography>
+          {item.type === "DEFAULT" ? (
+            <></>
+          ) : (
+            <Typography sx={{ mt: 1.5 }} color="text.secondary">
+              {item.type}
             </Typography>
-          </Box>
-          <Box sx={{ width: "30%" }}>
-            <Box
-              sx={{
-                display: "flex ",
-                alignItems: "center",
-              }}
-            >
-              <IconButton disabled={check}>
-                <Remove onClick={minusButton} />
-              </IconButton>
-              <Box sx={{ width: "50%" }}>
-                <TextField size="small" value={qty} />
-              </Box>
-              <IconButton disabled={check}>
-                <Add onClick={plusButton} />
-              </IconButton>
+          )}
+        </Box>
+        <Box sx={{ width: "15%" }}>
+          <Typography sx={{ color: "#ba6a62" }}>
+            PKR.{item.product.price}
+          </Typography>
+        </Box>
+        <Box sx={{ width: "30%" }}>
+          <Box
+            sx={{
+              display: "flex ",
+              alignItems: "center",
+            }}
+          >
+            <IconButton onClick={minusButton} disabled={check}>
+              <Remove />
+            </IconButton>
+            <Box sx={{ width: "50%" }}>
+              <TextField
+                size="small"
+                value={qty}
+                onChange={(e) => {
+                  setqty(e.target.value);
+                  if (e.filled) {
+                    setTimeout(QuantityInput(e.target.value), 500000);
+                  }
+                }}
+              />
             </Box>
-          </Box>
-          <Box sx={{ width: "20%" }}>
-            <Typography
-              sx={{
-                fontWeight: "bold",
-                color: "#ba6a62",
-              }}
-            >
-              PKR.{item.totalPrice}
-            </Typography>
-          </Box>
-          <Box>
-            <Delete onClick={deleteButton} />
+            <IconButton onClick={plusButton} disabled={check}>
+              <Add />
+            </IconButton>
           </Box>
         </Box>
-      </Card>
+        <Box sx={{ width: "20%" }}>
+          <Typography
+            sx={{
+              fontWeight: "bold",
+              color: "#ba6a62",
+            }}
+          >
+            PKR.{item.totalPrice}
+          </Typography>
+        </Box>
+        <Box>
+          <Delete onClick={deleteButton} />
+        </Box>
+      </Box>
+      <Divider />
     </div>
   );
 };

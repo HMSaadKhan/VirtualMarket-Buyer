@@ -5,20 +5,33 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import { makeStyles } from "@mui/styles";
+import { Inputs } from "../../Styles/StyledInput";
+import Counter from "../Counter";
 const useStyles = makeStyles({
   root: {
     display: "flex",
     justifyContent: "center",
-    margin: "20px",
+    marginTop: "30px",
+    marginBottom: "30px",
   },
-  container: { width: "40%" },
 });
 
 export default function CommentsDisplay({ review }) {
+  console.log(review);
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <div className={classes.container}>
+      <Box
+        sx={{
+          width: {
+            xs: "50%",
+            sm: "50%",
+            md: "30%",
+            // lg: "30%",
+            // xl: "30%",
+          },
+        }}
+      >
         <Card sx={{ display: "flex" }}>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <CardContent sx={{ flex: "1 0 auto" }}>
@@ -39,7 +52,7 @@ export default function CommentsDisplay({ review }) {
             </CardContent>
           </Box>
         </Card>
-      </div>
+      </Box>
     </div>
   );
 }

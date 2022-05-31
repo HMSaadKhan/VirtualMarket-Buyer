@@ -6,6 +6,7 @@ import {
   Typography,
   CardContent,
   Divider,
+  Button,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -18,6 +19,20 @@ const Login = (props) => {
   const direct = () => {
     window.location.href = "/";
   };
+
+  const LoginFunction = async (e) => {
+    await buyerService
+      .login(email, password)
+      .then((data) => {
+        setTimeout(direct, 1000);
+      })
+      .catch((err) => {
+        toast.error(err.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+      });
+  };
+
   return (
     <LoginAuth>
       <Box>
@@ -60,6 +75,7 @@ const Login = (props) => {
                     fullWidth
                     id="filled-required"
                     label="Email"
+                    helperText="example@example.com"
                     variant="standard"
                     defaultValue={email}
                     onChange={(e) => {
@@ -81,24 +97,19 @@ const Login = (props) => {
                   />
                 </>
                 <Box mt={2}>
-                  <StyledButton
-                    sx={{ width: "100%", margin: "0" }}
+                  <Button
+                    fullWidth
                     variant="contained"
-                    onClick={async (e) => {
-                      await buyerService
-                        .login(email, password)
-                        .then((data) => {
-                          setTimeout(direct, 1000);
-                        })
-                        .catch((err) => {
-                          toast.error(err.response.data, {
-                            position: toast.POSITION.BOTTOM_LEFT,
-                          });
-                        });
-                    }}
+                    onClick={LoginFunction}
+                    // onKeyPress={(e) => {
+                    //   if (e.key === "Enter") {
+                    //     LoginFunction();
+                    //     // write your functionality here
+                    //   }
+                    // }}
                   >
                     LOGIN
-                  </StyledButton>
+                  </Button>
                 </Box>
                 <Box mt={1}>
                   <Typography>

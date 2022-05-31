@@ -179,6 +179,7 @@ const BuyerAccount = (props) => {
                     disabled
                     label="Email"
                     placeholder="Email"
+                    helperText="example@example.com"
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -190,6 +191,7 @@ const BuyerAccount = (props) => {
                     variant="standard"
                     label="Phone Number"
                     placeholder="Phone Number"
+                    helperText="03XXXXXXXXX"
                     size="small"
                     value={phone}
                     onChange={(e) => {

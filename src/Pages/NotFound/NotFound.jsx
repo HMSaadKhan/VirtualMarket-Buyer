@@ -1,12 +1,10 @@
-import styled from "styled-components";
 import { MidPager } from "../../Styles/MidPager";
 
-const Container = styled.div``;
 const NotFound = () => {
   return (
-    <Container>
+    <div>
       <MidPager name={"Page Not Found"} />
-    </Container>
+    </div>
   );
 };
 

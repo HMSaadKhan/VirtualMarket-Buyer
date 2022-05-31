@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import { Box } from "@mui/material";
 import MenuBar from "./Components/MenuBar/MenuBar";
-import Footer from "./Components/Footer/Footer";
+//import Footer from "./Components/Footer/Footer";
 
 import Login from "./Pages/LoginPage/Login";
 import SignUp from "./Pages/SignUpPage/SignUp";
@@ -33,6 +33,8 @@ import Warranty from "./Pages/Warranty/Warranty";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./Styles/myStyleSheet";
 import CategoriesState from "./Contexts/Categories/CategoriesState";
+import TopBar from "./Components/MenuBar/TopBar";
+import LandingComponent from "./Components/LandingComponent/LandingComponent";
 function App() {
   const [refreshCart, setRefreshCart] = React.useState();
   const getStateChanged = (data) => {
@@ -44,9 +46,10 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router>
           <ToastContainer />
-
+          <TopBar />
           <MenuBar refreshCart={refreshCart} />
           <Categories />
+          {/* <LandingComponent /> */}
           {/* <Box sx={{ backgroundColor: "#fafafa" }}> */}
           <Box sx={{ backgroundColor: "#ffff" }}>
             <Switch>
@@ -62,7 +65,7 @@ function App() {
               <Route path="/resetPassword/:id/" exact component={NewPassword} />
               <Route path="/changepassword/" exact component={ChangePassword} />
               <Route path="/warranty/" component={Warranty} />
-              <Route path="/check-out/">
+              <Route path="/check-out/:id">
                 <CheckOut stateChanged={getStateChanged} />
               </Route>
 
@@ -75,7 +78,7 @@ function App() {
               />
               <Route path="/search/:id" exact component={ProductsBySearch} />
               <Route
-                //path=
+                
                 path={["/:anything/:name/:id/", "/:name/:id/"]}
               >
                 <ProductDetail stateChanged={getStateChanged} />

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Products from "../../Pages/Product/Products";
 import { makeStyles } from "@mui/styles";
 import categoryService from "../../Services/CategoryService";
+import LandingComponent from "../../Components/LandingComponent/LandingComponent";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +26,7 @@ const HomePage = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
+      <LandingComponent />
       {categories.map((product) => (
         <Products _id={product._id} name={product.name} key={product._id} />
       ))}

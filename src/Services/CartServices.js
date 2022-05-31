@@ -16,10 +16,10 @@ class CartService extends GenericService {
           reject(err);
         });
     });
-  clearCart = () =>
+  clearAll = () =>
     new Promise((resolve, reject) => {
       axios
-        .delete("carts/clear")
+        .delete("carts/clearCart")
         .then((data) => {
           console.log("delete cart");
           resolve(data);
@@ -38,10 +38,10 @@ class CartService extends GenericService {
           reject(err);
         });
     });
-  incQty = (_id) =>
+  incQty = (_id, data) =>
     new Promise((resolve, reject) => {
       axios
-        .patch("carts/incQty/" + _id)
+        .patch("carts/incQty/" + _id, data)
         .then((data) => {
           resolve(data);
         })
@@ -49,10 +49,10 @@ class CartService extends GenericService {
           reject(err);
         });
     });
-  deleteItem = (_id) =>
+  deleteItem = (_id, data) =>
     new Promise((resolve, reject) => {
       axios
-        .patch("carts/delete/" + _id)
+        .patch("carts/delete/" + _id, data)
         .then((data) => {
           resolve(data);
         })
@@ -60,10 +60,10 @@ class CartService extends GenericService {
           reject(err);
         });
     });
-  decQty = (_id) =>
+  decQty = (_id, data) =>
     new Promise((resolve, reject) => {
       axios
-        .patch("carts/decQty/" + _id)
+        .patch("carts/decQty/" + _id, data)
         .then((data) => {
           resolve(data);
         })
@@ -128,10 +128,44 @@ class CartService extends GenericService {
           reject(err);
         });
     });
-  ProceedToCheckOut = () =>
+  ProceedToCheckOut = (_id) =>
     new Promise((resolve, reject) => {
       axios
-        .get("carts/proceedToCheckout/")
+        .get("carts/proceedToCheckout/" + _id)
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  // ProceedToCheckOut = (_id) =>
+  //   new Promise((resolve, reject) => {
+  //     axios
+  //       .get("carts/getCheckoutCart/" + _id)
+  //       .then((data) => {
+  //         resolve(data);
+  //       })
+  //       .catch((err) => {
+  //         reject(err);
+  //       });
+  //   });
+
+  getCheckoutCart = (_id) =>
+    new Promise((resolve, reject) => {
+      this.get("carts/getCheckoutCart/" + _id)
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+
+  setQuantity = (_id, data) =>
+    new Promise((resolve, reject) => {
+      axios
+        .patch("carts/setqty/" + _id, data)
         .then((data) => {
           resolve(data);
         })

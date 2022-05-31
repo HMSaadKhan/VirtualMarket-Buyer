@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Card, CardContent, Box, Typography, Divider } from "@mui/material";
+import {
+  Card,
+  RadioGroup,
+  CardContent,
+  Box,
+  Typography,
+  Divider,
+} from "@mui/material";
 import CartItems from "./CartItems";
 import cartService from "../../Services/CartServices";
 import useState from "react-usestateref";
@@ -9,19 +16,28 @@ import Auth from "../../AuthWrapper/IsLoginFalse";
 import { StyledButton } from "../../Styles/StyledButton";
 import LoadingScreen from "../../Components/LoadingScreen";
 import { MidPager } from "../../Styles/MidPager";
+import CartSideBar from "./CartSideBar";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import { Labels } from "../../Styles/MyTypographies";
+import Radio from "@mui/material/Radio";
+import CartComponent from "./CartComponent";
 
 const Cart = (props) => {
   //const classes = useStyles();
   const history = useHistory();
 
-  console.log(props);
   const [cartItem, setCartItem, cartItemRef] = useState([]);
   const [cartValues, setCartValues] = useState([]);
   const [subtotal, setsubtotal, subtotalRef] = useState();
   const [deliveryCharge, setdeliveryCharge] = useState();
   const [total, settotal] = useState();
+  const [cartId, setcartId] = useState();
   const [loading, setloading] = useState(false);
+  const [radio, setRadio] = React.useState(false);
+
   const getCartItems = () => {
+    console.log("cart run");
     setloading(true);
     cartService
       .getCart()
@@ -34,11 +50,7 @@ const Cart = (props) => {
         }
 
         setloading(false);
-        setCartItem(data.items);
-
-        settotal(data.total);
-        setdeliveryCharge(data.seller.deliveryCharge);
-        setsubtotal(data.subTotal);
+        setCartItem(data);
       })
       .catch((err) => {
         console.log(err.response);
@@ -55,17 +67,6 @@ const Cart = (props) => {
   };
   useEffect(getCartItems, []);
 
-  const clearCart = () => {
-    setloading(true);
-    cartService.clearCart().then((data) => {
-      setloading(false);
-      toast.success(data.data, {
-        position: toast.POSITION.BOTTOM_LEFT,
-      });
-      getCartItems();
-      props.stateChanged(data);
-    });
-  };
   const getProductId = (data) => {
     console.log(data);
     props.stateChanged(data);
@@ -76,21 +77,14 @@ const Cart = (props) => {
     });
   };
 
-  const ProceedtoCheckOut = async () => {
-    setloading(true);
-    await cartService
-      .ProceedToCheckOut()
-      .then((data) => {
-        setloading(false);
-        history.push("/check-out");
-      })
-      .catch((err) => {
-        setloading(false);
-        toast.error(err.response.data, {
-          position: toast.POSITION.BOTTOM_LEFT,
-        });
-      });
+  const setCharges = () => {
+    if (cartItem.length > 0) {
+      setdeliveryCharge(cartItem[0].seller.deliveryCharge);
+      setsubtotal(cartItem[0].subTotal);
+      settotal(cartItem[0].total);
+    }
   };
+  useEffect(setCharges, [cartItem]);
 
   return (
     <Auth>
@@ -99,93 +93,49 @@ const Cart = (props) => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center",
         }}
       >
-        <Box sx={{ width: "25%" }}></Box>
-
         <Box m={2}>
-          {cartItem ? (
-            <Box>
-              {cartItem.map((item) => (
-                <CartItems
-                  item={item}
-                  key={item._id}
-                  getCartItems={getCartItems}
-                  getProductId={getProductId}
-                  // productQtyChange={productQtyChange}
-                />
-              ))}
-            </Box>
+          {cartItem.length > 0 ? (
+            <>
+              <RadioGroup
+                name="use-radio-group"
+                defaultValue={cartItem["0"].seller._id}
+              >
+                {cartItem.map((cart) => {
+                  return (
+                    <>
+                      <CartComponent
+                        cart={cart}
+                        setcartId={setcartId}
+                        cartId={cartId}
+                        key={cart.seller._id}
+                        getCartItems={getCartItems}
+                        getProductId={getProductId}
+                        setdeliveryCharge={setdeliveryCharge}
+                        setsubtotal={setsubtotal}
+                        settotal={settotal}
+                      />
+                    </>
+                  );
+                })}
+              </RadioGroup>
+            </>
           ) : (
             <Box>
               <MidPager name={"No items in Cart"} />
             </Box>
           )}
         </Box>
-        <Box m={2} sx={{ width: "25%" }}>
-          <Box>
-            <StyledButton
-              sx={{ width: "100%", marginLeft: 0 }}
-              onClick={clearCart}
-            >
-              Clear Cart
-            </StyledButton>
-          </Box>
-          <Box>
-            <Box>
-              <Box>
-                <Card sx={{ backgroundColor: "white", maxWidth: 400 }}>
-                  <CardContent>
-                    <Typography sx={{ fontSize: 18, fontWeight: "bold" }}>
-                      Cart Total
-                    </Typography>
 
-                    <Typography sx={{ display: "flex " }}>
-                      Sub Total
-                      <Box ml={8.5}>
-                        <Typography>PKR.{subtotalRef.current}</Typography>
-                      </Box>
-                    </Typography>
-                    <Typography sx={{ display: "flex " }}>
-                      Shipping
-                      <Box ml={9}>
-                        <Typography>PKR.{deliveryCharge}</Typography>
-                      </Box>
-                    </Typography>
-                    <Divider />
-                    <Typography sx={{ display: "flex ", fontWeight: "bold" }}>
-                      Total{" "}
-                      <Box ml={12}>
-                        <Typography>PKR.{total}</Typography>
-                      </Box>
-                    </Typography>
-                  </CardContent>
-                  <Box>
-                    <StyledButton
-                      sx={{ width: "100%", marginLeft: 0 }}
-                      onClick={() => {
-                        ProceedtoCheckOut();
-                      }}
-                    >
-                      Place Order{" "}
-                    </StyledButton>
-                  </Box>
-                  <Box mt={2}>
-                    <StyledButton
-                      sx={{ width: "100%", marginLeft: 0 }}
-                      onClick={() => {
-                        history.push("/");
-                      }}
-                    >
-                      Continue Shopping{" "}
-                    </StyledButton>
-                  </Box>
-                </Card>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
+        <CartSideBar
+          cartId={cartId}
+          subtotal={subtotal}
+          deliveryCharge={deliveryCharge}
+          total={total}
+          stateChanged={props.stateChanged}
+        />
       </Box>
     </Auth>
   );

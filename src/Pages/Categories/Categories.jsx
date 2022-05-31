@@ -1,14 +1,18 @@
 import React, { useContext } from "react";
-import { Box, Typography } from "@mui/material";
-//import categoryService from "../../Services/CategoryService";
+import { Box, Typography, Button } from "@mui/material";
+
 import { useHistory } from "react-router-dom";
-import { WhiteButton } from "../../Styles/StyledButton";
+// import { WhiteButton } from "../../Styles/StyledButton";
 import { CategoriesContext } from "../../Contexts/Categories/CategoriesState";
 export default function Categories() {
   const history = useHistory();
   //const [categories, setCategories] = useState([]);
   const categories = useContext(CategoriesContext);
+  const [open, setOpen] = React.useState(true);
 
+  const handleClick = () => {
+    setOpen(!open);
+  };
   // const getCategory = () => {
   //   categoryService
   //     .GetCategories()
@@ -20,6 +24,7 @@ export default function Categories() {
   //     });
   // };
   // useEffect(getCategory, []);
+
   return (
     <Box
       sx={{
@@ -42,7 +47,7 @@ export default function Categories() {
           Catergories
         </Typography>
       </Box>
-      <Box className="categories">
+      {/* <Box className="categories">
         {categories.map((item, index) => {
           return (
             <WhiteButton
@@ -55,7 +60,7 @@ export default function Categories() {
             </WhiteButton>
           );
         })}
-      </Box>
+      </Box> */}
       <Box></Box>
       <Box></Box>
     </Box>

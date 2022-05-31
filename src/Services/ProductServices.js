@@ -1,5 +1,5 @@
 import GenericService from "./GenericService";
-import axios from "axios";
+
 class ProductsService extends GenericService {
   constructor() {
     super();

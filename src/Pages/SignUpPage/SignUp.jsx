@@ -6,6 +6,7 @@ import {
   Typography,
   CardContent,
   Divider,
+  Button,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -84,6 +85,7 @@ const Signup = (props) => {
                     fullWidth
                     id="filled-required"
                     label="First Name"
+                    placeholder="Ahmad"
                     variant="standard"
                     defaultValue={fName}
                     onChange={(e) => {
@@ -96,6 +98,7 @@ const Signup = (props) => {
                     fullWidth
                     id="filled-required"
                     label="Last Name"
+                    placeholder="khan"
                     variant="standard"
                     defaultValue={lName}
                     onChange={(e) => {
@@ -110,6 +113,7 @@ const Signup = (props) => {
                   fullWidth
                   id="filled-required"
                   label="Email"
+                  helperText="example@example.com"
                   variant="standard"
                   defaultValue={email}
                   onChange={(e) => {
@@ -117,11 +121,12 @@ const Signup = (props) => {
                   }}
                 />
               </FlexBox>
-              <FlexBox>
+              <FlexBox sx={{ alignItems: "start" }}>
                 <FlexBox m={1}>
                   <TextField
                     fullWidth
                     label="Password"
+                    helperText=" Atleast 5 character long"
                     variant="standard"
                     type="password"
                     defaultValue={password}
@@ -130,7 +135,7 @@ const Signup = (props) => {
                     }}
                   />
                 </FlexBox>
-                <FlexBox>
+                <FlexBox m={1}>
                   <TextField
                     fullWidth
                     type="password"
@@ -146,8 +151,8 @@ const Signup = (props) => {
 
               <Box>
                 <Box m={1}>
-                  <StyledButton
-                    sx={{ width: "100%", margin: 0 }}
+                  <Button
+                    fullWidth
                     variant="contained"
                     onClick={SignupFunction}
                     onKeyPress={(e) => {
@@ -158,7 +163,7 @@ const Signup = (props) => {
                     }}
                   >
                     signup
-                  </StyledButton>
+                  </Button>
                 </Box>
                 <Box m={1}>
                   <Typography>

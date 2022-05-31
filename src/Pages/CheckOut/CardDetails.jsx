@@ -97,7 +97,7 @@ const CardDetails = ({
         <Box>
           <CardElement />
           <StyledButton disabled={!stripe || !elements} onClick={handleSubmit}>
-            Proceed
+            Place order
           </StyledButton>
         </Box>
       ) : (

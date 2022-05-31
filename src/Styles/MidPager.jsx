@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { Typography, Box, Container } from "@mui/material";
+import { Typography, Container } from "@mui/material";
 
 export const OuterCounter = styled(Container)({
   width: "100%",

@@ -91,18 +91,14 @@ export default function ScheduleOrder(props) {
           <div className={classes.root}>
             <Box>
               <HeadingText>Quantity</HeadingText>
-              <Counter
-                quantity={quantity}
-                value={setquantity}
-                minValue={minOrder}
-              />
+              <Counter num={quantity} set={setquantity} minValue={minOrder} />
               <Box sx={{}}>
                 <HeadingText>Date & Time</HeadingText>
                 <DateTimePicker
                   calendarIcon={<CalendarTodayOutlined />}
                   clearIcon={<CancelIcon />}
                   minDate={new Date()}
-                  format="dd-MM-yyyy HH:00 "
+                  format="dd-MM-yyyy hh:mm a"
                   onChange={setdatentime}
                   value={datentime}
                 />

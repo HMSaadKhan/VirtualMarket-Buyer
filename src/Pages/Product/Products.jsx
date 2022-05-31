@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import { Typography, Grid, Box } from "@mui/material";
+import { Grid } from "@mui/material";
 import productService from "../../Services/ProductServices";
 import { NameBar } from "../../Styles/NameBar";
 import ProductComponent from "./ProductComponent";
 import LoadingScreen from "../../Components/LoadingScreen";
 
 const Products = (props) => {
-  const { _id, name } = props;
+  const { name } = props;
 
   const [products, setProducts] = useState([]);
   const [loading, setloading] = useState(false);
@@ -25,7 +25,7 @@ const Products = (props) => {
         setloading(false);
       });
   };
-  useEffect(getProductsbyCategory, []);
+  useEffect(getProductsbyCategory, [props._id]);
 
   return (
     <div>
