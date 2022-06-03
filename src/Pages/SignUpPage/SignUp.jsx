@@ -91,6 +91,12 @@ const Signup = (props) => {
                     onChange={(e) => {
                       setfName(e.target.value);
                     }}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        SignupFunction();
+                        // write your functionality here
+                      }
+                    }}
                   />
                 </FlexBox>
                 <FlexBox m={1}>
@@ -103,6 +109,12 @@ const Signup = (props) => {
                     defaultValue={lName}
                     onChange={(e) => {
                       setlName(e.target.value);
+                    }}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        SignupFunction();
+                        // write your functionality here
+                      }
                     }}
                   />
                 </FlexBox>
@@ -119,6 +131,12 @@ const Signup = (props) => {
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      SignupFunction();
+                      // write your functionality here
+                    }
+                  }}
                 />
               </FlexBox>
               <FlexBox sx={{ alignItems: "start" }}>
@@ -133,6 +151,12 @@ const Signup = (props) => {
                     onChange={(e) => {
                       setPassword(e.target.value);
                     }}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        SignupFunction();
+                        // write your functionality here
+                      }
+                    }}
                   />
                 </FlexBox>
                 <FlexBox m={1}>
@@ -145,6 +169,12 @@ const Signup = (props) => {
                     onChange={(e) => {
                       setCPassword(e.target.value);
                     }}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        SignupFunction();
+                        // write your functionality here
+                      }
+                    }}
                   />
                 </FlexBox>
               </FlexBox>
@@ -155,12 +185,6 @@ const Signup = (props) => {
                     fullWidth
                     variant="contained"
                     onClick={SignupFunction}
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter") {
-                        SignupFunction();
-                        // write your functionality here
-                      }
-                    }}
                   >
                     signup
                   </Button>

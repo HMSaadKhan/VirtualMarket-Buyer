@@ -26,19 +26,10 @@ class BuyerService extends GenericService {
   isLoggedIn = () => {
     return localStorage.getItem("token") ? true : false;
   };
-  getLoggedInUser = () => {
-    try {
-      const jwt = localStorage.getItem("token");
-      const Jwt = jwtDecode(jwt);
-      return Jwt._id;
-    } catch (ex) {
-      return null;
-    }
-  };
 
-  getUserName = () =>
+  getUserAvatar = () =>
     new Promise((resolve, reject) => {
-      this.get("buyers/getName")
+      this.get("buyers/getavatar")
         .then((data) => {
           resolve(data);
         })
@@ -111,6 +102,17 @@ class BuyerService extends GenericService {
       console.log(data);
       axios
         .post("buyers/verify", data)
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  AddAvatar = (image) =>
+    new Promise((resolve, reject) => {
+      axios
+        .post("buyers/editAvatar", image)
         .then((data) => {
           resolve(data);
         })

@@ -26,16 +26,6 @@ export default function SellerDetails({ productDetails }) {
               {productDetails.seller.storeName}
             </Typography>
 
-            <Typography className={classes.cardHeadingText}>Email</Typography>
-            <Typography className={classes.cardSubText}>
-              {productDetails.seller.email}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Box>
-      <Box mb={1}>
-        <Card>
-          <CardContent>
             <Typography className={classes.cardHeadingText}>
               Shop Address
             </Typography>
@@ -45,9 +35,16 @@ export default function SellerDetails({ productDetails }) {
           </CardContent>
         </Card>
       </Box>
+
       <Box mb={1}>
         <Card>
           <CardContent>
+            <Typography className={classes.cardHeadingText}>
+              Minimum Order Quantity
+            </Typography>
+            <Typography className={classes.cardSubText}>
+              {productDetails.minOrder + " Product"} 
+            </Typography>
             <Typography className={classes.headingText}>
               Warranty Period
             </Typography>

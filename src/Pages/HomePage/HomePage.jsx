@@ -9,10 +9,13 @@ const useStyles = makeStyles((theme) => ({
     background: "#fafafa",
   },
 }));
-const HomePage = () => {
+const HomePage = (props) => {
+  console.log(props);
+
   const [categories, setCategories] = useState([]);
 
   const getCategory = () => {
+    props.setUrl("/");
     categoryService
       .GetCategories()
       .then((data) => {

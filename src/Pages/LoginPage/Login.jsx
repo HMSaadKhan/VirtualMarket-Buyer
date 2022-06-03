@@ -81,6 +81,12 @@ const Login = (props) => {
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        LoginFunction();
+                        // write your functionality here
+                      }
+                    }}
                   />
                 </>
                 <>
@@ -94,20 +100,16 @@ const Login = (props) => {
                     onChange={(e) => {
                       setPassword(e.target.value);
                     }}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        LoginFunction();
+                        // write your functionality here
+                      }
+                    }}
                   />
                 </>
                 <Box mt={2}>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    onClick={LoginFunction}
-                    // onKeyPress={(e) => {
-                    //   if (e.key === "Enter") {
-                    //     LoginFunction();
-                    //     // write your functionality here
-                    //   }
-                    // }}
-                  >
+                  <Button fullWidth variant="contained" onClick={LoginFunction}>
                     LOGIN
                   </Button>
                 </Box>

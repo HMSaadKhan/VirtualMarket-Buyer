@@ -71,7 +71,7 @@ const CartSideBar = ({
           </Button>
         </Box>
         <Box>
-          <Card sx={{ backgroundColor: "white", maxWidth: 400 }}>
+          <Card sx={{ backgroundColor: "#eeeeee", maxWidth: 400 }}>
             <CardContent>
               <Typography sx={{ fontSize: 18, fontWeight: "bold" }}>
                 Cart Total

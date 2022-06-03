@@ -7,13 +7,14 @@ import { CardHeadings } from "../../Styles/MyTypographies";
 import { StyledButton } from "../../Styles/StyledButton";
 import IsLoginTrue from "../../AuthWrapper/isLoginTrue";
 import LoadingScreen from "../../Components/LoadingScreen";
+import { useParams } from "react-router-dom";
 
 const ChangenewPassword = (props) => {
   const [otp, setOtp] = React.useState();
   const [password, setPassword] = React.useState("");
   const [loading, setloading] = React.useState(false);
   const history = useHistory();
-  const _id = props.match.params.id;
+  const id = useParams();
   return (
     <IsLoginTrue>
       <LoadingScreen bool={loading} />
@@ -61,7 +62,7 @@ const ChangenewPassword = (props) => {
                     onClick={async (e) => {
                       setloading(true);
                       await buyerService
-                        .resetPassword(_id, { otp, password }) //if gives error then check otp datatype
+                        .resetPassword(id._id, { otp, password }) //if gives error then check otp datatype
                         .then((data) => {
                           setloading(false);
                           toast.success(data.data, {

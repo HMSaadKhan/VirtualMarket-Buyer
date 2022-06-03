@@ -10,27 +10,21 @@ const Products = (props) => {
   const { name } = props;
 
   const [products, setProducts] = useState([]);
-  const [loading, setloading] = useState(false);
 
   const getProductsbyCategory = (_id) => {
-    setloading(true);
     productService
       .getFiveByCategory(props._id)
       .then((data) => {
         setProducts(data);
-        setloading(false);
       })
       .catch((e) => {
         console.log(e);
-        setloading(false);
       });
   };
   useEffect(getProductsbyCategory, [props._id]);
 
   return (
     <div>
-      <LoadingScreen bool={loading} />
-
       {products.length > 0 ? (
         <>
           <NameBar name={name} />

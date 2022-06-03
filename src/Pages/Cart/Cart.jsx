@@ -34,10 +34,10 @@ const Cart = (props) => {
   const [total, settotal] = useState();
   const [cartId, setcartId] = useState();
   const [loading, setloading] = useState(false);
-  const [radio, setRadio] = React.useState(false);
+  const [radiodefault, setRadiodefault] = React.useState();
+  const [errormessage, setErrorMessage] = useState();
 
   const getCartItems = () => {
-    console.log("cart run");
     setloading(true);
     cartService
       .getCart()
@@ -50,10 +50,12 @@ const Cart = (props) => {
         }
 
         setloading(false);
+        console.log(data);
         setCartItem(data);
       })
       .catch((err) => {
         console.log(err.response);
+        setErrorMessage(err.response.data);
 
         setloading(false);
 
@@ -78,10 +80,14 @@ const Cart = (props) => {
   };
 
   const setCharges = () => {
-    if (cartItem.length > 0) {
-      setdeliveryCharge(cartItem[0].seller.deliveryCharge);
-      setsubtotal(cartItem[0].subTotal);
-      settotal(cartItem[0].total);
+    if (!errormessage) {
+      if (cartItem.length > 0) {
+        setdeliveryCharge(cartItem[0].seller.deliveryCharge);
+        setsubtotal(cartItem[0].subTotal);
+        settotal(cartItem[0].total);
+        setcartId(cartItem[0]._id);
+        setRadiodefault(cartItem[0].seller._id);
+      }
     }
   };
   useEffect(setCharges, [cartItem]);
@@ -97,35 +103,43 @@ const Cart = (props) => {
         }}
       >
         <Box m={2}>
-          {cartItem.length > 0 ? (
+          {!errormessage ? (
             <>
-              <RadioGroup
-                name="use-radio-group"
-                defaultValue={cartItem["0"].seller._id}
-              >
-                {cartItem.map((cart) => {
-                  return (
-                    <>
-                      <CartComponent
-                        cart={cart}
-                        setcartId={setcartId}
-                        cartId={cartId}
-                        key={cart.seller._id}
-                        getCartItems={getCartItems}
-                        getProductId={getProductId}
-                        setdeliveryCharge={setdeliveryCharge}
-                        setsubtotal={setsubtotal}
-                        settotal={settotal}
-                      />
-                    </>
-                  );
-                })}
-              </RadioGroup>
+              {cartItem.length > 0 ? (
+                <>
+                  <RadioGroup
+                    name="use-radio-group"
+                    defaultValue={cartItem[0].seller._id}
+                  >
+                    {cartItem.map((cart) => {
+                      return (
+                        <>
+                          <CartComponent
+                            cart={cart}
+                            setcartId={setcartId}
+                            cartId={cartId}
+                            key={cart.seller._id}
+                            getCartItems={getCartItems}
+                            getProductId={getProductId}
+                            setdeliveryCharge={setdeliveryCharge}
+                            setsubtotal={setsubtotal}
+                            settotal={settotal}
+                          />
+                        </>
+                      );
+                    })}
+                  </RadioGroup>
+                </>
+              ) : (
+                <></>
+              )}
             </>
           ) : (
-            <Box>
-              <MidPager name={"No items in Cart"} />
-            </Box>
+            <>
+              <Box>
+                <MidPager name={errormessage} />
+              </Box>
+            </>
           )}
         </Box>
 
@@ -133,6 +147,7 @@ const Cart = (props) => {
           cartId={cartId}
           subtotal={subtotal}
           deliveryCharge={deliveryCharge}
+          getCartItems={getCartItems}
           total={total}
           stateChanged={props.stateChanged}
         />

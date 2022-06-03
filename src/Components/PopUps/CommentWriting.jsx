@@ -68,14 +68,13 @@ export default function CommentWriting({ orderId, itemId }) {
       .ReviewPost(orderId, { item: itemId, rating: value, comment: text })
       .then((data) => {
         console.log(data);
-        toast.success(data.statusText, {
+        toast.success(data, {
           position: toast.POSITION.BOTTOM_LEFT,
         });
 
         handleClose();
       })
       .catch((error) => {
-        console.log(error.response);
         toast.error(error.response.data, {
           position: toast.POSITION.BOTTOM_LEFT,
         });

@@ -8,28 +8,29 @@ import { NameBar } from "../../Styles/NameBar";
 import LoadingScreen from "../../Components/LoadingScreen";
 import { Containers } from "../../Styles/StyledBox";
 import { MidPager } from "../../Styles/MidPager";
+import { useParams } from "react-router-dom";
 
 const ProductsBySearch = (props) => {
-  console.log(props);
+  const search = useParams();
 
-  const key = props.match.params.id;
+  console.log(search);
   const [products, setProducts] = useState([]);
   const [loading, setloading] = useState(false);
 
   useEffect(() => {
     setloading(true);
 
-    productService.getBySearch(key).then((data) => {
+    productService.getBySearch(search.id).then((data) => {
       setProducts(data);
       setloading(false);
     });
-  }, [key]);
+  }, [search.id]);
 
   return (
     <div>
       <LoadingScreen bool={loading} />
 
-      <NameBar name={"Results for " + key} />
+      <NameBar name={"Results for " + search.id} />
       {products.length > 0 ? (
         <>
           <Grid container justifyContent="center" spacing={2}>

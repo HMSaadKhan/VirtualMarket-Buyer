@@ -28,16 +28,24 @@ const CartComponent = ({
       setdeliveryCharge(cart.seller.deliveryCharge);
       setsubtotal(cart.subTotal);
       settotal(cart.total);
+      setcartId(cart._id);
     }
   };
 
   return (
     <>
-      <Card sx={{ width: 600, marginBottom: "20px" }}>
+      <Card
+        sx={{
+          width: 600,
+          marginBottom: "20px",
+          border: 1,
+          backgroundColor: "#eeeeee",
+        }}
+      >
         <CardContent>
           <FormControlLabel
             value={cart.seller._id}
-            label={cart.seller.storeName}
+            label={"Items from '" + cart.seller.storeName + "'"}
             control={<Radio />}
             onChange={handleRadio}
           />
@@ -45,19 +53,6 @@ const CartComponent = ({
           {cart.items.map((item) => {
             return (
               <>
-                {/* <FormControlLabel
-              control={
-                <Radio
-                  checked={checked}
-                  onChange={handleRadio}
-                  value={cart.seller._id}
-                  name="radio-buttons"
-                />
-              }
-              // control={<Checkbox checked={checked} onChange={handleChange} />}
-              label={<Labels>{cart.seller._id}</Labels>}
-            /> */}
-
                 {console.log("Cart Component" + cartId)}
                 <CartItems
                   cartId={cartId}

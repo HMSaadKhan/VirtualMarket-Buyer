@@ -1,6 +1,7 @@
 import * as React from "react";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import { AddIcCallOutlined } from "@mui/icons-material";
 
 export default function LoadingScreen({ bool }) {
   return (

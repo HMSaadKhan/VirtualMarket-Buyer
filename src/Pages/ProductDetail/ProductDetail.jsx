@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useEffect } from "react";
 import productService from "../../Services/ProductServices";
 import useState from "react-usestateref";
@@ -13,46 +13,50 @@ import LoadingScreen from "../../Components/LoadingScreen";
 import ProductImages from "./ProductImages";
 import ProductOverview from "./ProductOverview";
 import SellerDetails from "./sellerDetails";
+import { MidPager } from "../../Styles/MidPager";
 
 export default function ProductDetail(props) {
-  const product = useParams();
+  const { id, name } = useParams();
+
   const [productDetails, SetProductDetails] = useState("");
 
   const [reviewDetails, setreviewDetails] = useState([]);
   const [schedulebool, setschedulebool] = useState(false);
   const [loading, setloading] = useState(false);
+  const [reviewError, setreviewError] = useState("");
 
   const getDetails = () => {
     setloading(true);
-    productService.getProductDetails(product.id).then((data) => {
+    productService.getProductDetails(id).then((data) => {
       setloading(false);
       console.log(data);
       SetProductDetails(data);
     });
   };
-  useEffect(getDetails, [product.id]);
+  useEffect(getDetails, [id]);
 
   const getReviews = () => {
     reviewService
-      .ReviewGet(product.id)
+      .ReviewGet(id)
       .then((data) => {
         setreviewDetails(data);
         console.log(data);
       })
       .catch((err) => {
         console.log(err.response);
+        setreviewError(err.response.data);
       });
   };
-  useEffect(getReviews, [product.id]);
+  useEffect(getReviews, [id]);
 
   return (
-    <Box>
+    <Box sx={{ marginBottom: "100px" }}>
       <LoadingScreen bool={loading} />
 
       {productDetails ? (
         <Box sx={{ maxWidth: "100%" }}>
           <ScheduleOrder
-            product={product.id}
+            product={id}
             bool={schedulebool}
             setbool={setschedulebool}
             minOrder={productDetails.minOrder}
@@ -74,7 +78,7 @@ export default function ProductDetail(props) {
               m={4}
               sx={{
                 width: {
-                  // xs: "100%",
+                  xs: "100%",
                   sm: "100%",
                   md: "30%",
                   // lg: "30%",
@@ -88,7 +92,7 @@ export default function ProductDetail(props) {
               m={4}
               sx={{
                 width: {
-                  // xs: "100%",
+                  xs: "100%",
                   sm: "100%",
                   md: "50%",
                   // lg: "30%",
@@ -122,17 +126,43 @@ export default function ProductDetail(props) {
           <Box>
             <Box>
               <NameBar name={"Reviews"} />
-              {reviewDetails.reviews ? (
-                <>
-                  {console.log("hello")}
-                  <Box>
-                    {reviewDetails.reviews.map((review) => (
-                      <CommentsDisplay review={review} key={review._id} />
-                    ))}
-                  </Box>
-                </>
+              {!reviewError ? (
+                <Box
+                  sx={{
+                    width: {
+                      xs: "100%",
+                      sm: "100%",
+                      md: "20%",
+                      // lg: "30%",
+                      // xl: "30%",
+                    },
+                  }}
+                >
+                  {reviewDetails.reviews ? (
+                    <>
+                      {console.log("hello")}
+                      <Box>
+                        {reviewDetails.reviews.map((review) => (
+                          <CommentsDisplay review={review} key={review._id} />
+                        ))}
+                      </Box>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </Box>
               ) : (
-                <></>
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                  <Typography
+                    sx={{
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                      color: "#ba6a62",
+                    }}
+                  >
+                    {reviewError}
+                  </Typography>
+                </Box>
               )}
             </Box>
           </Box>

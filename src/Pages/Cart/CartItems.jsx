@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const CartItems = (props) => {
   const classes = useStyles();
   const { getCartItems, getProductId, item, cartId } = props;
-  console.log("Cart item" + cartId);
+
   const [qty, setqty] = useState(item.quantity);
   const qtyupdate = () => {
     setqty(item.quantity);
@@ -43,8 +43,8 @@ const CartItems = (props) => {
     }
   };
   useEffect(checkDisable, []);
+  
   const plusButton = async () => {
-    console.log("cart item inside function" + cartId);
     setloading(true);
 
     await cartService
@@ -62,7 +62,6 @@ const CartItems = (props) => {
   };
   const minusButton = async () => {
     setloading(true);
-    console.log("cart item inside function" + cartId);
     await cartService
       .decQty(cartId, { id })
       .then((e) => {
@@ -103,13 +102,13 @@ const CartItems = (props) => {
         setloading(false);
       })
       .catch((err) => {
-        // getCartItems();
+        getCartItems();
 
         if (err.response.data.qty) {
           setqty(err.response.data.qty);
         }
         setloading(false);
-        console.log(err.response);
+
         toast.error(err.response.data.message, {
           position: toast.POSITION.BOTTOM_LEFT,
         });
@@ -125,7 +124,7 @@ const CartItems = (props) => {
           <img className={classes.image} src={item.product.images[0].link} />
         </Box>
         <Box sx={{ width: "25%" }}>
-          <Typography>{item.product.name}</Typography>
+          <Typography noWrap>{item.product.name}</Typography>
           {item.type === "DEFAULT" ? (
             <></>
           ) : (
@@ -155,9 +154,9 @@ const CartItems = (props) => {
                 value={qty}
                 onChange={(e) => {
                   setqty(e.target.value);
-                  if (e.filled) {
-                    setTimeout(QuantityInput(e.target.value), 500000);
-                  }
+                  // if (e.filled) {
+                  setTimeout(QuantityInput(e.target.value), 10000);
+                  // }
                 }}
               />
             </Box>

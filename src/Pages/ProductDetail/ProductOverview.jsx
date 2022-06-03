@@ -59,7 +59,7 @@ export default function ProductOverview({
   const [bool, setbool] = useState(false);
   const [schedulebool, setschedulebool] = useState(false);
   const [overallRating, setoverallRating] = useState(reviewDetails.rating);
-  const [totalRating, settotalRating] = useState(reviewDetails.total);
+  const [totalRating, settotalRating] = useState(reviewDetails.total | 0);
   const [type, settype] = useState();
   const [disable, setDisable] = useState(true);
   const [loading, setloading] = useState(false);
@@ -114,24 +114,18 @@ export default function ProductOverview({
       })
       .catch((error) => {
         setloading(false);
-        if (error.response.data === "Seller Mismatch") {
-          setbool(true);
-          console.log(error.response.data);
-        } else {
-          toast.error(error.response.data, {
-            position: toast.POSITION.BOTTOM_LEFT,
-          });
-        }
+
+        toast.error(error.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
       });
   };
 
   const stockCheck = () => {
     if (productDetails.stock < quantity || quantity < productDetails.minOrder) {
-      console.log("false " + productDetails.stock, quantity);
       setaddtoCartCheck(true);
     } else {
       setaddtoCartCheck(false);
-      console.log("true " + productDetails.stock, quantity);
     }
   };
   useEffect(stockCheck, [quantity]);
@@ -144,12 +138,15 @@ export default function ProductOverview({
         bool={schedulebool}
         setbool={setschedulebool}
         minOrder={productDetails.minOrder}
+        stock={productDetails.stock}
       />
       <Card>
         <CardContent>
           <FlexBox sx={{ justifyContent: "space-between" }}>
             <Box>
-              <Typography className={classes.name}>
+              <Typography
+                sx={{ fontSize: "20px", fontWeight: "bold", color: "#ba6a62" }}
+              >
                 {productDetails.name}
               </Typography>
               <Box sx={{ display: "flex", alignItem: "center" }}>
@@ -229,7 +226,6 @@ export default function ProductOverview({
           </Box>
           <Box sx={{ display: "flex" }}>
             <Box m={1}>
-              {console.log(addtoCartCheck)}
               <Button
                 disabled={addtoCartCheck}
                 variant="contained"

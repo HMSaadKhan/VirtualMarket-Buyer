@@ -103,14 +103,17 @@ export default function CheckOut(props) {
   const paymentProceed = async () => {
     setbool(true);
     await cartService
-      .CashOnDelivery({ name, address, phone, city })
+      .CashOnDelivery(cartId.id, { name, address, phone, city })
       .then((data) => {
+        toast.success(data.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
         setTimeout(() => {
           getCartItems();
           stateChanged(data);
           setbool(false);
-          history.push("/");
-        }, 1000);
+          history.push("/orders");
+        }, 2000);
       })
       .catch((err) => {
         toast.error(err.response.data, {
@@ -164,6 +167,7 @@ export default function CheckOut(props) {
                     phone={phone}
                     address={address}
                     city={city}
+                    cartId={cartId.id}
                     getCartItems={getCartItems}
                     stateChanged={stateChanged}
                   />

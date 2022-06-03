@@ -19,6 +19,7 @@ const CardDetails = ({
   city,
   stateChanged,
   getCartItems,
+  cartId,
 }) => {
   const [checked, setChecked] = useState(true);
   const [bool, setbool] = useState(false);
@@ -48,14 +49,17 @@ const CardDetails = ({
     console.log("COD run");
     setbool(true);
     await cartService
-      .CashOnDelivery({ name, address, phone, city })
+      .CashOnDelivery(cartId, { name, address, phone, city })
       .then((data) => {
+        toast.success(data.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
         setTimeout(() => {
           getCartItems();
           stateChanged(data);
           setbool(false);
-          history.push("/");
-        }, 1000);
+          history.push("/orders");
+        }, 2000);
       })
       .catch((err) => {
         toast.error(err.response.data, {
@@ -69,13 +73,16 @@ const CardDetails = ({
 
     console.log(Id, name, address, phone, city);
     await cartService
-      .OnlinePayment({ id, name, address, phone, city })
+      .OnlinePayment(cartId, { id, name, address, phone, city })
       .then((data) => {
+        toast.success(data.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
         setTimeout(() => {
           getCartItems();
           stateChanged(data);
           setbool(false);
-          history.push("/");
+          history.push("/orders");
         }, 1000);
       })
       .catch((err) => {

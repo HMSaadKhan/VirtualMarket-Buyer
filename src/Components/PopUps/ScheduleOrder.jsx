@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 });
 
 export default function ScheduleOrder(props) {
-  const { minOrder, bool, setbool, product } = props;
+  const { minOrder, bool, setbool, product, stock } = props;
   const classes = useStyles();
   const [datentime, setdatentime] = React.useState(new Date());
   const [checked, setChecked] = React.useState(false);
@@ -91,7 +91,12 @@ export default function ScheduleOrder(props) {
           <div className={classes.root}>
             <Box>
               <HeadingText>Quantity</HeadingText>
-              <Counter num={quantity} set={setquantity} minValue={minOrder} />
+              <Counter
+                num={quantity}
+                setNum={setquantity}
+                minValue={minOrder}
+                maxValue={stock}
+              />
               <Box sx={{}}>
                 <HeadingText>Date & Time</HeadingText>
                 <DateTimePicker
@@ -128,6 +133,7 @@ export default function ScheduleOrder(props) {
                       />
                       {radio === "PRESET" ? (
                         <Select
+                          sx={{ width: 100 }}
                           variant="standard"
                           value={preset}
                           onChange={(e) => {
@@ -158,9 +164,10 @@ export default function ScheduleOrder(props) {
                       />
                       {radio === "CUSTOM" ? (
                         <Counter
-                          quantity={customRepetition}
-                          value={setcustomRepetition}
+                          num={customRepetition}
+                          setNum={setcustomRepetition}
                           minValue={0}
+                          maxValue={365}
                         />
                       ) : (
                         <></>

@@ -6,33 +6,34 @@ import { NameBar } from "../../Styles/NameBar";
 import { CategoriesContext } from "../../Contexts/Categories/CategoriesState";
 import LoadingScreen from "../../Components/LoadingScreen";
 import { MidPager } from "../../Styles/MidPager";
+import { useParams } from "react-router-dom";
 
 const ProductsByCategory = (props) => {
-  const id = props.match.params.id;
+  const categoryName = useParams();
+
   const [products, setProducts] = useState([]);
   const categories = useContext(CategoriesContext);
   const [loading, setloading] = useState(false);
 
   const [category, setCategory] = useState(
-    categories.filter((item) => item._id === id)
+    categories.filter((item) => item._id === categoryName.id)
   );
 
   useEffect(() => {
     setloading(true);
-    productService.getByCategory(id).then((data) => {
+    productService.getByCategory(categoryName.id).then((data) => {
       setProducts(data);
       setloading(false);
     });
-  }, [id]);
+  }, [categoryName.id]);
   useEffect(() => {
-    setCategory(categories.filter((item) => item._id === id));
-  }, [id]);
+    setCategory(categories.filter((item) => item._id === categoryName.id));
+  }, [categoryName.id]);
 
   return (
     <div>
       <LoadingScreen bool={loading} />
 
-      {console.log(category)}
       {category.length > 0 ? <NameBar name={category[0].name} /> : <></>}
 
       {products.length > 0 ? (

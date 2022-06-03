@@ -8,50 +8,46 @@ import { Inputs } from "../Styles/StyledInput";
 export default function Counter(props) {
   const { num, setNum, minValue, maxValue } = props;
   console.log(props);
-  const [qty, SetQty] = useState(num);
+  //const [qty, SetQty] = useState(num);
   const [minusButtonCheck, setMinusButton] = useState(true);
   const [plusButtonCheck, setPlusButton] = useState(false);
   const [errorCheck, seterror] = useState(false);
   const [errortext, seterrortext] = useState();
 
   const minusButton = () => {
-    console.log(qty, minValue, maxValue);
-    if (qty <= minValue) {
+    if (num <= minValue) {
       setMinusButton(false);
       setPlusButton(false);
-      console.log("minus button If");
     } else {
-      SetQty(qty - 1);
-      setNum(qty - 1);
+      //  SetQty(qty - 1);
+      setNum(num - 1);
       setPlusButton(false);
-      console.log("minus button else");
     }
   };
 
+  React.useEffect(minusButton, []);
+
   const plusButton = () => {
-    console.log(qty, minValue, maxValue);
-    if (qty >= maxValue) {
-      console.log("plus button if");
+    if (num >= maxValue) {
       setPlusButton(true);
       setMinusButton(false);
     } else {
       setMinusButton(false);
-      console.log("plus button else");
-      SetQty(qty + 1);
-      setNum(qty + 1);
+      //SetQty(qty + 1);
+      setNum(num + 1);
     }
   };
+  React.useEffect(minusButton, []);
 
   const NumChange = (e) => {
     if (e.target.value < minValue) {
-      seterrortext("cannot be less than " + minValue);
-      SetQty(e.target.value);
+      //SetQty(e.target.value);
       setNum(e.target.value);
     } else {
-      SetQty(e.target.value);
+      //SetQty(e.target.value);
       setNum(e.target.value);
       seterror(false);
-      seterrortext(""); 
+      seterrortext("");
     }
     if (e.target.value > maxValue) {
       seterror(true);
@@ -66,8 +62,9 @@ export default function Counter(props) {
       </IconButton>
       <Box sx={{ width: "30%" }}>
         <Inputs
+          type="number"
           error={errorCheck}
-          value={qty}
+          value={num}
           helperText={errortext}
           onChange={(e) => {
             NumChange(e);

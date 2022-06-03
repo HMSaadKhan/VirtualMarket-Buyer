@@ -10,7 +10,7 @@ import { Search } from "@mui/icons-material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Favorite from "@mui/icons-material/Favorite";
 import cartService from "../../Services/CartServices";
-
+import Logo from "./virtualmarket.png";
 const useStyles = makeStyles((theme) => ({
   link: {
     color: "black",
@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "10px",
   },
   icon: {
+    cursor: "pointer",
     color: "black",
     marginRight: "10px",
   },
@@ -65,15 +66,20 @@ const MenuBar = (props) => {
           }}
         >
           <div>
-            <Typography
-              sx={{ color: "#ba6a62", fontWeight: "bold", cursor: "pointer" }}
-              variant="h6"
+            {console.log(Logo)}
+            <Box
+              sx={{
+                color: "#ba6a62",
+                cursor: "pointer",
+                height: "100",
+                width: "100",
+              }}
               onClick={(e) => {
                 history.push("/");
               }}
             >
-              VirtualMarket
-            </Typography>
+              <img src={Logo} height="65" width="88" objectfit="contain" />
+            </Box>
           </div>
           <div className={classes.search}>
             <TextField

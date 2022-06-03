@@ -91,9 +91,9 @@ const ScheduledOrder = () => {
           <>
             {scheduleOrders.map((items) => {
               return (
-                <>
+                <Box key={items._id}>
                   {items ? (
-                    <Box key={items._id}>
+                    <Box>
                       <Box>
                         <Box
                           m={2}
@@ -225,7 +225,7 @@ const ScheduledOrder = () => {
                   ) : (
                     <></>
                   )}
-                </>
+                </Box>
               );
             })}
           </>
@@ -255,7 +255,7 @@ const ScheduledOrder = () => {
       ) : (
         <></>
       )}
-      <Typography onClick={handleProfileMenuOpen}>Schedule Orders</Typography>
+      <Typography onClick={handleProfileMenuOpen}>Schedule Items</Typography>
       {renderMenu}
     </div>
   );

@@ -104,11 +104,10 @@ class CartService extends GenericService {
           reject(err);
         });
     });
-  CashOnDelivery = (data) =>
+  CashOnDelivery = (id, data) =>
     new Promise((resolve, reject) => {
-      console.log(data);
       axios
-        .post("orders/codCheckout", data)
+        .post("orders/codCheckout/" + id, data)
         .then((data) => {
           resolve(data);
         })
@@ -116,11 +115,10 @@ class CartService extends GenericService {
           reject(err);
         });
     });
-  OnlinePayment = (data) =>
+  OnlinePayment = (id, data) =>
     new Promise((resolve, reject) => {
-      console.log(data);
       axios
-        .post("orders/onlinePaymentCheckout", data)
+        .post("orders/onlinePaymentCheckout/" + id, data)
         .then((data) => {
           resolve(data);
         })

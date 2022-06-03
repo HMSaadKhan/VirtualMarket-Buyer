@@ -17,14 +17,14 @@ import ChangePassword from "./Pages/SignUpPage/ChangePassword";
 import HomePage from "./Pages/HomePage/HomePage";
 import Cart from "./Pages/Cart/Cart";
 import Favorite from "./Pages/Favorites/Fvaorite";
-
+import BottomNavigationBar from "./Components/BottomNavigation/BottomNavigationBar";
 import BuyerAccount from "./Pages/BuyerAccount/BuyerAccount";
 import ProductDetail from "./Pages/ProductDetail/ProductDetail";
 import NotFound from "./Pages/NotFound/NotFound";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Categories from "./Pages/Categories/Categories";
-
+import Categories from "./Pages/Categories/MenuButtons";
+import MenuButtonsBar from "./Pages/Categories/MenuButtonsBar";
 import CheckOut from "./Pages/CheckOut/CheckOut";
 import Orders from "./Pages/OrderList/Orders";
 import ProductsByCategory from "./Pages/HomePage/ProductsByCategory";
@@ -34,28 +34,34 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./Styles/myStyleSheet";
 import CategoriesState from "./Contexts/Categories/CategoriesState";
 import TopBar from "./Components/MenuBar/TopBar";
-import LandingComponent from "./Components/LandingComponent/LandingComponent";
-function App() {
+function App(props) {
   const [refreshCart, setRefreshCart] = React.useState();
   const getStateChanged = (data) => {
     console.log(data);
     setRefreshCart(data);
+    setUrl(data);
   };
+
+  const [getUrl, setUrl] = React.useState("");
   return (
     <CategoriesState>
       <ThemeProvider theme={theme}>
         <Router>
           <ToastContainer />
           <TopBar />
-          <MenuBar refreshCart={refreshCart} />
-          <Categories />
-          {/* <LandingComponent /> */}
-          {/* <Box sx={{ backgroundColor: "#fafafa" }}> */}
-          <Box sx={{ backgroundColor: "#ffff" }}>
+          <Box sx={{ display: { xs: "none", md: "inline", lg: "inline" } }}>
+            <MenuBar refreshCart={refreshCart} />
+          </Box>
+          <Box sx={{ display: { xs: "inline", md: "none", lg: "none" } }}>
+            <BottomNavigationBar refreshCart={refreshCart} />
+          </Box>
+
+          <MenuButtonsBar />
+          <Box>
             <Switch>
               <Route path="/Login" exact component={Login} />
               <Route path="/Cart">
-                <Cart stateChanged={getStateChanged} />
+                <Cart setUrl={setUrl} stateChanged={getStateChanged} />
               </Route>
               <Route path="/favorite" exact component={Favorite} />
               <Route path="/SignUp" exact component={SignUp} />
@@ -77,14 +83,12 @@ function App() {
                 component={ProductsByCategory}
               />
               <Route path="/search/:id" exact component={ProductsBySearch} />
-              <Route
-                
-                path={["/:anything/:name/:id/", "/:name/:id/"]}
-              >
-                <ProductDetail stateChanged={getStateChanged} />
+              <Route path={["/:anything/:name/:id/", "/:name/:id/"]}>
+                <ProductDetail setUrl={setUrl} stateChanged={getStateChanged} />
               </Route>
-              <Route path="/" exact component={HomePage} />
-
+              <Route path="/">
+                <HomePage setUrl={setUrl} />
+              </Route>
               <Redirect to="/not-found" />
             </Switch>
 

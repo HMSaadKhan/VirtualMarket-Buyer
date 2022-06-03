@@ -5,17 +5,19 @@ import Menu from "@mui/material/Menu";
 import buyerService from "../../Services/BuyerService";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ScheduledOrder from "./ScheduledOrders";
-
+import LogoutIcon from "@mui/icons-material/Logout";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 const AccountIcon = (props) => {
   const [fname, setfname] = useState("");
   const [lname, setlname] = useState("");
+  const [avatar, setavatar] = useState("");
 
   const getData = () => {
     buyerService
-      .getUserName()
+      .getUserAvatar()
       .then((data) => {
-        setfname(data.fName.charAt(0).toUpperCase());
-        setlname(data.lName.charAt(0).toUpperCase());
+        console.log(data);
+        setavatar(data.avatar);
       })
       .catch((err) => {
         console.log(err);
@@ -74,9 +76,9 @@ const AccountIcon = (props) => {
       ) : (
         <div>
           <MenuItem value="/AccountSettings" onClick={handleChange}>
-            Profile
+            <AccountBoxIcon /> Profile
           </MenuItem>
-          <MenuItem value="/orders" onClick={handleChange}>
+          {/* <MenuItem value="/orders" onClick={handleChange}>
             Orders
           </MenuItem>
           <MenuItem value="/warranty" onClick={handleChange}>
@@ -84,8 +86,11 @@ const AccountIcon = (props) => {
           </MenuItem>
           <MenuItem>
             <ScheduledOrder />
+          </MenuItem> */}
+          <MenuItem onClick={handleLogout}>
+            <LogoutIcon />
+            Logout
           </MenuItem>
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </div>
       )}
     </Menu>
@@ -101,21 +106,16 @@ const AccountIcon = (props) => {
         />
       ) : (
         <Avatar
-          sx={{ width: 24, height: 24, bgcolor: "#ba6a62" }}
+          sx={{
+            width: 24,
+            height: 24,
+            bgcolor: "#ba6a62",
+            border: 1,
+            borderColor: "#ba6a62",
+          }}
           onClick={handleProfileMenuOpen}
-        >
-          <Typography
-            sx={{
-              width: 16,
-              height: 16,
-              marginBottom: "6px",
-              marginRight: "4px",
-            }}
-          >
-            {fname}
-            {lname}
-          </Typography>
-        </Avatar>
+          src={avatar}
+        />
       )}
       {renderMenu}
     </div>
