@@ -6,7 +6,7 @@ class WarrantyService extends GenericService {
   constructor() {
     super();
   }
-  getWarranty = () => axios.get("warranties/getByBuyer/");
+  getWarranty = (status) => axios.get("warranties/getByBuyer/" + status);
   claimWarranty = (_id, data) => axios.patch("warranties/request/" + _id, data);
 }
 let warrantyService = new WarrantyService();

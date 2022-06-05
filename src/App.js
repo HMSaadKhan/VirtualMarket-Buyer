@@ -70,7 +70,7 @@ function App(props) {
               <Route path="/forgotpassword" component={ForgotPassword} />
               <Route path="/resetPassword/:id/" exact component={NewPassword} />
               <Route path="/changepassword/" exact component={ChangePassword} />
-              <Route path="/warranty/" component={Warranty} />
+              <Route path="/warranty/:status" component={Warranty} />
               <Route path="/check-out/:id">
                 <CheckOut stateChanged={getStateChanged} />
               </Route>

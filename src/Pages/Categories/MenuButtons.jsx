@@ -107,7 +107,7 @@ export default function MenuButtons(props) {
           <MarginBox>
             <Links
               onClick={() => {
-                history.push("/warranty");
+                history.push("/warranty/ACTIVE");
               }}
             >
               Warranty

@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 });
 
-const WarrantyComponent = ({ warranty }) => {
+const WarrantyComponent = ({ warranty, getWarranties }) => {
   const classes = useStyles();
   console.log(new Date(warranty.expiry));
   console.log(warranty.expiry);
@@ -52,7 +52,11 @@ const WarrantyComponent = ({ warranty }) => {
                 </Typography>
               </Box>
               <Box>
-                <ClaimWriting id={warranty._id} status={warranty.status} />
+                <ClaimWriting
+                  id={warranty._id}
+                  status={warranty.status}
+                  getWarranties={getWarranties}
+                />
               </Box>
             </Box>
             {warranty.sellerComment ? (

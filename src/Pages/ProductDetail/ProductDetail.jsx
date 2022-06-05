@@ -140,7 +140,7 @@ export default function ProductDetail(props) {
                 >
                   {reviewDetails.reviews ? (
                     <>
-                      {console.log("hello")}
+                     
                       <Box>
                         {reviewDetails.reviews.map((review) => (
                           <CommentsDisplay review={review} key={review._id} />

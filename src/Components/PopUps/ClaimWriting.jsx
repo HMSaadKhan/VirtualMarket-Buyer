@@ -42,7 +42,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ClaimWriting({ id, status }) {
+export default function ClaimWriting({ id, status, getWarranties }) {
   const classes = useStyles();
   console.log(status, id);
   const [open, setOpen] = React.useState(false);
@@ -75,11 +75,14 @@ export default function ClaimWriting({ id, status }) {
           position: toast.POSITION.BOTTOM_LEFT,
         });
         handleClose();
+        getWarranties();
       })
       .catch((error) => {
-        toast.error(error.response.data, {
-          position: toast.POSITION.BOTTOM_LEFT,
-        });
+        console.log(error);
+        getWarranties();
+        // toast.error(error.response.data, {
+        //   position: toast.POSITION.BOTTOM_LEFT,
+        // });
       });
   };
 
