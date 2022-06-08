@@ -40,12 +40,39 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
   useEffect(ButtonLabel, []);
 
   return (
-    <Box m={3}>
-      <Card sx={{ maxWidth: 1000, height: "80%", backgroundColor: "#fafafa" }}>
-        <CardContent>
-          <Card sx={{ margin: "10px", maxWidth: 900 }}>
+    <Box m={2}>
+      <Card
+        sx={{
+          backgroundColor: "#fafafa",
+        }}
+      >
+        <CardContent
+          sx={{
+            padding: {
+              xs: "0",
+              sm: "0",
+              md: "20",
+              lg: "20",
+              xl: "20",
+            },
+          }}
+        >
+          <Card sx={{ margin: "10px" }}>
             <CardContent>
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: {
+                    xs: "column",
+                    sm: "column",
+                    md: "row",
+                    lg: "row",
+                    xl: "row",
+                  },
+
+                  justifyContent: "space-between",
+                }}
+              >
                 <FlexBox>
                   <OrderComponentHeading>Order# </OrderComponentHeading>
                   <Typography>{order._id}</Typography>
@@ -69,8 +96,14 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
               ))}
             </CardContent>
           </Card>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Card sx={{ maxWidth: 500 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
+            <Card sx={{ margin: "10px" }}>
               <CardContent>
                 <OrderComponentHeading>Shipping Details</OrderComponentHeading>
                 <SpaceBetween>
@@ -79,7 +112,7 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
                 </SpaceBetween>
                 <SpaceBetween sx={{ alignItems: "start" }}>
                   <OrderComponentHeading>Address</OrderComponentHeading>
-                  <Box sx={{ width: "50%" }}>
+                  <Box sx={{}}>
                     <Typography align="right" className={classes.text}>
                       {order.deliveryAddress}
                     </Typography>
@@ -95,7 +128,7 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
                 </SpaceBetween>
               </CardContent>
             </Card>
-            <Card sx={{ maxWidth: 600, marginLeft: "90px" }}>
+            <Card sx={{ margin: "10px" }}>
               <CardContent>
                 <SpaceBetween>
                   <OrderComponentHeading>Sub Total</OrderComponentHeading>
@@ -117,11 +150,11 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
               </CardContent>
             </Card>
           </Box>
-          <Box sx={{ width: "100%", margin: "20px" }}>
+          <Box sx={{ margin: "10px" }}>
             <Stepper activeStep={index} alternativeLabel>
               {order.events.map((label) => (
                 <Step key={label}>
-                  <StepLabel >
+                  <StepLabel>
                     {label.name}
                     <br />
                     {moment(new Date(label.date)).format("MMMM Do YYYY")}

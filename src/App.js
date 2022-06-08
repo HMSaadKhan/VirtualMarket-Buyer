@@ -49,10 +49,30 @@ function App(props) {
         <Router>
           <ToastContainer />
           <TopBar />
-          <Box sx={{ display: { xs: "none", md: "inline", lg: "inline" } }}>
+          <Box
+            sx={{
+              display: {
+                xs: "none",
+                sm: "inline",
+                md: "inline",
+                lg: "inline",
+                xl: "inline",
+              },
+            }}
+          >
             <MenuBar refreshCart={refreshCart} />
           </Box>
-          <Box sx={{ display: { xs: "inline", md: "none", lg: "none" } }}>
+          <Box
+            sx={{
+              display: {
+                xs: "inline",
+                sm: "none",
+                md: "none",
+                lg: "none",
+                xl: "none",
+              },
+            }}
+          >
             <BottomNavigationBar refreshCart={refreshCart} />
           </Box>
 

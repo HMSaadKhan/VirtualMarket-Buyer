@@ -32,7 +32,7 @@ export default function OrderItems({ items, orderStatus, orderId }) {
           <Typography>{items.productName}</Typography>
         </Box>
         <Box sx={{ width: "25%" }}>
-          <Typography align="center">Qty:{items.quantity}</Typography>
+          <Typography align="center">Qty: {items.quantity}</Typography>
         </Box>
         <Box sx={{ width: "25%" }}>
           <Typography align="center">PKR. {items.totalPrice}</Typography>

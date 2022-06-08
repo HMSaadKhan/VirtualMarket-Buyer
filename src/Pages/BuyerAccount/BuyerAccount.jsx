@@ -11,6 +11,7 @@ import {
   TextField,
   Box,
   Select,
+  Button,
   InputLabel,
   FormControl,
   MenuItem,
@@ -97,18 +98,29 @@ const BuyerAccount = (props) => {
         sx={{
           display: "flex",
           justifyContent: "center",
-          paddingTop: "5%",
-          paddingBottom: "5%",
+          alignItems: "center",
+          marginTop: "50px",
         }}
       >
-        <Box m={1}>
-          <Card sx={{ maxWidth: 900 }}>
-            <CardContent>
+        <Box
+          sx={{
+            width: {
+              xs: "100%",
+              sm: "70%",
+              md: "70%",
+              lg: "50%",
+              xl: "50%",
+            },
+          }}
+        >
+          <Card>
+            <CardContent sx={{}}>
               <CardHeadings align="left">User Profile</CardHeadings>
               {!verified ? (
                 <div>
-                  <MarginBox>
-                    <StyledButton
+                  <Box mb={1}>
+                    <Button
+                      variant="contained"
                       onClick={() => {
                         setCheck(true);
                         buyerService
@@ -127,15 +139,15 @@ const BuyerAccount = (props) => {
                       }}
                     >
                       Verify Account
-                    </StyledButton>
-                  </MarginBox>
+                    </Button>
+                  </Box>
                 </div>
               ) : (
                 <div></div>
               )}
               {check ? (
-                <MarginBox>
-                  <MarginBox>
+                <Box>
+                  <Box>
                     <TextField
                       label="Verification Code"
                       value={otp}
@@ -143,11 +155,10 @@ const BuyerAccount = (props) => {
                         setOtp(e.target.value);
                       }}
                     />
-                  </MarginBox>
+                  </Box>
 
-                  <MarginBox>
-                    <StyledButton
-                      color="success"
+                  <Box mt={1}>
+                    <Button
                       variant="contained"
                       onClick={() => {
                         buyerService
@@ -167,105 +178,22 @@ const BuyerAccount = (props) => {
                       }}
                     >
                       Verify
-                    </StyledButton>
-                  </MarginBox>
-                </MarginBox>
+                    </Button>
+                  </Box>
+                </Box>
               ) : (
                 <div></div>
               )}
-              <MarginBox sx={{ display: "flex" }}>
-                <Box>
-                  <MarginBox sx={{ display: "flex" }}>
-                    <MarginBox>
-                      <TextField
-                        variant="standard"
-                        label="First Name"
-                        placeholder="First Name"
-                        size="small"
-                        value={fName}
-                        onChange={(e) => {
-                          setfName(e.target.value);
-                        }}
-                      />
-                    </MarginBox>
-                    <MarginBox>
-                      <TextField
-                        variant="standard"
-                        label="Last Name"
-                        placeholder="Last Name"
-                        size="small"
-                        value={lName}
-                        onChange={(e) => {
-                          setlName(e.target.value);
-                        }}
-                      />
-                    </MarginBox>
-                  </MarginBox>
-                  <MarginBox sx={{ display: "flex " }}>
-                    <MarginBox>
-                      <TextField
-                        variant="standard"
-                        disabled
-                        label="Email"
-                        placeholder="Email"
-                        helperText="example@example.com"
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                        }}
-                      />
-                    </MarginBox>
-                    <MarginBox>
-                      <TextField
-                        variant="standard"
-                        label="Phone Number"
-                        placeholder="Phone Number"
-                        helperText="03XXXXXXXXX"
-                        size="small"
-                        value={phone}
-                        onChange={(e) => {
-                          setphone(e.target.value);
-                        }}
-                      />
-                    </MarginBox>
-                  </MarginBox>
-                  <MarginBox sx={{ display: "flex ", alignItems: "center" }}>
-                    <MarginBox>
-                      <FormControl sx={{ width: 200 }}>
-                        <InputLabel variant="standard">City</InputLabel>
-
-                        <Select
-                          variant="standard"
-                          value={city}
-                          onChange={(e) => {
-                            selectChange(e);
-                          }}
-                        >
-                          {cities.map((item) => (
-                            <MenuItem key={item} value={item._id}>
-                              {item.name}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </MarginBox>
-                    <MarginBox>
-                      <TextField
-                        variant="standard"
-                        label="Address"
-                        multiline
-                        value={address}
-                        onChange={(e) => {
-                          setAddress(e.target.value);
-                        }}
-                      />
-                    </MarginBox>
-                  </MarginBox>
-                </Box>
-                <MarginBox>
-                  <MarginBox>
-                    <img height="200" weight="200" src={avatar} />
-
+              <Box sx={{ display: { xs: "inline", md: "none" } }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "start",
+                    alignItems: "center",
+                  }}
+                >
+                  <img height="100" weight="100" src={avatar} />
+                  <Box>
                     <form>
                       <>
                         <label htmlFor="file"></label>
@@ -278,8 +206,7 @@ const BuyerAccount = (props) => {
                         />
                       </>
                     </form>
-                  </MarginBox>
-                  <MarginBox>
+
                     <StyledButton
                       variant="contained"
                       onClick={() => {
@@ -288,16 +215,150 @@ const BuyerAccount = (props) => {
                     >
                       Update Image
                     </StyledButton>
+                  </Box>
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "start",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Box
+                  sx={{
+                    width: "100%",
+                  }}
+                >
+                  <MarginBox>
+                    <TextField
+                      variant="standard"
+                      label="First Name"
+                      placeholder="First Name"
+                      size="small"
+                      value={fName}
+                      onChange={(e) => {
+                        setfName(e.target.value);
+                      }}
+                    />
                   </MarginBox>
-                </MarginBox>
-              </MarginBox>
+                  <MarginBox>
+                    <TextField
+                      variant="standard"
+                      disabled
+                      label="Email"
+                      placeholder="Email"
+                      helperText="example@example.com"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                    />
+                  </MarginBox>
+                  <MarginBox>
+                    <FormControl sx={{ maxWidth: 200 }}>
+                      <InputLabel variant="standard">City</InputLabel>
+
+                      <Select
+                        variant="standard"
+                        value={city}
+                        onChange={(e) => {
+                          selectChange(e);
+                        }}
+                      >
+                        {cities.map((item) => (
+                          <MenuItem key={item} value={item._id}>
+                            {item.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </MarginBox>
+                </Box>
+                <Box sx={{ width: "100%" }}>
+                  <MarginBox>
+                    <TextField
+                      variant="standard"
+                      label="Last Name"
+                      placeholder="Last Name"
+                      size="small"
+                      value={lName}
+                      onChange={(e) => {
+                        setlName(e.target.value);
+                      }}
+                    />
+                  </MarginBox>
+                  <MarginBox>
+                    <TextField
+                      variant="standard"
+                      label="Phone Number"
+                      placeholder="Phone Number"
+                      helperText="03XXXXXXXXX"
+                      size="small"
+                      value={phone}
+                      onChange={(e) => {
+                        setphone(e.target.value);
+                      }}
+                    />
+                  </MarginBox>
+                  <MarginBox>
+                    <TextField
+                      variant="standard"
+                      label="Address"
+                      multiline
+                      value={address}
+                      onChange={(e) => {
+                        setAddress(e.target.value);
+                      }}
+                    />
+                  </MarginBox>
+                </Box>
+                <Box sx={{ display: { xs: "none", md: "inline" } }}>
+                  <Box sx={{ width: "100%" }}>
+                    <Box>
+                      <Box>
+                        <img height="200" weight="200" src={avatar} />
+
+                        <form>
+                          <>
+                            <label htmlFor="file"></label>
+                            <input
+                              type="file"
+                              id="file"
+                              onChange={(e) => {
+                                setImage(e.target.files[0]);
+                              }}
+                            />
+                          </>
+                        </form>
+                        <MarginBox>
+                          <StyledButton
+                            variant="contained"
+                            onClick={() => {
+                              send();
+                            }}
+                          >
+                            Update Image
+                          </StyledButton>
+                        </MarginBox>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
               <MarginBox sx={{ display: "flex" }}>
                 <MarginBox>
-                  <StyledButton
+                  <Button
                     variant="contained"
                     onClick={(e) => {
                       buyerService
-                        .editUserDetails({ fName, lName, phone, address, city })
+                        .editUserDetails({
+                          fName,
+                          lName,
+                          phone,
+                          address,
+                          city,
+                        })
                         .then((data) => {
                           console.log(data);
 
@@ -314,17 +375,17 @@ const BuyerAccount = (props) => {
                     }}
                   >
                     Save
-                  </StyledButton>
+                  </Button>
                 </MarginBox>
                 <MarginBox>
-                  <StyledButton
+                  <Button
                     variant="contained"
                     onClick={(e) => {
                       props.history.push("/changepassword");
                     }}
                   >
                     Change Password
-                  </StyledButton>
+                  </Button>
                 </MarginBox>
               </MarginBox>
             </CardContent>

@@ -115,12 +115,9 @@ export default function MenuIconOption(props) {
   );
 
   return (
-    <Box
-      ml={2}
-      sx={{ display: "flex", justifyContent: "left", alignItems: "center" }}
-    >
+    <Box>
       <Box>
-        <MenuIcon sx={{ color: "#ba6a62" }} onClick={handleOptionOpen} />
+        <MenuIcon fontSize="medium" onClick={handleOptionOpen} />
       </Box>
       {renderMenu}
       {renderOption}

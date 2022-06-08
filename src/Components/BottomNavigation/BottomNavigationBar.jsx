@@ -11,6 +11,7 @@ import AccountIcon from "../MenuBar/AccountBar";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
 import { Badge } from "@mui/material";
+import MenuIconOption from "../../Pages/Categories/MenuIconOption";
 export default function BottomNavigationBar(props) {
   const [value, setValue] = React.useState(0);
   const [qty, setQty] = React.useState(0);
@@ -58,23 +59,15 @@ export default function BottomNavigationBar(props) {
           label="Cart"
           icon={
             <Badge badgeContent={qty} color="error">
-              <ShoppingCartOutlinedIcon
-                fontSize="medium"
-                sx={{ color: "#ba6a62" }}
-              />
+              <ShoppingCartOutlinedIcon fontSize="medium" />
             </Badge>
           }
           onClick={() => {
             history.push("/cart");
           }}
         />
-        <BottomNavigationAction
-          label="Profile"
-          icon={<AccountIcon />}
-          onClick={(e) => {
-            console.log("NearBy");
-          }}
-        />
+        <BottomNavigationAction label="Profile" icon={<AccountIcon />} />
+        <BottomNavigationAction label="Menu" icon={<MenuIconOption />} />
       </BottomNavigation>
     </Box>
   );

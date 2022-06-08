@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import LoginAuth from "../../AuthWrapper/isLoginTrue";
 import buyerService from "../../Services/BuyerService";
-import { StyledButton } from "../../Styles/StyledButton";
 const Login = (props) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -41,8 +40,7 @@ const Login = (props) => {
           sx={{
             display: "flex",
             justifyContent: "center",
-            paddingTop: "5%",
-            paddingBottom: "5%",
+            marginTop: "100px",
           }}
         >
           <Card sx={{ maxWidth: 300, padding: "20px" }}>
