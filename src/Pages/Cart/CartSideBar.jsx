@@ -60,18 +60,13 @@ const CartSideBar = ({
 
   return (
     <>
-      <Box m={2} sx={{ width: "25%" }}>
+      <Box m={2}>
+        <Box></Box>
         <Box>
-          <Button
-            variant="contained"
-            sx={{ width: "100%", marginLeft: 0 }}
-            onClick={clearAll}
-          >
-            Clear all
-          </Button>
-        </Box>
-        <Box>
-          <Card sx={{ backgroundColor: "#eeeeee", maxWidth: 400 }}>
+          <Card sx={{ backgroundColor: "#fafafa" }}>
+            <Button fullWidth variant="contained" onClick={clearAll}>
+              Clear all
+            </Button>
             <CardContent>
               <Typography sx={{ fontSize: 18, fontWeight: "bold" }}>
                 Cart Total
@@ -80,20 +75,34 @@ const CartSideBar = ({
               <Typography sx={{ display: "flex " }}>
                 Sub Total
                 <Box ml={8.5}>
-                  <Typography>PKR.{subtotal}</Typography>
+                  <Typography>
+                    {subtotal ? <>PKR.{subtotal}</> : <></>}
+                  </Typography>
                 </Box>
               </Typography>
               <Typography sx={{ display: "flex " }}>
                 Shipping
                 <Box ml={9}>
-                  <Typography>PKR.{deliveryCharge}</Typography>
+                  <Typography>
+                    {deliveryCharge ? (
+                      <>PKR.{deliveryCharge}</>
+                    ) : (
+                      <>
+                        {deliveryCharge === 0 ? (
+                          <>PKR.{deliveryCharge}</>
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    )}
+                  </Typography>
                 </Box>
               </Typography>
               <Divider />
               <Typography sx={{ display: "flex ", fontWeight: "bold" }}>
                 Total{" "}
                 <Box ml={12}>
-                  <Typography>PKR.{total}</Typography>
+                  <Typography>{total ? <>PKR.{total}</> : <></>}</Typography>
                 </Box>
               </Typography>
             </CardContent>

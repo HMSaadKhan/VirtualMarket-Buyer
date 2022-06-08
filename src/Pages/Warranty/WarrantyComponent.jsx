@@ -8,7 +8,7 @@ import moment from "moment";
 const useStyles = makeStyles({
   root: {
     display: "flex",
-    flexDirection: "row",
+
     alignItems: "center",
     justifyContent: "space-between",
   },
@@ -16,38 +16,37 @@ const useStyles = makeStyles({
 
 const WarrantyComponent = ({ warranty, getWarranties }) => {
   const classes = useStyles();
-  console.log(new Date(warranty.expiry));
-  console.log(warranty.expiry);
+
   return (
-    <Box>
-      <Box sx={{ width: 1000, marginTop: "5%", marginBottom: "5%" }}>
+    <Box sx={{ width: "100%" }}>
+      <Box sx={{ marginTop: "5%", marginBottom: "5%" }}>
         <Card>
           <CardContent>
-            <Box className={classes.root}>
+            <Box
+              className={classes.root}
+              sx={{ flexDirection: { xs: "column", sm: "column", lg: "row" } }}
+            >
               <Box sx={{ width: "100%" }}>
                 <Typography>{warranty.productName}</Typography>
               </Box>
               <Box sx={{ width: "100%" }}>
                 <Typography align="center" sx={{ color: "#ba6a62" }}>
-                  {warranty.quantity}
+                  {"Qty:" + warranty.quantity}
                 </Typography>
               </Box>
 
               <Box sx={{ width: "100%" }}>
-                <Typography>
-                  {" "}
+                <Typography align="center">
                   {moment(new Date(warranty.createdAt)).format("MMMM Do YYYY")}
                 </Typography>
               </Box>
               <Box sx={{ width: "100%", color: "red" }}>
-                <Typography>
-                  {" "}
+                <Typography align="center">
                   {moment(new Date(warranty.expiry)).format("MMMM Do YYYY")}
                 </Typography>
               </Box>
               <Box sx={{ width: "100%", fontWeight: "bold" }}>
-                <Typography sx={{ fontWeight: "bold" }}>
-                  {" "}
+                <Typography align="center" sx={{ fontWeight: "bold" }}>
                   {warranty.status}
                 </Typography>
               </Box>

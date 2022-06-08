@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
-import { RadioGroup, Card, CardContent, Checkbox } from "@mui/material";
-import useState from "react-usestateref";
+import { Card, CardContent } from "@mui/material";
 import CartItems from "./CartItems";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { Labels } from "../../Styles/MyTypographies";
 import Radio from "@mui/material/Radio";
 
 const CartComponent = ({
@@ -18,13 +16,12 @@ const CartComponent = ({
   key,
 }) => {
   //const classes = useStyles();
-  const [checked, setChecked] = React.useState(false);
   useEffect(() => {
     setcartId(cart._id);
-  }, []);
+  }, [cart._id]);
 
   const handleRadio = (e) => {
-    if (cart.seller._id == e.target.value) {
+    if (cart.seller._id === e.target.value) {
       setdeliveryCharge(cart.seller.deliveryCharge);
       setsubtotal(cart.subTotal);
       settotal(cart.total);
@@ -36,10 +33,9 @@ const CartComponent = ({
     <>
       <Card
         sx={{
-          width: 600,
           marginBottom: "20px",
           border: 1,
-          backgroundColor: "#eeeeee",
+          backgroundColor: "#fafafa",
         }}
       >
         <CardContent>
@@ -53,15 +49,12 @@ const CartComponent = ({
           {cart.items.map((item) => {
             return (
               <>
-                {console.log("Cart Component" + cartId)}
                 <CartItems
                   cartId={cartId}
                   item={item}
                   key={item._id}
                   getCartItems={getCartItems}
                   getProductId={getProductId}
-
-                  // productQtyChange={productQtyChange}
                 />
               </>
             );

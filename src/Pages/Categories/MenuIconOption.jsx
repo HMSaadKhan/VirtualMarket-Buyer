@@ -26,6 +26,7 @@ export default function MenuIconOption(props) {
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
+    handleOptionClose();
   };
   const handleOptionClose = () => {
     setOptionState(null);
@@ -86,24 +87,19 @@ export default function MenuIconOption(props) {
       open={isOptionOpen}
       onClose={handleOptionClose}
     >
-      <MenuItem
-        onClick={() => {
-          history.push("/");
-        }}
-      >
-        Home
-      </MenuItem>
       <MenuItem onClick={handleMenuOpen}>Products</MenuItem>
       <MenuItem
         onClick={() => {
           history.push("/orders");
+          handleOptionClose();
         }}
       >
         Orders
       </MenuItem>
       <MenuItem
         onClick={() => {
-          history.push("/warranty");
+          history.push("/warranty/ACTIVE");
+          handleOptionClose();
         }}
       >
         Warranty

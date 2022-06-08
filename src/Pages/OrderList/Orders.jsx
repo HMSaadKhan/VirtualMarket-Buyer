@@ -49,7 +49,7 @@ export default function Orders(props) {
       <Box className={classes.root}>
         <Box>
           {orderDetails.length > 0 ? (
-            <Box sx={{ backgroundColor: "red", width: "100%" }}>
+            <Box sx={{ width: "100%" }}>
               {orderDetails.map((order) => {
                 return <OrderComponent order={order} key={order._id} />;
               })}

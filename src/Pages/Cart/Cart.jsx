@@ -1,35 +1,21 @@
 import React, { useEffect } from "react";
-import {
-  Card,
-  RadioGroup,
-  CardContent,
-  Box,
-  Typography,
-  Divider,
-} from "@mui/material";
-import CartItems from "./CartItems";
+import { RadioGroup, Box } from "@mui/material";
 import cartService from "../../Services/CartServices";
 import useState from "react-usestateref";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import Auth from "../../AuthWrapper/IsLoginFalse";
-import { StyledButton } from "../../Styles/StyledButton";
 import LoadingScreen from "../../Components/LoadingScreen";
 import { MidPager } from "../../Styles/MidPager";
 import CartSideBar from "./CartSideBar";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { Labels } from "../../Styles/MyTypographies";
-import Radio from "@mui/material/Radio";
 import CartComponent from "./CartComponent";
 
 const Cart = (props) => {
   //const classes = useStyles();
   const history = useHistory();
 
-  const [cartItem, setCartItem, cartItemRef] = useState([]);
-  const [cartValues, setCartValues] = useState([]);
-  const [subtotal, setsubtotal, subtotalRef] = useState();
+  const [cartItem, setCartItem] = useState([]);
+  const [subtotal, setsubtotal] = useState();
   const [deliveryCharge, setdeliveryCharge] = useState();
   const [total, settotal] = useState();
   const [cartId, setcartId] = useState();
@@ -43,7 +29,7 @@ const Cart = (props) => {
       .getCart()
       .then((data) => {
         console.log(data);
-        if (data.status == 200) {
+        if (data.status === 200) {
           toast.success(data.statusText, {
             position: toast.POSITION.BOTTOM_LEFT,
           });
@@ -90,7 +76,7 @@ const Cart = (props) => {
       }
     }
   };
-  useEffect(setCharges, [cartItem]);
+  useEffect(setCharges, [cartItem, errormessage]);
 
   return (
     <Auth>
@@ -99,58 +85,69 @@ const Cart = (props) => {
       <Box
         sx={{
           display: "flex",
+          flexDirection: { xs: "column", sm: "column", lg: "row" },
           justifyContent: "center",
         }}
       >
-        <Box m={2}>
-          {!errormessage ? (
-            <>
-              {cartItem.length > 0 ? (
-                <>
-                  <RadioGroup
-                    name="use-radio-group"
-                    defaultValue={cartItem[0].seller._id}
-                  >
-                    {cartItem.map((cart) => {
-                      return (
-                        <>
-                          <CartComponent
-                            cart={cart}
-                            setcartId={setcartId}
-                            cartId={cartId}
-                            key={cart.seller._id}
-                            getCartItems={getCartItems}
-                            getProductId={getProductId}
-                            setdeliveryCharge={setdeliveryCharge}
-                            setsubtotal={setsubtotal}
-                            settotal={settotal}
-                          />
-                        </>
-                      );
-                    })}
-                  </RadioGroup>
-                </>
-              ) : (
-                <></>
-              )}
-            </>
-          ) : (
-            <>
-              <Box>
-                <MidPager name={errormessage} />
-              </Box>
-            </>
-          )}
+        <Box sx={{ width: "50%" }}></Box>
+        <Box
+          sx={{
+            width: { xs: "100%", sm: "100%", lg: "100%" },
+          }}
+        >
+          <Box m={2}>
+            {!errormessage ? (
+              <>
+                {cartItem.length > 0 ? (
+                  <>
+                    <RadioGroup
+                      name="use-radio-group"
+                      defaultValue={cartItem[0].seller._id}
+                    >
+                      {cartItem.map((cart) => {
+                        return (
+                          <>
+                            <CartComponent
+                              cart={cart}
+                              setcartId={setcartId}
+                              cartId={cartId}
+                              key={cart.seller._id}
+                              getCartItems={getCartItems}
+                              getProductId={getProductId}
+                              setdeliveryCharge={setdeliveryCharge}
+                              setsubtotal={setsubtotal}
+                              settotal={settotal}
+                            />
+                          </>
+                        );
+                      })}
+                    </RadioGroup>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            ) : (
+              <>
+                <Box>
+                  <MidPager name={errormessage} />
+                </Box>
+              </>
+            )}
+          </Box>
         </Box>
 
-        <CartSideBar
-          cartId={cartId}
-          subtotal={subtotal}
-          deliveryCharge={deliveryCharge}
-          getCartItems={getCartItems}
-          total={total}
-          stateChanged={props.stateChanged}
-        />
+        <Box sx={{ width: { xs: "100%", sm: "100%", lg: "50%" } }}>
+          {" "}
+          <CartSideBar
+            cartId={cartId}
+            subtotal={subtotal}
+            deliveryCharge={deliveryCharge}
+            getCartItems={getCartItems}
+            total={total}
+            stateChanged={props.stateChanged}
+          />
+        </Box>
       </Box>
     </Auth>
   );

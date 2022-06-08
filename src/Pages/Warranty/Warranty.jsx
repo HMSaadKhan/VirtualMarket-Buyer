@@ -12,7 +12,7 @@ import { useHistory } from "react-router-dom";
 const useStyles = makeStyles({
   root: {
     display: "flex",
-    flexDirection: "row",
+    alignItems: "center",
     justifyContent: "center",
   },
 });
@@ -72,11 +72,13 @@ const Warranty = (props) => {
           {warranties ? (
             <Box>
               {warranties.map((warranty, index) => (
-                <WarrantyComponent
-                  key={index}
-                  warranty={warranty}
-                  getWarranties={getWarranties}
-                />
+                <Box sx={{ width: "100%", backgroundColor: "red" }}>
+                  <WarrantyComponent
+                    key={index}
+                    warranty={warranty}
+                    getWarranties={getWarranties}
+                  />
+                </Box>
               ))}
             </Box>
           ) : (

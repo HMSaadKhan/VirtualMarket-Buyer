@@ -10,7 +10,6 @@ import { toast } from "react-toastify";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
   },
@@ -43,7 +42,7 @@ const CartItems = (props) => {
     }
   };
   useEffect(checkDisable, []);
-  
+
   const plusButton = async () => {
     setloading(true);
 
@@ -123,57 +122,76 @@ const CartItems = (props) => {
         <Box sx={{ width: "20%" }}>
           <img className={classes.image} src={item.product.images[0].link} />
         </Box>
-        <Box sx={{ width: "25%" }}>
-          <Typography noWrap>{item.product.name}</Typography>
-          {item.type === "DEFAULT" ? (
-            <></>
-          ) : (
-            <Typography sx={{ mt: 1.5 }} color="text.secondary">
-              {item.type}
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            flexDirection: { xs: "column", sm: "column", lg: "row" },
+          }}
+          s
+        >
+          <Box sx={{ width: "100%" }}>
+            <Typography noWrap align="center">
+              {item.product.name}
             </Typography>
-          )}
-        </Box>
-        <Box sx={{ width: "15%" }}>
-          <Typography sx={{ color: "#ba6a62" }}>
-            PKR.{item.product.price}
-          </Typography>
-        </Box>
-        <Box sx={{ width: "30%" }}>
-          <Box
-            sx={{
-              display: "flex ",
-              alignItems: "center",
-            }}
-          >
-            <IconButton onClick={minusButton} disabled={check}>
-              <Remove />
-            </IconButton>
-            <Box sx={{ width: "50%" }}>
-              <TextField
-                size="small"
-                value={qty}
-                onChange={(e) => {
-                  setqty(e.target.value);
-                  // if (e.filled) {
-                  setTimeout(QuantityInput(e.target.value), 10000);
-                  // }
-                }}
-              />
-            </Box>
-            <IconButton onClick={plusButton} disabled={check}>
-              <Add />
-            </IconButton>
+            {item.type === "DEFAULT" ? (
+              <></>
+            ) : (
+              <Typography
+                align="center"
+                sx={{ mt: 1.5 }}
+                color="text.secondary"
+              >
+                {item.type}
+              </Typography>
+            )}
           </Box>
-        </Box>
-        <Box sx={{ width: "20%" }}>
-          <Typography
-            sx={{
-              fontWeight: "bold",
-              color: "#ba6a62",
-            }}
-          >
-            PKR.{item.totalPrice}
-          </Typography>
+          <Box sx={{ width: "100%" }}>
+            <Typography align="center" sx={{ color: "#ba6a62" }}>
+              PKR.{item.product.price}
+            </Typography>
+          </Box>
+          <Box sx={{ width: "100%" }}>
+            <Box
+              sx={{
+                display: "flex ",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <IconButton onClick={minusButton} disabled={check}>
+                <Remove />
+              </IconButton>
+              <Box>
+                <TextField
+                  fullWidth
+                  size="small"
+                  value={qty}
+                  onChange={(e) => {
+                    setqty(e.target.value);
+                    // if (e.filled) {
+                    setTimeout(QuantityInput(e.target.value), 10000);
+                    // }
+                  }}
+                />
+              </Box>
+              <IconButton onClick={plusButton} disabled={check}>
+                <Add />
+              </IconButton>
+            </Box>
+          </Box>
+          <Box sx={{ width: "100%" }}>
+            <Typography
+              align="center"
+              sx={{
+                fontWeight: "bold",
+                color: "#ba6a62",
+              }}
+            >
+              PKR.{item.totalPrice}
+            </Typography>
+          </Box>
         </Box>
         <Box>
           <Delete onClick={deleteButton} />
