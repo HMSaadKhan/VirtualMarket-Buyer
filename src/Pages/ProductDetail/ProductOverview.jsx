@@ -47,6 +47,7 @@ export default function ProductOverview({
   stateChanged,
   reviewDetails,
   getDetails,
+  setbargainbool,
 }) {
   const history = useHistory();
   const classes = useStyles();
@@ -175,14 +176,12 @@ export default function ProductOverview({
               }}
             >
               <Box>
-                <Typography className={classes.name}>
-                  <Checkbox
-                    checked={favoriteChecked}
-                    onChange={favoriteHandleChange}
-                    icon={<FavoriteBorder />}
-                    checkedIcon={<Favorite />}
-                  />
-                </Typography>
+                <Checkbox
+                  checked={favoriteChecked}
+                  onChange={favoriteHandleChange}
+                  icon={<FavoriteBorder />}
+                  checkedIcon={<Favorite />}
+                />
               </Box>
               <Box>
                 <Tooltip title="schedule Item">
@@ -218,6 +217,7 @@ export default function ProductOverview({
 
           <Box sx={{ display: "flex ", alignItems: "center" }}>
             <Counter
+              disabled={addtoCartCheck}
               num={quantity}
               setNum={SetQuantity}
               minValue={productDetails.minOrder}
@@ -254,7 +254,12 @@ export default function ProductOverview({
               <></>
             )}
             <Box m={1}>
-              <Button variant="contained" disabled={disable}>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setbargainbool(true);
+                }}
+              >
                 Bargain
               </Button>
             </Box>

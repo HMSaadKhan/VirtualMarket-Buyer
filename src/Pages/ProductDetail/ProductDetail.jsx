@@ -14,6 +14,8 @@ import ProductImages from "./ProductImages";
 import ProductOverview from "./ProductOverview";
 import SellerDetails from "./sellerDetails";
 import { MidPager } from "../../Styles/MidPager";
+import ChatBox from "../../Components/Message/Chatbox";
+import Bargain from "../../Components/PopUps/Bargain";
 
 export default function ProductDetail(props) {
   const { id, name } = useParams();
@@ -24,7 +26,9 @@ export default function ProductDetail(props) {
   const [schedulebool, setschedulebool] = useState(false);
   const [loading, setloading] = useState(false);
   const [reviewError, setreviewError] = useState("");
-
+  const [chatbool, setchatbool] = React.useState(false);
+  const [msgbool, setmsgbool] = React.useState(false);
+  const [bargainbool, setbargainbool] = React.useState(false);
   const getDetails = () => {
     setloading(true);
     productService.getProductDetails(id).then((data) => {
@@ -52,6 +56,7 @@ export default function ProductDetail(props) {
   return (
     <Box sx={{ marginBottom: "100px" }}>
       <LoadingScreen bool={loading} />
+      <ChatBox bool={chatbool} setbool={setchatbool} />
 
       {productDetails ? (
         <Box sx={{ maxWidth: "100%" }}>
@@ -60,6 +65,11 @@ export default function ProductDetail(props) {
             bool={schedulebool}
             setbool={setschedulebool}
             minOrder={productDetails.minOrder}
+          />
+          <Bargain
+            productDetails={productDetails}
+            bool={bargainbool}
+            setbool={setbargainbool}
           />
 
           <FlexBox
@@ -101,6 +111,7 @@ export default function ProductDetail(props) {
               }}
             >
               <ProductOverview
+                setbargainbool={setbargainbool}
                 productDetails={productDetails}
                 stateChanged={props.stateChanged}
                 reviewDetails={reviewDetails}
@@ -120,7 +131,11 @@ export default function ProductDetail(props) {
                 display: { xs: "none", sm: "inline" },
               }}
             >
-              <SellerDetails productDetails={productDetails} />
+              <SellerDetails
+                productDetails={productDetails}
+                msgbool={msgbool}
+                setmsgbool={setmsgbool}
+              />
             </Box>
           </FlexBox>
           <Box>
@@ -140,7 +155,6 @@ export default function ProductDetail(props) {
                 >
                   {reviewDetails.reviews ? (
                     <>
-                     
                       <Box>
                         {reviewDetails.reviews.map((review) => (
                           <CommentsDisplay review={review} key={review._id} />

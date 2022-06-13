@@ -1,6 +1,10 @@
 import * as React from "react";
-import { Card, Box, Typography, CardContent } from "@mui/material";
+import { Card, Box, Typography, CardContent, IconButton } from "@mui/material";
+import ChatIcon from "@mui/icons-material/Chat";
+import chatService from "../../Services/ChatService";
 import { makeStyles } from "@mui/styles";
+import ChatMessages from "../../Components/Message/ChatMessages";
+import ChatBox from "../../Components/Message/Chatbox";
 const useStyles = makeStyles({
   cardHeadingText: { color: "text.secondary" },
   cardSubText: {
@@ -11,26 +15,69 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SellerDetails({ productDetails }) {
+export default function SellerDetails({ productDetails, msgbool, setmsgbool }) {
   const classes = useStyles();
+  const [chat, setchat] = React.useState();
+  const [anchor, setanchor] = React.useState();
+
+  const chatInitiate = () => {
+    chatService
+      .chatInitiate({ seller: productDetails.seller._id })
+      .then((data) => {
+        // console.log(data);
+        setchat(data.data);
+        setmsgbool(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
       <Box mb={1}>
         <Card>
-          <CardContent>
-            <Typography className={classes.cardHeadingText}>
-              Shop Name
-            </Typography>
-            <Typography className={classes.cardSubText}>
-              {productDetails.seller.storeName}
-            </Typography>
+          {chat ? (
+            <>
+              {/* {console.log(chat)} */}
+              <ChatMessages
+                bool={msgbool}
+                setbool={setmsgbool}
+                chatId={chat._id}
+                anchor={anchor}
+              />
+              {/* <ChatBox chat={chat} bool={chatbool} setbool={setchatbool} /> */}
+            </>
+          ) : (
+            <></>
+          )}
 
+          <CardContent>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Box>
+                <Typography className={classes.cardHeadingText}>
+                  Shop Name
+                </Typography>
+                <Typography className={classes.cardSubText}>
+                  {productDetails.seller.storeName}
+                </Typography>
+              </Box>
+              <Box>
+                <IconButton
+                  onClick={(e) => {
+                    chatInitiate();
+                    setanchor(e.currentTarget);
+                  }}
+                >
+                  <ChatIcon />
+                </IconButton>
+              </Box>
+            </Box>
             <Typography className={classes.cardHeadingText}>
-              Shop Address
+              Seller City
             </Typography>
             <Typography className={classes.cardSubText}>
-              {productDetails.seller.address}
+              {productDetails.seller.city.name}
             </Typography>
           </CardContent>
         </Card>
@@ -43,7 +90,7 @@ export default function SellerDetails({ productDetails }) {
               Minimum Order Quantity
             </Typography>
             <Typography className={classes.cardSubText}>
-              {productDetails.minOrder + " Product"} 
+              {productDetails.minOrder + " Product"}
             </Typography>
             <Typography className={classes.headingText}>
               Warranty Period

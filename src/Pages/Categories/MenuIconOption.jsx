@@ -61,6 +61,7 @@ export default function MenuIconOption(props) {
             value={item._id}
             onClick={(e) => {
               history.push("/category/" + item._id);
+              setAnchorEl(null);
             }}
           >
             {item.name}

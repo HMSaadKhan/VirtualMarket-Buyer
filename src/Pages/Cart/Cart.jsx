@@ -102,7 +102,7 @@ const Cart = (props) => {
                   <>
                     <RadioGroup
                       name="use-radio-group"
-                      defaultValue={cartItem[0].seller._id}
+                      value={cartItem[0].seller._id}
                     >
                       {cartItem.map((cart) => {
                         return (
