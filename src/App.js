@@ -33,6 +33,7 @@ import Warranty from "./Pages/Warranty/Warranty";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./Styles/myStyleSheet";
 import CategoriesState from "./Contexts/Categories/CategoriesState";
+import ChatAnchor from "./Contexts/ChatAnchor/ChatAnchor";
 import TopBar from "./Components/MenuBar/TopBar";
 function App(props) {
   const [refreshCart, setRefreshCart] = React.useState();
@@ -45,77 +46,90 @@ function App(props) {
   const [getUrl, setUrl] = React.useState("");
   return (
     <CategoriesState>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <ToastContainer />
-          <TopBar />
-          <Box
-            sx={{
-              display: {
-                xs: "none",
-                sm: "inline",
-                md: "inline",
-                lg: "inline",
-                xl: "inline",
-              },
-            }}
-          >
-            <MenuBar refreshCart={refreshCart} />
-          </Box>
-          <Box
-            sx={{
-              display: {
-                xs: "inline",
-                sm: "none",
-                md: "none",
-                lg: "none",
-                xl: "none",
-              },
-            }}
-          >
-            <BottomNavigationBar refreshCart={refreshCart} />
-          </Box>
+      <ChatAnchor>
+        <ThemeProvider theme={theme}>
+          <Router>
+            <ToastContainer />
+            <TopBar />
+            <Box
+              sx={{
+                display: {
+                  xs: "none",
+                  sm: "inline",
+                  md: "inline",
+                  lg: "inline",
+                  xl: "inline",
+                },
+              }}
+            >
+              <MenuBar refreshCart={refreshCart} />
+            </Box>
+            <Box
+              sx={{
+                display: {
+                  xs: "inline",
+                  sm: "none",
+                  md: "none",
+                  lg: "none",
+                  xl: "none",
+                },
+              }}
+            >
+              <BottomNavigationBar refreshCart={refreshCart} />
+            </Box>
 
-          <MenuButtonsBar />
-          <Box>
-            <Switch>
-              <Route path="/Login" exact component={Login} />
-              <Route path="/Cart">
-                <Cart setUrl={setUrl} stateChanged={getStateChanged} />
-              </Route>
-              <Route path="/favorite" exact component={Favorite} />
-              <Route path="/SignUp" exact component={SignUp} />
-              <Route path="/AccountSettings" component={BuyerAccount} />
-              <Route path="/Orders" component={Orders} />
-              <Route path="/forgotpassword" component={ForgotPassword} />
-              <Route path="/resetPassword/:id/" exact component={NewPassword} />
-              <Route path="/changepassword/" exact component={ChangePassword} />
-              <Route path="/warranty/:status" component={Warranty} />
-              <Route path="/check-out/:id">
-                <CheckOut stateChanged={getStateChanged} />
-              </Route>
+            <MenuButtonsBar />
+            <Box>
+              <Switch>
+                <Route path="/Login" exact component={Login} />
+                <Route path="/Cart">
+                  <Cart setUrl={setUrl} stateChanged={getStateChanged} />
+                </Route>
+                <Route path="/favorite" exact component={Favorite} />
+                <Route path="/SignUp" exact component={SignUp} />
+                <Route path="/AccountSettings" component={BuyerAccount} />
+                <Route path="/Orders" component={Orders} />
+                <Route path="/forgotpassword" component={ForgotPassword} />
+                <Route
+                  path="/resetPassword/:id/"
+                  exact
+                  component={NewPassword}
+                />
+                <Route
+                  path="/changepassword/"
+                  exact
+                  component={ChangePassword}
+                />
+                <Route path="/warranty/:status" component={Warranty} />
+                <Route path="/check-out/:id">
+                  <CheckOut stateChanged={getStateChanged} />
+                </Route>
 
-              <Route path="/not-found" component={NotFound} />
+                <Route path="/not-found" component={NotFound} />
 
-              <Route
-                path="/category/:id"
-                exact
-                component={ProductsByCategory}
-              />
-              <Route path="/search/:id" exact component={ProductsBySearch} />
-              <Route path={["/:anything/:name/:id/", "/:name/:id/"]}>
-                <ProductDetail setUrl={setUrl} stateChanged={getStateChanged} />
-              </Route>
-              <Route path="/">
-                <HomePage setUrl={setUrl} />
-              </Route>
-              <Redirect to="/not-found" />
-            </Switch>
+                <Route
+                  path="/category/:id"
+                  exact
+                  component={ProductsByCategory}
+                />
+                <Route path="/search/:id" exact component={ProductsBySearch} />
+                <Route path={["/:anything/:name/:id/", "/:name/:id/"]}>
+                  <ProductDetail
+                    setUrl={setUrl}
+                    stateChanged={getStateChanged}
+                  />
+                </Route>
+                <Route path="/">
+                  <HomePage setUrl={setUrl} />
+                </Route>
+                <Redirect to="/not-found" />
+              </Switch>
 
-            {/* <Footer /> */}
-          </Box>
-        </Router>
-      </ThemeProvider>
+              {/* <Footer /> */}
+            </Box>
+          </Router>
+        </ThemeProvider>
+      </ChatAnchor>
     </CategoriesState>
   );
 }

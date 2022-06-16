@@ -4,31 +4,33 @@ import {
   Box,
   Menu,
   Card,
-  CardContent,
-  Divider,
-  Avatar,
   Typography,
   Button,
-  MenuItem,
   TextField,
+  CardContent,
 } from "@mui/material";
 import moment from "moment";
 
 import { useHistory } from "react-router-dom";
 
-import ChatIcon from "@mui/icons-material/Chat";
-import chatService from "../../Services/ChatService";
 import messageService from "../../Services/MessageService";
+
+import { ChatAnchorContext } from "../../Contexts/ChatAnchor/ChatAnchor";
+
+import { styled } from "@mui/material/styles";
 
 export default function ChatMessages({ bool, setbool, chatId, anchor }) {
   const history = useHistory();
-  const ref = React.useRef();
-  const [msgbool, setmsgbool] = React.useState(false);
-
-  const [messagesent, setmessagesent] = React.useState();
   const [messages, setmessages] = React.useState([]);
   const [msgText, setmsgText] = React.useState("");
-  console.log(chatId);
+  //const anchorContext = React.useContext(ChatAnchorContext);
+  console.log(bool, setbool, chatId);
+  const FlexBox = styled(Box)({
+    display: "flex",
+    alignItems: "center",
+    margin: "5px",
+    flexWrap: "wrap",
+  });
 
   React.useEffect(() => {
     setmessages([]);
@@ -42,10 +44,7 @@ export default function ChatMessages({ bool, setbool, chatId, anchor }) {
         console.log(error.response);
         setmessages([]);
       });
-  }, [chatId, bool]);
-  React.useEffect(() => {
-    ref?.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, msgText]);
+  }, [chatId, bool, messages]);
 
   const send = () => {
     messageService
@@ -53,7 +52,7 @@ export default function ChatMessages({ bool, setbool, chatId, anchor }) {
       .then((chats) => {
         setmessages([
           {
-            sender: "BUYER",
+            sender: "SELLER",
             createdAt: new Date(),
             content: msgText,
             type: "TEXT",
@@ -146,32 +145,158 @@ export default function ChatMessages({ bool, setbool, chatId, anchor }) {
                     // ref={ref}
                   >
                     {message.sender === "BUYER" ? (
-                      <>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            width: "100%",
-                            justifyContent: "right",
-                          }}
-                        >
-                          <Card
-                            sx={{
-                              backgroundColor: "#ba6a63",
-                              margin: "10px",
-                              padding: "10px",
-                            }}
-                          >
-                            <Typography>{message.content}</Typography>
-                          </Card>
-                        </Box>
-                      </>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          width: "100%",
+                          justifyContent: "right",
+                          padding: "10px",
+                        }}
+                      >
+                        {message.type === "OFFER" ? (
+                          <>
+                            <Card
+                              sx={{
+                                backgroundColor: "#fafafa",
+                              }}
+                            >
+                              <CardContent>
+                                <Box
+                                  sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  {" "}
+                                  <Box
+                                    sx={{
+                                      display: "flex ",
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                      height: "70px",
+                                      width: "70px",
+                                    }}
+                                  >
+                                    <Box>
+                                      <img
+                                        height="100%"
+                                        width="100%"
+                                        objectFit="contain"
+                                        src={
+                                          message.Offer.Product.images[0].link
+                                        }
+                                        alt=""
+                                      />
+                                    </Box>
+                                  </Box>
+                                  <Box>
+                                    <Box sx={{ width: "100%" }}>
+                                      <Typography
+                                        sx={{
+                                          color: "#ba6a62",
+                                          fontWeight: "bold",
+                                        }}
+                                      >
+                                        {message.Offer.Product.name}
+                                      </Typography>
+                                    </Box>
+                                    <Box sx={{ width: "100%" }}>
+                                      <FlexBox>
+                                        <Typography
+                                          sx={{
+                                            color: "#ba6a62",
+                                            fontWeight: "bold",
+                                          }}
+                                        >
+                                          Brand:
+                                        </Typography>
+                                        <Typography>
+                                          {message.Offer.Product.brand}
+                                        </Typography>
+                                      </FlexBox>
+                                    </Box>
+                                  </Box>
+                                </Box>
+                                <FlexBox justifyContent="center">
+                                  <FlexBox>
+                                    <Typography
+                                      sx={{
+                                        color: "#ba6a62",
+                                        fontWeight: "bold",
+                                      }}
+                                    >
+                                      Offered Price:
+                                    </Typography>
+                                    <Typography>
+                                      {message.Offer.price + " RS"}
+                                    </Typography>
+                                  </FlexBox>{" "}
+                                  <FlexBox>
+                                    <Typography
+                                      sx={{
+                                        color: "#ba6a62",
+                                        fontWeight: "bold",
+                                      }}
+                                    >
+                                      Required pieces:
+                                    </Typography>
+                                    <Typography>
+                                      {message.Offer.quantity}
+                                    </Typography>
+                                  </FlexBox>{" "}
+                                  <FlexBox>
+                                    <Typography
+                                      sx={{
+                                        color: "#ba6a62",
+                                        fontWeight: "bold",
+                                      }}
+                                    >
+                                      Offer Status:
+                                    </Typography>
+                                    <Typography>
+                                      {message.Offer.status}
+                                    </Typography>
+                                  </FlexBox>
+                                </FlexBox>
+                                <Button
+                                  variant="contained"
+                                  fullWidth
+                                  disabled={
+                                    message.Offer.status === "ACCEPTED"
+                                      ? false
+                                      : true
+                                  }
+                                >
+                                  Add to cart
+                                </Button>
+                              </CardContent>
+                            </Card>
+                          </>
+                        ) : (
+                          <>
+                            {" "}
+                            <Box>
+                              <Card
+                                sx={{
+                                  backgroundColor: "#ba6a63",
+                                  // margin: "10px",
+                                  padding: "5px",
+                                }}
+                              >
+                                <Typography>{message.content}</Typography>
+                              </Card>
+                            </Box>
+                          </>
+                        )}
+                      </Box>
                     ) : (
                       <>
                         <Box
                           sx={{
                             display: "flex",
                             width: "100%",
-                            justifyContent: "right",
+                            justifyContent: "left",
                           }}
                         >
                           <Card

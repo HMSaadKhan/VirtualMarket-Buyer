@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-use-before-define */
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
   Menu,
@@ -12,7 +14,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import moment from "moment";
-
+import { ChatAnchorContext } from "../../Contexts/ChatAnchor/ChatAnchor";
 import { useHistory } from "react-router-dom";
 import ChatMessages from "./ChatMessages";
 import ChatIcon from "@mui/icons-material/Chat";
@@ -28,6 +30,10 @@ export default function ChatBox({ chat, bool, setbool }) {
   const [chats, setchats] = React.useState([]);
   const [chatid, setchatid] = React.useState();
   const [anchor, setanchor] = React.useState();
+  console.log("chat box run");
+  const anchorContext = useContext(ChatAnchorContext);
+  console.log(anchorContext);
+  const ref = React.useRef();
 
   const [msgbool, setmsgbool] = React.useState(false);
   React.useEffect(() => {
@@ -41,6 +47,9 @@ export default function ChatBox({ chat, bool, setbool }) {
       .catch((error) => {
         console.log(error);
       });
+  }, [bool]);
+  React.useEffect(() => {
+    anchorContext.setanchor(ref.current);
   }, [bool]);
 
   const chatList = (
@@ -56,7 +65,7 @@ export default function ChatBox({ chat, bool, setbool }) {
       }}
       id="basic-menu"
       keepMounted
-      anchorEl={anchor}
+      anchorEl={anchorContext.anchor}
       open={bool}
       PaperProps={{
         style: {
@@ -180,11 +189,12 @@ export default function ChatBox({ chat, bool, setbool }) {
           backgroundColor: "white",
         }}
       >
-        <ListItem disablePadding sx={{}}>
+        <ListItem disablePadding sx={{}} ref={ref}>
           <ListItemButton
             onClick={(e) => {
               setbool(true);
               setanchor(e.currentTarget);
+              console.log(e.currentTarget);
             }}
           >
             <ListItemIcon>

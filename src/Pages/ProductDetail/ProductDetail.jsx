@@ -139,8 +139,13 @@ export default function ProductDetail(props) {
             </Box>
           </FlexBox>
           <Box>
-            <Box>
-              <NameBar name={"Reviews"} />
+            <NameBar name={"Reviews"} />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
               {!reviewError ? (
                 <Box
                   sx={{
@@ -148,8 +153,8 @@ export default function ProductDetail(props) {
                       xs: "100%",
                       sm: "100%",
                       md: "20%",
-                      // lg: "30%",
-                      // xl: "30%",
+                      lg: "40%",
+                      xl: "40%",
                     },
                   }}
                 >

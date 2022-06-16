@@ -8,7 +8,7 @@ class ChatService extends GenericService {
     super();
   }
   chatInitiate = (data) => axios.post("chats/initiate/", data);
-  getChats = () => axios.get("chats/getchats/");
+  getChats = () => axios.get("chats/getBuyerchats/");
 }
 let chatService = new ChatService();
 export default chatService;
