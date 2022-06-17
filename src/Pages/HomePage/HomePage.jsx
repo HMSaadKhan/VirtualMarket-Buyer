@@ -10,13 +10,10 @@ const useStyles = makeStyles((theme) => ({
   width: "100%",
 }));
 const HomePage = (props) => {
-  console.log(props);
-
-  const [chatbool, setchatbool] = React.useState(false);  
+  const [chatbool, setchatbool] = React.useState(false);
   const [categories, setCategories] = useState([]);
 
   const getCategory = () => {
-    props.setUrl("/");
     categoryService
       .GetCategories()
       .then((data) => {

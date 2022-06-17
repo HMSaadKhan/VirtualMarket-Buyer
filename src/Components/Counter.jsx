@@ -1,13 +1,12 @@
 import * as React from "react";
 import { Add, Remove } from "@mui/icons-material";
-import { Box, IconButton, TextField } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import useState from "react-usestateref";
-import { styled } from "@mui/material/styles";
 
 import { Inputs } from "../Styles/StyledInput";
 export default function Counter(props) {
-  const { num, setNum, minValue, maxValue } = props;
-  console.log(props);
+  const { num, setNum, minValue, maxValue, check } = props;
+
   //const [qty, SetQty] = useState(num);
   const [minusButtonCheck, setMinusButton] = useState(true);
   const [plusButtonCheck, setPlusButton] = useState(false);
@@ -62,6 +61,9 @@ export default function Counter(props) {
       </IconButton>
       <Box sx={{ width: "30%" }}>
         <Inputs
+          InputProps={{
+            readOnly: check ? true : false,
+          }}
           type="number"
           error={errorCheck}
           value={num}

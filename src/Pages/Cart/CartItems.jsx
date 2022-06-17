@@ -35,7 +35,7 @@ const CartItems = (props) => {
 
   const [check, setcheck] = useState(false);
   const checkDisable = () => {
-    if (item.type === "SAMPLE") {
+    if (!(item.type === "DEFAULT")) {
       setcheck(true);
     } else {
       setcheck(false);
@@ -124,12 +124,10 @@ const CartItems = (props) => {
         </Box>
         <Box
           sx={{
-            width: "100%",
             display: "flex",
             alignItems: "center",
-            flexDirection: { xs: "column", sm: "column", lg: "row" },
+            flexDirection: { xs: "column", sm: "row", md: "row", lg: "row" },
           }}
-          s
         >
           <Box sx={{ width: "100%" }}>
             <Typography noWrap align="center">
@@ -140,7 +138,7 @@ const CartItems = (props) => {
             ) : (
               <Typography
                 align="center"
-                sx={{ mt: 1.5 }}
+                sx={{ mt: 1.5, ml: 1 }}
                 color="text.secondary"
               >
                 {item.type}
@@ -165,6 +163,9 @@ const CartItems = (props) => {
               </IconButton>
               <Box>
                 <TextField
+                  InputProps={{
+                    readOnly: check ? true : false,
+                  }}
                   fullWidth
                   size="small"
                   value={qty}

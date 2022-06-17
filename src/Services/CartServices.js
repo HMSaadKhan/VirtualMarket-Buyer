@@ -171,6 +171,7 @@ class CartService extends GenericService {
           reject(err);
         });
     });
+  addOffer = (id) => axios.post("carts/addoffer/" + id);
 }
 
 let cartService = new CartService();

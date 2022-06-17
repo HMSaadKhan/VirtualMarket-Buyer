@@ -217,7 +217,7 @@ export default function ProductOverview({
 
           <Box sx={{ display: "flex ", alignItems: "center" }}>
             <Counter
-              disabled={addtoCartCheck}
+              check={addtoCartCheck}
               num={quantity}
               setNum={SetQuantity}
               minValue={productDetails.minOrder}

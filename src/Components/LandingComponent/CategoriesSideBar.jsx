@@ -9,7 +9,7 @@ import {
 import React, { useContext } from "react";
 import { CategoriesContext } from "../../Contexts/Categories/CategoriesState";
 import { Link, useHistory } from "react-router-dom";
-import CategoryIcon from "@mui/icons-material/Category";
+
 function CategoriesSideBar() {
   const categories = useContext(CategoriesContext);
   const history = useHistory();

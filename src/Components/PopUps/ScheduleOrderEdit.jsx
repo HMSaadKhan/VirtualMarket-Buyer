@@ -107,9 +107,10 @@ export default function ScheduleOrderEdit(props) {
               <Box>
                 <HeadingText>Quanity</HeadingText>
                 <Counter
-                  quantity={quantity}
-                  value={setquantity}
+                  num={quantity}
+                  setNum={setquantity}
                   minValue={schedule.Product.minOrder}
+                  maxValue={schedule.Product.stock}
                 />
                 <HeadingText>Date & time</HeadingText>
                 <DateTimePicker
@@ -172,9 +173,10 @@ export default function ScheduleOrderEdit(props) {
                         />
                         {repetitionType === "CUSTOM" ? (
                           <Counter
-                            quantity={customRepetition}
-                            value={setcustomRepetition}
-                            minValue={1}
+                            num={customRepetition}
+                            setNum={setcustomRepetition}
+                            minValue={0}
+                            maxValue={365}
                           />
                         ) : (
                           <></>

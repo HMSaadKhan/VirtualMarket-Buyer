@@ -24,33 +24,64 @@ const ItemCard = ({ item }) => {
   const classes = useStyles();
 
   return (
-    <div>
+    <Box>
       <Box className={classes.root}>
-        <Box sx={{ width: "20%" }}>
+        <Box
+          sx={{
+            width: { xs: "50%", sm: "25%", md: "20%", lg: "20%" },
+          }}
+        >
           <img className={classes.image} src={item.product.images[0].link} />
         </Box>
-        <Box sx={{ width: "25%" }}>
-          <Typography>{item.product.name}</Typography>
-          {item.type == "DEFAULT" ? (
-            <></>
-          ) : (
-            <Typography sx={{ mt: 1.5 }} color="text.secondary">
-              {item.type}
+        <Box
+          sx={{
+            width: "80%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: { xs: "center", sm: "center", lg: "space-around" },
+            flexDirection: { xs: "column", sm: "row", md: "row", lg: "row" },
+          }}
+        >
+          <Box sx={{ width: "100%" }}>
+            <Typography>{item.product.name}</Typography>
+            {item.type === "DEFAULT" ? (
+              <></>
+            ) : (
+              <Typography sx={{ mt: 1.5 }} color="text.secondary">
+                {item.type}
+              </Typography>
+            )}
+          </Box>
+          <Box sx={{ width: "100%" }}>
+            <Typography sx={{ color: "#ba6a62" }}>
+              PKR.{item.product.price}
             </Typography>
-          )}
+          </Box>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: {
+                xs: "start",
+                sm: "start",
+                md: "center",
+                lg: "center",
+              },
+            }}
+          >
+            <HeadingText>Qty:</HeadingText>
+            <Typography>{item.quantity}</Typography>
+          </Box>
+          <Box sx={{ width: "100%" }}>
+            <Typography sx={{ fontWeight: "bold", color: "#ba6a62" }}>
+              PKR.{item.totalPrice}
+            </Typography>
+          </Box>
         </Box>
-        <Typography sx={{ color: "#ba6a62" }}>
-          PKR.{item.product.price}
-        </Typography>
-        <HeadingText>Qty:</HeadingText>
-        <Typography>{item.quantity}</Typography>
-
-        <Typography sx={{ fontWeight: "bold", color: "#ba6a62" }}>
-          PKR.{item.totalPrice}
-        </Typography>
       </Box>
       <Divider />
-    </div>
+    </Box>
   );
 };
 

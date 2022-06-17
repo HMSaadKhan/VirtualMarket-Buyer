@@ -2,30 +2,14 @@ import * as React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 
-import {
-  Box,
-  TextField,
-  Typography,
-  Button,
-  InputAdornment,
-} from "@mui/material/";
-import { MenuItem, Select } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { toast } from "react-toastify";
-import Counter from "../Counter";
-import DateTimePicker from "react-datetime-picker";
-import Radio from "@mui/material/Radio";
-import scheduleService from "../../Services/ScheduleService";
-import { NameBar } from "../../Styles/NameBar";
-import { HeadingText, Labels } from "../../Styles/MyTypographies";
-import { StyledButton } from "../../Styles/StyledButton";
-import { CalendarTodayOutlined, Delete } from "@mui/icons-material";
-import CancelIcon from "@mui/icons-material/Cancel";
+import { Box, Typography, Button, InputAdornment } from "@mui/material/";
 
+import { makeStyles } from "@mui/styles";
+import { NameBar } from "../../Styles/NameBar";
 import { styled } from "@mui/material/styles";
 import bargainService from "../../Services/BargainService";
+import LoadingScreen from "../LoadingScreen";
+import { Inputs } from "../../Styles/StyledInput";
 
 const FlexBox = styled(Box)({
   display: "flex",
@@ -39,27 +23,34 @@ const useStyles = makeStyles({
 });
 
 export default function Bargain(props) {
-  const { productDetails, bool, setbool } = props;
+  const { productDetails, bool, setbool, setmsgbool } = props;
   const classes = useStyles();
   const [price, setprice] = React.useState();
   const [quantity, setquantity] = React.useState();
+  const [loading, setloading] = React.useState(false);
 
   const handleClose = () => {
     setbool(!bool);
   };
   const OfferSend = () => {
+    setloading(true);
     bargainService
       .sendOffer({ product: productDetails._id, price, quantity })
       .then((data) => {
         console.log(data);
+        setbool(false);
+        setmsgbool(true);
+        setloading(false);
       })
       .catch((error) => {
-        console.log(error);
+        setloading(false);
+        console.log(error.response);
       });
   };
 
   return (
     <div>
+      <LoadingScreen bool={loading} />
       <Dialog open={bool} onClose={handleClose}>
         <NameBar name={"Bargain"} />
         <DialogContent>
@@ -79,18 +70,20 @@ export default function Bargain(props) {
                       display: "flex ",
                       justifyContent: "center",
                       alignItems: "center",
-                      height: "100px",
-                      width: "100px",
+                      height: "60px",
+                      width: "60px",
                     }}
                   >
                     <Box>
-                      <img
-                        height="100%"
-                        width="100%"
-                        objectFit="contain"
-                        src={productDetails.images[0].link}
-                        alt=""
-                      />
+                      <Box>
+                        <img
+                          height="100%"
+                          width="100%"
+                          objectFit="contain"
+                          src={productDetails.images[0].link}
+                          alt=""
+                        />
+                      </Box>
                     </Box>
                   </Box>
                   <Box>
@@ -144,7 +137,8 @@ export default function Bargain(props) {
               >
                 Quantity:
               </Typography>
-              <TextField
+              <Inputs
+                type="number"
                 value={quantity}
                 onChange={(e) => {
                   setquantity(e.target.value);
@@ -163,7 +157,8 @@ export default function Bargain(props) {
               >
                 Price Offer:
               </Typography>
-              <TextField
+              <Inputs
+                type="number"
                 fullWidth
                 value={price}
                 onChange={(e) => {
@@ -171,7 +166,7 @@ export default function Bargain(props) {
                 }}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">RS</InputAdornment>
+                    <InputAdornment position="end">PKR</InputAdornment>
                   ),
                 }}
               />

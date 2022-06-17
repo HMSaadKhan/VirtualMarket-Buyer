@@ -23,7 +23,6 @@ import ProductDetail from "./Pages/ProductDetail/ProductDetail";
 import NotFound from "./Pages/NotFound/NotFound";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Categories from "./Pages/Categories/MenuButtons";
 import MenuButtonsBar from "./Pages/Categories/MenuButtonsBar";
 import CheckOut from "./Pages/CheckOut/CheckOut";
 import Orders from "./Pages/OrderList/Orders";
@@ -114,13 +113,10 @@ function App(props) {
                 />
                 <Route path="/search/:id" exact component={ProductsBySearch} />
                 <Route path={["/:anything/:name/:id/", "/:name/:id/"]}>
-                  <ProductDetail
-                    setUrl={setUrl}
-                    stateChanged={getStateChanged}
-                  />
+                  <ProductDetail stateChanged={getStateChanged} />
                 </Route>
                 <Route path="/">
-                  <HomePage setUrl={setUrl} />
+                  <HomePage />
                 </Route>
                 <Redirect to="/not-found" />
               </Switch>

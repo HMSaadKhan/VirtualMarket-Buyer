@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-use-before-define */
@@ -5,47 +6,45 @@ import React, { useContext, useState } from "react";
 import {
   Box,
   Menu,
-  Card,
-  CardContent,
+  IconButton,
   Divider,
   Avatar,
   Typography,
-  Button,
   MenuItem,
 } from "@mui/material";
 import moment from "moment";
+import CloseIcon from "@mui/icons-material/Close";
 import { ChatAnchorContext } from "../../Contexts/ChatAnchor/ChatAnchor";
-import { useHistory } from "react-router-dom";
 import ChatMessages from "./ChatMessages";
 import ChatIcon from "@mui/icons-material/Chat";
 import chatService from "../../Services/ChatService";
+import Fab from "@mui/material/Fab";
 import {
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+import { MidPager } from "../../Styles/MidPager";
 
 export default function ChatBox({ chat, bool, setbool }) {
-  const [chats, setchats] = React.useState([]);
-  const [chatid, setchatid] = React.useState();
-  const [anchor, setanchor] = React.useState();
-  console.log("chat box run");
+  const [chats, setchats] = useState([]);
+  const [chatid, setchatid] = useState();
+  const [msgbool, setmsgbool] = useState(false);
+  const [chatperson, setchatperson] = useState();
+
   const anchorContext = useContext(ChatAnchorContext);
-  console.log(anchorContext);
   const ref = React.useRef();
 
-  const [msgbool, setmsgbool] = React.useState(false);
   React.useEffect(() => {
     setchats([]);
     chatService
       .getChats()
       .then((chats) => {
-        console.log(chats);
         setchats(chats.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
       });
   }, [bool]);
   React.useEffect(() => {
@@ -69,6 +68,8 @@ export default function ChatBox({ chat, bool, setbool }) {
       open={bool}
       PaperProps={{
         style: {
+          // height: { sx: "600", sm: "600" },
+          // width: { sx: "100%", sm: "100%" },
           height: 600,
           width: "50ch",
         },
@@ -89,20 +90,23 @@ export default function ChatBox({ chat, bool, setbool }) {
               alignItems: "center",
             }}
           >
-            <ChatIcon />
-            <Typography>Chats</Typography>
+            <Typography
+              ml={2}
+              sx={{ fontSize: "20px", fontWeight: "bold", color: "#ba6a62" }}
+            >
+              Chats
+            </Typography>
           </Box>
-          <Button
+          <IconButton
             onClick={() => {
               setbool(false);
-              console.log("button");
             }}
           >
-            Close
-          </Button>
+            <CloseIcon />
+          </IconButton>
         </Box>
       </Box>
-      <Box sx={{ marginTop: "50px" }}>
+      <Box>
         {chats.length > 0 ? (
           <>
             {chats.map((chat) => {
@@ -117,12 +121,14 @@ export default function ChatBox({ chat, bool, setbool }) {
                   onClick={() => {
                     setmsgbool(true);
                     setchatid(chat._id);
+                    setbool(false);
+                    setchatperson(chat.Seller);
                   }}
                 >
                   {/* <Card>
                     <CardContent> */}
 
-                  <Box sx={{ width: "110px" }}>
+                  <Box sx={{ width: "20%" }}>
                     <Avatar
                       alt="seller avatar"
                       src={chat.Seller.avatar.link}
@@ -130,28 +136,27 @@ export default function ChatBox({ chat, bool, setbool }) {
                     />
                   </Box>
                   <Box
+                    ml={1}
                     sx={{
                       display: "flex",
-                      width: "100%",
+                      maxWidth: "100%",
+                      minWidth: "50%",
+
                       flexDirection: "column",
                       justifyContent: "left",
                     }}
                   >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "left",
-                      }}
-                    >
+                    <Box>
                       <Typography>{chat.Seller.storeName}</Typography>
                     </Box>
                     <Box>
-                      <Typography align="left">{chat.lastMessage}</Typography>
+                      <Typography noWrap align="left">
+                        {chat.lastMessage}
+                      </Typography>
                     </Box>
                   </Box>
-                  <Box sx={{ width: "100px" }}>
+                  <Box pr={5} sx={{ width: "100%" }}>
                     <Typography sx={{ fontSize: "12px" }}>
-                      {/* {moment(chat.lastUpdated).format("LLL")} */}
                       {moment(chat.lastUpdated).calendar()}
                     </Typography>
                   </Box>
@@ -164,7 +169,15 @@ export default function ChatBox({ chat, bool, setbool }) {
             })}
           </>
         ) : (
-          <>no chats</>
+          <>
+            {!chats.length > 0 ? (
+              <>
+                <MidPager name={"No Chats"} />
+              </>
+            ) : (
+              <></>
+            )}
+          </>
         )}
       </Box>
     </Menu>
@@ -176,8 +189,20 @@ export default function ChatBox({ chat, bool, setbool }) {
         bool={msgbool}
         setbool={setmsgbool}
         chatId={chatid}
-        anchor={anchor}
+        chatperson={chatperson}
+        setchatbool={setbool}
       />
+      <Fab
+        ref={ref}
+        color="primary"
+        aria-label="add"
+        sx={{ position: "fixed", bottom: 70, right: "1%", zIndex: 4 }}
+        onClick={(e) => {
+          setbool(true);
+        }}
+      >
+        <ChatIcon />
+      </Fab>
 
       <Box
         sx={{
@@ -189,12 +214,10 @@ export default function ChatBox({ chat, bool, setbool }) {
           backgroundColor: "white",
         }}
       >
-        <ListItem disablePadding sx={{}} ref={ref}>
+        {/* <ListItem disablePadding sx={{}} ref={ref}>
           <ListItemButton
             onClick={(e) => {
               setbool(true);
-              setanchor(e.currentTarget);
-              console.log(e.currentTarget);
             }}
           >
             <ListItemIcon>
@@ -202,7 +225,7 @@ export default function ChatBox({ chat, bool, setbool }) {
             </ListItemIcon>
             <ListItemText primary="Messages" />
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
       </Box>
       {chatList}
     </Box>

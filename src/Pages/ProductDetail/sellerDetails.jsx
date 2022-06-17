@@ -4,7 +4,6 @@ import ChatIcon from "@mui/icons-material/Chat";
 import chatService from "../../Services/ChatService";
 import { makeStyles } from "@mui/styles";
 import ChatMessages from "../../Components/Message/ChatMessages";
-import ChatBox from "../../Components/Message/Chatbox";
 const useStyles = makeStyles({
   cardHeadingText: { color: "text.secondary" },
   cardSubText: {
@@ -18,13 +17,17 @@ const useStyles = makeStyles({
 export default function SellerDetails({ productDetails, msgbool, setmsgbool }) {
   const classes = useStyles();
   const [chat, setchat] = React.useState();
-  const [anchor, setanchor] = React.useState();
+
+  React.useEffect(() => {
+    if (msgbool) {
+      chatInitiate();
+    }
+  }, [msgbool]);
 
   const chatInitiate = () => {
     chatService
       .chatInitiate({ seller: productDetails.seller._id })
       .then((data) => {
-        // console.log(data);
         setchat(data.data);
         setmsgbool(true);
       })
@@ -44,7 +47,7 @@ export default function SellerDetails({ productDetails, msgbool, setmsgbool }) {
                 bool={msgbool}
                 setbool={setmsgbool}
                 chatId={chat._id}
-                anchor={anchor}
+                chatperson={chat.Seller}
               />
               {/* <ChatBox chat={chat} bool={chatbool} setbool={setchatbool} /> */}
             </>
@@ -66,7 +69,6 @@ export default function SellerDetails({ productDetails, msgbool, setmsgbool }) {
                 <IconButton
                   onClick={(e) => {
                     chatInitiate();
-                    setanchor(e.currentTarget);
                   }}
                 >
                   <ChatIcon />

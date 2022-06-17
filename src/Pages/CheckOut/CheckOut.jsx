@@ -24,7 +24,6 @@ const useStyles = makeStyles({
   },
   root: {
     display: "flex",
-    flexDirection: "row",
     justifyContent: "center",
   },
   cardDetails: {},
@@ -148,16 +147,24 @@ export default function CheckOut(props) {
       <LoadingScreen bool={bool} />
       {cartItem ? (
         <>
-          <Box className={classes.root}>
+          <Box
+            className={classes.root}
+            sx={{
+              flexDirection: { xs: "column", sm: "column", lg: "row" },
+              alignItems: { xs: "center", sm: "center", lg: "start" },
+            }}
+          >
             <Box m={2}>
               <HeadingText>Make Your CheckOut Here</HeadingText>
-              <Card sx={{ width: 600 }}>
-                <CardContent>
-                  {cartItem.map((item) => (
-                    <ItemCard item={item} key={item._id} />
-                  ))}
-                </CardContent>
-              </Card>
+              <Box>
+                <Card>
+                  <CardContent>
+                    {cartItem.map((item) => (
+                      <ItemCard item={item} key={item._id} />
+                    ))}
+                  </CardContent>
+                </Card>
+              </Box>
               <br />
 
               {onlinePaymentOption ? (

@@ -16,6 +16,7 @@ import SellerDetails from "./sellerDetails";
 import { MidPager } from "../../Styles/MidPager";
 import ChatBox from "../../Components/Message/Chatbox";
 import Bargain from "../../Components/PopUps/Bargain";
+import DealComponent from "../../Components/DealComponent/DealComponent";
 
 export default function ProductDetail(props) {
   const { id, name } = useParams();
@@ -38,6 +39,7 @@ export default function ProductDetail(props) {
     });
   };
   useEffect(getDetails, [id]);
+  console.log(msgbool);
 
   const getReviews = () => {
     reviewService
@@ -70,6 +72,7 @@ export default function ProductDetail(props) {
             productDetails={productDetails}
             bool={bargainbool}
             setbool={setbargainbool}
+            setmsgbool={setmsgbool}
           />
 
           <FlexBox
@@ -138,6 +141,17 @@ export default function ProductDetail(props) {
               />
             </Box>
           </FlexBox>
+          <Box>
+            <NameBar name={"Deals"} />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <DealComponent />
+            </Box>
+          </Box>
           <Box>
             <NameBar name={"Reviews"} />
             <Box

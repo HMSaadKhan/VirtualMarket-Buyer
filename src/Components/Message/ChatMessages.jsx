@@ -8,28 +8,46 @@ import {
   Button,
   TextField,
   CardContent,
+  IconButton,
+  Avatar,
 } from "@mui/material";
 import moment from "moment";
-
-import { useHistory } from "react-router-dom";
+import SendIcon from "@mui/icons-material/Send";
+import CloseIcon from "@mui/icons-material/Close";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import messageService from "../../Services/MessageService";
 
 import { ChatAnchorContext } from "../../Contexts/ChatAnchor/ChatAnchor";
 
 import { styled } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
+import cartService from "../../Services/CartServices";
 
-export default function ChatMessages({ bool, setbool, chatId, anchor }) {
-  const history = useHistory();
+const useStyles = makeStyles({
+  image: {
+    width: "60px",
+    height: "60px",
+    objectFit: "contain",
+  },
+});
+
+export default function ChatMessages({
+  bool,
+  setbool,
+  chatId,
+  chatperson,
+  setchatbool,
+}) {
+  const classes = useStyles();
   const [messages, setmessages] = React.useState([]);
   const [msgText, setmsgText] = React.useState("");
-  //const anchorContext = React.useContext(ChatAnchorContext);
-  console.log(bool, setbool, chatId);
+  const anchorContext = React.useContext(ChatAnchorContext);
+
   const FlexBox = styled(Box)({
     display: "flex",
     alignItems: "center",
     margin: "5px",
-    flexWrap: "wrap",
   });
 
   React.useEffect(() => {
@@ -44,7 +62,7 @@ export default function ChatMessages({ bool, setbool, chatId, anchor }) {
         console.log(error.response);
         setmessages([]);
       });
-  }, [chatId, bool, messages]);
+  }, [chatId, bool]);
 
   const send = () => {
     messageService
@@ -52,7 +70,7 @@ export default function ChatMessages({ bool, setbool, chatId, anchor }) {
       .then((chats) => {
         setmessages([
           {
-            sender: "SELLER",
+            sender: "BUYER",
             createdAt: new Date(),
             content: msgText,
             type: "TEXT",
@@ -79,7 +97,7 @@ export default function ChatMessages({ bool, setbool, chatId, anchor }) {
         horizontal: "center",
       }}
       id="basic-menu"
-      anchorEl={anchor}
+      anchorEl={anchorContext.anchor}
       open={bool}
       PaperProps={{
         style: {
@@ -109,28 +127,57 @@ export default function ChatMessages({ bool, setbool, chatId, anchor }) {
             alignItems: "center",
           }}
         >
-          <Box
-            m={1}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Typography>Messages</Typography>
-          </Box>
-          <Button
+          {chatperson ? (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <IconButton
+                onClick={() => {
+                  setchatbool(true);
+                  setbool(false);
+                }}
+              >
+                <ArrowBackIcon />
+              </IconButton>
+              <Box>
+                <Avatar
+                  alt="seller avatar"
+                  src={chatperson.avatar.link}
+                  sx={{ width: 36, height: 36, border: 1 }}
+                />
+              </Box>
+              <Box ml={1}>
+                <Typography
+                  sx={{
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                    color: "#ba6a62",
+                  }}
+                >
+                  {chatperson.storeName}
+                </Typography>
+              </Box>
+            </Box>
+          ) : (
+            <></>
+          )}
+
+          <IconButton
             onClick={() => {
               setbool(false);
-              console.log("button");
             }}
           >
-            Close
-          </Button>
+            <CloseIcon />
+          </IconButton>
         </Box>
         <Box
           sx={{
             height: "90%",
-            overflow: "scroll",
+            overflowY: "scroll",
+
             display: "flex",
             flexDirection: "column-reverse",
           }}
@@ -158,37 +205,24 @@ export default function ChatMessages({ bool, setbool, chatId, anchor }) {
                             <Card
                               sx={{
                                 backgroundColor: "#fafafa",
+                                width: "80%",
                               }}
                             >
                               <CardContent>
                                 <Box
                                   sx={{
                                     display: "flex",
-                                    justifyContent: "center",
+                                    justifyContent: "left",
                                     alignItems: "center",
                                   }}
                                 >
                                   {" "}
-                                  <Box
-                                    sx={{
-                                      display: "flex ",
-                                      justifyContent: "center",
-                                      alignItems: "center",
-                                      height: "70px",
-                                      width: "70px",
-                                    }}
-                                  >
-                                    <Box>
-                                      <img
-                                        height="100%"
-                                        width="100%"
-                                        objectFit="contain"
-                                        src={
-                                          message.Offer.Product.images[0].link
-                                        }
-                                        alt=""
-                                      />
-                                    </Box>
+                                  <Box>
+                                    <img
+                                      className={classes.image}
+                                      src={message.Offer.Product.images[0].link}
+                                      alt=""
+                                    />
                                   </Box>
                                   <Box>
                                     <Box sx={{ width: "100%" }}>
@@ -218,7 +252,7 @@ export default function ChatMessages({ bool, setbool, chatId, anchor }) {
                                     </Box>
                                   </Box>
                                 </Box>
-                                <FlexBox justifyContent="center">
+                                <Box justifyContent="left">
                                   <FlexBox>
                                     <Typography
                                       sx={{
@@ -226,10 +260,10 @@ export default function ChatMessages({ bool, setbool, chatId, anchor }) {
                                         fontWeight: "bold",
                                       }}
                                     >
-                                      Offered Price:
+                                      Offered Price:&nbsp;
                                     </Typography>
                                     <Typography>
-                                      {message.Offer.price + " RS"}
+                                      {message.Offer.price + " PKR"}
                                     </Typography>
                                   </FlexBox>{" "}
                                   <FlexBox>
@@ -239,12 +273,12 @@ export default function ChatMessages({ bool, setbool, chatId, anchor }) {
                                         fontWeight: "bold",
                                       }}
                                     >
-                                      Required pieces:
+                                      Quantity:&nbsp;
                                     </Typography>
                                     <Typography>
-                                      {message.Offer.quantity}
+                                      {message.Offer.quantity + " pieces"}
                                     </Typography>
-                                  </FlexBox>{" "}
+                                  </FlexBox>
                                   <FlexBox>
                                     <Typography
                                       sx={{
@@ -252,13 +286,13 @@ export default function ChatMessages({ bool, setbool, chatId, anchor }) {
                                         fontWeight: "bold",
                                       }}
                                     >
-                                      Offer Status:
+                                      Offer Status:&nbsp;
                                     </Typography>
                                     <Typography>
                                       {message.Offer.status}
                                     </Typography>
                                   </FlexBox>
-                                </FlexBox>
+                                </Box>
                                 <Button
                                   variant="contained"
                                   fullWidth
@@ -267,10 +301,28 @@ export default function ChatMessages({ bool, setbool, chatId, anchor }) {
                                       ? false
                                       : true
                                   }
+                                  onClick={() => {
+                                    cartService
+                                      .addOffer(message.Offer._id)
+                                      .then((data) => {
+                                        console.log(data.data);
+                                      })
+                                      .catch((error) => {
+                                        console.log(error.response);
+                                      });
+                                  }}
                                 >
                                   Add to cart
                                 </Button>
                               </CardContent>
+                              <Typography
+                                pr={1}
+                                pb={1}
+                                align="right"
+                                sx={{ fontSize: "10px" }}
+                              >
+                                {moment(message.Offer.createdAt).format("LT")}
+                              </Typography>
                             </Card>
                           </>
                         ) : (
@@ -281,10 +333,21 @@ export default function ChatMessages({ bool, setbool, chatId, anchor }) {
                                 sx={{
                                   backgroundColor: "#ba6a63",
                                   // margin: "10px",
+                                  minWidth: "100px",
+                                  maxWidth: "300px",
                                   padding: "5px",
                                 }}
                               >
-                                <Typography>{message.content}</Typography>
+                                <Typography align="left">
+                                  {message.content}
+                                </Typography>
+
+                                <Typography
+                                  align="right"
+                                  sx={{ fontSize: "10px", color: "white" }}
+                                >
+                                  {moment(message.createdAt).format("LT")}
+                                </Typography>
                               </Card>
                             </Box>
                           </>
@@ -301,12 +364,20 @@ export default function ChatMessages({ bool, setbool, chatId, anchor }) {
                         >
                           <Card
                             sx={{
-                              backgroundColor: "yellow",
-                              margin: "10px",
-                              padding: "10px",
+                              backgroundColor: "#fafafa",
+                              margin: "5px",
+                              minWidth: "100px",
+                              maxWidth: "300px",
+                              padding: "5px",
                             }}
                           >
-                            <Typography>{message.content}</Typography>
+                            <Typography align="left">
+                              {message.content}
+                            </Typography>
+
+                            <Typography align="right" sx={{ fontSize: "10px" }}>
+                              {moment(message.createdAt).format("LT")}
+                            </Typography>
                           </Card>
                         </Box>
                       </>
@@ -344,14 +415,13 @@ export default function ChatMessages({ bool, setbool, chatId, anchor }) {
             }}
           />
 
-          <Button
+          <IconButton
             onClick={() => {
               send();
             }}
           >
-            {" "}
-            send
-          </Button>
+            <SendIcon />
+          </IconButton>
         </Box>
       </Box>
     </Menu>
