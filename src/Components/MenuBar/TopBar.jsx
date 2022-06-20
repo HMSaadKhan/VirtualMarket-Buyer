@@ -34,7 +34,7 @@ export default function TopBar() {
               }
             }}
           >
-            Become a Seller
+            Join us as a Seller
           </Links>
         </Box>
       </Box>

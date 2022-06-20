@@ -35,11 +35,11 @@ const WarrantyComponent = ({ warranty, getWarranties }) => {
                 </Typography>
               </Box>
 
-              <Box sx={{ width: "100%" }}>
+              {/* <Box sx={{ width: "100%" }}>
                 <Typography align="center">
                   {moment(new Date(warranty.createdAt)).format("MMMM Do YYYY")}
                 </Typography>
-              </Box>
+              </Box> */}
               <Box sx={{ width: "100%", color: "red" }}>
                 <Typography align="center">
                   {moment(new Date(warranty.expiry)).format("MMMM Do YYYY")}

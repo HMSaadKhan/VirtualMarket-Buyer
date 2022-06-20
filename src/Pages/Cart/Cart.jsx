@@ -20,9 +20,8 @@ const Cart = (props) => {
   const [total, settotal] = useState();
   const [cartId, setcartId] = useState();
   const [loading, setloading] = useState(false);
-  const [radiodefault, setRadiodefault] = React.useState();
   const [errormessage, setErrorMessage] = useState();
-
+  const [radiochange, setradiochange, radioref] = useState();
   const getCartItems = () => {
     setloading(true);
     cartService
@@ -72,7 +71,9 @@ const Cart = (props) => {
         setsubtotal(cartItem[0].subTotal);
         settotal(cartItem[0].total);
         setcartId(cartItem[0]._id);
-        setRadiodefault(cartItem[0].seller._id);
+        console.warn(radioref.current);
+        setradiochange(cartItem[0].seller._id);
+        console.warn("ID:" + radioref.current);
       }
     }
   };
@@ -100,9 +101,11 @@ const Cart = (props) => {
               <>
                 {cartItem.length > 0 ? (
                   <>
+                    {console.log(String(radioref.current))}
                     <RadioGroup
                       name="use-radio-group"
-                      value={cartItem[0].seller._id}
+                      value={String(radioref.current)}
+                      
                     >
                       {cartItem.map((cart) => {
                         return (
@@ -117,6 +120,7 @@ const Cart = (props) => {
                               setdeliveryCharge={setdeliveryCharge}
                               setsubtotal={setsubtotal}
                               settotal={settotal}
+                              setradiochange={setradiochange}
                             />
                           </>
                         );

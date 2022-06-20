@@ -19,19 +19,26 @@ import ChatMessages from "./ChatMessages";
 import ChatIcon from "@mui/icons-material/Chat";
 import chatService from "../../Services/ChatService";
 import Fab from "@mui/material/Fab";
-import {
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
+import buyerService from "../../Services/BuyerService";
 import { MidPager } from "../../Styles/MidPager";
+import { SocketAPIContext } from "../../Contexts/SocketAPI/SocketAPi";
+import jwtDecode from "jwt-decode";
 
 export default function ChatBox({ chat, bool, setbool }) {
   const [chats, setchats] = useState([]);
   const [chatid, setchatid] = useState();
   const [msgbool, setmsgbool] = useState(false);
   const [chatperson, setchatperson] = useState();
+  const socket = useContext(SocketAPIContext);
+  console.log(socket);
+
+  React.useEffect(() => {
+    if (buyerService.isLoggedIn()) {
+      const buyer = jwtDecode(buyerService.getToken());
+      console.log(buyer);
+      socket.emit("connectUser", buyer._id);
+    }
+  }, [socket]);
 
   const anchorContext = useContext(ChatAnchorContext);
   const ref = React.useRef();
@@ -122,7 +129,7 @@ export default function ChatBox({ chat, bool, setbool }) {
                     setmsgbool(true);
                     setchatid(chat._id);
                     setbool(false);
-                    setchatperson(chat.Seller);
+                    setchatperson(chat);
                   }}
                 >
                   {/* <Card>

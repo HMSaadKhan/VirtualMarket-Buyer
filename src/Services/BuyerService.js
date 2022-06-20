@@ -19,6 +19,11 @@ class BuyerService extends GenericService {
           reject(err);
         });
     });
+
+  getToken = () => {
+    return localStorage.getItem("token");
+  };
+
   register = (data) => this.post("buyers/signup", data);
   logout = () => {
     localStorage.removeItem("token");

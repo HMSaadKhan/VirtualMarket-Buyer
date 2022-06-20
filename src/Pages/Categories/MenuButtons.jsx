@@ -55,6 +55,7 @@ export default function MenuButtons(props) {
             value={item._id}
             onClick={(e) => {
               history.push("/category/" + item._id);
+              handleMenuClose();
             }}
             onChange={(e) => {}}
           >

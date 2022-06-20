@@ -30,6 +30,8 @@ export default function ProductDetail(props) {
   const [chatbool, setchatbool] = React.useState(false);
   const [msgbool, setmsgbool] = React.useState(false);
   const [bargainbool, setbargainbool] = React.useState(false);
+
+
   const getDetails = () => {
     setloading(true);
     productService.getProductDetails(id).then((data) => {
@@ -141,7 +143,7 @@ export default function ProductDetail(props) {
               />
             </Box>
           </FlexBox>
-          <Box>
+          {/* <Box>
             <NameBar name={"Deals"} />
             <Box
               sx={{
@@ -151,7 +153,7 @@ export default function ProductDetail(props) {
             >
               <DealComponent />
             </Box>
-          </Box>
+          </Box> */}
           <Box>
             <NameBar name={"Reviews"} />
             <Box
@@ -162,15 +164,17 @@ export default function ProductDetail(props) {
             >
               {!reviewError ? (
                 <Box
-                  sx={{
-                    width: {
-                      xs: "100%",
-                      sm: "100%",
-                      md: "20%",
-                      lg: "40%",
-                      xl: "40%",
-                    },
-                  }}
+                  sx={
+                    {
+                      // width: {
+                      //   xs: "100%",
+                      //   sm: "100%",
+                      //   md: "20%",
+                      //   lg: "100%",
+                      //   xl: "100%",
+                      // },
+                    }
+                  }
                 >
                   {reviewDetails.reviews ? (
                     <>

@@ -10,6 +10,7 @@ const CartComponent = ({
   getProductId,
   setdeliveryCharge,
   setsubtotal,
+  setradiochange,
   settotal,
   setcartId,
   cartId,
@@ -25,6 +26,7 @@ const CartComponent = ({
       setdeliveryCharge(cart.seller.deliveryCharge);
       setsubtotal(cart.subTotal);
       settotal(cart.total);
+      setradiochange(cart.seller._id);
       setcartId(cart._id);
     }
   };

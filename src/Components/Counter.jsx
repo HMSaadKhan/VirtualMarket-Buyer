@@ -6,7 +6,7 @@ import useState from "react-usestateref";
 import { Inputs } from "../Styles/StyledInput";
 export default function Counter(props) {
   const { num, setNum, minValue, maxValue, check } = props;
-
+  console.log(num, minValue, maxValue, check);
   //const [qty, SetQty] = useState(num);
   const [minusButtonCheck, setMinusButton] = useState(true);
   const [plusButtonCheck, setPlusButton] = useState(false);
@@ -33,7 +33,7 @@ export default function Counter(props) {
     } else {
       setMinusButton(false);
       //SetQty(qty + 1);
-      setNum(num + 1);
+      setNum(parseInt(num) + 1);
     }
   };
   React.useEffect(minusButton, []);
@@ -61,13 +61,13 @@ export default function Counter(props) {
       </IconButton>
       <Box sx={{ width: "30%" }}>
         <Inputs
+          sx={{ color: "black" }}
           InputProps={{
             readOnly: check ? true : false,
           }}
           type="number"
           error={errorCheck}
           value={num}
-          helperText={errortext}
           onChange={(e) => {
             NumChange(e);
           }}

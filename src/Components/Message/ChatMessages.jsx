@@ -23,7 +23,7 @@ import { ChatAnchorContext } from "../../Contexts/ChatAnchor/ChatAnchor";
 import { styled } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import cartService from "../../Services/CartServices";
-
+import { SocketAPIContext } from "../../Contexts/SocketAPI/SocketAPi";
 const useStyles = makeStyles({
   image: {
     width: "60px",
@@ -43,6 +43,7 @@ export default function ChatMessages({
   const [messages, setmessages] = React.useState([]);
   const [msgText, setmsgText] = React.useState("");
   const anchorContext = React.useContext(ChatAnchorContext);
+  const socket = React.useContext(SocketAPIContext);
 
   const FlexBox = styled(Box)({
     display: "flex",
@@ -64,21 +65,33 @@ export default function ChatMessages({
       });
   }, [chatId, bool]);
 
+  React.useEffect(() => {
+    socket.on("receivemsg", (senderID, receiverID, msg, roomID) => {
+      console.log(senderID, receiverID, msg, roomID);
+      if (chatId === roomID) {
+        setmessages([msg, ...messages]);
+      }
+    });
+  }, [socket]);
+
   const send = () => {
+    const msg = {
+      sender: "BUYER",
+      createdAt: new Date(),
+      content: msgText,
+      type: "TEXT",
+    };
+    socket.emit("sendmsg", {
+      senderID: chatperson.Buyer,
+      receiverID: chatperson.Seller._id,
+      msg: msg,
+      roomID: chatId,
+    });
     messageService
       .sendMessage(chatId, { content: msgText })
       .then((chats) => {
-        setmessages([
-          {
-            sender: "BUYER",
-            createdAt: new Date(),
-            content: msgText,
-            type: "TEXT",
-          },
-          ...messages,
-        ]);
+        setmessages([msg, ...messages]);
         setmsgText("");
-        console.log(chats.data);
       })
       .catch((error) => {
         console.log(error.response);
@@ -145,7 +158,7 @@ export default function ChatMessages({
               <Box>
                 <Avatar
                   alt="seller avatar"
-                  src={chatperson.avatar.link}
+                  src={chatperson.Seller.avatar.link}
                   sx={{ width: 36, height: 36, border: 1 }}
                 />
               </Box>
@@ -157,7 +170,7 @@ export default function ChatMessages({
                     color: "#ba6a62",
                   }}
                 >
-                  {chatperson.storeName}
+                  {chatperson.Seller.storeName}
                 </Typography>
               </Box>
             </Box>

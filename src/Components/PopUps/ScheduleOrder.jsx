@@ -2,7 +2,7 @@ import * as React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 
-import Box from "@mui/material/Box";
+import { Box, Typography } from "@mui/material/";
 import { MenuItem, Select } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Checkbox from "@mui/material/Checkbox";
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 });
 
 export default function ScheduleOrder(props) {
-  const { minOrder, bool, setbool, product, stock } = props;
+  const { minOrder, bool, setbool, product, stock, check } = props;
   const classes = useStyles();
   const [datentime, setdatentime] = React.useState(new Date());
   const [checked, setChecked] = React.useState(false);
@@ -96,7 +96,36 @@ export default function ScheduleOrder(props) {
                 setNum={setquantity}
                 minValue={minOrder}
                 maxValue={stock}
+                check={minOrder > stock ? true : false}
               />
+              <Box>
+                {quantity > stock ? (
+                  <>
+                    {minOrder > stock ? (
+                      <></>
+                    ) : (
+                      <>
+                        <Typography m={1} color="red" variant="subtitle">
+                          {" "}
+                          Maximum {stock} products can be ordered
+                        </Typography>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
+                {quantity < minOrder ? (
+                  <>
+                    <Typography m={1} color="red" variant="subtitle">
+                      {" "}
+                      Minimum {minOrder} product can be ordered
+                    </Typography>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </Box>
               <Box sx={{}}>
                 <HeadingText>Date & Time</HeadingText>
                 <DateTimePicker
@@ -163,12 +192,44 @@ export default function ScheduleOrder(props) {
                         label={<Labels>Custom Days</Labels>}
                       />
                       {radio === "CUSTOM" ? (
-                        <Counter
-                          num={customRepetition}
-                          setNum={setcustomRepetition}
-                          minValue={0}
-                          maxValue={365}
-                        />
+                        <>
+                          <Counter
+                            num={customRepetition}
+                            setNum={setcustomRepetition}
+                            minValue={0}
+                            maxValue={365}
+                          />
+                          <Box>
+                            {customRepetition > 365 ? (
+                              <>
+                                <Typography
+                                  m={1}
+                                  color="red"
+                                  variant="subtitle"
+                                >
+                                  {" "}
+                                  Maximum 365 days can be scheduled
+                                </Typography>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                            {customRepetition < 1 ? (
+                              <>
+                                <Typography
+                                  m={1}
+                                  color="red"
+                                  variant="subtitle"
+                                >
+                                  {" "}
+                                  Minimum 1 days can be scheduled
+                                </Typography>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </Box>
+                        </>
                       ) : (
                         <></>
                       )}

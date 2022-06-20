@@ -22,17 +22,23 @@ export default function CommentsDisplay({ review }) {
   return (
     <div className={classes.root}>
       <Box
-        // sx={{
-        //   width: {
-        //     xs: "50%",
-        //     sm: "50%",
-        //     md: "30%",
-        //     lg: "30%",
-        //     xl: "30%",
-        //   },
-        // }}
+      // sx={{
+      //   width: {
+      //     xs: "50%",
+      //     sm: "50%",
+      //     md: "30%",
+      //     lg: "30%",
+      //     xl: "30%",
+      //   },
+      // }}
       >
-        <Card sx={{ display: "flex" }}>
+        <Card
+          sx={{
+            display: "flex",
+            minWidth: 400,
+            maxWidth: 400,
+          }}
+        >
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <CardContent sx={{ flex: "1 0 auto" }}>
               <Typography>

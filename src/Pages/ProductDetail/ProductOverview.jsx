@@ -115,7 +115,10 @@ export default function ProductOverview({
       })
       .catch((error) => {
         setloading(false);
-
+        console.log(error.response);
+        if (error.response.data === "Product Out of Stock") {
+          window.location.reload();
+        }
         toast.error(error.response.data, {
           position: toast.POSITION.BOTTOM_LEFT,
         });
@@ -194,6 +197,14 @@ export default function ProductOverview({
                         setschedulebool(true);
                       } else {
                         history.push("/login");
+                        // history.push("/login", [
+                        //   "/:anything/:name/:id/",
+                        //   "/" +
+                        //     productDetails.name +
+                        //     "/" +
+                        //     productDetails._id +
+                        //     "/",
+                        // ]);
                       }
                     }}
                   />
@@ -215,14 +226,46 @@ export default function ProductOverview({
             </Typography>
           </Box>
 
-          <Box sx={{ display: "flex ", alignItems: "center" }}>
-            <Counter
-              check={addtoCartCheck}
-              num={quantity}
-              setNum={SetQuantity}
-              minValue={productDetails.minOrder}
-              maxValue={productDetails.stock}
-            />
+          <Box>
+            <Box sx={{ display: "flex ", alignItems: "center" }}>
+              <Counter
+                check={
+                  productDetails.minOrder > productDetails.stock ? true : false
+                }
+                num={quantity}
+                setNum={SetQuantity}
+                minValue={productDetails.minOrder}
+                maxValue={productDetails.stock}
+              />
+            </Box>
+            <Box>
+              {quantity > productDetails.stock && productDetails.stock > 0 ? (
+                <>
+                  {productDetails.minOrder > productDetails.stock ? (
+                    <></>
+                  ) : (
+                    <>
+                      <Typography m={1} color="red" variant="subtitle">
+                        {" "}
+                        Maximum {productDetails.stock} products can be ordered
+                      </Typography>
+                    </>
+                  )}
+                </>
+              ) : (
+                <></>
+              )}
+              {quantity < productDetails.minOrder ? (
+                <>
+                  <Typography m={1} color="red" variant="subtitle">
+                    {" "}
+                    Minimum {productDetails.minOrder} product can be ordered
+                  </Typography>
+                </>
+              ) : (
+                <></>
+              )}
+            </Box>
           </Box>
           <Box sx={{ display: "flex" }}>
             <Box m={1}>
