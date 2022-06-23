@@ -66,7 +66,6 @@ const MenuBar = (props) => {
           }}
         >
           <div>
-            {console.log(Logo)}
             <Box
               sx={{
                 color: "#ba6a62",

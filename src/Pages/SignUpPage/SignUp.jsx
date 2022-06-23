@@ -84,7 +84,7 @@ const Signup = (props) => {
                 >
                   SIGN UP
                 </Typography>
-                <FlexBox>
+                {/* <FlexBox>
                   <FlexBox m={1}>
                     <TextField
                       fullWidth
@@ -123,7 +123,7 @@ const Signup = (props) => {
                       }}
                     />
                   </FlexBox>
-                </FlexBox>
+                </FlexBox> */}
 
                 <FlexBox m={1}>
                   <TextField

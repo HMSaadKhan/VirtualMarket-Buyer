@@ -11,11 +11,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "left",
   },
   image: {
-    width: "100px",
-    height: "100px",
+    width: "60px",
+    height: "60px",
     objectFit: "contain",
   },
 }));
@@ -119,26 +119,30 @@ const CartItems = (props) => {
       <LoadingScreen bool={loading} />
 
       <Box className={classes.root}>
-        <Box sx={{ width: "20%" }}>
+        <Box
+          sx={{
+            width: "15%",
+          }}
+        >
           <img className={classes.image} src={item.product.images[0].link} />
         </Box>
         <Box
           sx={{
             display: "flex",
+            width: "100%",
             alignItems: "center",
+            justifyContent: "space-between",
             flexDirection: { xs: "column", sm: "row", md: "row", lg: "row" },
           }}
         >
           <Box sx={{ width: "100%" }}>
-            <Typography noWrap align="center">
-              {item.product.name}
-            </Typography>
+            <Typography noWrap>{item.product.name}</Typography>
             {item.type === "DEFAULT" ? (
               <></>
             ) : (
               <Typography
-                align="center"
-                sx={{ mt: 1.5, ml: 1 }}
+                // align="center"
+                sx={{ ml: 1 }}
                 color="text.secondary"
               >
                 {item.type}
@@ -150,37 +154,37 @@ const CartItems = (props) => {
               PKR.{item.product.price}
             </Typography>
           </Box>
-          <Box sx={{ width: "100%" }}>
-            <Box
-              sx={{
-                display: "flex ",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <IconButton onClick={minusButton} disabled={check}>
-                <Remove />
-              </IconButton>
-              <Box>
-                <TextField
-                  InputProps={{
-                    readOnly: check ? true : false,
-                  }}
-                  fullWidth
-                  size="small"
-                  value={qty}
-                  onChange={(e) => {
-                    setqty(e.target.value);
-                    // if (e.filled) {
-                    setTimeout(QuantityInput(e.target.value), 10000);
-                    // }
-                  }}
-                />
-              </Box>
-              <IconButton onClick={plusButton} disabled={check}>
-                <Add />
-              </IconButton>
+          <Box
+            sx={{
+              width: "100%",
+
+              display: "flex ",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <IconButton onClick={minusButton} disabled={check}>
+              <Remove />
+            </IconButton>
+            <Box>
+              <TextField
+                InputProps={{
+                  readOnly: check ? true : false,
+                }}
+                fullWidth
+                size="small"
+                value={qty}
+                onChange={(e) => {
+                  setqty(e.target.value);
+                  // if (e.filled) {
+                  setTimeout(QuantityInput(e.target.value), 10000);
+                  // }
+                }}
+              />
             </Box>
+            <IconButton onClick={plusButton} disabled={check}>
+              <Add />
+            </IconButton>
           </Box>
           <Box sx={{ width: "100%" }}>
             <Typography
@@ -194,7 +198,7 @@ const CartItems = (props) => {
             </Typography>
           </Box>
         </Box>
-        <Box>
+        <Box sx={{ width: "10%" }}>
           <Delete onClick={deleteButton} />
         </Box>
       </Box>

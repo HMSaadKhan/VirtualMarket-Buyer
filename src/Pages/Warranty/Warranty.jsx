@@ -42,6 +42,7 @@ const Warranty = (props) => {
           display: "flex ",
           justifyContent: "center",
           flexDirection: "column",
+          marginBottom: "50px",
         }}
       >
         <Box sx={{ display: "flex ", justifyContent: "center" }}>

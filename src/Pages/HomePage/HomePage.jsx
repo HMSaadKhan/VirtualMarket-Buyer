@@ -7,7 +7,7 @@ import ChatBox from "../../Components/Message/Chatbox";
 import { Box } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
-  width: "100%",
+  root: { marginBottom: "50px" },
 }));
 const HomePage = (props) => {
   const [chatbool, setchatbool] = React.useState(false);

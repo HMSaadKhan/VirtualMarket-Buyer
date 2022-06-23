@@ -32,7 +32,7 @@ const ProductsByCategory = (props) => {
     <Auth>
       <LoadingScreen bool={loading} />
 
-      <Box>
+      <Box sx={{ marginBottom: "50px" }}>
         <NameBar name={"Favourties"} />
         {products ? (
           <>

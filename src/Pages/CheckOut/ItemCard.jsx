@@ -20,7 +20,6 @@ const useStyles = makeStyles({
 });
 
 const ItemCard = ({ item }) => {
-  console.log(item);
   const classes = useStyles();
 
   return (
@@ -28,7 +27,7 @@ const ItemCard = ({ item }) => {
       <Box className={classes.root}>
         <Box
           sx={{
-            width: { xs: "50%", sm: "25%", md: "20%", lg: "20%" },
+            width: { xs: "50%", sm: "25%", md: "20%", lg: "25%" },
           }}
         >
           <img className={classes.image} src={item.product.images[0].link} />
@@ -47,7 +46,7 @@ const ItemCard = ({ item }) => {
             {item.type === "DEFAULT" ? (
               <></>
             ) : (
-              <Typography sx={{ mt: 1.5 }} color="text.secondary">
+              <Typography sx={{}} color="text.secondary">
                 {item.type}
               </Typography>
             )}

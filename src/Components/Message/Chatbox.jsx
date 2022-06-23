@@ -35,7 +35,7 @@ export default function ChatBox({ chat, bool, setbool }) {
   React.useEffect(() => {
     if (buyerService.isLoggedIn()) {
       const buyer = jwtDecode(buyerService.getToken());
-      console.log(buyer);
+
       socket.emit("connectUser", buyer._id);
     }
   }, [socket]);

@@ -8,7 +8,6 @@ const ChatAnchor = (props) => {
 
   return (
     <>
-      {console.log({ anchor, setanchor })}
       <ChatAnchorContext.Provider value={{ anchor, setanchor }}>
         {props.children}
       </ChatAnchorContext.Provider>

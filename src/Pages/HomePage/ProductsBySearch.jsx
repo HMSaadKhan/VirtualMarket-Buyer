@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, Box } from "@mui/material";
 import productService from "../../Services/ProductServices";
 
 import ProductComponent from "../../Pages/Product/ProductComponent";
@@ -27,7 +27,7 @@ const ProductsBySearch = (props) => {
   }, [search.id]);
 
   return (
-    <div>
+    <Box sx={{ marginBottom: "50px" }}>
       <LoadingScreen bool={loading} />
 
       <NameBar name={"Results for " + search.id} />
@@ -44,7 +44,7 @@ const ProductsBySearch = (props) => {
           <MidPager name={"No Items Found"} />
         </>
       )}
-    </div>
+    </Box>
   );
 };
 

@@ -25,6 +25,7 @@ const useStyles = makeStyles({
   root: {
     display: "flex",
     justifyContent: "center",
+    marginBottom: "50px",
   },
   cardDetails: {},
   innerContainer: { display: "flex", flexDirection: "column", width: 800 },
@@ -35,13 +36,13 @@ export default function CheckOut(props) {
   const history = useHistory();
 
   const cartId = useParams();
-  console.log(cartId);
 
   const classes = useStyles();
 
   const [cartItem, setCartItem] = useState([]);
   const [cartValues, setCartValues] = useState([]);
   const [deliveryCharge, setdeliveryCharge] = useState();
+  const [advancePayment, setadvancePayment] = useState();
   const [name, setname] = useState("");
   const [address, setaddress] = useState("");
   const [city, setCity] = useState("");
@@ -50,14 +51,9 @@ export default function CheckOut(props) {
   const [bool, setbool] = useState(false);
   const [onlinePaymentOption, setonlinePaymentOption] = useState();
   const getCities = () => {
-    cityService
-      .GetCities()
-      .then((data) => {
-        setcities(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    cityService.GetCities().then((data) => {
+      setcities(data);
+    });
   };
   React.useEffect(getCities, []);
 
@@ -73,6 +69,8 @@ export default function CheckOut(props) {
         setCartItem(data.items);
         setCartValues(data);
         setdeliveryCharge(data.seller.deliveryCharge);
+        setonlinePaymentOption(data.seller.onlinePaymentOption);
+        setadvancePayment(data.advance);
       })
       .catch((err) => {
         // setCartItem(null);
@@ -94,7 +92,7 @@ export default function CheckOut(props) {
         setphone(data.data.phone);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
       });
   };
   useEffect(getDeliveryDetails, []);
@@ -132,12 +130,12 @@ export default function CheckOut(props) {
   const handlePhone = (data) => {
     setphone(data);
   };
-  const PaymentMethods = () => {
-    cartService.SellerPaymentMethod().then((data) => {
-      setonlinePaymentOption(data.data.onlinePaymentOption);
-    });
-  };
-  useEffect(PaymentMethods, []);
+  // const PaymentMethods = () => {
+  //   cartService.SellerPaymentMethod().then((data) => {
+  //     setonlinePaymentOption(data.data.onlinePaymentOption);
+  //   });
+  // };
+  // useEffect(PaymentMethods, []);
 
   const stripePromise = loadStripe(
     "pk_test_51KgTkABawPiCT74LKv8JcHCRedbnbeBQb2kmzemxbOEPLeYXn59W9vFsq7bT7d3fvgtYqAWYOdF7ZetxUcHutVAP00a87p6k3l"
@@ -150,24 +148,26 @@ export default function CheckOut(props) {
           <Box
             className={classes.root}
             sx={{
+              width: "100%",
               flexDirection: { xs: "column", sm: "column", lg: "row" },
               alignItems: { xs: "center", sm: "center", lg: "start" },
             }}
           >
             <Box m={2}>
               <HeadingText>Make Your CheckOut Here</HeadingText>
-              <Box>
+              <Box sx={{ width: "100%" }}>
                 <Card>
                   <CardContent>
-                    {cartItem.map((item) => (
-                      <ItemCard item={item} key={item._id} />
+                    {cartItem.map((item, index) => (
+                      <ItemCard item={item} key={index} />
                     ))}
                   </CardContent>
                 </Card>
               </Box>
               <br />
 
-              {onlinePaymentOption ? (
+              {/* {onlinePaymentOption ? ( */}
+              {cartValues && (
                 <Elements stripe={stripePromise}>
                   <CardDetails
                     name={name}
@@ -175,15 +175,19 @@ export default function CheckOut(props) {
                     address={address}
                     city={city}
                     cartId={cartId.id}
+                    advancePayment={advancePayment}
+                    totalPayment={cartValues.total}
                     getCartItems={getCartItems}
                     stateChanged={stateChanged}
+                    onlinePaymentOption={onlinePaymentOption}
                   />
                 </Elements>
-              ) : (
+              )}
+              {/* ) : (
                 <>
                   <StyledButton onClick={paymentProceed}>Proceed</StyledButton>
                 </>
-              )}
+              )} */}
             </Box>
             {cartValues ? (
               <CheckOutSideBar

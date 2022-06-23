@@ -118,7 +118,7 @@ class CartService extends GenericService {
   OnlinePayment = (id, data) =>
     new Promise((resolve, reject) => {
       axios
-        .post("orders/onlinePaymentCheckout/" + id, data)
+        .post("orders/checkout/" + id, data)
         .then((data) => {
           resolve(data);
         })

@@ -6,12 +6,12 @@ import useState from "react-usestateref";
 import { Inputs } from "../Styles/StyledInput";
 export default function Counter(props) {
   const { num, setNum, minValue, maxValue, check } = props;
-  console.log(num, minValue, maxValue, check);
+  
   //const [qty, SetQty] = useState(num);
   const [minusButtonCheck, setMinusButton] = useState(true);
   const [plusButtonCheck, setPlusButton] = useState(false);
   const [errorCheck, seterror] = useState(false);
-  const [errortext, seterrortext] = useState();
+
 
   const minusButton = () => {
     if (num <= minValue) {
@@ -46,11 +46,11 @@ export default function Counter(props) {
       //SetQty(e.target.value);
       setNum(e.target.value);
       seterror(false);
-      seterrortext("");
+   
     }
     if (e.target.value > maxValue) {
       seterror(true);
-      seterrortext("cannot be greater than " + maxValue);
+      
     }
   };
 

@@ -31,7 +31,7 @@ const ProductsByCategory = (props) => {
   }, [categoryName.id]);
 
   return (
-    <div>
+    <Box sx={{ marginBottom: "50px" }}>
       <LoadingScreen bool={loading} />
 
       {category.length > 0 ? <NameBar name={category[0].name} /> : <></>}
@@ -49,7 +49,7 @@ const ProductsByCategory = (props) => {
           <MidPager name={"No Product Found"} />
         </>
       )}
-    </div>
+    </Box>
   );
 };
 

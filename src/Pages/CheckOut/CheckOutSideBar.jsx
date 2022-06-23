@@ -43,7 +43,7 @@ export default function CheckOutSideBar(props) {
               <HeadingText>Cart Total</HeadingText>
               <FlexBox sx={{ justifyContent: "space-between" }}>
                 <Typography>Subtotal</Typography>
-                <Typography>PKR.{cartValues.subTotal}</Typography>
+                <Typography align="left">PKR.{cartValues.subTotal}</Typography>
               </FlexBox>
               <FlexBox sx={{ justifyContent: "space-between" }}>
                 <Typography>Shipping</Typography>
@@ -54,8 +54,20 @@ export default function CheckOutSideBar(props) {
                 <Typography>Total</Typography>
                 <Typography>PKR.{cartValues.total}</Typography>
               </FlexBox>
+              <Divider />
+              <FlexBox sx={{ justifyContent: "space-between" }}>
+                <Box sx={{ width: "50%" }}>
+                  <Typography>Advance</Typography>
+                </Box>
+                <Typography>PKR.{cartValues.advance}</Typography>
+              </FlexBox>
+              <FlexBox sx={{ justifyContent: "space-between" }}>
+                <Box sx={{ width: "50%" }}>
+                  <Typography>Cash on Delivery</Typography>
+                </Box>
+                <Typography>PKR.{cartValues.cashOnDelivery}</Typography>
+              </FlexBox>
 
-              
               <Divider />
               <HeadingText>Shipping Details</HeadingText>
               <Box

@@ -3,6 +3,8 @@ import React from "react";
 import { FlexBox } from "../../Styles/StyledBox";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/styles";
+import Logo from "./virtualmarket.png";
+import { useHistory } from "react-router-dom";
 
 const Links = styled(Typography)({
   textDecoration: "none",
@@ -12,17 +14,35 @@ const Links = styled(Typography)({
 });
 
 export default function TopBar() {
+  const history = useHistory();
   return (
     <div>
-      <Box sx={{ color: "#fafafa", width: "100%", height: "30px" }}>
-        <Box
-          pl={2}
-          pr={2}
-          sx={{
-            display: "flex",
-            justifyContent: "Right",
-          }}
-        >
+      <Box
+        sx={{
+          color: "#fafafa",
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <div>
+          <Box
+            sx={{
+              color: "#ba6a62",
+              cursor: "pointer",
+              height: "100",
+              width: "100",
+              display: { xs: "inline", md: "none", lg: "none", xl: "none" },
+            }}
+            onClick={(e) => {
+              history.push("/");
+            }}
+          >
+            <img src={Logo} height="65" width="88" objectfit="contain" />
+          </Box>
+        </div>
+        <Box sx={{}}>
           <Links
             sx={{ color: "black" }}
             onClick={(e) => {

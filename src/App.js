@@ -35,6 +35,7 @@ import CategoriesState from "./Contexts/Categories/CategoriesState";
 import ChatAnchor from "./Contexts/ChatAnchor/ChatAnchor";
 import TopBar from "./Components/MenuBar/TopBar";
 import SocketAPI from "./Contexts/SocketAPI/SocketAPi";
+import Thankyou from "./Pages/Thankyou/Thankyou";
 function App(props) {
   const [refreshCart, setRefreshCart] = React.useState();
   const getStateChanged = (data) => {
@@ -120,6 +121,10 @@ function App(props) {
                   />
                   <Route path={["/:anything/:name/:id/", "/:name/:id/"]}>
                     <ProductDetail stateChanged={getStateChanged} />
+                  </Route>
+                  <Route path="/thankyou">
+                    {" "}
+                    <Thankyou />
                   </Route>
                   <Route path="/">
                     <HomePage />

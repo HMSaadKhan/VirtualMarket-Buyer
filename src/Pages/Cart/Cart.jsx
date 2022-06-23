@@ -88,6 +88,7 @@ const Cart = (props) => {
           display: "flex",
           flexDirection: { xs: "column", sm: "column", lg: "row" },
           justifyContent: "center",
+          marginBottom: "50px",
         }}
       >
         <Box sx={{ width: "50%" }}></Box>
@@ -105,7 +106,6 @@ const Cart = (props) => {
                     <RadioGroup
                       name="use-radio-group"
                       value={String(radioref.current)}
-                      
                     >
                       {cartItem.map((cart) => {
                         return (

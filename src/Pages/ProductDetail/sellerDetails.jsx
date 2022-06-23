@@ -47,7 +47,7 @@ export default function SellerDetails({ productDetails, msgbool, setmsgbool }) {
                 bool={msgbool}
                 setbool={setmsgbool}
                 chatId={chat._id}
-                chatperson={chat.Seller}
+                chatperson={chat}
               />
               {/* <ChatBox chat={chat} bool={chatbool} setbool={setchatbool} /> */}
             </>
