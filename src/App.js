@@ -36,6 +36,8 @@ import ChatAnchor from "./Contexts/ChatAnchor/ChatAnchor";
 import TopBar from "./Components/MenuBar/TopBar";
 import SocketAPI from "./Contexts/SocketAPI/SocketAPi";
 import Thankyou from "./Pages/Thankyou/Thankyou";
+import Verify from "./Pages/VerifyScreen/Verify";
+import SellerPage from "./Pages/SellerPage/SellerPage";
 function App(props) {
   const [refreshCart, setRefreshCart] = React.useState();
   const getStateChanged = (data) => {
@@ -114,6 +116,8 @@ function App(props) {
                     exact
                     component={ProductsByCategory}
                   />
+                  <Route exact path="/seller/:id" component={SellerPage} />
+                  <Route exact path="/verify/:id" component={Verify} />
                   <Route
                     path="/search/:id"
                     exact
@@ -126,6 +130,7 @@ function App(props) {
                     {" "}
                     <Thankyou />
                   </Route>
+
                   <Route path="/">
                     <HomePage />
                   </Route>

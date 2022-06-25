@@ -122,14 +122,12 @@ const BuyerAccount = (props) => {
                     <Button
                       variant="contained"
                       onClick={() => {
-                        setCheck(true);
                         buyerService
                           .verificationOTP()
                           .then((res) => {
                             toast.success(res.data, {
                               position: toast.POSITION.BOTTOM_LEFT,
                             });
-                            setCheck(true);
                           })
                           .catch((err) => {
                             toast.error(err.response.data, {
@@ -145,7 +143,7 @@ const BuyerAccount = (props) => {
               ) : (
                 <div></div>
               )}
-              {check ? (
+              {/* {check ? (
                 <Box>
                   <Box>
                     <TextField
@@ -183,7 +181,7 @@ const BuyerAccount = (props) => {
                 </Box>
               ) : (
                 <div></div>
-              )}
+              )} */}
               <Box sx={{ display: { xs: "inline", md: "none" } }}>
                 <Box
                   sx={{
@@ -256,7 +254,7 @@ const BuyerAccount = (props) => {
                     />
                   </MarginBox>
                   <MarginBox>
-                    <FormControl sx={{ maxWidth: 200 }}>
+                    <FormControl sx={{ width: "100px" }}>
                       <InputLabel variant="standard">City</InputLabel>
 
                       <Select

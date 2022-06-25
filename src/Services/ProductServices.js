@@ -1,4 +1,5 @@
 import GenericService from "./GenericService";
+import axios from "axios";
 
 class ProductsService extends GenericService {
   constructor() {
@@ -45,6 +46,7 @@ class ProductsService extends GenericService {
           reject(err);
         });
     });
+  getbySeller = (id) => axios.get("products/getbyseller/" + id);
 }
 
 let productService = new ProductsService();

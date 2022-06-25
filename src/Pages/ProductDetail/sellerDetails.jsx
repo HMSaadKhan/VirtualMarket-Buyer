@@ -4,6 +4,7 @@ import ChatIcon from "@mui/icons-material/Chat";
 import chatService from "../../Services/ChatService";
 import { makeStyles } from "@mui/styles";
 import ChatMessages from "../../Components/Message/ChatMessages";
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles({
   cardHeadingText: { color: "text.secondary" },
   cardSubText: {
@@ -16,6 +17,7 @@ const useStyles = makeStyles({
 
 export default function SellerDetails({ productDetails, msgbool, setmsgbool }) {
   const classes = useStyles();
+  const history = useHistory();
   const [chat, setchat] = React.useState();
 
   React.useEffect(() => {
@@ -40,7 +42,7 @@ export default function SellerDetails({ productDetails, msgbool, setmsgbool }) {
     <>
       <Box mb={1}>
         <Card>
-          {chat ? (
+          {chat && (
             <>
               {/* {console.log(chat)} */}
               <ChatMessages
@@ -51,8 +53,6 @@ export default function SellerDetails({ productDetails, msgbool, setmsgbool }) {
               />
               {/* <ChatBox chat={chat} bool={chatbool} setbool={setchatbool} /> */}
             </>
-          ) : (
-            <></>
           )}
 
           <CardContent>
@@ -61,7 +61,13 @@ export default function SellerDetails({ productDetails, msgbool, setmsgbool }) {
                 <Typography className={classes.cardHeadingText}>
                   Shop Name
                 </Typography>
-                <Typography className={classes.cardSubText}>
+                <Typography
+                  className={classes.cardSubText}
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => {
+                    history.push("/seller/" + productDetails.seller._id);
+                  }}
+                >
                   {productDetails.seller.storeName}
                 </Typography>
               </Box>

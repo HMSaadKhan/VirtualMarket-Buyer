@@ -27,8 +27,6 @@ const Signup = (props) => {
     setloading(true);
     buyerService
       .register({
-        fName,
-        lName,
         email,
         password,
         confirmPassword,

@@ -44,7 +44,7 @@ export default function TopBar() {
         </div>
         <Box sx={{}}>
           <Links
-            sx={{ color: "black" }}
+            sx={{ color: "black", cursor: "pointer" }}
             onClick={(e) => {
               {
                 window.open(

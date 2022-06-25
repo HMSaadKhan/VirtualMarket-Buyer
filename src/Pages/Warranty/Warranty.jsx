@@ -8,6 +8,7 @@ import warrantyService from "../../Services/WarrantyService";
 import { NameBar } from "../../Styles/NameBar";
 import LoadingScreen from "../../Components/LoadingScreen";
 import { useHistory } from "react-router-dom";
+import { MidPager } from "../../Styles/MidPager";
 
 const useStyles = makeStyles({
   root: {
@@ -21,13 +22,21 @@ const Warranty = (props) => {
   console.log(props);
   const [loading, setloading] = useState(false);
   const [warranties, setwarranties] = useState();
+  const [error, seterror] = useState();
   const getWarranties = () => {
     setloading(true);
-    warrantyService.getWarranty(status).then((warranty) => {
-      console.log(warranty.data);
-      setloading(false);
-      setwarranties(warranty.data);
-    });
+    warrantyService
+      .getWarranty(status)
+      .then((warranty) => {
+        console.log(warranty.data);
+        setloading(false);
+        setwarranties(warranty.data);
+      })
+      .catch((error) => {
+        console.log(error.response);
+        setloading(false);
+        seterror(error.response.data);
+      });
   };
   useEffect(getWarranties, [status]);
   const history = useHistory();
@@ -83,7 +92,7 @@ const Warranty = (props) => {
               ))}
             </Box>
           ) : (
-            <></>
+            <MidPager name={error} />
           )}
         </Box>
       </Box>

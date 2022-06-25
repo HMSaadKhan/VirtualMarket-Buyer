@@ -105,6 +105,27 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
           >
             <Card sx={{ margin: "10px" }}>
               <CardContent>
+                <SpaceBetween>
+                  <OrderComponentHeading>Sub Total</OrderComponentHeading>
+                  <Typography>PKR. {order.subTotal}</Typography>
+                </SpaceBetween>
+                <SpaceBetween sx={{ alignItems: "start" }}>
+                  <Box sx={{ width: "25%" }}>
+                    <OrderComponentHeading>
+                      Delivery Charge
+                    </OrderComponentHeading>
+                  </Box>
+                  <Typography>PKR. {order.deliveryCharge}</Typography>
+                </SpaceBetween>
+                <Divider />
+                <SpaceBetween>
+                  <OrderComponentHeading>Total</OrderComponentHeading>
+                  <Typography>PKR. {order.total}</Typography>
+                </SpaceBetween>
+              </CardContent>
+            </Card>
+            <Card sx={{ margin: "10px" }}>
+              <CardContent>
                 <OrderComponentHeading>Shipping Details</OrderComponentHeading>
                 <SpaceBetween>
                   <OrderComponentHeading>Name</OrderComponentHeading>
@@ -125,27 +146,6 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
                 <SpaceBetween>
                   <OrderComponentHeading>Phone</OrderComponentHeading>
                   <Typography>{order.buyerContact}</Typography>
-                </SpaceBetween>
-              </CardContent>
-            </Card>
-            <Card sx={{ margin: "10px" }}>
-              <CardContent>
-                <SpaceBetween>
-                  <OrderComponentHeading>Sub Total</OrderComponentHeading>
-                  <Typography>PKR. {order.subTotal}</Typography>
-                </SpaceBetween>
-                <SpaceBetween sx={{ alignItems: "start" }}>
-                  <Box sx={{ width: "25%" }}>
-                    <OrderComponentHeading>
-                      Delivery Charge
-                    </OrderComponentHeading>
-                  </Box>
-                  <Typography>PKR. {order.deliveryCharge}</Typography>
-                </SpaceBetween>
-                <Divider />
-                <SpaceBetween>
-                  <OrderComponentHeading>Total</OrderComponentHeading>
-                  <Typography>PKR. {order.total}</Typography>
                 </SpaceBetween>
               </CardContent>
             </Card>
