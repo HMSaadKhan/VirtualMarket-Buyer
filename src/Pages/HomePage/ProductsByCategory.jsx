@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Grid, Typography, Box } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import productService from "../../Services/ProductServices";
 import ProductComponent from "../../Pages/Product/ProductComponent";
 import { NameBar } from "../../Styles/NameBar";

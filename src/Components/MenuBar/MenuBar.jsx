@@ -5,7 +5,7 @@ import useState from "react-usestateref";
 import { Badge, Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import AccountIcon from "./AccountBar";
-import { AppBar, Toolbar, Typography, TextField } from "@mui/material";
+import { AppBar, Toolbar, TextField } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Favorite from "@mui/icons-material/Favorite";
@@ -41,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MenuBar = (props) => {
-  const [qty, setQty, qtyRef] = useState(0);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [qty, setQty] = useState(0);
+
   const [search, setSearch] = useState("");
 
   const getCartCount = () => {
@@ -77,7 +77,13 @@ const MenuBar = (props) => {
                 history.push("/");
               }}
             >
-              <img src={Logo} height="65" width="88" objectfit="contain" />
+              <img
+                src={Logo}
+                height="65"
+                width="88"
+                objectfit="contain"
+                alt="logo"
+              />
             </Box>
           </div>
           <div className={classes.search}>

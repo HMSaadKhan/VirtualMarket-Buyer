@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
+import { Card, Button } from "@mui/material/";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
@@ -12,20 +13,44 @@ import Divider from "@mui/material/Divider";
 import moment from "moment";
 import { OrderComponentHeading } from "../../Styles/MyTypographies";
 import { FlexBox, SpaceBetween } from "../../Styles/StyledBox";
+import LoadingScreen from "../../Components/LoadingScreen";
+import { toast } from "react-toastify";
 
+import orderService from "../../Services/OrderService";
+import { useParams } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   text: {
     color: "black",
   },
 }));
 
-export default function OrderComponent({ order, ChangeOrderStatus }) {
+export default function OrderComponent() {
+  const orderId = useParams();
   const classes = useStyles();
   const [index, setindex] = useState();
+
+  const [order, setorder] = useState("");
+  const [loading, setloading] = useState(false);
+
+  const Orders = () => {
+    setloading(true);
+    orderService
+      .orderDetails(orderId.id)
+      .then((data) => {
+        setloading(false);
+        setorder(data.data);
+      })
+      .catch((error) => {
+        setloading(false);
+        console.log(error);
+      });
+  };
+  useEffect(Orders, []);
 
   const ButtonLabel = () => {
     if (order.status === "PLACED") {
       setindex(1);
+      console.log("Placed");
     }
     if (order.status === "PACKAGING") {
       setindex(2);
@@ -37,135 +62,189 @@ export default function OrderComponent({ order, ChangeOrderStatus }) {
       setindex(4);
     }
   };
-  useEffect(ButtonLabel, []);
+  useEffect(ButtonLabel, [order]);
 
   return (
-    <Box m={2}>
-      <Card
-        sx={{
-          backgroundColor: "#fafafa",
-        }}
-      >
-        <CardContent
+    <Box
+      m={2}
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        width: {
+          xs: "100%",
+          sm: "100%",
+          md: "100%",
+          lg: "100%",
+          xl: "100%",
+        },
+      }}
+    >
+      <LoadingScreen bool={loading} />
+      {order && (
+        <Card
           sx={{
-            padding: {
-              xs: "0",
-              sm: "0",
-              md: "20",
-              lg: "20",
-              xl: "20",
+            backgroundColor: "#fafafa",
+            width: {
+              xs: "800px",
+              sm: "800px",
+              md: "800px",
+              lg: "800px",
+              xl: "800px",
             },
           }}
         >
-          <Card sx={{ margin: "10px" }}>
-            <CardContent>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: {
-                    xs: "column",
-                    sm: "column",
-                    md: "row",
-                    lg: "row",
-                    xl: "row",
-                  },
-
-                  justifyContent: "space-between",
-                }}
-              >
-                <FlexBox>
-                  <OrderComponentHeading>Order# </OrderComponentHeading>
-                  <Typography>{order._id}</Typography>
-                </FlexBox>
-                <FlexBox>
-                  <OrderComponentHeading>Order Type: </OrderComponentHeading>
-                  <Typography> {order.type}</Typography>
-                </FlexBox>
-              </Box>
-            </CardContent>
-          </Card>
-          <Card sx={{ margin: "10px" }}>
-            <CardContent>
-              {order.items.map((items) => (
-                <OrderItems
-                  orderId={order._id}
-                  orderStatus={order.status}
-                  items={items}
-                  key={items._id}
-                />
-              ))}
-            </CardContent>
-          </Card>
-          <Box
+          <CardContent
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
+              padding: {
+                xs: "0",
+                sm: "0",
+                md: "20",
+                lg: "20",
+                xl: "20",
+              },
             }}
           >
+            <Box
+              m={2}
+              sx={{
+                display: "flex",
+                flexDirection: {
+                  xs: "column",
+                  sm: "column",
+                  md: "row",
+                  lg: "row",
+                  xl: "row",
+                },
+
+                justifyContent: "space-between",
+              }}
+            >
+              <FlexBox>
+                <OrderComponentHeading>Order# </OrderComponentHeading>
+                <Typography>{order._id}</Typography>
+              </FlexBox>
+              <FlexBox>
+                <Button
+                  disabled={order.status !== "PLACED" ? true : false}
+                  onClick={() => {
+                    orderService
+                      .cancelOrder(order._id)
+                      .then((data) => {
+                        console.log(data);
+                        Orders();
+                        toast.success(data.data, {
+                          position: toast.POSITION.BOTTOM_LEFT,
+                        });
+                      })
+                      .catch((error) => {
+                        console.log(error.response);
+                        toast.error(error.response.data, {
+                          position: toast.POSITION.BOTTOM_LEFT,
+                        });
+                      });
+                  }}
+                >
+                  cancel Order
+                </Button>
+              </FlexBox>
+            </Box>
+
             <Card sx={{ margin: "10px" }}>
               <CardContent>
-                <SpaceBetween>
-                  <OrderComponentHeading>Sub Total</OrderComponentHeading>
-                  <Typography>PKR. {order.subTotal}</Typography>
-                </SpaceBetween>
-                <SpaceBetween sx={{ alignItems: "start" }}>
-                  <Box sx={{ width: "25%" }}>
+                {order.items.map((items) => (
+                  <OrderItems
+                    orderId={order._id}
+                    orderStatus={order.status}
+                    items={items}
+                    key={items._id}
+                  />
+                ))}
+              </CardContent>
+            </Card>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <Card sx={{ margin: "10px" }}>
+                <CardContent>
+                  <SpaceBetween>
+                    <OrderComponentHeading>Sub Total</OrderComponentHeading>
+                    <Typography>PKR. {order.subTotal}</Typography>
+                  </SpaceBetween>
+                  <SpaceBetween sx={{ alignItems: "start" }}>
+                    <Box sx={{ width: "25%" }}>
+                      <OrderComponentHeading>
+                        Delivery Charge
+                      </OrderComponentHeading>
+                    </Box>
+                    <Typography>PKR. {order.deliveryCharge}</Typography>
+                  </SpaceBetween>
+                  <Divider />
+                  <SpaceBetween>
+                    <OrderComponentHeading>Total</OrderComponentHeading>
+                    <Typography>PKR. {order.total}</Typography>
+                  </SpaceBetween>
+                  <Divider />
+                  <SpaceBetween>
+                    <OrderComponentHeading>Advance</OrderComponentHeading>
+                    <Typography>PKR. {order.advance}</Typography>
+                  </SpaceBetween>
+                  <SpaceBetween>
                     <OrderComponentHeading>
-                      Delivery Charge
+                      Cash on Delivery
                     </OrderComponentHeading>
-                  </Box>
-                  <Typography>PKR. {order.deliveryCharge}</Typography>
-                </SpaceBetween>
-                <Divider />
-                <SpaceBetween>
-                  <OrderComponentHeading>Total</OrderComponentHeading>
-                  <Typography>PKR. {order.total}</Typography>
-                </SpaceBetween>
-              </CardContent>
-            </Card>
-            <Card sx={{ margin: "10px" }}>
-              <CardContent>
-                <OrderComponentHeading>Shipping Details</OrderComponentHeading>
-                <SpaceBetween>
-                  <OrderComponentHeading>Name</OrderComponentHeading>
-                  <Typography>{order.buyerName}</Typography>
-                </SpaceBetween>
-                <SpaceBetween sx={{ alignItems: "start" }}>
-                  <OrderComponentHeading>Address</OrderComponentHeading>
-                  <Box sx={{}}>
-                    <Typography align="right" className={classes.text}>
-                      {order.deliveryAddress}
-                    </Typography>
-                  </Box>
-                </SpaceBetween>
-                <SpaceBetween>
-                  <OrderComponentHeading>City</OrderComponentHeading>
-                  <Typography>{order.deliveryCity.name}</Typography>
-                </SpaceBetween>
-                <SpaceBetween>
-                  <OrderComponentHeading>Phone</OrderComponentHeading>
-                  <Typography>{order.buyerContact}</Typography>
-                </SpaceBetween>
-              </CardContent>
-            </Card>
-          </Box>
-          <Box sx={{ margin: "10px" }}>
-            <Stepper activeStep={index} alternativeLabel>
-              {order.events.map((label) => (
-                <Step key={label}>
-                  <StepLabel>
-                    {label.name}
-                    <br />
-                    {moment(new Date(label.date)).format("MMMM Do YYYY")}
-                  </StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-          </Box>
-        </CardContent>
-      </Card>
-      <Divider />
+                    <Typography>PKR. {order.cashOnDelivery}</Typography>
+                  </SpaceBetween>
+                </CardContent>
+              </Card>
+              <Card sx={{ margin: "10px" }}>
+                <CardContent>
+                  <OrderComponentHeading>
+                    Shipping Details
+                  </OrderComponentHeading>
+                  <SpaceBetween>
+                    <OrderComponentHeading>Name</OrderComponentHeading>
+                    <Typography>{order.buyerName}</Typography>
+                  </SpaceBetween>
+                  <SpaceBetween sx={{ alignItems: "start" }}>
+                    <OrderComponentHeading>Address</OrderComponentHeading>
+                    <Box sx={{}}>
+                      <Typography align="right" className={classes.text}>
+                        {order.deliveryAddress}
+                      </Typography>
+                    </Box>
+                  </SpaceBetween>
+                  <SpaceBetween>
+                    <OrderComponentHeading>City</OrderComponentHeading>
+                    <Typography>{order.deliveryCity.name}</Typography>
+                  </SpaceBetween>
+                  <SpaceBetween>
+                    <OrderComponentHeading>Phone</OrderComponentHeading>
+                    <Typography>{order.buyerContact}</Typography>
+                  </SpaceBetween>
+                </CardContent>
+              </Card>
+            </Box>
+            <Box sx={{ margin: "10px" }}>
+              {console.log(index)}
+              <Stepper activeStep={index} alternativeLabel>
+                {order.events.map((label) => (
+                  <Step key={label}>
+                    <StepLabel>
+                      {label.name}
+                      <br />
+                      {moment(new Date(label.date)).format("MMMM Do YYYY")}
+                    </StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+            </Box>
+          </CardContent>
+        </Card>
+      )}
     </Box>
   );
 }

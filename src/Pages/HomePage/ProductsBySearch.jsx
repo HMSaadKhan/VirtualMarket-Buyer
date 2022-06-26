@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import { Grid, Typography, Box } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import productService from "../../Services/ProductServices";
 
 import ProductComponent from "../../Pages/Product/ProductComponent";
 import { NameBar } from "../../Styles/NameBar";
 import LoadingScreen from "../../Components/LoadingScreen";
-import { Containers } from "../../Styles/StyledBox";
 import { MidPager } from "../../Styles/MidPager";
 import { useParams } from "react-router-dom";
 

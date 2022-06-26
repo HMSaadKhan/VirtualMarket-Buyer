@@ -82,13 +82,13 @@ const Warranty = (props) => {
           {warranties ? (
             <Box>
               {warranties.map((warranty, index) => (
-                <Box sx={{ width: "100%", backgroundColor: "red" }}>
+               
                   <WarrantyComponent
                     key={index}
                     warranty={warranty}
                     getWarranties={getWarranties}
                   />
-                </Box>
+               
               ))}
             </Box>
           ) : (

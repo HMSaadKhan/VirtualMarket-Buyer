@@ -5,8 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import { makeStyles } from "@mui/styles";
-import { Inputs } from "../../Styles/StyledInput";
-import Counter from "../Counter";
+
 const useStyles = makeStyles({
   root: {
     display: "flex",
@@ -17,21 +16,10 @@ const useStyles = makeStyles({
 });
 
 export default function CommentsDisplay({ review }) {
-  console.log(review);
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Box
-      // sx={{
-      //   width: {
-      //     xs: "50%",
-      //     sm: "50%",
-      //     md: "30%",
-      //     lg: "30%",
-      //     xl: "30%",
-      //   },
-      // }}
-      >
+      <Box>
         <Card
           sx={{
             display: "flex",

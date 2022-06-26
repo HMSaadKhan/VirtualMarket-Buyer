@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Card,
   Button,
@@ -11,6 +11,7 @@ import cartService from "../../Services/CartServices";
 import useState from "react-usestateref";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import LoadingScreen from "../../Components/LoadingScreen";
 
 const CartSideBar = ({
   subtotal,
@@ -23,11 +24,6 @@ const CartSideBar = ({
   //const classes = useStyles();
   const history = useHistory();
 
-  const [cartItem, setCartItem, cartItemRef] = useState([]);
-  const [cartValues, setCartValues] = useState([]);
-  // const [subtotal, setsubtotal, subtotalRef] = useState();
-  // const [deliveryCharge, setdeliveryCharge] = useState();
-  // const [total, settotal] = useState();
   const [loading, setloading] = useState(false);
 
   const clearAll = () => {
@@ -61,7 +57,7 @@ const CartSideBar = ({
   return (
     <>
       <Box m={2}>
-        <Box></Box>
+        <LoadingScreen bool={loading} />
         <Box>
           <Card sx={{ backgroundColor: "#fafafa" }}>
             <Button fullWidth variant="contained" onClick={clearAll}>

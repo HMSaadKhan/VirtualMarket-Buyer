@@ -4,7 +4,6 @@ import { Grid } from "@mui/material";
 import productService from "../../Services/ProductServices";
 import { NameBar } from "../../Styles/NameBar";
 import ProductComponent from "./ProductComponent";
-import LoadingScreen from "../../Components/LoadingScreen";
 
 const Products = (props) => {
   const { name } = props;

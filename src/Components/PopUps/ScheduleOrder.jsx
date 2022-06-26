@@ -15,7 +15,7 @@ import scheduleService from "../../Services/ScheduleService";
 import { NameBar } from "../../Styles/NameBar";
 import { HeadingText, Labels } from "../../Styles/MyTypographies";
 import { StyledButton } from "../../Styles/StyledButton";
-import { CalendarTodayOutlined, Delete } from "@mui/icons-material";
+import { CalendarTodayOutlined } from "@mui/icons-material";
 import CancelIcon from "@mui/icons-material/Cancel";
 const useStyles = makeStyles({
   root: {
@@ -25,13 +25,13 @@ const useStyles = makeStyles({
 });
 
 export default function ScheduleOrder(props) {
-  const { minOrder, bool, setbool, product, stock, check } = props;
+  const { minOrder, bool, setbool, product, stock } = props;
   const classes = useStyles();
   const [datentime, setdatentime] = React.useState(new Date());
   const [checked, setChecked] = React.useState(false);
   const [radio, setRadio] = React.useState("PRESET");
   const [preset, setpreset] = React.useState("");
-  const [quantity, setquantity, quantityref] = React.useState(props.minOrder);
+  const [quantity, setquantity] = React.useState(props.minOrder);
   const [customRepetition, setcustomRepetition] = React.useState(0);
 
   const Preset = [

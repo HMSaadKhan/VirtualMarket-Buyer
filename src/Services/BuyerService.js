@@ -1,5 +1,5 @@
+/* eslint-disable no-useless-constructor */
 import GenericService from "./GenericService";
-import jwtDecode from "jwt-decode";
 import axios from "axios";
 
 class BuyerService extends GenericService {

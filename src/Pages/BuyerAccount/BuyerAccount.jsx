@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import buyerService from "../../Services/BuyerService";
 import cityService from "../../Services/CityService";
-import { styled } from "@mui/material/styles";
+
 import { toast } from "react-toastify";
 import Auth from "../../AuthWrapper/IsLoginFalse";
 import {
@@ -16,7 +16,7 @@ import {
   FormControl,
   MenuItem,
 } from "@mui/material";
-import { CardHeadings, HeadingText } from "../../Styles/MyTypographies";
+import { CardHeadings } from "../../Styles/MyTypographies";
 import { StyledButton } from "../../Styles/StyledButton";
 import { MarginBox } from "../../Styles/StyledBox";
 import LoadingScreen from "../../Components/LoadingScreen";
@@ -28,8 +28,6 @@ const BuyerAccount = (props) => {
   const [phone, setphone] = useState("");
   const [address, setAddress] = useState("");
   const [verified, setVerified] = useState(true);
-  const [otp, setOtp] = useState("");
-  const [check, setCheck] = useState(false);
   const [cities, setcities] = useState([]);
   const [loading, setloading] = useState(false);
   const [avatar, setavatar] = useState();

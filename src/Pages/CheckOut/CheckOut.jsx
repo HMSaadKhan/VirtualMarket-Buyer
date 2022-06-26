@@ -7,17 +7,17 @@ import CheckOutSideBar from "./CheckOutSideBar";
 import ItemCard from "./ItemCard";
 import CardDetails from "./CardDetails";
 import cartService from "../../Services/CartServices";
-import { useHistory } from "react-router-dom";
+
 import cityService from "../../Services/CityService";
 import Auth from "../../AuthWrapper/IsLoginFalse";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { HeadingText } from "../../Styles/MyTypographies";
-import { StyledButton } from "../../Styles/StyledButton";
-import { toast } from "react-toastify";
+
 import LoadingScreen from "../../Components/LoadingScreen";
 import { MidPager } from "../../Styles/MidPager";
 import { useParams } from "react-router-dom";
+import { TextField } from "@mui/material";
 const useStyles = makeStyles({
   textField: {
     display: "flex",
@@ -33,7 +33,6 @@ const useStyles = makeStyles({
 
 export default function CheckOut(props) {
   const { stateChanged } = props;
-  const history = useHistory();
 
   const cartId = useParams();
 
@@ -48,8 +47,10 @@ export default function CheckOut(props) {
   const [city, setCity] = useState("");
   const [phone, setphone] = useState("");
   const [cities, setcities] = useState([]);
-  const [bool, setbool] = useState(false);
+  const [loading, setloading] = useState(false);
   const [onlinePaymentOption, setonlinePaymentOption] = useState();
+  const [specialInstructions, setSpecialInstructions] = useState();
+
   const getCities = () => {
     cityService.GetCities().then((data) => {
       setcities(data);
@@ -62,6 +63,7 @@ export default function CheckOut(props) {
   };
 
   const getCartItems = () => {
+    setloading(true);
     cartService
       .getCheckoutCart(cartId.id)
       .then((data) => {
@@ -71,6 +73,7 @@ export default function CheckOut(props) {
         setdeliveryCharge(data.seller.deliveryCharge);
         setonlinePaymentOption(data.seller.onlinePaymentOption);
         setadvancePayment(data.advance);
+        setloading(false);
       })
       .catch((err) => {
         // setCartItem(null);
@@ -83,6 +86,7 @@ export default function CheckOut(props) {
   useEffect(getCartItems, []);
 
   const getDeliveryDetails = () => {
+    setloading(true);
     cartService
       .buyerDeliveryDetails()
       .then((data) => {
@@ -90,35 +94,14 @@ export default function CheckOut(props) {
         setaddress(data.data.address);
         setCity(data.data.city._id);
         setphone(data.data.phone);
+        setloading(false);
       })
       .catch((err) => {
+        setloading(false);
         console.log(err.response);
       });
   };
   useEffect(getDeliveryDetails, []);
-
-  const paymentProceed = async () => {
-    setbool(true);
-    await cartService
-      .CashOnDelivery(cartId.id, { name, address, phone, city })
-      .then((data) => {
-        toast.success(data.data, {
-          position: toast.POSITION.BOTTOM_LEFT,
-        });
-        setTimeout(() => {
-          getCartItems();
-          stateChanged(data);
-          setbool(false);
-          history.push("/orders");
-        }, 2000);
-      })
-      .catch((err) => {
-        toast.error(err.response.data, {
-          position: toast.POSITION.BOTTOM_LEFT,
-        });
-        setbool(false);
-      });
-  };
 
   const handleName = (data) => {
     setname(data);
@@ -142,7 +125,7 @@ export default function CheckOut(props) {
   );
   return (
     <Auth>
-      <LoadingScreen bool={bool} />
+      <LoadingScreen bool={loading} />
       {cartItem ? (
         <>
           <Box
@@ -159,8 +142,25 @@ export default function CheckOut(props) {
                 <Card>
                   <CardContent>
                     {cartItem.map((item, index) => (
-                      <ItemCard item={item} key={index} />
+                      <ItemCard
+                        item={item}
+                        key={index}
+                        specialInstructions={specialInstructions}
+                        setSpecialInstructions={setSpecialInstructions}
+                      />
                     ))}
+                    <Box mt={2}>
+                      <HeadingText>Specail Instructions</HeadingText>
+                      <TextField
+                        multiline
+                        fullWidth
+                        label="Special Instructions"
+                        value={specialInstructions}
+                        onChange={(e) => {
+                          setSpecialInstructions(e.target.value);
+                        }}
+                      />
+                    </Box>
                   </CardContent>
                 </Card>
               </Box>
@@ -180,6 +180,7 @@ export default function CheckOut(props) {
                     getCartItems={getCartItems}
                     stateChanged={stateChanged}
                     onlinePaymentOption={onlinePaymentOption}
+                    specialInstructions={specialInstructions}
                   />
                 </Elements>
               )}

@@ -4,38 +4,12 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
 import TextField from "@mui/material/TextField";
 import { makeStyles } from "@mui/styles";
 import warrantyService from "../../Services/WarrantyService";
 import { toast } from "react-toastify";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { styled } from "@mui/material/styles";
 
-const StyledButton = styled(Button)({
-  margin: "10px",
-  color: "#ffff",
-  backgroundColor: "#ba6a62",
-  fontWeight: "bold",
-  "&:hover": {
-    backgroundColor: "#C78781",
-    color: "#fafafa",
-  },
-});
-const DisabledButton = styled(Button)({
-  margin: "10px",
-  color: "#ffff",
-  backgroundColor: "#856562",
-  fontWeight: "bold",
-  "&:hover": {
-    backgroundColor: "#C78781",
-    color: "#fafafa",
-  },
-  "&:disabled": {
-    backgroundColor: "#d4cecd",
-    color: "#fafafa",
-  },
-});
 const useStyles = makeStyles({
   root: {
     width: 500,
@@ -46,14 +20,6 @@ export default function ClaimWriting({ id, status, getWarranties }) {
   const classes = useStyles();
   console.log(status, id);
   const [open, setOpen] = React.useState(false);
-  const [disable, setDisable] = React.useState(false);
-
-  const checkDisable = () => {
-    if (status === "EXPIRED" || status === "REQUESTED") {
-      setDisable(true);
-    }
-  };
-  React.useEffect(checkDisable, []);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -80,21 +46,25 @@ export default function ClaimWriting({ id, status, getWarranties }) {
       .catch((error) => {
         console.log(error);
         getWarranties();
-        // toast.error(error.response.data, {
-        //   position: toast.POSITION.BOTTOM_LEFT,
-        // });
+        toast.error(error.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
       });
   };
 
   return (
     <div>
-      {disable ? (
-        <DisabledButton disabled={disable} onClick={handleClickOpen}>
-          Claim
-        </DisabledButton>
-      ) : (
-        <StyledButton onClick={handleClickOpen}>Claim</StyledButton>
-      )}
+      <Button
+        variant="contained"
+        disabled={
+          status === "EXPIRED" || status === "REQUESTED" || status === "PENDING"
+            ? true
+            : false
+        }
+        onClick={handleClickOpen}
+      >
+        Claim
+      </Button>
 
       <Dialog
         open={open}
@@ -103,7 +73,7 @@ export default function ClaimWriting({ id, status, getWarranties }) {
       >
         <Box
           sx={{
-            height: "40px",
+            height: "50px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -126,7 +96,7 @@ export default function ClaimWriting({ id, status, getWarranties }) {
 
         <DialogContent>
           <div className={classes.root}>
-            <Card>
+            <>
               <Box>
                 <Box mr={4} ml={2}>
                   <TextField
@@ -139,12 +109,12 @@ export default function ClaimWriting({ id, status, getWarranties }) {
                   />
                 </Box>
                 <Box m={2}>
-                  <StyledButton onClick={Review} variant="contained">
+                  <Button onClick={Review} variant="contained">
                     Submit
-                  </StyledButton>
+                  </Button>
                 </Box>
               </Box>
-            </Card>
+            </>
           </div>
         </DialogContent>
       </Dialog>

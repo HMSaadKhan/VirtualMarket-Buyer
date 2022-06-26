@@ -13,13 +13,11 @@ import LoadingScreen from "../../Components/LoadingScreen";
 import ProductImages from "./ProductImages";
 import ProductOverview from "./ProductOverview";
 import SellerDetails from "./sellerDetails";
-import { MidPager } from "../../Styles/MidPager";
 import ChatBox from "../../Components/Message/Chatbox";
 import Bargain from "../../Components/PopUps/Bargain";
-import DealComponent from "../../Components/DealComponent/DealComponent";
 
 export default function ProductDetail(props) {
-  const { id, name } = useParams();
+  const { id } = useParams();
 
   const [productDetails, SetProductDetails] = useState("");
 
@@ -30,7 +28,6 @@ export default function ProductDetail(props) {
   const [chatbool, setchatbool] = React.useState(false);
   const [msgbool, setmsgbool] = React.useState(false);
   const [bargainbool, setbargainbool] = React.useState(false);
-
 
   const getDetails = () => {
     setloading(true);

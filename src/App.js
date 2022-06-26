@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import { Box } from "@mui/material";
 import MenuBar from "./Components/MenuBar/MenuBar";
-//import Footer from "./Components/Footer/Footer";
+import Footer from "./Components/Footer/Footer";
 
 import Login from "./Pages/LoginPage/Login";
 import SignUp from "./Pages/SignUpPage/SignUp";
@@ -38,15 +38,14 @@ import SocketAPI from "./Contexts/SocketAPI/SocketAPi";
 import Thankyou from "./Pages/Thankyou/Thankyou";
 import Verify from "./Pages/VerifyScreen/Verify";
 import SellerPage from "./Pages/SellerPage/SellerPage";
+import OrderComponent from "./Pages/OrderList/OrderComponent";
 function App(props) {
   const [refreshCart, setRefreshCart] = React.useState();
   const getStateChanged = (data) => {
     console.log(data);
     setRefreshCart(data);
-    setUrl(data);
   };
 
-  const [getUrl, setUrl] = React.useState("");
   return (
     <SocketAPI>
       <CategoriesState>
@@ -87,7 +86,7 @@ function App(props) {
                 <Switch>
                   <Route path="/Login" exact component={Login} />
                   <Route path="/Cart">
-                    <Cart setUrl={setUrl} stateChanged={getStateChanged} />
+                    <Cart stateChanged={getStateChanged} />
                   </Route>
                   <Route path="/favorite" exact component={Favorite} />
                   <Route path="/SignUp" exact component={SignUp} />
@@ -115,6 +114,11 @@ function App(props) {
                     path="/category/:id"
                     exact
                     component={ProductsByCategory}
+                  />
+                  <Route
+                    exact
+                    path="/orderDetail/:id"
+                    component={OrderComponent}
                   />
                   <Route exact path="/seller/:id" component={SellerPage} />
                   <Route exact path="/verify/:id" component={Verify} />

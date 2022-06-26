@@ -12,15 +12,12 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { MenuItem } from "@mui/material";
 import { HeadingText } from "../../Styles/MyTypographies";
-import LoadingScreen from "../../Components/LoadingScreen";
 import { FlexBox } from "../../Styles/StyledBox";
 
 export default function CheckOutSideBar(props) {
-  const [loading, setloading] = React.useState(false);
   const {
     cartValues,
     deliveryCharge,
-    handleCOD,
     handleName,
     name,
     address,
@@ -31,11 +28,9 @@ export default function CheckOutSideBar(props) {
     cities,
     city,
   } = props;
-  const delivery_charge = deliveryCharge;
 
   return (
     <Box>
-      <LoadingScreen bool={loading} />
       {cartValues ? (
         <Box m={5} sx={{ width: 250 }}>
           <Card sx={{ backgroundColor: "white", maxWidth: 300 }}>

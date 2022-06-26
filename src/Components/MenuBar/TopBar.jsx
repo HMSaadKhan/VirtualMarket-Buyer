@@ -1,7 +1,8 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable no-lone-blocks */
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import { FlexBox } from "../../Styles/StyledBox";
-import { Link } from "react-router-dom";
+
 import { styled } from "@mui/styles";
 import Logo from "./virtualmarket.png";
 import { useHistory } from "react-router-dom";
@@ -33,7 +34,13 @@ export default function TopBar() {
               cursor: "pointer",
               height: "100",
               width: "100",
-              display: { xs: "inline", md: "none", lg: "none", xl: "none" },
+              display: {
+                xs: "inline",
+                sm: "none",
+                md: "none",
+                lg: "none",
+                xl: "none",
+              },
             }}
             onClick={(e) => {
               history.push("/");
@@ -42,7 +49,7 @@ export default function TopBar() {
             <img src={Logo} height="65" width="88" objectfit="contain" />
           </Box>
         </div>
-        <Box sx={{}}>
+        <Box sx={{ bgColor: "#ba6a62" }}>
           <Links
             sx={{ color: "black", cursor: "pointer" }}
             onClick={(e) => {

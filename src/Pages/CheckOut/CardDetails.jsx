@@ -2,16 +2,12 @@
 
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import { toast } from "react-toastify";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import cartService from "../../Services/CartServices";
-import { StyledButton } from "../../Styles/StyledButton";
 import LoadingScreen from "../../Components/LoadingScreen";
-import { Labels } from "../../Styles/MyTypographies";
 import { useHistory } from "react-router-dom";
-import { TextField, Typography, Button } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import { Inputs } from "../../Styles/StyledInput";
 
 const CardDetails = ({
@@ -25,17 +21,12 @@ const CardDetails = ({
   advancePayment,
   totalPayment,
   onlinePaymentOption,
+  specialInstructions,
 }) => {
-  console.log(advancePayment);
-  console.log(totalPayment);
-  const [checked, setChecked] = useState(true);
   const [bool, setbool] = useState(false);
-  const [Id, setId] = useState();
+
   const [advanceAmount, setadvanceAmount] = useState();
-  const [proceedDisable, setproceedDisable] = useState(true);
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
+
   const stripe = useStripe();
   const elements = useElements();
   const history = useHistory();
@@ -58,7 +49,7 @@ const CardDetails = ({
       return;
     }
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: elements.getElement(CardElement),
     });
@@ -66,20 +57,22 @@ const CardDetails = ({
     if (paymentMethod) {
       const { id } = paymentMethod;
       setbool(true);
-      console.log(id);
 
-      // if (paymentMethod.id) {
       OnlinePayment(id);
-      // } else {
-      //   paymentProceed();
-      // }
-    } else setproceedDisable(true);
+    }
   };
   const paymentProceed = async () => {
     console.log("COD run");
     setbool(true);
     await cartService
-      .OnlinePayment(cartId, { name, address, phone, city, advanceAmount })
+      .OnlinePayment(cartId, {
+        name,
+        address,
+        phone,
+        city,
+        advanceAmount,
+        specialInstructions,
+      })
       .then((data) => {
         toast.success(data.data, {
           position: toast.POSITION.BOTTOM_LEFT,
@@ -103,7 +96,15 @@ const CardDetails = ({
 
     console.log(id, name, address, phone, city, advanceAmount);
     await cartService
-      .OnlinePayment(cartId, { id, name, address, phone, city, advanceAmount })
+      .OnlinePayment(cartId, {
+        id,
+        name,
+        address,
+        phone,
+        city,
+        advanceAmount,
+        specialInstructions,
+      })
       .then((data) => {
         toast.success(data.data, {
           position: toast.POSITION.BOTTOM_LEFT,
@@ -128,16 +129,6 @@ const CardDetails = ({
       <LoadingScreen bool={bool} />
 
       <Box>
-        {/* {advanceAmount < totalPayment && advanceAmount >= advancePayment &&()} */}
-      </Box>
-
-      {/* <FormControlLabel
-        control={<Checkbox checked={checked} onChange={handleChange} />}
-        label={<Labels>Online Payment</Labels>}
-      /> */}
-      {/* {checked ? ( */}
-
-      <Box>
         {onlinePaymentOption && (
           <>
             <Box sx={{ display: "flex ", alignItems: "center" }}>
@@ -145,12 +136,12 @@ const CardDetails = ({
                 color="primary"
                 sx={{ fontWeight: "bold", fontSize: "20px" }}
               >
-                Online Payment
+                Advance Payment
               </Typography>
               <Typography
                 sx={{ color: "#eeeee", fontWeight: "bold", fontSize: "10px" }}
               >
-                (optional)
+                {advancePayment > 0 ? <>(required)</> : <>(optional)</>}
               </Typography>
             </Box>
             <Inputs

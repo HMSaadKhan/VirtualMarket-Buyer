@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { RadioGroup, Box } from "@mui/material";
 import cartService from "../../Services/CartServices";
 import useState from "react-usestateref";
-import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import Auth from "../../AuthWrapper/IsLoginFalse";
 import LoadingScreen from "../../Components/LoadingScreen";
@@ -12,7 +11,6 @@ import CartComponent from "./CartComponent";
 
 const Cart = (props) => {
   //const classes = useStyles();
-  const history = useHistory();
 
   const [cartItem, setCartItem] = useState([]);
   const [subtotal, setsubtotal] = useState();

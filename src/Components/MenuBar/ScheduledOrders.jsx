@@ -1,6 +1,5 @@
 import { Menu, Box, IconButton, Typography, Divider } from "@mui/material";
 import React, { useState } from "react";
-import { useHistory, Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import scheduleService from "../../Services/ScheduleService";
@@ -21,7 +20,6 @@ const ScheduledOrder = () => {
 
   const [schedulebool, setschedulebool] = useState(false);
   const [scheduleId, setscheduleId] = useState();
-  const [txtWrap, setTxtWrap] = useState(true);
 
   const getSchedule = () => {
     scheduleService.getScheduledOrder().then((data) => {
@@ -54,13 +52,6 @@ const ScheduledOrder = () => {
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
     setEditScheduleOrders(null);
-  };
-
-  const history = useHistory();
-
-  const handleChange = (event) => {
-    history.push(event.target.getAttribute("value"));
-    handleMenuClose();
   };
 
   const renderMenu = (
@@ -116,7 +107,7 @@ const ScheduledOrder = () => {
                               <Box sx={{ width: "100%" }}>
                                 <Typography
                                   sx={{ color: "#ba6a62", fontWeight: "bold" }}
-                                  noWrap={txtWrap}
+                                  noWrap
                                 >
                                   {items.Product.name}
                                 </Typography>

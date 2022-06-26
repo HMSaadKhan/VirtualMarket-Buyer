@@ -1,15 +1,13 @@
-import { Card, Box, Avatar } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Grid } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import img from "../../Components/LandingComponent/testImage.jpeg";
 import { useEffect } from "react";
 import sellerService from "../../Services/SellerService";
 import { useParams } from "react-router-dom";
-
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import chatService from "../../Services/ChatService";
@@ -17,9 +15,7 @@ import ChatMessages from "../../Components/Message/ChatMessages";
 import ChatIcon from "@mui/icons-material/Chat";
 import { IconButton } from "@mui/material";
 import productService from "../../Services/ProductServices";
-
 import ProductComponent from "../../Pages/Product/ProductComponent";
-import { NameBar } from "../../Styles/NameBar";
 import LoadingScreen from "../../Components/LoadingScreen";
 import { MidPager } from "../../Styles/MidPager";
 
@@ -69,7 +65,7 @@ export default function SellerPage() {
         setloading(false);
         console.log(error.response);
       });
-  }, []);
+  }, [seller.id]);
 
   const chatInitiate = () => {
     chatService
@@ -224,7 +220,7 @@ export default function SellerPage() {
                             Same City Delivery
                           </Typography>
                           <Typography ml={1} variant="subtitle" component="div">
-                            {sellerDetails.sameCityDeliveryCharge + " Rs"}
+                            {"PKR." + sellerDetails.sameCityDeliveryCharge}
                           </Typography>
                         </Box>
                         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -237,7 +233,7 @@ export default function SellerPage() {
                             Different City Delivery
                           </Typography>
                           <Typography ml={1} variant="subtitle" component="div">
-                            {sellerDetails.diffCityDeliveryCharge + " Rs"}
+                            {"PKR." + sellerDetails.diffCityDeliveryCharge}
                           </Typography>
                         </Box>
                       </Box>
@@ -310,7 +306,7 @@ export default function SellerPage() {
                             {sellerDetails.advancePaymentCriteria === 1 ? (
                               <>On All Orders</>
                             ) : (
-                              sellerDetails.advancePaymentCriteria + " Rs"
+                              "PKR." + sellerDetails.advancePaymentCriteria
                             )}
                           </Typography>
                         </Box>
@@ -337,7 +333,7 @@ export default function SellerPage() {
                         Same City Delivery
                       </Typography>
                       <Typography ml={1} variant="subtitle" component="div">
-                        {sellerDetails.sameCityDeliveryCharge + " Rs"}
+                        {"PKR." + sellerDetails.sameCityDeliveryCharge}
                       </Typography>
                     </Box>
                     <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -350,7 +346,7 @@ export default function SellerPage() {
                         Different City Delivery
                       </Typography>
                       <Typography ml={1} variant="subtitle" component="div">
-                        {sellerDetails.diffCityDeliveryCharge + " Rs"}
+                        {"PKR." + sellerDetails.diffCityDeliveryCharge}
                       </Typography>
                     </Box>
                   </Box>
@@ -411,7 +407,7 @@ export default function SellerPage() {
                         {sellerDetails.advancePaymentCriteria === 1 ? (
                           <>On All Orders</>
                         ) : (
-                          sellerDetails.advancePaymentCriteria + " Rs"
+                          "PKR." + sellerDetails.advancePaymentCriteria
                         )}
                       </Typography>
                     </Box>

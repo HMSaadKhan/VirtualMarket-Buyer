@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
 import orderService from "../../Services/OrderService";
-import OrderComponent from "./OrderComponent";
 import { Card, CardContent, Button } from "@mui/material";
 import Auth from "../../AuthWrapper/IsLoginFalse";
 import { NameBar } from "../../Styles/NameBar";
@@ -12,6 +11,7 @@ import { MidPager } from "../../Styles/MidPager";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
 import { styled } from "@mui/styles";
+import { toast } from "react-toastify";
 const Links = styled(Typography)({
   color: "black",
   cursor: "pointer",
@@ -80,11 +80,13 @@ export default function Orders(props) {
                             <Typography color="primary">
                               Order#&nbsp;
                             </Typography>
-                            <Typography>{order._id}</Typography>
+                            <Typography noWrap sx={{ width: "30ch" }}>
+                              {order._id}
+                            </Typography>
                           </Box>
                           <Links
                             onClick={() => {
-                              history.push("/");
+                              history.push("/orderdetail/" + order._id);
                             }}
                           >
                             View
@@ -94,20 +96,38 @@ export default function Orders(props) {
                           sx={{
                             display: "flex",
                             justifyContent: "space-between",
-                            alignItems: "center",
+                            alignItems: {
+                              xs: "start",
+                              sm: "start",
+                              md: "center",
+                              lg: "center",
+                            },
                             flexDirection: {
                               xs: "column",
                               sm: "column",
+                              md: "row",
                               lg: "row",
                             },
-                            height: "50px",
+                            height: {
+                              xs: "60",
+                              sm: "60",
+                              md: "50",
+                              lg: "50",
+                            },
                           }}
                         >
                           <Box sx={{ display: "flex" }}>
                             <Typography color="primary">
                               Order From&nbsp;
                             </Typography>
-                            <Typography>{order.Seller.storeName}</Typography>
+                            <Typography
+                              sx={{ cursor: "pointer" }}
+                              onClick={() => {
+                                history.push("/seller/" + order.Seller._id);
+                              }}
+                            >
+                              {order.Seller.storeName}
+                            </Typography>
                           </Box>
                           <Box sx={{ display: "flex" }}>
                             <Typography color="primary">
@@ -124,7 +144,28 @@ export default function Orders(props) {
                             <Typography>{order.status}</Typography>
                           </Box>
 
-                          <Button>cancel Order</Button>
+                          <Button
+                            disabled={order.status !== "PLACED" ? true : false}
+                            onClick={() => {
+                              orderService
+                                .cancelOrder(order._id)
+                                .then((data) => {
+                                  console.log(data);
+                                  Orders();
+                                  toast.success(data.data, {
+                                    position: toast.POSITION.BOTTOM_LEFT,
+                                  });
+                                })
+                                .catch((error) => {
+                                  console.log(error.response);
+                                  toast.error(error.response.data, {
+                                    position: toast.POSITION.BOTTOM_LEFT,
+                                  });
+                                });
+                            }}
+                          >
+                            cancel Order
+                          </Button>
                         </Box>
                       </CardContent>
                     </Card>

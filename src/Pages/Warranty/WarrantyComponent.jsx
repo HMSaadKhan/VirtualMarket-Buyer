@@ -1,79 +1,92 @@
 import React from "react";
 import { Card, Typography, Box, CardContent } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import ClaimWriting from "../../Components/PopUps/ClaimWriting";
 
 import moment from "moment";
-
-const useStyles = makeStyles({
-  root: {
-    display: "flex",
-
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-});
+import { useHistory } from "react-router-dom";
 
 const WarrantyComponent = ({ warranty, getWarranties }) => {
-  const classes = useStyles();
+  const history = useHistory();
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ marginTop: "5%", marginBottom: "5%" }}>
-        <Card>
-          <CardContent>
-            <Box
-              className={classes.root}
-              sx={{ flexDirection: { xs: "column", sm: "column", lg: "row" } }}
-            >
-              <Box sx={{ width: "100%" }}>
-                <Typography>{warranty.productName}</Typography>
-              </Box>
-              <Box sx={{ width: "100%" }}>
-                <Typography align="center" sx={{ color: "#ba6a62" }}>
-                  {"Qty:" + warranty.quantity}
-                </Typography>
-              </Box>
-
-              {/* <Box sx={{ width: "100%" }}>
-                <Typography align="center">
-                  {moment(new Date(warranty.createdAt)).format("MMMM Do YYYY")}
-                </Typography>
-              </Box> */}
-              <Box sx={{ width: "100%", color: "red" }}>
-                <Typography align="center">
-                  {moment(new Date(warranty.expiry)).format("MMMM Do YYYY")}
-                </Typography>
-              </Box>
-              <Box sx={{ width: "100%", fontWeight: "bold" }}>
-                <Typography align="center" sx={{ fontWeight: "bold" }}>
-                  {warranty.status}
-                </Typography>
-              </Box>
-              <Box>
-                <ClaimWriting
-                  id={warranty._id}
-                  status={warranty.status}
-                  getWarranties={getWarranties}
-                />
-              </Box>
+    <Box m={2} sx={{ width: "100%" }}>
+      <Card
+        sx={{
+          backgroundColor: "#fafafa",
+          width: { xs: "400px", sm: "700px", md: "800px", lg: "800px" },
+        }}
+      >
+        <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: {
+                xs: "start",
+                sm: "start",
+                md: "center",
+                lg: "center",
+              },
+              flexDirection: {
+                xs: "column",
+                sm: "row",
+                md: "row",
+                lg: "row",
+              },
+              height: {
+                xs: "60",
+                sm: "60",
+                md: "50",
+                lg: "50",
+              },
+            }}
+          >
+            <Box sx={{ display: "flex", width: "15ch" }}>
+              <Typography
+                sx={{ cursor: "pointer" }}
+                onClick={() => {
+                  history.push(
+                    "/" + warranty.productName + "/" + warranty.Product
+                  );
+                }}
+              >
+                {warranty.productName}
+              </Typography>
             </Box>
-            {warranty.sellerComment ? (
-              <>
-                {" "}
-                <Box>
-                  <Typography sx={{ fontWeight: "bold", color: "#ba6a62" }}>
-                    Seller Remarks:
-                  </Typography>
-                  {warranty.sellerComment}
-                </Box>
-              </>
-            ) : (
-              <></>
-            )}
-          </CardContent>
-        </Card>
-      </Box>
+            <Box sx={{ display: "flex" }}>
+              <Typography color="primary">Qty:&nbsp;</Typography>
+              <Typography>{warranty.quantity}</Typography>
+            </Box>
+            <Box sx={{ display: "flex" }}>
+              <Typography color="primary">Expired on&nbsp;</Typography>
+              <Typography>{moment(warranty.expiry).format("lll")}</Typography>
+            </Box>
+            <Box sx={{ display: "flex" }}>
+              <Typography color="primary">Status&nbsp;</Typography>
+              <Typography>{warranty.status}</Typography>
+            </Box>
+
+            <ClaimWriting
+              id={warranty._id}
+              status={warranty.status}
+              getWarranties={getWarranties}
+            />
+          </Box>
+          {warranty.sellerComment ? (
+            <>
+              {" "}
+              <Box>
+                <Typography sx={{ fontWeight: "bold", color: "#ba6a62" }}>
+                  Seller Remarks:
+                </Typography>
+                {warranty.sellerComment}
+              </Box>
+            </>
+          ) : (
+            <></>
+          )}
+        </CardContent>
+      </Card>
     </Box>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Typography, Box } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import favoriteService from "../../Services/FavoritesService";
 import ProductComponent from "../../Pages/Product/ProductComponent";
 import Auth from "../../AuthWrapper/IsLoginFalse";

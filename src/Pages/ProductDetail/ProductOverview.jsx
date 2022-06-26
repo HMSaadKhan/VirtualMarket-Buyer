@@ -62,7 +62,7 @@ export default function ProductOverview({
   const [overallRating, setoverallRating] = useState(reviewDetails.rating);
   const [totalRating, settotalRating] = useState(reviewDetails.total | 0);
   const [type, settype] = useState();
-  const [disable, setDisable] = useState(true);
+
   const [loading, setloading] = useState(false);
   const [addtoCartCheck, setaddtoCartCheck] = useState(false);
 
@@ -197,14 +197,6 @@ export default function ProductOverview({
                         setschedulebool(true);
                       } else {
                         history.push("/login");
-                        // history.push("/login", [
-                        //   "/:anything/:name/:id/",
-                        //   "/" +
-                        //     productDetails.name +
-                        //     "/" +
-                        //     productDetails._id +
-                        //     "/",
-                        // ]);
                       }
                     }}
                   />
@@ -311,6 +303,17 @@ export default function ProductOverview({
                         Custom Order
                       </Button>
                     </Box> */}
+          </Box>
+          <Box className={classes.description}>
+            <Typography mt={1} mb={1} color="red">
+              {productDetails.seller.advancePayment && (
+                <>
+                  {productDetails.seller.advancePaymentAmount + "%"} Advance
+                  Payment is taken on order greater than{" "}
+                  {"PKR." + productDetails.seller.advancePaymentCriteria}
+                </>
+              )}
+            </Typography>
           </Box>
           <Box className={classes.description}>
             <Typography mt={2} mb={2}>

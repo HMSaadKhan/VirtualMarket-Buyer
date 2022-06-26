@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-constructor */
 import GenericService from "./GenericService";
 
 class CategoryService extends GenericService {

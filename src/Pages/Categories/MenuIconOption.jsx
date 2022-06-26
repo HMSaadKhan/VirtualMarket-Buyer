@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
-import { Box, Typography, Menu, MenuItem } from "@mui/material";
-import { styled } from "@mui/styles";
+import { Box, Menu, MenuItem } from "@mui/material";
 
 import { useHistory } from "react-router-dom";
 import { CategoriesContext } from "../../Contexts/Categories/CategoriesState";
-import { MarginBox } from "../../Styles/StyledBox";
+
 import ScheduledOrder from "../../Components/MenuBar/ScheduledOrders";
 
 import MenuIcon from "@mui/icons-material/Menu";

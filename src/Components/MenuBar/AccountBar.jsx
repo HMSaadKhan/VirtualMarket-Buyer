@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { MenuItem, Avatar, Typography } from "@mui/material";
+import { MenuItem, Avatar } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import buyerService from "../../Services/BuyerService";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import ScheduledOrder from "./ScheduledOrders";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 const AccountIcon = (props) => {
-  const [fname, setfname] = useState("");
-  const [lname, setlname] = useState("");
   const [avatar, setavatar] = useState("");
 
   const getData = () => {

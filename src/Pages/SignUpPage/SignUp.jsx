@@ -19,8 +19,6 @@ const Signup = (props) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setCPassword] = React.useState("");
-  const [fName, setfName] = React.useState("");
-  const [lName, setlName] = React.useState("");
   const [loading, setloading] = React.useState(false);
 
   const SignupFunction = () => {

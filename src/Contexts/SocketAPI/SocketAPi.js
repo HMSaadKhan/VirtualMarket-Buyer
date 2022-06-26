@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
-import React, { useState, createContext } from "react";
+import React, { createContext } from "react";
 import socketClient from "socket.io-client";
 export const SocketAPIContext = createContext({});
 const socket = socketClient("https://virtualmarket-chat-socket.herokuapp.com/");
