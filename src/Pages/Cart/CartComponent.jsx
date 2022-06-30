@@ -3,6 +3,7 @@ import { Card, CardContent } from "@mui/material";
 import CartItems from "./CartItems";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
+import { useHistory } from "react-router-dom";
 
 const CartComponent = ({
   cart,
@@ -16,6 +17,7 @@ const CartComponent = ({
   cartId,
   key,
 }) => {
+  const history = useHistory();
   //const classes = useStyles();
   useEffect(() => {
     setcartId(cart._id);
@@ -43,6 +45,9 @@ const CartComponent = ({
         <CardContent>
           <FormControlLabel
             value={cart.seller._id}
+            onClick={() => {
+              history.push("seller/" + cart.seller._id);
+            }}
             label={"Items from '" + cart.seller.storeName + "'"}
             control={<Radio />}
             onChange={handleRadio}

@@ -38,6 +38,11 @@ const useStyles = makeStyles({
     height: "200px",
     objectFit: "contain",
   },
+  imageprev: {
+    width: "100px",
+    height: "100px",
+    objectFit: "contain",
+  },
 });
 
 export default function ChatMessages({
@@ -529,7 +534,7 @@ export default function ChatMessages({
               >
                 <CloseIcon />
               </IconButton>
-              <img className={classes.imagemsg} src={ImagePreview} />
+              <img className={classes.imageprev} src={ImagePreview} />
             </Box>
           ) : (
             <TextField

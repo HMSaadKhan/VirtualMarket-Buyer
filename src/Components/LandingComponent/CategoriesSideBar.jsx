@@ -33,7 +33,7 @@ function CategoriesSideBar() {
           </Typography>
         </Box>
         <Box>
-          <List sx={{ height: 480, overflowX: "auto" }}>
+          <List sx={{ height: 480, overflowX: "hidden", overflowY: "auto" }}>
             {categories.map((category) => {
               return (
                 <Box key={category._id} sx={{}}>

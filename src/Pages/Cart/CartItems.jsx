@@ -7,6 +7,7 @@ import cartService from "../../Services/CartServices";
 import { makeStyles } from "@mui/styles";
 import LoadingScreen from "../../Components/LoadingScreen";
 import { toast } from "react-toastify";
+import { Link, useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CartItems = (props) => {
   const classes = useStyles();
+  const history = useHistory();
   const { getCartItems, getProductId, item, cartId } = props;
 
   const [qty, setqty] = useState(item.quantity);
@@ -135,8 +137,25 @@ const CartItems = (props) => {
             flexDirection: { xs: "column", sm: "row", md: "row", lg: "row" },
           }}
         >
-          <Box sx={{ width: "100%" }}>
-            <Typography noWrap>{item.product.name}</Typography>
+          <Box
+            sx={{
+              width: {
+                xs: "5ch",
+                sm: "10ch",
+                md: "15ch",
+                lg: "15ch",
+              },
+            }}
+          >
+            <Typography
+              noWrap
+              sx={{ cursor: "pointer" }}
+              onClick={() => {
+                history.push("/" + item.product.name + "/" + item.product._id);
+              }}
+            >
+              {item.product.name}
+            </Typography>
             {item.type === "DEFAULT" ? (
               <></>
             ) : (
@@ -157,7 +176,6 @@ const CartItems = (props) => {
           <Box
             sx={{
               width: "100%",
-
               display: "flex ",
               alignItems: "center",
               justifyContent: "center",
@@ -166,7 +184,11 @@ const CartItems = (props) => {
             <IconButton onClick={minusButton} disabled={check}>
               <Remove />
             </IconButton>
-            <Box>
+            <Box
+              sx={{
+                width: "10ch",
+              }}
+            >
               <TextField
                 InputProps={{
                   readOnly: check ? true : false,
