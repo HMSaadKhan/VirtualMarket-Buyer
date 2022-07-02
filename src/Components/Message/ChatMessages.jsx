@@ -28,8 +28,9 @@ import { styled } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import cartService from "../../Services/CartServices";
 import { SocketAPIContext } from "../../Contexts/SocketAPI/SocketAPi";
-import { useContext } from "react";
-import { CartCountContext } from "../../Contexts/CartChanger/CartChanger";
+import OfferMsg from "./OfferMsg";
+import ImageMsg from "./ImageMsg";
+import TextMsg from "./TextMsg";
 
 const useStyles = makeStyles({
   image: {
@@ -61,7 +62,7 @@ export default function ChatMessages({
   const [msgText, setmsgText] = React.useState("");
   const [error, seterror] = React.useState("");
   const [loading, setloading] = React.useState(false);
-  const cartCount = useContext(CartCountContext);
+
   const anchorContext = React.useContext(ChatAnchorContext);
   const socket = React.useContext(SocketAPIContext);
   const [image, setImage] = React.useState();
@@ -277,198 +278,17 @@ export default function ChatMessages({
                           padding: "10px",
                         }}
                       >
-                        {message.type === "OFFER" ? (
-                          <>
-                            <Card
-                              sx={{
-                                backgroundColor: "#fafafa",
-                                width: "80%",
-                              }}
-                            >
-                              <CardContent>
-                                <Box
-                                  sx={{
-                                    display: "flex",
-                                    justifyContent: "left",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  {" "}
-                                  <Box>
-                                    <img
-                                      className={classes.image}
-                                      src={message.Offer.Product.images[0].link}
-                                      alt=""
-                                    />
-                                  </Box>
-                                  <Box>
-                                    <Box sx={{ width: "100%" }}>
-                                      <Typography
-                                        sx={{
-                                          color: "#ba6a62",
-                                          fontWeight: "bold",
-                                        }}
-                                      >
-                                        {message.Offer.Product.name}
-                                      </Typography>
-                                    </Box>
-                                    <Box sx={{ width: "100%" }}>
-                                      <FlexBox>
-                                        <Typography
-                                          sx={{
-                                            color: "#ba6a62",
-                                            fontWeight: "bold",
-                                          }}
-                                        >
-                                          Brand:
-                                        </Typography>
-                                        <Typography>
-                                          {message.Offer.Product.brand}
-                                        </Typography>
-                                      </FlexBox>
-                                    </Box>
-                                  </Box>
-                                </Box>
-                                <Box justifyContent="left">
-                                  <FlexBox>
-                                    <Typography
-                                      sx={{
-                                        color: "#ba6a62",
-                                        fontWeight: "bold",
-                                      }}
-                                    >
-                                      Offered Price:&nbsp;
-                                    </Typography>
-                                    <Typography>
-                                      {message.Offer.price + " PKR"}
-                                    </Typography>
-                                  </FlexBox>{" "}
-                                  <FlexBox>
-                                    <Typography
-                                      sx={{
-                                        color: "#ba6a62",
-                                        fontWeight: "bold",
-                                      }}
-                                    >
-                                      Quantity:&nbsp;
-                                    </Typography>
-                                    <Typography>
-                                      {message.Offer.quantity + " pieces"}
-                                    </Typography>
-                                  </FlexBox>
-                                  <FlexBox>
-                                    <Typography
-                                      sx={{
-                                        color: "#ba6a62",
-                                        fontWeight: "bold",
-                                      }}
-                                    >
-                                      Offer Status:&nbsp;
-                                    </Typography>
-                                    <Typography>
-                                      {message.Offer.status}
-                                    </Typography>
-                                  </FlexBox>
-                                </Box>
-                                <Button
-                                  variant="contained"
-                                  fullWidth
-                                  disabled={
-                                    message.Offer.status === "ACCEPTED"
-                                      ? false
-                                      : true
-                                  }
-                                  onClick={() => {
-                                    cartService
-                                      .addOffer(message.Offer._id)
-                                      .then((data) => {
-                                        console.log(data.data);
-                                        toast.success(data.data, {
-                                          position: toast.POSITION.BOTTOM_LEFT,
-                                        });
-                                        cartCount.setChanger(data);
-                                        getMessages();
-                                      })
-                                      .catch((error) => {
-                                        console.log(error.response);
-                                        toast.error(error.response.data, {
-                                          position: toast.POSITION.BOTTOM_LEFT,
-                                        });
-                                      });
-                                  }}
-                                >
-                                  Add to cart
-                                </Button>
-                              </CardContent>
-                              <Typography
-                                pr={1}
-                                pb={1}
-                                align="right"
-                                sx={{ fontSize: "10px" }}
-                              >
-                                {moment(message.Offer.createdAt).format("LT")}
-                              </Typography>
-                            </Card>
-                          </>
-                        ) : (
-                          <>
-                            {message.type === "IMAGE" ? (
-                              <>
-                                <Box>
-                                  <Card
-                                    sx={{
-                                      backgroundColor: "#ba6a63",
-                                      // margin: "10px",
-                                      minWidth: "100px",
-                                      maxWidth: "300px",
-                                      padding: "5px",
-                                    }}
-                                  >
-                                    <Box>
-                                      <img
-                                        className={classes.imagemsg}
-                                        src={message.content}
-                                        alt="image"
-                                      />
-                                    </Box>
-
-                                    <Typography
-                                      align="right"
-                                      sx={{ fontSize: "10px", color: "white" }}
-                                    >
-                                      {moment(message.createdAt).format("LT")}
-                                    </Typography>
-                                  </Card>
-                                </Box>
-                              </>
-                            ) : (
-                              <>
-                                {" "}
-                                <Box>
-                                  <Card
-                                    sx={{
-                                      backgroundColor: "#ba6a63",
-                                      // margin: "10px",
-                                      minWidth: "100px",
-                                      maxWidth: "300px",
-                                      padding: "5px",
-                                    }}
-                                  >
-                                    <Typography align="left">
-                                      {message.content}
-                                    </Typography>
-
-                                    <Typography
-                                      align="right"
-                                      sx={{ fontSize: "10px", color: "white" }}
-                                    >
-                                      {moment(message.createdAt).format("LT")}
-                                    </Typography>
-                                  </Card>
-                                </Box>
-                              </>
-                            )}
-                          </>
+                        {message.type === "IMAGE" && (
+                          <ImageMsg message={message} />
+                        )}
+                        {message.type === "OFFER" && (
+                          <OfferMsg
+                            message={message}
+                            getMessages={getMessages}
+                          />
+                        )}
+                        {message.type === "TEXT" && (
+                          <TextMsg message={message} />
                         )}
                       </Box>
                     ) : (
@@ -478,25 +298,16 @@ export default function ChatMessages({
                             display: "flex",
                             width: "100%",
                             justifyContent: "left",
+                            m: 1,
                           }}
                         >
-                          <Card
-                            sx={{
-                              backgroundColor: "#fafafa",
-                              margin: "5px",
-                              minWidth: "100px",
-                              maxWidth: "300px",
-                              padding: "5px",
-                            }}
-                          >
-                            <Typography align="left">
-                              {message.content}
-                            </Typography>
+                          {message.type === "IMAGE" && (
+                            <ImageMsg message={message} />
+                          )}
 
-                            <Typography align="right" sx={{ fontSize: "10px" }}>
-                              {moment(message.createdAt).format("LT")}
-                            </Typography>
-                          </Card>
+                          {message.type === "TEXT" && (
+                            <TextMsg message={message} />
+                          )}
                         </Box>
                       </>
                     )}
