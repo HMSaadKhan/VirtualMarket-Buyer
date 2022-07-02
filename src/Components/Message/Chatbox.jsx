@@ -22,15 +22,26 @@ import Fab from "@mui/material/Fab";
 import buyerService from "../../Services/BuyerService";
 import { MidPager } from "../../Styles/MidPager";
 import { SocketAPIContext } from "../../Contexts/SocketAPI/SocketAPi";
+import ChatLoading from "../ChatLoading";
 import jwtDecode from "jwt-decode";
-
-export default function ChatBox({ chat, bool, setbool }) {
+import { toast } from "react-toastify";
+export default function ChatBox({ bool, setbool }) {
   const [chats, setchats] = useState([]);
   const [chatid, setchatid] = useState();
+  const [error, seterror] = useState("");
   const [msgbool, setmsgbool] = useState(false);
+  const [loading, setloading] = useState(false);
   const [chatperson, setchatperson] = useState();
+
   const socket = useContext(SocketAPIContext);
-  console.log(socket);
+
+  const bg = (data) => {
+    if (data) {
+      return "white";
+    } else {
+      return "red";
+    }
+  };
 
   React.useEffect(() => {
     if (buyerService.isLoggedIn()) {
@@ -44,14 +55,19 @@ export default function ChatBox({ chat, bool, setbool }) {
   const ref = React.useRef();
 
   React.useEffect(() => {
+    setloading(true);
     setchats([]);
     chatService
       .getChats()
       .then((chats) => {
+        console.log(chats.data);
         setchats(chats.data);
+        setloading(false);
       })
       .catch((error) => {
         console.log(error.response);
+        setloading(false);
+        seterror(error.response.data);
       });
   }, [bool]);
   React.useEffect(() => {
@@ -112,6 +128,7 @@ export default function ChatBox({ chat, bool, setbool }) {
             <CloseIcon />
           </IconButton>
         </Box>
+        <ChatLoading bool={loading} />
       </Box>
       <Box>
         {chats.length > 0 ? (
@@ -124,6 +141,7 @@ export default function ChatBox({ chat, bool, setbool }) {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "start",
+                    backgroundColor: bg(chat.buyerRead),
                   }}
                   onClick={() => {
                     setmsgbool(true);
@@ -131,6 +149,12 @@ export default function ChatBox({ chat, bool, setbool }) {
                     setbool(false);
                     setchatperson(chat);
                   }}
+                  onMouseEnter={(e) =>
+                    (e.target.style.backgroundColor = bg(chat.buyerRead))
+                  }
+                  onMouseLeave={(e) =>
+                    (e.target.style.backgroundColor = bg(chat.buyerRead))
+                  }
                 >
                   {/* <Card>
                     <CardContent> */}
@@ -176,22 +200,13 @@ export default function ChatBox({ chat, bool, setbool }) {
             })}
           </>
         ) : (
-          <>
-            {!chats.length > 0 ? (
-              <>
-                <MidPager name={"No Chats"} />
-              </>
-            ) : (
-              <></>
-            )}
-          </>
+          <>{error.length > 1 && <MidPager name={error} />}</>
         )}
       </Box>
     </Menu>
   );
   return (
     <Box>
-      {chat ? <></> : <></>}
       <ChatMessages
         bool={msgbool}
         setbool={setmsgbool}
@@ -205,7 +220,11 @@ export default function ChatBox({ chat, bool, setbool }) {
         aria-label="add"
         sx={{ position: "fixed", bottom: 70, right: "1%", zIndex: 4 }}
         onClick={(e) => {
-          setbool(true);
+          buyerService.isLoggedIn()
+            ? setbool(true)
+            : toast.error(error, {
+                position: toast.POSITION.BOTTOM_LEFT,
+              });
         }}
       >
         <ChatIcon />

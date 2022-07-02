@@ -8,9 +8,11 @@ import LoadingScreen from "../../Components/LoadingScreen";
 import { MidPager } from "../../Styles/MidPager";
 import CartSideBar from "./CartSideBar";
 import CartComponent from "./CartComponent";
+import { useContext } from "react";
+import { CartCountContext } from "../../Contexts/CartChanger/CartChanger";
 
 const Cart = (props) => {
-  //const classes = useStyles();
+  const cartCount = useContext(CartCountContext);
 
   const [cartItem, setCartItem] = useState([]);
   const [subtotal, setsubtotal] = useState();
@@ -54,7 +56,7 @@ const Cart = (props) => {
 
   const getProductId = (data) => {
     console.log(data);
-    props.stateChanged(data);
+    cartCount.setChanger(data);
     setCartItem((items) => {
       return items.filter((item) => {
         return item._id !== data;
@@ -147,7 +149,6 @@ const Cart = (props) => {
             deliveryCharge={deliveryCharge}
             getCartItems={getCartItems}
             total={total}
-            stateChanged={props.stateChanged}
           />
         </Box>
       </Box>

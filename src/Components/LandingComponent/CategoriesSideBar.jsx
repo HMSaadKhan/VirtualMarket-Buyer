@@ -6,6 +6,7 @@ import {
   ListItemText,
   Box,
 } from "@mui/material";
+import "../../Styles/hidescrollBar.css";
 import React, { useContext } from "react";
 import { CategoriesContext } from "../../Contexts/Categories/CategoriesState";
 import { Link, useHistory } from "react-router-dom";

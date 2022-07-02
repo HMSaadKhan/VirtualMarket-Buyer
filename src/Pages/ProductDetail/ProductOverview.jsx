@@ -26,6 +26,8 @@ import { FlexBox } from "../../Styles/StyledBox";
 import LoadingScreen from "../../Components/LoadingScreen";
 import buyerService from "../../Services/BuyerService";
 import Counter from "../../Components/Counter";
+import { useContext } from "react";
+import { CartCountContext } from "../../Contexts/CartChanger/CartChanger";
 
 const useStyles = makeStyles({
   name: {
@@ -44,7 +46,7 @@ const useStyles = makeStyles({
 
 export default function ProductOverview({
   productDetails,
-  stateChanged,
+
   reviewDetails,
   getDetails,
   setbargainbool,
@@ -53,6 +55,8 @@ export default function ProductOverview({
   const classes = useStyles();
   const product = useParams();
   const [quantity, SetQuantity] = useState(productDetails.minOrder);
+  const cartCount = useContext(CartCountContext);
+  console.log(cartCount);
 
   const [favoriteChecked, setFavoriteChecked] = React.useState(
     productDetails.favourite
@@ -106,7 +110,7 @@ export default function ProductOverview({
     cartService
       .addToCart({ product: product.id, quantity, type: Type })
       .then((data) => {
-        stateChanged(data);
+        cartCount.setChanger(data);
         toast.success(data.data, {
           position: toast.POSITION.BOTTOM_LEFT,
         });

@@ -45,9 +45,6 @@ const CartComponent = ({
         <CardContent>
           <FormControlLabel
             value={cart.seller._id}
-            onClick={() => {
-              history.push("seller/" + cart.seller._id);
-            }}
             label={"Items from '" + cart.seller.storeName + "'"}
             control={<Radio />}
             onChange={handleRadio}

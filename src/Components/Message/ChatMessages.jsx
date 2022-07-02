@@ -20,13 +20,17 @@ import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import messageService from "../../Services/MessageService";
+import MsgLoading from "../MsgLoading";
 
 import { ChatAnchorContext } from "../../Contexts/ChatAnchor/ChatAnchor";
-
+import { toast } from "react-toastify";
 import { styled } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import cartService from "../../Services/CartServices";
 import { SocketAPIContext } from "../../Contexts/SocketAPI/SocketAPi";
+import { useContext } from "react";
+import { CartCountContext } from "../../Contexts/CartChanger/CartChanger";
+
 const useStyles = makeStyles({
   image: {
     width: "60px",
@@ -55,6 +59,9 @@ export default function ChatMessages({
   const classes = useStyles();
   const [messages, setmessages] = React.useState([]);
   const [msgText, setmsgText] = React.useState("");
+  const [error, seterror] = React.useState("");
+  const [loading, setloading] = React.useState(false);
+  const cartCount = useContext(CartCountContext);
   const anchorContext = React.useContext(ChatAnchorContext);
   const socket = React.useContext(SocketAPIContext);
   const [image, setImage] = React.useState();
@@ -80,14 +87,17 @@ export default function ChatMessages({
   };
 
   const getMessages = () => {
+    setloading(true);
     setmessages([]);
     messageService
       .getMessage(chatId)
       .then((chats) => {
+        setloading(false);
         console.log(chats);
         setmessages(chats.data.reverse());
       })
       .catch((error) => {
+        setloading(false);
         console.log(error.response);
         setmessages([]);
       });
@@ -95,32 +105,33 @@ export default function ChatMessages({
 
   React.useEffect(getMessages, [chatId, bool]);
 
-  React.useEffect(() => {
-    socket.on("receivemsg", (senderID, receiverID, msg, roomID) => {
-      console.log(senderID, receiverID, msg, roomID);
-      if (chatId === roomID) {
-        setmessages([msg, ...messages]);
-      }
-    });
-  }, [socket]);
+  // React.useEffect(() => {
+  //   socket.on("receivemsg", (senderID, receiverID, msg, roomID) => {
+  //     console.log(senderID, receiverID, msg, roomID);
+  //     if (chatId === roomID) {
+  //       setmessages([msg, ...messages]);
+  //     }
+  //   });
+  // }, [socket]);
 
   const send = () => {
     const msg = {
       sender: "BUYER",
       createdAt: new Date(),
       content: msgText,
-      type: "TEXT",
+      type: "TEXT" || "OFFER",
     };
-    socket.emit("sendmsg", {
-      senderID: chatperson.Buyer,
-      receiverID: chatperson.Seller._id,
-      msg: msg,
-      roomID: chatId,
-    });
+    // socket.emit("sendmsg", {
+    //   senderID: chatperson.Buyer,
+    //   receiverID: chatperson.Seller._id,
+    //   msg: msg,
+    //   roomID: chatId,
+    // });
     messageService
       .sendMessage(chatId, { content: msgText })
       .then((chats) => {
         setmessages([msg, ...messages]);
+        //getMessages();
         setmsgText("");
       })
       .catch((error) => {
@@ -135,12 +146,12 @@ export default function ChatMessages({
       createdAt: new Date(),
       type: "IMAGE",
     };
-    socket.emit("sendmsg", {
-      senderID: chatperson.Buyer,
-      receiverID: chatperson.Seller._id,
-      msg: msg,
-      roomID: chatId,
-    });
+    // socket.emit("sendmsg", {
+    //   senderID: chatperson.Buyer,
+    //   receiverID: chatperson.Seller._id,
+    //   msg: msg,
+    //   roomID: chatId,
+    // });
     console.log(data);
     await messageService
       .sendImage(chatId, data)
@@ -174,11 +185,6 @@ export default function ChatMessages({
           width: "50ch",
         },
       }}
-      sx={{
-        display: "flex",
-        justifyContent: "right",
-        alignItems: "center",
-      }}
     >
       <Box
         sx={{
@@ -189,7 +195,6 @@ export default function ChatMessages({
         }}
       >
         <Box
-          focus="false"
           sx={{
             display: "flex",
             justifyContent: "space-between",
@@ -251,12 +256,15 @@ export default function ChatMessages({
             flexDirection: "column-reverse",
           }}
         >
-          {messages ? (
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <MsgLoading bool={loading} />
+          </Box>
+          {messages.length > 0 ? (
             <>
-              {messages.map((message) => {
+              {messages.map((message, index) => {
                 return (
                   <Box
-                    key={message._id}
+                    key={index}
                     sx={{ display: "flex", justifyContent: "space-between" }}
                     // ref={ref}
                   >
@@ -375,9 +383,17 @@ export default function ChatMessages({
                                       .addOffer(message.Offer._id)
                                       .then((data) => {
                                         console.log(data.data);
+                                        toast.success(data.data, {
+                                          position: toast.POSITION.BOTTOM_LEFT,
+                                        });
+                                        cartCount.setChanger(data);
+                                        getMessages();
                                       })
                                       .catch((error) => {
                                         console.log(error.response);
+                                        toast.error(error.response.data, {
+                                          position: toast.POSITION.BOTTOM_LEFT,
+                                        });
                                       });
                                   }}
                                 >
@@ -538,7 +554,6 @@ export default function ChatMessages({
             </Box>
           ) : (
             <TextField
-              autoFocus
               fullWidth
               multiline
               value={msgText}

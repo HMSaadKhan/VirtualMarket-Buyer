@@ -28,13 +28,13 @@ function LandingComponent() {
         <Box
           sx={{
             width: {
-              xs: "55%",
+              xs: "100%",
               sm: "65%",
               md: "100%",
               lg: "100%",
               xl: "100%",
             },
-            display: { xs: "none", sm: "inline", md: "inline" },
+            display: { xs: "inline", sm: "inline", md: "inline" },
           }}
         >
           <LandingImages />

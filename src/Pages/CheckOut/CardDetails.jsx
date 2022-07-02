@@ -9,13 +9,15 @@ import LoadingScreen from "../../Components/LoadingScreen";
 import { useHistory } from "react-router-dom";
 import { Typography, Button } from "@mui/material";
 import { Inputs } from "../../Styles/StyledInput";
+import { useContext } from "react";
+import { CartCountContext } from "../../Contexts/CartChanger/CartChanger";
 
 const CardDetails = ({
   name,
   phone,
   address,
   city,
-  stateChanged,
+
   getCartItems,
   cartId,
   advancePayment,
@@ -24,6 +26,7 @@ const CardDetails = ({
   specialInstructions,
 }) => {
   const [bool, setbool] = useState(false);
+  const cartCount = useContext(CartCountContext);
 
   const [advanceAmount, setadvanceAmount] = useState();
 
@@ -37,6 +40,9 @@ const CardDetails = ({
 
   const proceed = () => {
     if (onlinePaymentOption && advanceAmount === 0) {
+      paymentProceed();
+    }
+    if (!onlinePaymentOption) {
       paymentProceed();
     }
     if (advanceAmount > 0) {
@@ -79,7 +85,7 @@ const CardDetails = ({
         });
         setTimeout(() => {
           getCartItems();
-          stateChanged(data);
+          cartCount.setChanger(data);
           setbool(false);
           history.push("/thankyou");
         }, 2000);
@@ -111,7 +117,8 @@ const CardDetails = ({
         });
         setTimeout(() => {
           getCartItems();
-          stateChanged(data);
+          cartCount.setChanger(data);
+
           setbool(false);
           history.push("/thankyou");
         }, 1000);

@@ -51,6 +51,7 @@ export default function CommentWriting({ orderId, itemId }) {
 
   const handleClickOpen = () => {
     setOpen(true);
+    setText("");
   };
 
   const handleClose = () => {

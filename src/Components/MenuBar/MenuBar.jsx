@@ -11,6 +11,8 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Favorite from "@mui/icons-material/Favorite";
 import cartService from "../../Services/CartServices";
 import Logo from "./virtualmarket.png";
+import { useContext } from "react";
+import { CartCountContext } from "../../Contexts/CartChanger/CartChanger";
 const useStyles = makeStyles((theme) => ({
   link: {
     color: "black",
@@ -41,19 +43,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MenuBar = (props) => {
-  const [qty, setQty] = useState(0);
-
   const [search, setSearch] = useState("");
-
-  const getCartCount = () => {
-    cartService.getQty().then((data) => {
-      setQty(data.data.count);
-    });
-  };
-  useEffect(getCartCount, [props.refreshCart]);
+  const cartCount = useContext(CartCountContext);
 
   const history = useHistory();
-
   const classes = useStyles();
   return (
     <Box sx={{ width: "auto" }}>
@@ -124,7 +117,7 @@ const MenuBar = (props) => {
               <AccountIcon />
             </div>
             <div className={classes.icon}>
-              <Badge badgeContent={qty} color="error">
+              <Badge badgeContent={cartCount.qty} color="error">
                 <ShoppingCartOutlinedIcon
                   fontSize="medium"
                   sx={{ color: "#ba6a62" }}

@@ -5,6 +5,7 @@ import chatService from "../../Services/ChatService";
 import { makeStyles } from "@mui/styles";
 import ChatMessages from "../../Components/Message/ChatMessages";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 const useStyles = makeStyles({
   cardHeadingText: { color: "text.secondary" },
   cardSubText: {
@@ -35,6 +36,9 @@ export default function SellerDetails({ productDetails, msgbool, setmsgbool }) {
       })
       .catch((error) => {
         console.log(error);
+        toast.error(error.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
       });
   };
 
@@ -117,7 +121,7 @@ export default function SellerDetails({ productDetails, msgbool, setmsgbool }) {
                 </Typography>
               ) : (
                 <Typography sx={{ fontWeight: "bold", color: "red" }}>
-                  {productDetails.stock + " Pieces"}
+                  Out of Stock
                 </Typography>
               )}
             </Typography>

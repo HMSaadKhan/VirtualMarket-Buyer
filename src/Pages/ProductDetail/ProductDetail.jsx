@@ -115,7 +115,6 @@ export default function ProductDetail(props) {
               <ProductOverview
                 setbargainbool={setbargainbool}
                 productDetails={productDetails}
-                stateChanged={props.stateChanged}
                 reviewDetails={reviewDetails}
                 getDetails={getDetails}
               />

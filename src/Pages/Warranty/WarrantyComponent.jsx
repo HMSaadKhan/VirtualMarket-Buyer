@@ -39,9 +39,10 @@ const WarrantyComponent = ({ warranty, getWarranties }) => {
                 md: "50",
                 lg: "50",
               },
+              "& .MuiBox-root": { m: 0.5 },
             }}
           >
-            <Box sx={{ display: "flex", width: "15ch" }}>
+            <Box sx={{ display: "flex", width: "50ch" }}>
               <Typography
                 sx={{ cursor: "pointer" }}
                 onClick={() => {
@@ -53,15 +54,15 @@ const WarrantyComponent = ({ warranty, getWarranties }) => {
                 {warranty.productName}
               </Typography>
             </Box>
-            <Box sx={{ display: "flex" }}>
+            <Box sx={{ display: "flex", width: "30%" }}>
               <Typography color="primary">Qty:&nbsp;</Typography>
               <Typography>{warranty.quantity}</Typography>
             </Box>
-            <Box sx={{ display: "flex" }}>
-              <Typography color="primary">Expired on&nbsp;</Typography>
+            <Box sx={{ display: "flex", width: "100%" }}>
+              <Typography color="primary">Expiry&nbsp;</Typography>
               <Typography>{moment(warranty.expiry).format("lll")}</Typography>
             </Box>
-            <Box sx={{ display: "flex" }}>
+            <Box sx={{ display: "flex", width: "100%" }}>
               <Typography color="primary">Status&nbsp;</Typography>
               <Typography>{warranty.status}</Typography>
             </Box>

@@ -12,20 +12,25 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import LoginAuth from "../../AuthWrapper/isLoginTrue";
 import buyerService from "../../Services/BuyerService";
+import LoadingScreen from "../../Components/LoadingScreen";
 const Login = (props) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [loading, setloading] = React.useState(false);
   const direct = () => {
     window.location.href = "/";
   };
 
   const LoginFunction = async (e) => {
+    setloading(true);
     await buyerService
       .login(email, password)
       .then((data) => {
+        setloading(false);
         setTimeout(direct, 1000);
       })
       .catch((err) => {
+        setloading(false);
         toast.error(err.response.data, {
           position: toast.POSITION.BOTTOM_LEFT,
         });
@@ -35,6 +40,7 @@ const Login = (props) => {
   return (
     <LoginAuth>
       <Box>
+        <LoadingScreen bool={loading} />
         <Box
           // sx={{ paddingLeft: "40%", paddingTop: "5%", paddingBottom: "5%" }}
           sx={{

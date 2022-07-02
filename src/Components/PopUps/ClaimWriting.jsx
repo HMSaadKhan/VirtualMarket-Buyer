@@ -27,6 +27,7 @@ export default function ClaimWriting({ id, status, getWarranties }) {
 
   const handleClose = () => {
     setOpen(false);
+    setText("");
   };
   const [comment, setText] = React.useState("");
 

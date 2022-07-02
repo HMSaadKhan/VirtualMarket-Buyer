@@ -18,7 +18,7 @@ import productService from "../../Services/ProductServices";
 import ProductComponent from "../../Pages/Product/ProductComponent";
 import LoadingScreen from "../../Components/LoadingScreen";
 import { MidPager } from "../../Styles/MidPager";
-
+import { toast } from "react-toastify";
 import ChatBox from "../../Components/Message/Chatbox";
 
 const useStyles = makeStyles({
@@ -76,6 +76,9 @@ export default function SellerPage() {
       })
       .catch((error) => {
         console.log(error);
+        toast.error(error.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
       });
   };
   return (

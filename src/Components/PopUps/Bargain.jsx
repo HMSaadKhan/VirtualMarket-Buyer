@@ -31,6 +31,8 @@ export default function Bargain(props) {
 
   const handleClose = () => {
     setbool(!bool);
+    setquantity(null);
+    setprice(null);
   };
   const OfferSend = () => {
     setloading(true);
@@ -41,6 +43,8 @@ export default function Bargain(props) {
         setbool(false);
         setmsgbool(true);
         setloading(false);
+        setquantity(null);
+        setprice(null);
       })
       .catch((error) => {
         setloading(false);

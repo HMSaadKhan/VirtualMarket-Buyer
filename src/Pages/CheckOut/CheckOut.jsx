@@ -32,8 +32,6 @@ const useStyles = makeStyles({
 });
 
 export default function CheckOut(props) {
-  const { stateChanged } = props;
-
   const cartId = useParams();
 
   const classes = useStyles();
@@ -150,7 +148,7 @@ export default function CheckOut(props) {
                       />
                     ))}
                     <Box mt={2}>
-                      <HeadingText>Specail Instructions</HeadingText>
+                      <HeadingText>Special Instructions</HeadingText>
                       <TextField
                         multiline
                         fullWidth
@@ -178,7 +176,6 @@ export default function CheckOut(props) {
                     advancePayment={advancePayment}
                     totalPayment={cartValues.total}
                     getCartItems={getCartItems}
-                    stateChanged={stateChanged}
                     onlinePaymentOption={onlinePaymentOption}
                     specialInstructions={specialInstructions}
                   />

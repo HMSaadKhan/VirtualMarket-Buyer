@@ -12,6 +12,8 @@ import useState from "react-usestateref";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import LoadingScreen from "../../Components/LoadingScreen";
+import { useContext } from "react";
+import { CartCountContext } from "../../Contexts/CartChanger/CartChanger";
 
 const CartSideBar = ({
   subtotal,
@@ -23,6 +25,7 @@ const CartSideBar = ({
 }) => {
   //const classes = useStyles();
   const history = useHistory();
+  const cartCount = useContext(CartCountContext);
 
   const [loading, setloading] = useState(false);
 
@@ -34,7 +37,7 @@ const CartSideBar = ({
         position: toast.POSITION.BOTTOM_LEFT,
       });
       getCartItems();
-      stateChanged(data);
+      cartCount.setChanger(data);
     });
   };
 
