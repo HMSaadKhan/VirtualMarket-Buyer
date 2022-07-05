@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import useState from "react-usestateref";
-import { Badge, Box } from "@mui/material";
+import { Badge, Box, IconButton } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import AccountIcon from "./AccountBar";
 import { AppBar, Toolbar, TextField } from "@mui/material";
@@ -33,12 +33,11 @@ const useStyles = makeStyles((theme) => ({
   input: {},
   iconContainer: {
     display: "flex",
-    marginLeft: "10px",
+    marginRight: "10px",
   },
   icon: {
     cursor: "pointer",
     color: "black",
-    marginRight: "10px",
   },
 }));
 
@@ -105,27 +104,32 @@ const MenuBar = (props) => {
           </div>
           <div className={classes.iconContainer}>
             <div className={classes.icon}>
-              <Favorite
-                fontSize="medium"
-                sx={{ color: "#ba6a62" }}
+              <IconButton
                 onClick={() => {
                   history.push("/favorite");
                 }}
-              />
+              >
+                <Favorite fontSize="medium" sx={{ color: "#ba6a62" }} />
+              </IconButton>
             </div>
             <div className={classes.icon}>
-              <AccountIcon />
+              <IconButton>
+                <AccountIcon />
+              </IconButton>
             </div>
             <div className={classes.icon}>
-              <Badge badgeContent={cartCount.qty} color="error">
-                <ShoppingCartOutlinedIcon
-                  fontSize="medium"
-                  sx={{ color: "#ba6a62" }}
-                  onClick={() => {
-                    history.push("/cart");
-                  }}
-                />
-              </Badge>
+              <IconButton
+                onClick={() => {
+                  history.push("/cart");
+                }}
+              >
+                <Badge badgeContent={cartCount.qty} color="error">
+                  <ShoppingCartOutlinedIcon
+                    fontSize="medium"
+                    sx={{ color: "#ba6a62" }}
+                  />
+                </Badge>
+              </IconButton>
             </div>
           </div>
         </Toolbar>

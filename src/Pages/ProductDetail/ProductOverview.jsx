@@ -8,6 +8,7 @@ import {
   Button,
   Divider,
   Tooltip,
+  IconButton,
 } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import { makeStyles } from "@mui/styles";
@@ -192,10 +193,7 @@ export default function ProductOverview({
               </Box>
               <Box>
                 <Tooltip title="schedule Item">
-                  <ScheduleIcon
-                    sx={{
-                      color: "#ba6a62",
-                    }}
+                  <IconButton
                     onClick={(e) => {
                       if (buyerService.isLoggedIn()) {
                         setschedulebool(true);
@@ -203,7 +201,9 @@ export default function ProductOverview({
                         history.push("/login");
                       }
                     }}
-                  />
+                  >
+                    <ScheduleIcon />
+                  </IconButton>
                 </Tooltip>
               </Box>
             </Box>
@@ -280,6 +280,7 @@ export default function ProductOverview({
             {productDetails.sampleOrder ? (
               <Box m={1}>
                 <Button
+                  disabled={addtoCartCheck}
                   variant="contained"
                   onClick={(e) => {
                     settype("SAMPLE");
@@ -294,6 +295,7 @@ export default function ProductOverview({
             )}
             <Box m={1}>
               <Button
+                disabled={addtoCartCheck}
                 variant="contained"
                 onClick={() => {
                   setbargainbool(true);
@@ -313,7 +315,7 @@ export default function ProductOverview({
               {productDetails.seller.advancePayment && (
                 <>
                   {productDetails.seller.advancePaymentAmount + "%"} Advance
-                  Payment is taken on order greater than{" "}
+                  Payment required on order greater than{" "}
                   {"PKR." + productDetails.seller.advancePaymentCriteria}
                 </>
               )}

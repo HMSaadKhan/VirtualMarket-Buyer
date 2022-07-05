@@ -177,18 +177,19 @@ export default function SellerPage() {
                         justifyContent: "space-between",
                       }}
                     >
-                      <Box>
+                      <Box sx={{ width: "100%" }}>
                         <Typography ml={2} variant="subtitle" component="div">
                           {sellerDetails.city.name}
                         </Typography>
                         <Box sx={{ display: "flex", alignItems: "center" }}>
                           <Typography
                             ml={2}
+                            mr={1}
                             variant="body2"
                             component="text.secondary"
                             sx={{ fontWeight: "bold" }}
                           >
-                            Online Payments
+                            Advance Payment
                           </Typography>
                           {sellerDetails.onlinePaymentOption ? (
                             <CheckCircleIcon
@@ -211,6 +212,7 @@ export default function SellerPage() {
                             md: "block",
                             lg: "block",
                           },
+                          width: "100%",
                         }}
                       >
                         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -248,6 +250,7 @@ export default function SellerPage() {
                             md: "block",
                             lg: "block",
                           },
+                          width: "100%",
                         }}
                       >
                         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -257,7 +260,7 @@ export default function SellerPage() {
                             component="text.secondary"
                             sx={{ fontWeight: "bold" }}
                           >
-                            Advance Payments
+                            Required Advance Payments
                           </Typography>
                           {sellerDetails.advancePayment ? (
                             <CheckCircleIcon
@@ -271,48 +274,15 @@ export default function SellerPage() {
                             />
                           )}
                         </Box>
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
-                          <Typography
-                            ml={2}
-                            variant="body2"
-                            component="text.secondary"
-                            sx={{ fontWeight: "bold" }}
-                          >
-                            Advance Payment
-                          </Typography>
-                          <Typography
-                            ml={1}
-                            variant="body2"
-                            component="text.secondary"
-                          >
-                            {sellerDetails.advancePaymentAmount + "%"}
-                          </Typography>
-                        </Box>
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
-                          <Typography
-                            ml={2}
-                            variant="body2"
-                            component="text.secondary"
-                            sx={{ fontWeight: "bold" }}
-                          >
-                            {sellerDetails.advancePaymentCriteria === 1 ? (
-                              <></>
-                            ) : (
-                              <>On Min. Order of</>
-                            )}
-                          </Typography>
-                          <Typography
-                            ml={1}
-                            variant="body2"
-                            component="text.secondary"
-                          >
-                            {sellerDetails.advancePaymentCriteria === 1 ? (
-                              <>On All Orders</>
-                            ) : (
-                              "PKR." + sellerDetails.advancePaymentCriteria
-                            )}
-                          </Typography>
-                        </Box>
+                        {sellerDetails.advancePayment && (
+                          <>
+                            <Typography ml={2} color="red">
+                              {sellerDetails.advancePaymentAmount + "%"} Advance
+                              Payment required on order greater than{" "}
+                              {"PKR." + sellerDetails.advancePaymentCriteria}
+                            </Typography>
+                          </>
+                        )}
                       </Box>
                     </Box>
                   </Box>
@@ -358,10 +328,10 @@ export default function SellerPage() {
                       <Typography
                         ml={2}
                         variant="body2"
-                        sx={{ fontWeight: "bold" }}
                         component="text.secondary"
+                        sx={{ fontWeight: "bold" }}
                       >
-                        Advance Payments
+                        Required Advance Payments
                       </Typography>
                       {sellerDetails.advancePayment ? (
                         <CheckCircleIcon
@@ -372,48 +342,15 @@ export default function SellerPage() {
                         <CancelIcon fontSize="small" sx={{ color: "red" }} />
                       )}
                     </Box>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <Typography
-                        ml={2}
-                        variant="body2"
-                        component="text.secondary"
-                        sx={{ fontWeight: "bold" }}
-                      >
-                        Advance Payment
-                      </Typography>
-                      <Typography
-                        ml={1}
-                        variant="body2"
-                        component="text.secondary"
-                      >
-                        {sellerDetails.advancePaymentAmount + "%"}
-                      </Typography>
-                    </Box>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <Typography
-                        ml={2}
-                        variant="body2"
-                        component="text.secondary"
-                        sx={{ fontWeight: "bold" }}
-                      >
-                        {sellerDetails.advancePaymentCriteria === 1 ? (
-                          <></>
-                        ) : (
-                          <>On Min. Order of</>
-                        )}
-                      </Typography>
-                      <Typography
-                        ml={1}
-                        variant="body2"
-                        component="text.secondary"
-                      >
-                        {sellerDetails.advancePaymentCriteria === 1 ? (
-                          <>On All Orders</>
-                        ) : (
-                          "PKR." + sellerDetails.advancePaymentCriteria
-                        )}
-                      </Typography>
-                    </Box>
+                    {sellerDetails.advancePayment && (
+                      <>
+                        <Typography ml={2} color="red">
+                          {sellerDetails.advancePaymentAmount + "%"} Advance
+                          Payment required on order greater than{" "}
+                          {"PKR." + sellerDetails.advancePaymentCriteria}
+                        </Typography>
+                      </>
+                    )}
                   </Box>
                 </Box>
 

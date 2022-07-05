@@ -115,7 +115,7 @@ export default function SellerDetails({ productDetails, msgbool, setmsgbool }) {
               Available Stock
             </Typography>
             <Typography className={classes.subText}>
-              {productDetails.stock > productDetails.minOrder ? (
+              {productDetails.stock >= productDetails.minOrder ? (
                 <Typography sx={{ fontWeight: "bold", color: "green" }}>
                   {productDetails.stock + " Pieces"}
                 </Typography>

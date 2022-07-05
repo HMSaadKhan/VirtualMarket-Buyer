@@ -225,7 +225,7 @@ const ScheduledOrder = () => {
             align="center"
             sx={{ color: "#ba6a62", fontWeight: "bold" }}
           >
-            No Orders Scheduled
+            No Items Scheduled
           </Typography>
         )}
       </div>
@@ -246,7 +246,7 @@ const ScheduledOrder = () => {
       ) : (
         <></>
       )}
-      <Typography onClick={handleProfileMenuOpen}>Schedule Items</Typography>
+      <Typography onClick={handleProfileMenuOpen}>Scheduled Items</Typography>
       {renderMenu}
     </div>
   );

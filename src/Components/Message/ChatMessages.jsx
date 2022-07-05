@@ -6,15 +6,11 @@ import React from "react";
 import {
   Box,
   Menu,
-  Card,
   Typography,
-  Button,
   TextField,
-  CardContent,
   IconButton,
   Avatar,
 } from "@mui/material";
-import moment from "moment";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -23,10 +19,8 @@ import messageService from "../../Services/MessageService";
 import MsgLoading from "../MsgLoading";
 
 import { ChatAnchorContext } from "../../Contexts/ChatAnchor/ChatAnchor";
-import { toast } from "react-toastify";
 import { styled } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
-import cartService from "../../Services/CartServices";
 import { SocketAPIContext } from "../../Contexts/SocketAPI/SocketAPi";
 import OfferMsg from "./OfferMsg";
 import ImageMsg from "./ImageMsg";
@@ -106,14 +100,14 @@ export default function ChatMessages({
 
   React.useEffect(getMessages, [chatId, bool]);
 
-  // React.useEffect(() => {
-  //   socket.on("receivemsg", (senderID, receiverID, msg, roomID) => {
-  //     console.log(senderID, receiverID, msg, roomID);
-  //     if (chatId === roomID) {
-  //       setmessages([msg, ...messages]);
-  //     }
-  //   });
-  // }, [socket]);
+  React.useEffect(() => {
+    socket.on("receivemsg", ({ senderID, receiverID, msg, roomID }) => {
+      console.log(senderID, receiverID, msg, roomID);
+      if (chatId === roomID) {
+        setmessages([msg, ...messages]);
+      }
+    });
+  }, [socket]);
 
   const send = () => {
     const msg = {
@@ -122,12 +116,12 @@ export default function ChatMessages({
       content: msgText,
       type: "TEXT" || "OFFER",
     };
-    // socket.emit("sendmsg", {
-    //   senderID: chatperson.Buyer,
-    //   receiverID: chatperson.Seller._id,
-    //   msg: msg,
-    //   roomID: chatId,
-    // });
+    socket.emit("sendmsg", {
+      senderID: chatperson.Buyer,
+      receiverID: chatperson.Seller._id,
+      msg: msg,
+      roomID: chatId,
+    });
     messageService
       .sendMessage(chatId, { content: msgText })
       .then((chats) => {
@@ -147,12 +141,12 @@ export default function ChatMessages({
       createdAt: new Date(),
       type: "IMAGE",
     };
-    // socket.emit("sendmsg", {
-    //   senderID: chatperson.Buyer,
-    //   receiverID: chatperson.Seller._id,
-    //   msg: msg,
-    //   roomID: chatId,
-    // });
+    socket.emit("sendmsg", {
+      senderID: chatperson.Buyer,
+      receiverID: chatperson.Seller._id,
+      msg: msg,
+      roomID: chatId,
+    });
     console.log(data);
     await messageService
       .sendImage(chatId, data)
@@ -210,6 +204,7 @@ export default function ChatMessages({
               }}
             >
               <IconButton
+                disabled={setchatbool ? false : true}
                 onClick={() => {
                   setchatbool(true);
                   setbool(false);
@@ -370,6 +365,9 @@ export default function ChatMessages({
               value={msgText}
               onChange={(e) => {
                 setmsgText(e.target.value);
+              }}
+              onKeyDown={(e) => {
+                e.stopPropagation();
               }}
               onKeyPress={(e) => {
                 if (e.key === "Enter") {

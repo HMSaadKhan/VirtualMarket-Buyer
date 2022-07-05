@@ -39,37 +39,54 @@ export default function OfferMsg({ message, getMessages }) {
       <Card
         sx={{
           backgroundColor: "#fafafa",
-          width: "100%",
+          width: "300px",
         }}
       >
         <CardContent>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "left",
-              alignItems: "center",
-            }}
-          >
-            {" "}
-            <Box>
-              <img
-                className={classes.image}
-                src={message.Offer.Product.images[0].link}
-                alt=""
-              />
-            </Box>
-            <Box>
-              <Box sx={{ width: "100%" }}>
-                <Typography
-                  sx={{
-                    color: "#ba6a62",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {message.Offer.Product.name}
-                </Typography>
+          {message.Offer.Product ? (
+            <>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "left",
+                  alignItems: "center",
+                }}
+              >
+                {" "}
+                <Box>
+                  <img
+                    className={classes.image}
+                    src={message.Offer.Product.images[0].link}
+                    alt=""
+                  />
+                </Box>
+                <Box>
+                  <Box sx={{ width: "100%" }}>
+                    <Typography
+                      sx={{
+                        color: "#ba6a62",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {message.Offer.Product.name}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ width: "100%" }}>
+                    <FlexBox>
+                      <Typography
+                        sx={{
+                          color: "#ba6a62",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Brand:
+                      </Typography>
+                      <Typography>{message.Offer.Product.brand}</Typography>
+                    </FlexBox>
+                  </Box>
+                </Box>
               </Box>
-              <Box sx={{ width: "100%" }}>
+              <Box justifyContent="left">
                 <FlexBox>
                   <Typography
                     sx={{
@@ -77,73 +94,62 @@ export default function OfferMsg({ message, getMessages }) {
                       fontWeight: "bold",
                     }}
                   >
-                    Brand:
+                    Offered Price:&nbsp;
                   </Typography>
-                  <Typography>{message.Offer.Product.brand}</Typography>
+                  <Typography>{message.Offer.price + " PKR"}</Typography>
+                </FlexBox>{" "}
+                <FlexBox>
+                  <Typography
+                    sx={{
+                      color: "#ba6a62",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Quantity:&nbsp;
+                  </Typography>
+                  <Typography>{message.Offer.quantity + " pieces"}</Typography>
+                </FlexBox>
+                <FlexBox>
+                  <Typography
+                    sx={{
+                      color: "#ba6a62",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Offer Status:&nbsp;
+                  </Typography>
+                  <Typography>{message.Offer.status}</Typography>
                 </FlexBox>
               </Box>
-            </Box>
-          </Box>
-          <Box justifyContent="left">
-            <FlexBox>
-              <Typography
-                sx={{
-                  color: "#ba6a62",
-                  fontWeight: "bold",
+              <Button
+                variant="contained"
+                fullWidth
+                disabled={message.Offer.status === "ACCEPTED" ? false : true}
+                onClick={() => {
+                  cartService
+                    .addOffer(message.Offer._id)
+                    .then((data) => {
+                      console.log(data.data);
+                      toast.success(data.data, {
+                        position: toast.POSITION.BOTTOM_LEFT,
+                      });
+                      cartCount.setChanger(data);
+                      getMessages();
+                    })
+                    .catch((error) => {
+                      console.log(error.response);
+                      toast.error(error.response.data, {
+                        position: toast.POSITION.BOTTOM_LEFT,
+                      });
+                    });
                 }}
               >
-                Offered Price:&nbsp;
-              </Typography>
-              <Typography>{message.Offer.price + " PKR"}</Typography>
-            </FlexBox>{" "}
-            <FlexBox>
-              <Typography
-                sx={{
-                  color: "#ba6a62",
-                  fontWeight: "bold",
-                }}
-              >
-                Quantity:&nbsp;
-              </Typography>
-              <Typography>{message.Offer.quantity + " pieces"}</Typography>
-            </FlexBox>
-            <FlexBox>
-              <Typography
-                sx={{
-                  color: "#ba6a62",
-                  fontWeight: "bold",
-                }}
-              >
-                Offer Status:&nbsp;
-              </Typography>
-              <Typography>{message.Offer.status}</Typography>
-            </FlexBox>
-          </Box>
-          <Button
-            variant="contained"
-            fullWidth
-            disabled={message.Offer.status === "ACCEPTED" ? false : true}
-            onClick={() => {
-              cartService
-                .addOffer(message.Offer._id)
-                .then((data) => {
-                  console.log(data.data);
-                  toast.success(data.data, {
-                    position: toast.POSITION.BOTTOM_LEFT,
-                  });
-                  cartCount.setChanger(data);
-                  getMessages();
-                })
-                .catch((error) => {
-                  console.log(error.response);
-                  toast.error(error.response.data, {
-                    position: toast.POSITION.BOTTOM_LEFT,
-                  });
-                });
-            }}
-          >
-            Add to cart
-          </Button>
+                Add to cart
+              </Button>
+            </>
+          ) : (
+            <Typography color="primary">Offer No Longer Available</Typography>
+          )}
         </CardContent>
         <Typography pr={1} pb={1} align="right" sx={{ fontSize: "10px" }}>
           {moment(message.Offer.createdAt).format("LT")}

@@ -15,6 +15,22 @@ const ChangenewPassword = (props) => {
   const [oldPassword, setOldPassword] = React.useState();
   const [newPassword, setNewPassword] = React.useState("");
   const history = useHistory();
+
+  const changePasswordfun = () => {
+    buyerService
+      .changePassword({ oldPassword, newPassword }) //if gives error then check oldPassword datatype
+      .then((data) => {
+        toast.success(data.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+        history.push("/AccountSettings");
+      })
+      .catch((err) => {
+        toast.error(err.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+      });
+  };
   return (
     <>
       <Box>
@@ -59,6 +75,12 @@ const ChangenewPassword = (props) => {
                       onChange={(e) => {
                         setOldPassword(e.target.value);
                       }}
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          changePasswordfun();
+                          // write your functionality here
+                        }
+                      }}
                     />
                   </>
                   <>
@@ -71,6 +93,12 @@ const ChangenewPassword = (props) => {
                       onChange={(e) => {
                         setNewPassword(e.target.value);
                       }}
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          changePasswordfun();
+                          // write your functionality here
+                        }
+                      }}
                     />
                   </>
 
@@ -78,21 +106,7 @@ const ChangenewPassword = (props) => {
                     <Button
                       fullWidth
                       variant="contained"
-                      onClick={async (e) => {
-                        await buyerService
-                          .changePassword({ oldPassword, newPassword }) //if gives error then check oldPassword datatype
-                          .then((data) => {
-                            toast.success(data.data, {
-                              position: toast.POSITION.BOTTOM_LEFT,
-                            });
-                            history.push("/AccountSettings");
-                          })
-                          .catch((err) => {
-                            toast.error(err.response.data, {
-                              position: toast.POSITION.BOTTOM_LEFT,
-                            });
-                          });
-                      }}
+                      onClick={changePasswordfun}
                     >
                       Update Password
                     </Button>

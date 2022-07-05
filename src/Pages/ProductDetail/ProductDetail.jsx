@@ -15,6 +15,7 @@ import ProductOverview from "./ProductOverview";
 import SellerDetails from "./sellerDetails";
 import ChatBox from "../../Components/Message/Chatbox";
 import Bargain from "../../Components/PopUps/Bargain";
+import { MidPager } from "../../Styles/MidPager";
 
 export default function ProductDetail(props) {
   const { id } = useParams();
@@ -28,14 +29,21 @@ export default function ProductDetail(props) {
   const [chatbool, setchatbool] = React.useState(false);
   const [msgbool, setmsgbool] = React.useState(false);
   const [bargainbool, setbargainbool] = React.useState(false);
-
+  const [error, seterror] = useState();
   const getDetails = () => {
     setloading(true);
-    productService.getProductDetails(id).then((data) => {
-      setloading(false);
-      console.log(data);
-      SetProductDetails(data);
-    });
+    productService
+      .getProductDetails(id)
+      .then((data) => {
+        setloading(false);
+        console.log(data);
+        SetProductDetails(data);
+      })
+      .catch((err) => {
+        setloading(false);
+
+        seterror(err.response.data);
+      });
   };
   useEffect(getDetails, [id]);
   console.log(msgbool);
@@ -201,7 +209,9 @@ export default function ProductDetail(props) {
           </Box>
         </Box>
       ) : (
-        <></>
+        <>
+          <MidPager name={error} />
+        </>
       )}
     </Box>
   );

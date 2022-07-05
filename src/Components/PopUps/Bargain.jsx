@@ -10,6 +10,7 @@ import { styled } from "@mui/material/styles";
 import bargainService from "../../Services/BargainService";
 import LoadingScreen from "../LoadingScreen";
 import { Inputs } from "../../Styles/StyledInput";
+import { toast } from "react-toastify";
 
 const FlexBox = styled(Box)({
   display: "flex",
@@ -30,9 +31,9 @@ export default function Bargain(props) {
   const [loading, setloading] = React.useState(false);
 
   const handleClose = () => {
-    setbool(!bool);
-    setquantity(null);
-    setprice(null);
+    setbool(false);
+    setquantity("");
+    setprice("");
   };
   const OfferSend = () => {
     setloading(true);
@@ -40,15 +41,16 @@ export default function Bargain(props) {
       .sendOffer({ product: productDetails._id, price, quantity })
       .then((data) => {
         console.log(data);
-        setbool(false);
+        handleClose();
         setmsgbool(true);
         setloading(false);
-        setquantity(null);
-        setprice(null);
       })
       .catch((error) => {
         setloading(false);
         console.log(error.response);
+        toast.error(error.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
       });
   };
 
@@ -118,7 +120,7 @@ export default function Bargain(props) {
                               fontWeight: "bold",
                             }}
                           >
-                            Price:
+                            Unit Price:
                           </Typography>
                           <Typography>
                             {productDetails.price + " Rs"}{" "}
@@ -139,7 +141,7 @@ export default function Bargain(props) {
                   fontWeight: "bold",
                 }}
               >
-                Quantity:
+                Required Quantity:
               </Typography>
               <Inputs
                 type="number"
@@ -149,7 +151,7 @@ export default function Bargain(props) {
                 }}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">pieces</InputAdornment>
+                    <InputAdornment position="end">Pcs</InputAdornment>
                   ),
                 }}
               />
@@ -193,7 +195,7 @@ export default function Bargain(props) {
                 sx={{ margin: "10px" }}
                 variant="contained"
                 onClick={(e) => {
-                  setbool(false);
+                  handleClose();
                 }}
               >
                 Cancel

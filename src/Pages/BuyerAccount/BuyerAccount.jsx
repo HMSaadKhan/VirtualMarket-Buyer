@@ -77,6 +77,7 @@ const BuyerAccount = (props) => {
         setloading(false);
         console.log(data);
         getData();
+        setImage(null);
         toast.success(data.data, {
           position: toast.POSITION.BOTTOM_LEFT,
         });
@@ -120,14 +121,17 @@ const BuyerAccount = (props) => {
                     <Button
                       variant="contained"
                       onClick={() => {
+                        console.log("click");
                         buyerService
                           .verificationOTP()
                           .then((res) => {
-                            toast.success(res.data, {
+                            console.log(res);
+                            toast.success(res, {
                               position: toast.POSITION.BOTTOM_LEFT,
                             });
                           })
                           .catch((err) => {
+                            console.log(err);
                             toast.error(err.response.data, {
                               position: toast.POSITION.BOTTOM_LEFT,
                             });
@@ -141,45 +145,7 @@ const BuyerAccount = (props) => {
               ) : (
                 <div></div>
               )}
-              {/* {check ? (
-                <Box>
-                  <Box>
-                    <TextField
-                      label="Verification Code"
-                      value={otp}
-                      onChange={(e) => {
-                        setOtp(e.target.value);
-                      }}
-                    />
-                  </Box>
 
-                  <Box mt={1}>
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        buyerService
-                          .VerifyOtp({ otp })
-                          .then((res) => {
-                            toast.success(res.data, {
-                              position: toast.POSITION.BOTTOM_LEFT,
-                            });
-                            setCheck(false);
-                            getData();
-                          })
-                          .catch((err) => {
-                            toast.error(err.response.data, {
-                              position: toast.POSITION.BOTTOM_LEFT,
-                            });
-                          });
-                      }}
-                    >
-                      Verify
-                    </Button>
-                  </Box>
-                </Box>
-              ) : (
-                <div></div>
-              )} */}
               <Box sx={{ display: { xs: "inline", md: "none" } }}>
                 <Box
                   sx={{
@@ -221,25 +187,77 @@ const BuyerAccount = (props) => {
                   justifyContent: "space-between",
                 }}
               >
-                <Box
-                  sx={{
-                    width: "100%",
-                  }}
-                >
-                  <MarginBox>
-                    <TextField
-                      variant="standard"
-                      label="First Name"
-                      placeholder="First Name"
-                      size="small"
-                      value={fName}
-                      onChange={(e) => {
-                        setfName(e.target.value);
+                <Box sx={{ width: "100%" }}>
+                  <Box sx={{ display: "flex" }}>
+                    <Box
+                      sx={{
+                        width: "100%",
                       }}
-                    />
-                  </MarginBox>
+                    >
+                      <MarginBox>
+                        <TextField
+                          variant="standard"
+                          label="First Name"
+                          placeholder="First Name"
+                          size="small"
+                          value={fName}
+                          onChange={(e) => {
+                            setfName(e.target.value);
+                          }}
+                        />
+                      </MarginBox>
+
+                      <MarginBox>
+                        <FormControl sx={{ width: "100px" }}>
+                          <InputLabel variant="standard">City</InputLabel>
+
+                          <Select
+                            variant="standard"
+                            value={city}
+                            onChange={(e) => {
+                              selectChange(e);
+                            }}
+                          >
+                            {cities.map((item) => (
+                              <MenuItem key={item} value={item._id}>
+                                {item.name}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </MarginBox>
+                    </Box>
+                    <Box sx={{ width: "100%" }}>
+                      <MarginBox>
+                        <TextField
+                          variant="standard"
+                          label="Last Name"
+                          placeholder="Last Name"
+                          size="small"
+                          value={lName}
+                          onChange={(e) => {
+                            setlName(e.target.value);
+                          }}
+                        />
+                      </MarginBox>
+                      <MarginBox>
+                        <TextField
+                          variant="standard"
+                          label="Phone Number"
+                          placeholder="Phone Number"
+                          helperText="03XXXXXXXXX"
+                          size="small"
+                          value={phone}
+                          onChange={(e) => {
+                            setphone(e.target.value);
+                          }}
+                        />
+                      </MarginBox>
+                    </Box>
+                  </Box>
                   <MarginBox>
                     <TextField
+                      fullWidth
                       variant="standard"
                       disabled
                       label="Email"
@@ -252,53 +270,8 @@ const BuyerAccount = (props) => {
                     />
                   </MarginBox>
                   <MarginBox>
-                    <FormControl sx={{ width: "100px" }}>
-                      <InputLabel variant="standard">City</InputLabel>
-
-                      <Select
-                        variant="standard"
-                        value={city}
-                        onChange={(e) => {
-                          selectChange(e);
-                        }}
-                      >
-                        {cities.map((item) => (
-                          <MenuItem key={item} value={item._id}>
-                            {item.name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </MarginBox>
-                </Box>
-                <Box sx={{ width: "100%" }}>
-                  <MarginBox>
                     <TextField
-                      variant="standard"
-                      label="Last Name"
-                      placeholder="Last Name"
-                      size="small"
-                      value={lName}
-                      onChange={(e) => {
-                        setlName(e.target.value);
-                      }}
-                    />
-                  </MarginBox>
-                  <MarginBox>
-                    <TextField
-                      variant="standard"
-                      label="Phone Number"
-                      placeholder="Phone Number"
-                      helperText="03XXXXXXXXX"
-                      size="small"
-                      value={phone}
-                      onChange={(e) => {
-                        setphone(e.target.value);
-                      }}
-                    />
-                  </MarginBox>
-                  <MarginBox>
-                    <TextField
+                      fullWidth
                       variant="standard"
                       label="Address"
                       multiline
@@ -321,6 +294,7 @@ const BuyerAccount = (props) => {
                             <input
                               type="file"
                               id="file"
+                              accept="image/*"
                               onChange={(e) => {
                                 setImage(e.target.files[0]);
                               }}
@@ -329,6 +303,7 @@ const BuyerAccount = (props) => {
                         </form>
                         <MarginBox>
                           <StyledButton
+                            disabled={image ? false : true}
                             variant="contained"
                             onClick={() => {
                               send();

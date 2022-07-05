@@ -8,9 +8,9 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-
+import { useHistory } from "react-router-dom";
 import Select from "@mui/material/Select";
-import { MenuItem } from "@mui/material";
+import { Button, MenuItem } from "@mui/material";
 import { HeadingText } from "../../Styles/MyTypographies";
 import { FlexBox } from "../../Styles/StyledBox";
 
@@ -28,7 +28,8 @@ export default function CheckOutSideBar(props) {
     cities,
     city,
   } = props;
-
+  const [check, setcheck] = React.useState(true);
+  const history = useHistory();
   return (
     <Box>
       {cartValues ? (
@@ -64,7 +65,22 @@ export default function CheckOutSideBar(props) {
               </FlexBox>
 
               <Divider />
-              <HeadingText>Shipping Details</HeadingText>
+              <Box
+                sx={{
+                  display: "flex ",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <HeadingText>Shipping Details</HeadingText>
+                <Button
+                  onClick={() => {
+                    history.push("/accountsettings");
+                  }}
+                >
+                  Edit
+                </Button>
+              </Box>
               <Box
                 sx={{
                   "& .MuiTextField-root": { m: 1, width: "25ch" },
@@ -72,6 +88,7 @@ export default function CheckOutSideBar(props) {
                 }}
               >
                 <TextField
+                  disabled={check}
                   value={name}
                   label="Name"
                   InputLabelProps={{ shrink: name ? true : false }}
@@ -80,6 +97,7 @@ export default function CheckOutSideBar(props) {
                   }}
                 />
                 <TextField
+                  disabled={check}
                   value={phone}
                   label="Phone"
                   size="small"
@@ -89,6 +107,7 @@ export default function CheckOutSideBar(props) {
                   }}
                 />
                 <TextField
+                  disabled={check}
                   value={address}
                   multiline
                   label="Address"
@@ -103,6 +122,7 @@ export default function CheckOutSideBar(props) {
                     <InputLabel>City</InputLabel>
 
                     <Select
+                      disabled={check}
                       label="City"
                       size="small"
                       value={city}

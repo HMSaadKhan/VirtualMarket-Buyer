@@ -6,8 +6,8 @@ import useState from "react-usestateref";
 import Magnifier from "react-magnifier";
 const useStyles = makeStyles({
   images: {
-    width: "60px",
-    height: "60px",
+    width: "50px",
+    height: "50px",
     marginRight: "10px",
     objectFit: "contain",
     cursor: "pointer",
