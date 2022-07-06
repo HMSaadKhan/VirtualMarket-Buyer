@@ -140,35 +140,44 @@ const CartItems = (props) => {
         >
           <Box
             sx={{
-              width: {
-                xs: "5ch",
-                sm: "10ch",
-                md: "15ch",
-                lg: "15ch",
-              },
+              width: "100%",
             }}
           >
-            <Typography
-              noWrap
-              sx={{ cursor: "pointer", textDecoration: "underline" }}
-              onClick={() => {
-                history.push("/" + item.product.name + "/" + item.product._id);
+            <Box
+              sx={{
+                width: {
+                  xs: "5ch",
+                  sm: "10ch",
+                  md: "15ch",
+                  lg: "15ch",
+                },
               }}
             >
-              {item.product.name}
-            </Typography>
-            {item.type === "DEFAULT" ? (
-              <></>
-            ) : (
               <Typography
-                // align="center"
-                sx={{ ml: 1 }}
-                color="text.secondary"
+                noWrap
+                sx={{ cursor: "pointer", textDecoration: "underline" }}
+                onClick={() => {
+                  history.push(
+                    "/" + item.product.name + "/" + item.product._id
+                  );
+                }}
               >
-                {item.type}
+                {item.product.name}
               </Typography>
-            )}
+              {item.type === "DEFAULT" ? (
+                <></>
+              ) : (
+                <Typography
+                  // align="center"
+                  sx={{ ml: 1 }}
+                  color="text.secondary"
+                >
+                  {item.type}
+                </Typography>
+              )}
+            </Box>
           </Box>
+
           <Box sx={{ width: "100%" }}>
             <Typography align="center" sx={{ color: "#ba6a62" }}>
               PKR.{item.product.price}

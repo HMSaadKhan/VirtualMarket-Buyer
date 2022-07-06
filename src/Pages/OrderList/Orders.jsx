@@ -59,14 +59,24 @@ export default function Orders(props) {
       <LoadingScreen bool={loading} />
       <NameBar name={"Orders"} />
 
-      <Box className={classes.root}>
+      <Box sx={{ width: "100%" }} className={classes.root}>
         <Box>
           {orderDetails.length > 0 ? (
             <Box sx={{ width: "100%" }}>
               {orderDetails.map((order) => {
                 return (
                   <Box m={2}>
-                    <Card sx={{ backgroundColor: "#fafafa" }}>
+                    <Card
+                      sx={{
+                        backgroundColor: "#fafafa",
+                        width: {
+                          xs: "300px",
+                          sm: "500px",
+                          md: "800px",
+                          lg: "900px",
+                        },
+                      }}
+                    >
                       <CardContent
                         sx={{ display: "flex", flexDirection: "column" }}
                       >
