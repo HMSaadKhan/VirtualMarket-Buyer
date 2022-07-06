@@ -4,13 +4,13 @@ import MobileStepper from "@mui/material/MobileStepper";
 
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
-import testimage from "./testImage.jpeg";
+import HomeScreen from "./HomeScreen.png";
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const images = [
   {
-    label: "test",
-    imgPath: testimage,
+    label: "HomeScreen Image",
+    imgPath: HomeScreen,
   },
   // {
   //   label: "Bird",

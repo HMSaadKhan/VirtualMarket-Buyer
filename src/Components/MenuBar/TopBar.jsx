@@ -84,7 +84,7 @@ export default function TopBar() {
             </Box>
           </Box>
         </div>
-        <Box pr={2} sx={{ backgroundColor: "#ba6a62" }}>
+        <Box pr={2} sx={{ }}>
           <Links
             sx={{ color: "black", cursor: "pointer" }}
             onClick={(e) => {
