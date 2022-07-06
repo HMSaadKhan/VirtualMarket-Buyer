@@ -15,6 +15,7 @@ const ChangenewPassword = (props) => {
   const [oldPassword, setOldPassword] = React.useState();
   const [newPassword, setNewPassword] = React.useState("");
   const history = useHistory();
+  
 
   const changePasswordfun = () => {
     buyerService

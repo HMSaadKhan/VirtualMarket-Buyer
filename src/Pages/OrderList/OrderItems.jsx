@@ -4,8 +4,7 @@ import { Divider } from "@mui/material/";
 import Typography from "@mui/material/Typography";
 import CommentWriting from "../../Components/PopUps/CommentWriting";
 
-
-export default function OrderItems({ items, orderStatus, orderId }) {
+export default function OrderItems({ items, orderStatus, orderId, Orders }) {
   console.log(items);
   return (
     <>
@@ -27,12 +26,25 @@ export default function OrderItems({ items, orderStatus, orderId }) {
         <Box sx={{ width: "25%" }}>
           <Typography align="center">PKR. {items.totalPrice}</Typography>
         </Box>
-        {orderStatus === "DELIVERED" ? (
+        {orderStatus === "DELIVERED" && !items.reviewed ? (
           <Box sx={{ width: "25%" }}>
-            <CommentWriting orderId={orderId} itemId={items._id} />
+            <CommentWriting
+              orderId={orderId}
+              itemId={items._id}
+              Orders={Orders}
+            />
           </Box>
         ) : (
-          <></>
+          <>
+            {items.reviewed && (
+              <>
+                {" "}
+                <Typography color="primary" sx={{ fontWeight: "bold" }}>
+                  REVIEWED
+                </Typography>
+              </>
+            )}
+          </>
         )}
       </Box>
       <Divider />

@@ -88,9 +88,8 @@ class BuyerService extends GenericService {
         });
     });
 
-  changePassword = (data) =>
+  changePassword = (id, data) =>
     new Promise((resolve, reject) => {
-      console.log(data);
       axios
         .patch("buyers/changePassword", data)
         .then((data) => {

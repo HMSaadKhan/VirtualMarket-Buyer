@@ -20,7 +20,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 const useStyles = makeStyles({
   root: {
     width: 500,
-    height: 350,
+    maxHeight: 400,
   },
 });
 
@@ -32,7 +32,7 @@ export default function ScheduleOrder(props) {
   const [radio, setRadio] = React.useState("PRESET");
   const [preset, setpreset] = React.useState("");
   const [quantity, setquantity] = React.useState(props.minOrder);
-  const [customRepetition, setcustomRepetition] = React.useState(0);
+  const [customRepetition, setcustomRepetition] = React.useState(1);
 
   const Preset = [
     "WEEKLY",
@@ -48,6 +48,11 @@ export default function ScheduleOrder(props) {
   };
   const handleClose = () => {
     setbool(!bool);
+    setquantity(props.minOrder);
+    setRadio("PRESET");
+    setChecked(false);
+    setcustomRepetition(1);
+    setdatentime(new Date());
   };
   const handleRadio = (e) => {
     setRadio(e.target.value);
@@ -90,7 +95,7 @@ export default function ScheduleOrder(props) {
         <DialogContent>
           <div className={classes.root}>
             <Box>
-              <HeadingText>Quantity</HeadingText>
+              <HeadingText sx={{ marginTop: "0px" }}>Quantity</HeadingText>
               <Counter
                 num={quantity}
                 setNum={setquantity}
@@ -127,7 +132,7 @@ export default function ScheduleOrder(props) {
                 )}
               </Box>
               <Box sx={{}}>
-                <HeadingText>Date & Time</HeadingText>
+                <HeadingText sx={{ marginTop: "0px" }}>Date & Time</HeadingText>
                 <DateTimePicker
                   calendarIcon={<CalendarTodayOutlined />}
                   clearIcon={<CancelIcon />}
@@ -244,14 +249,13 @@ export default function ScheduleOrder(props) {
               sx={{
                 display: "flex",
                 justifyContent: "right",
-                paddingTop: "100px",
-                alignItems: "end",
+                paddingTop: "50px",
               }}
             >
               <StyledButton onClick={scheduleOrder}>schedule</StyledButton>
               <StyledButton
                 onClick={(e) => {
-                  setbool(false);
+                  handleClose();
                 }}
               >
                 Cancel

@@ -120,7 +120,7 @@ export default function OrderComponent() {
               }}
             >
               <FlexBox>
-                <OrderComponentHeading>Order# </OrderComponentHeading>
+                <OrderComponentHeading>Order#&nbsp; </OrderComponentHeading>
                 <Typography>{order._id}</Typography>
               </FlexBox>
               <FlexBox>
@@ -148,7 +148,13 @@ export default function OrderComponent() {
                 </Button>
               </FlexBox>
             </Box>
-
+            <Typography
+              ml={1}
+              color="primary"
+              sx={{ fontSize: "20px", fontWeight: "bold" }}
+            >
+              Products
+            </Typography>
             <Card sx={{ margin: "10px" }}>
               <CardContent>
                 {order.items.map((items) => (
@@ -157,6 +163,7 @@ export default function OrderComponent() {
                     orderStatus={order.status}
                     items={items}
                     key={items._id}
+                    Orders={Orders}
                   />
                 ))}
               </CardContent>
@@ -168,6 +175,13 @@ export default function OrderComponent() {
                 justifyContent: "center",
               }}
             >
+              <Typography
+                ml={1}
+                color="primary"
+                sx={{ fontSize: "20px", fontWeight: "bold" }}
+              >
+                Billing Details
+              </Typography>
               <Card sx={{ margin: "10px" }}>
                 <CardContent>
                   <SpaceBetween>
@@ -200,11 +214,15 @@ export default function OrderComponent() {
                   </SpaceBetween>
                 </CardContent>
               </Card>
+              <Typography
+                ml={1}
+                color="primary"
+                sx={{ fontSize: "20px", fontWeight: "bold" }}
+              >
+                Shipping Details
+              </Typography>
               <Card sx={{ margin: "10px" }}>
                 <CardContent>
-                  <OrderComponentHeading>
-                    Shipping Details
-                  </OrderComponentHeading>
                   <SpaceBetween>
                     <OrderComponentHeading>Name</OrderComponentHeading>
                     <Typography>{order.buyerName}</Typography>

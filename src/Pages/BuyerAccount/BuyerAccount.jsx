@@ -32,13 +32,14 @@ const BuyerAccount = (props) => {
   const [loading, setloading] = useState(false);
   const [avatar, setavatar] = useState();
   const [image, setImage] = useState();
+  const [saveButton, setsaveButton] = useState(true);
 
   const getData = () => {
     setloading(true);
     buyerService
       .getUserDetails()
       .then((data) => {
-        console.log(data);
+        setsaveButton(true);
         setloading(false);
         setfName(data.fName);
         setlName(data.lName);
@@ -162,6 +163,7 @@ const BuyerAccount = (props) => {
                         <input
                           type="file"
                           id="file"
+                          accept="image/*"
                           onChange={(e) => {
                             setImage(e.target.files[0]);
                           }}
@@ -170,6 +172,7 @@ const BuyerAccount = (props) => {
                     </form>
 
                     <StyledButton
+                      disabled={image ? false : true}
                       variant="contained"
                       onClick={() => {
                         send();
@@ -203,6 +206,7 @@ const BuyerAccount = (props) => {
                           value={fName}
                           onChange={(e) => {
                             setfName(e.target.value);
+                            setsaveButton(false);
                           }}
                         />
                       </MarginBox>
@@ -216,6 +220,7 @@ const BuyerAccount = (props) => {
                             value={city}
                             onChange={(e) => {
                               selectChange(e);
+                              setsaveButton(false);
                             }}
                           >
                             {cities.map((item) => (
@@ -237,6 +242,7 @@ const BuyerAccount = (props) => {
                           value={lName}
                           onChange={(e) => {
                             setlName(e.target.value);
+                            setsaveButton(false);
                           }}
                         />
                       </MarginBox>
@@ -250,6 +256,7 @@ const BuyerAccount = (props) => {
                           value={phone}
                           onChange={(e) => {
                             setphone(e.target.value);
+                            setsaveButton(false);
                           }}
                         />
                       </MarginBox>
@@ -264,9 +271,6 @@ const BuyerAccount = (props) => {
                       placeholder="Email"
                       helperText="example@example.com"
                       value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                      }}
                     />
                   </MarginBox>
                   <MarginBox>
@@ -278,6 +282,7 @@ const BuyerAccount = (props) => {
                       value={address}
                       onChange={(e) => {
                         setAddress(e.target.value);
+                        setsaveButton(false);
                       }}
                     />
                   </MarginBox>
@@ -320,6 +325,7 @@ const BuyerAccount = (props) => {
               <MarginBox sx={{ display: "flex" }}>
                 <MarginBox>
                   <Button
+                    disabled={saveButton}
                     variant="contained"
                     onClick={(e) => {
                       buyerService

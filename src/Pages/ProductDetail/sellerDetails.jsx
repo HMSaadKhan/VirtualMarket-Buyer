@@ -67,7 +67,7 @@ export default function SellerDetails({ productDetails, msgbool, setmsgbool }) {
                 </Typography>
                 <Typography
                   className={classes.cardSubText}
-                  sx={{ cursor: "pointer" }}
+                  sx={{ cursor: "pointer", textDecoration: "underline" }}
                   onClick={() => {
                     history.push("/seller/" + productDetails.seller._id);
                   }}

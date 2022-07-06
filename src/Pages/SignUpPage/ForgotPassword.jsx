@@ -1,17 +1,36 @@
 import React from "react";
-import { TextField, Card, Box, CardContent } from "@mui/material";
+import { TextField, Card, Box, CardContent, Button } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import buyerService from "../../Services/BuyerService";
 import IsLoginTrue from "../../AuthWrapper/isLoginTrue";
 import { CardHeadings } from "../../Styles/MyTypographies";
-import { StyledButton } from "../../Styles/StyledButton";
 import LoadingScreen from "../../Components/LoadingScreen";
 
 const ForgotPassword = (props) => {
   const [email, setEmail] = React.useState("");
   const [loading, setloading] = React.useState(false);
   const history = useHistory();
+
+  const sendOtp = () => {
+    setloading(true);
+    buyerService
+      .forgotPassword(email)
+      .then((data) => {
+        setloading(false);
+        toast.success(data.message, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+
+        history.push("resetPassword/" + data._id);
+      })
+      .catch((err) => {
+        setloading(false);
+        toast.error(err.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+      });
+  };
   return (
     <IsLoginTrue>
       <LoadingScreen bool={loading} />
@@ -37,34 +56,26 @@ const ForgotPassword = (props) => {
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        sendOtp();
+                        // write your functionality here
+                      }
+                    }}
                   />
                 </>
 
                 <Box mt={2}>
-                  <StyledButton
+                  <Button
+                    variant="contained"
+                    disabled={email ? false : true}
                     sx={{ margin: "0px", width: "100%" }}
                     onClick={async (e) => {
-                      setloading(true);
-                      await buyerService
-                        .forgotPassword(email)
-                        .then((data) => {
-                          setloading(false);
-                          toast.success(data.message, {
-                            position: toast.POSITION.BOTTOM_LEFT,
-                          });
-
-                          history.push("resetPassword/" + data._id);
-                        })
-                        .catch((err) => {
-                          setloading(false);
-                          toast.error(err.response.data, {
-                            position: toast.POSITION.BOTTOM_LEFT,
-                          });
-                        });
+                      sendOtp();
                     }}
                   >
                     Send OTP
-                  </StyledButton>
+                  </Button>
                 </Box>
               </Box>
             </CardContent>

@@ -121,6 +121,7 @@ const Cart = (props) => {
                               setsubtotal={setsubtotal}
                               settotal={settotal}
                               setradiochange={setradiochange}
+                              radiochange={radiochange}
                             />
                           </>
                         );

@@ -1,10 +1,10 @@
 import React from "react";
-import { TextField, Card, Box, CardContent } from "@mui/material";
+import { TextField, Card, Box, CardContent, Button } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import buyerService from "../../Services/BuyerService";
 import { CardHeadings } from "../../Styles/MyTypographies";
-import { StyledButton } from "../../Styles/StyledButton";
+
 import IsLoginTrue from "../../AuthWrapper/isLoginTrue";
 import LoadingScreen from "../../Components/LoadingScreen";
 import { useParams } from "react-router-dom";
@@ -15,6 +15,26 @@ const ChangenewPassword = (props) => {
   const [loading, setloading] = React.useState(false);
   const history = useHistory();
   const id = useParams();
+
+  const updatePassword = () => {
+    setloading(true);
+    buyerService
+      .resetPassword(id.id, { otp, password }) //if gives error then check otp datatype
+      .then((data) => {
+        setloading(false);
+
+        toast.success(data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+        history.push("/Login");
+      })
+      .catch((err) => {
+        setloading(false);
+        toast.error(err.response.data, {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+      });
+  };
   return (
     <IsLoginTrue>
       <LoadingScreen bool={loading} />
@@ -41,6 +61,12 @@ const ChangenewPassword = (props) => {
                     onChange={(e) => {
                       setOtp(e.target.value);
                     }}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        updatePassword();
+                        // write your functionality here
+                      }
+                    }}
                   />
                 </>
                 <>
@@ -53,33 +79,26 @@ const ChangenewPassword = (props) => {
                     onChange={(e) => {
                       setPassword(e.target.value);
                     }}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        updatePassword();
+                        // write your functionality here
+                      }
+                    }}
                   />
                 </>
 
                 <Box mt={2}>
-                  <StyledButton
+                  <Button
+                    disabled={otp || password ? false : true}
+                    variant="contained"
                     sx={{ margin: "0px", width: "100%" }}
-                    onClick={async (e) => {
-                      setloading(true);
-                      await buyerService
-                        .resetPassword(id._id, { otp, password }) //if gives error then check otp datatype
-                        .then((data) => {
-                          setloading(false);
-                          toast.success(data.data, {
-                            position: toast.POSITION.BOTTOM_LEFT,
-                          });
-                          history.push("/Login");
-                        })
-                        .catch((err) => {
-                          setloading(false);
-                          toast.error(err.response.data, {
-                            position: toast.POSITION.BOTTOM_LEFT,
-                          });
-                        });
+                    onClick={(e) => {
+                      updatePassword();
                     }}
                   >
                     Update Password
-                  </StyledButton>
+                  </Button>
                 </Box>
               </Box>
             </CardContent>

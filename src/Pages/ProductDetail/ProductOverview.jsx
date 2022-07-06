@@ -194,6 +194,7 @@ export default function ProductOverview({
               <Box>
                 <Tooltip title="schedule Item">
                   <IconButton
+                    disabled={addtoCartCheck}
                     onClick={(e) => {
                       if (buyerService.isLoggedIn()) {
                         setschedulebool(true);
@@ -298,7 +299,11 @@ export default function ProductOverview({
                 disabled={addtoCartCheck}
                 variant="contained"
                 onClick={() => {
-                  setbargainbool(true);
+                  if (buyerService.isLoggedIn()) {
+                    setbargainbool(true);
+                  } else {
+                    history.push("/login");
+                  }
                 }}
               >
                 Bargain

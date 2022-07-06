@@ -24,8 +24,9 @@ const useStyles = makeStyles((theme) => ({
 const CartItems = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const { getCartItems, getProductId, item, cartId } = props;
-
+  const { getCartItems, getProductId, item, cartId, selectedCart, cart } =
+    props;
+  console.log(cartId);
   const [qty, setqty] = useState(item.quantity);
   const qtyupdate = () => {
     setqty(item.quantity);
@@ -149,7 +150,7 @@ const CartItems = (props) => {
           >
             <Typography
               noWrap
-              sx={{ cursor: "pointer" }}
+              sx={{ cursor: "pointer", textDecoration: "underline" }}
               onClick={() => {
                 history.push("/" + item.product.name + "/" + item.product._id);
               }}
@@ -181,7 +182,12 @@ const CartItems = (props) => {
               justifyContent: "center",
             }}
           >
-            <IconButton onClick={minusButton} disabled={check}>
+            <IconButton
+              onClick={minusButton}
+              disabled={
+                check || cart.seller._id === selectedCart ? false : true
+              }
+            >
               <Remove />
             </IconButton>
             <Box
@@ -193,18 +199,28 @@ const CartItems = (props) => {
                 InputProps={{
                   readOnly: check ? true : false,
                 }}
+                disabled={cart.seller._id === selectedCart ? false : true}
                 fullWidth
                 size="small"
                 value={qty}
+                onBlur={(e) => {
+                  QuantityInput(e.target.value);
+                }}
+                //onFocusout="myFunction()"
                 onChange={(e) => {
                   setqty(e.target.value);
                   // if (e.filled) {
-                  setTimeout(QuantityInput(e.target.value), 10000);
+                  // setTimeout(QuantityInput(e.target.value), 10000);
                   // }
                 }}
               />
             </Box>
-            <IconButton onClick={plusButton} disabled={check}>
+            <IconButton
+              onClick={plusButton}
+              disabled={
+                check || cart.seller._id === selectedCart ? false : true
+              }
+            >
               <Add />
             </IconButton>
           </Box>
@@ -221,7 +237,12 @@ const CartItems = (props) => {
           </Box>
         </Box>
         <Box sx={{ width: "10%" }}>
-          <Delete onClick={deleteButton} />
+          <IconButton
+            onClick={deleteButton}
+            disabled={cart.seller._id === selectedCart ? false : true}
+          >
+            <Delete />
+          </IconButton>
         </Box>
       </Box>
       <Divider />

@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CommentWriting({ orderId, itemId }) {
+export default function CommentWriting({ orderId, itemId, Orders }) {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -74,6 +74,7 @@ export default function CommentWriting({ orderId, itemId }) {
         });
 
         handleClose();
+        Orders();
       })
       .catch((error) => {
         toast.error(error.response.data, {

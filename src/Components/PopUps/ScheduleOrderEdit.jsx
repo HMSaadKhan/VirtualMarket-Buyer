@@ -1,4 +1,4 @@
-import React   from "react";
+import React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Box from "@mui/material/Box";
@@ -18,7 +18,7 @@ import { StyledButton } from "../../Styles/StyledButton";
 const useStyles = makeStyles({
   root: {
     width: 400,
-    height: 350,
+    maxHeight: 300,
   },
 });
 
@@ -48,7 +48,7 @@ export default function ScheduleOrderEdit(props) {
   );
   const [quantity, setquantity] = React.useState(schedule.quantity);
   const [customRepetition, setcustomRepetition] = React.useState(
-    schedule.customRepetition ? schedule.customRepetition : 0
+    schedule.customRepetition ? schedule.customRepetition : 1
   );
 
   const handleChange = (event) => {
@@ -56,6 +56,13 @@ export default function ScheduleOrderEdit(props) {
   };
   const handleClose = () => {
     setbool(!bool);
+    setquantity(schedule.quantity);
+    setrepetitionType(schedule.repetitionType);
+    setpresetRepetition(schedule.presetRepetition);
+    setcustomRepetition(
+      schedule.customRepetition ? schedule.customRepetition : 1
+    );
+    setscheduledTime(new Date(schedule.scheduledTime));
   };
   const handleRadio = (e) => {
     setrepetitionType(e.target.value);
@@ -105,7 +112,7 @@ export default function ScheduleOrderEdit(props) {
           <div className={classes.root}>
             {schedule ? (
               <Box>
-                <HeadingText>Quanity</HeadingText>
+                <HeadingText sx={{ marginTop: "0px" }}>Quanity</HeadingText>
                 <Counter
                   num={quantity}
                   setNum={setquantity}
@@ -259,14 +266,14 @@ export default function ScheduleOrderEdit(props) {
               sx={{
                 display: "flex",
                 justifyContent: "right",
-                paddingTop: "100px",
+                paddingTop: "50px",
                 alignItems: "end",
               }}
             >
               <StyledButton onClick={scheduleOrder}>schedule</StyledButton>
               <StyledButton
                 onClick={(e) => {
-                  setbool(false);
+                  handleClose();
                 }}
               >
                 Cancel

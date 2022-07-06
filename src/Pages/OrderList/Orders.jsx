@@ -121,7 +121,10 @@ export default function Orders(props) {
                               Order From&nbsp;
                             </Typography>
                             <Typography
-                              sx={{ cursor: "pointer" }}
+                              sx={{
+                                cursor: "pointer",
+                                textDecoration: "underline",
+                              }}
                               onClick={() => {
                                 history.push("/seller/" + order.Seller._id);
                               }}

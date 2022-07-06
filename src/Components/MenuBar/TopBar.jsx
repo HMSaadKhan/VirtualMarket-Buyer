@@ -48,8 +48,43 @@ export default function TopBar() {
           >
             <img src={Logo} height="65" width="88" objectfit="contain" />
           </Box>
+          <Box
+            sx={{
+              display: {
+                xs: "none",
+                sm: "inline",
+                md: "inline",
+                lg: "inline",
+                xl: "inline",
+              },
+            }}
+          >
+            <Box pl={2} sx={{ display: "flex" }}>
+              <Typography
+                align="right"
+                sx={{
+                  color: "black",
+                  cursor: "pointer",
+                  fontSize: "15px",
+                }}
+              >
+                contact us:&nbsp;
+              </Typography>
+              <Typography
+                align="right"
+                color="primary"
+                sx={{
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  fontSize: "15px",
+                }}
+              >
+                virtualmarket06@gmail.com
+              </Typography>
+            </Box>
+          </Box>
         </div>
-        <Box sx={{ bgColor: "#ba6a62" }}>
+        <Box pr={2} sx={{ backgroundColor: "#ba6a62" }}>
           <Links
             sx={{ color: "black", cursor: "pointer" }}
             onClick={(e) => {

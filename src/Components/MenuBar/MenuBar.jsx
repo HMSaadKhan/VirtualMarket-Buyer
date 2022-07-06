@@ -95,12 +95,14 @@ const MenuBar = (props) => {
                 setSearch(e.target.value);
               }}
             />
-            <Search
-              sx={{ color: "#ba6a62" }}
+            <IconButton
+              disabled={search ? false : true}
               onClick={(e) => {
                 history.push("/search/" + search);
               }}
-            />
+            >
+              <Search />
+            </IconButton>
           </div>
           <div className={classes.iconContainer}>
             <div className={classes.icon}>

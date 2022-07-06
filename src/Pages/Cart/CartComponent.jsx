@@ -15,7 +15,8 @@ const CartComponent = ({
   settotal,
   setcartId,
   cartId,
-  key,
+
+  radiochange,
 }) => {
   const history = useHistory();
   //const classes = useStyles();
@@ -54,7 +55,9 @@ const CartComponent = ({
             return (
               <>
                 <CartItems
+                  selectedCart={radiochange}
                   cartId={cartId}
+                  cart={cart}
                   item={item}
                   key={item._id}
                   getCartItems={getCartItems}

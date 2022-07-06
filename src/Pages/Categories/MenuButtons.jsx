@@ -57,7 +57,6 @@ export default function MenuButtons(props) {
               history.push("/category/" + item._id);
               handleMenuClose();
             }}
-            onChange={(e) => {}}
           >
             {item.name}
           </MenuItem>
@@ -94,7 +93,13 @@ export default function MenuButtons(props) {
             </Links>
           </MarginBox>
           <MarginBox>
-            <Links onClick={handleProfileMenuOpen}>Products</Links>
+            <Links
+              onClick={handleProfileMenuOpen}
+              onMouseOver={handleProfileMenuOpen}
+              // onMouseOut={handleMenuClose}
+            >
+              Products
+            </Links>
           </MarginBox>
           <MarginBox>
             <Links
