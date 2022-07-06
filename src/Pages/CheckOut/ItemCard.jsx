@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { makeStyles } from "@mui/styles";
 import { HeadingText } from "../../Styles/MyTypographies";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -21,6 +22,7 @@ const useStyles = makeStyles({
 
 const ItemCard = ({ item }) => {
   const classes = useStyles();
+  const history = useHistory();
 
   return (
     <Box>
@@ -42,7 +44,14 @@ const ItemCard = ({ item }) => {
           }}
         >
           <Box sx={{ width: "100%" }}>
-            <Typography>{item.product.name}</Typography>
+            <Typography
+              sx={{ cursor: "pointer", textDecoration: "underline" }}
+              onClick={() => {
+                history.push("/" + item.product.name + "/" + item.product._id);
+              }}
+            >
+              {item.product.name}
+            </Typography>
             {item.type === "DEFAULT" ? (
               <></>
             ) : (
