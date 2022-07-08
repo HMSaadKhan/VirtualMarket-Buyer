@@ -152,7 +152,7 @@ export default function ScheduleOrderEdit(props) {
                 </Box>
                 <HeadingText>Date & time</HeadingText>
                 <DateTimePicker
-                  format="dd-MM-yyyy HH"
+                  format="dd-MM-yyyy hh:mm a"
                   onChange={setscheduledTime}
                   value={scheduledTime}
                 />
